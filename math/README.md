@@ -29,3 +29,4 @@ latexmk -xelatex main
 - 新课时：在 `chapters/` 新增文件，并在 `main.tex` 中 `\input` 一行。
 - 图片统一放 `figures/`，在 `main.tex` 中用 `\graphicspath{{../figures/}}` 引入。
 - 中文字体与数学字体已在 `common/preamble.tex` 中统一配置，不要在单个文件里重复设置。
+- `extension/` 的编号与 `lesson/` 的课次号对应；教案与导学案的作业环节用 `\reading{编号}{篇名}` 指向对应篇目。
