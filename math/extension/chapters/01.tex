@@ -1,0 +1,174 @@
+\section{一个「自然」的问题}
+
+19 世纪末，康托尔（Georg Cantor）创立了集合论。数学家一度以为，
+终于可以为全部数学找到一个统一而严格的基础。然而没过多久，
+一个看似简单的问题就让这座大厦动摇起来。
+
+\begin{definition}[罗素悖论]
+设
+\[
+  R=\{x\mid x\notin x\},
+\]
+即 $R$ 是所有「不以自身为元素」的集合组成的集合。
+\end{definition}
+
+\begin{problem}
+$R$ 是不是 $R$ 的元素？
+\end{problem}
+
+\begin{solution}
+分两种情况讨论：
+\begin{itemize}
+  \item 若 $R\in R$，则由 $R$ 的定义，$R$ 必须满足条件 $R\notin R$，矛盾；
+  \item 若 $R\notin R$，则 $R$ 恰好满足定义中的条件，于是应有 $R\in R$，同样矛盾。
+\end{itemize}
+两种假设都导致矛盾。问题出在前提：我们默认了「所有集合的集合」
+是一个合法的集合，而它并不是。
+\end{solution}
+
+这个悖论说明，「任意性质都能确定一个集合」这一直觉是错误的。
+要修复它，必须对「什么样的集合可以存在」作出限制。
+
+\section{公理化集合论：ZFC}
+
+策梅洛（Zermelo）与弗兰克尔（Fraenkel）提出了一套公理，
+把集合的存在性限制在若干条明确规则之内，这就是今天通用的
+\key{ZFC 公理系统}。其中与中学内容最相关的几条是：
+
+\begin{description}
+  \item[外延公理] 两个集合相等，当且仅当它们含有相同的元素。
+  \[
+    A=B\iff(\forall x)(x\in A\leftrightarrow x\in B).
+  \]
+  \item[分离公理] 已知集合 $A$ 与性质 $p(x)$，可以取出
+  $\{x\in A\mid p(x)\}$，它是一个集合。注意这里必须从已有的 $A$ 中「分离」，
+  不能凭空构造「所有满足 $p(x)$ 的对象」。
+  \item[幂集公理] 对任意集合 $A$，其所有子集组成的集合 $\mathcal{P}(A)$ 存在。
+  \item[无穷公理] 存在一个无穷集合。这条公理保证了自然数集 $\mathbb{N}$ 的存在。
+  \item[选择公理] 对任意一族两两不交的非空集合，可以从每个集合中
+  各取一个元素组成新的集合。它看似显然，却与许多深刻结论相关。
+\end{description}
+
+\begin{example}
+有了分离公理，罗素悖论就消失了：我们不能构造「所有满足 $x\notin x$
+的对象」，只能从某个已有集合 $A$ 中分离出 $\{x\in A\mid x\notin x\}$。
+而这个集合是否属于 $A$，是可以有确定答案的。
+\end{example}
+
+\section{无穷也有大小：对角线方法}
+
+自然数集 $\mathbb{N}$ 是无穷的，实数集 $\mathbb{R}$ 也是无穷的。
+它们一样大吗？康托尔的回答是：不一样。
+
+\begin{definition}[等势]
+若存在从集合 $A$ 到集合 $B$ 的一一对应，则称 $A$ 与 $B$ \key{等势}，
+记作 $|A|=|B|$。
+\end{definition}
+
+\begin{definition}[可数集]
+与自然数集 $\mathbb{N}$ 等势的集合称为 \key{可数集}。
+\end{definition}
+
+\begin{example}
+整数集 $\mathbb{Z}$ 是可数的。按下表排列即可建立一一对应：
+\[
+  \begin{array}{c|ccccc}
+  \mathbb{N} & 0 & 1 & 2 & 3 & \cdots\\ \hline
+  \mathbb{Z} & 0 & 1 & -1 & 2 & \cdots
+  \end{array}
+\]
+更意外的是，有理数集 $\mathbb{Q}$ 也是可数的——把分数按「分子分母之和」
+分组排列，就能不重不漏地数完所有有理数。
+\end{example}
+
+那么实数呢？康托尔在 1874 年给出了否定的答案，用的正是著名的
+\key{对角线方法}。
+
+\begin{theorem}[康托尔]
+开区间 $(0,1)$ 中的实数组成的集合不可数。
+\end{theorem}
+
+\begin{proof}
+用反证法。假设 $(0,1)$ 可数，则可以把它列成一张无穷列表：
+\[
+  \begin{aligned}
+  x_1&=0.a_{11}a_{12}a_{13}\ldots\\
+  x_2&=0.a_{21}a_{22}a_{23}\ldots\\
+  x_3&=0.a_{31}a_{32}a_{33}\ldots\\
+  &\ \vdots
+  \end{aligned}
+  \qquad a_{ij}\in\{0,1,\dots,9\}.
+\]
+现在构造一个数 $y=0.b_1b_2b_3\ldots$，其中
+\[
+  b_k=
+  \begin{cases}
+    5, & a_{kk}\neq 5,\\
+    6, & a_{kk}=5.
+  \end{cases}
+\]
+这样 $y$ 与列表中的第 $k$ 个数在第 $k$ 位小数上不同，因此 $y$ 不等于
+其中任何一个——但 $y\in(0,1)$，与「列表包含所有实数」矛盾。
+故 $(0,1)$ 不可数。
+\end{proof}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.72]
+    % 对角线示意
+    \def\rows{5}
+    \foreach \i in {1,...,\rows} {
+      \foreach \j in {1,...,\rows} {
+        \node at (\j*1.35, -\i*0.78) {$a_{\i\j}$};
+      }
+    }
+    % 高亮对角线
+    \foreach \i in {1,...,\rows} {
+      \fill[second!25] ($(\i*1.35-0.55,-\i*0.78-0.32)$) rectangle ($(\i*1.35+0.55,-\i*0.78+0.32)$);
+      \node[second] at (\i*1.35, -\i*0.78) {$a_{\i\i}$};
+    }
+    \draw[->, thick, second] (0.8, 0.4) -- (7.4, -3.6) node[pos=0.5, above, sloped] {对角线};
+    \node at (8.6, -1.2) {$\longrightarrow\ b_k\neq a_{kk}$};
+  \end{tikzpicture}
+  \caption{对角线方法：沿对角线逐位改数字，得到的数不在原列表中。}
+\end{figure}
+
+对角线法的威力远不止于此。图灵用类似的思想证明了停机问题不可判定，
+哥德尔用它构造了「本语句不可证明」的自指命题。它几乎是整个
+数理逻辑中最重要的技巧之一。
+
+\section{连续统假设：一个悬而未决的问题}
+
+既然可数无穷与实数无穷不同，一个自然的问题是：
+在这两者之间，还存在别的大小吗？
+
+\begin{conjecture}[连续统假设]
+不存在基数严格介于可数集与实数集之间的集合，即
+\[
+  2^{\aleph_0}=\aleph_1.
+\]
+\end{conjecture}
+
+这个问题被列为希尔伯特 1900 年提出的 23 个问题的第一个。
+它的结局出人意料：
+
+\begin{itemize}
+  \item 哥德尔在 1940 年证明，连续统假设与 ZFC 公理系统\key{相容}——
+  在 ZFC 中无法证明它为假 \cite{godel1940}；
+  \item 科恩在 1963 年证明，它的否定也与 ZFC \key{相容}——
+  在 ZFC 中同样无法证明它为真 \cite{cohen1963}。
+\end{itemize}
+
+换言之，连续统假设在现有的集合论公理下\key{不可判定}。
+要决定它，必须引入新的公理——而什么样的公理才算「正确」，
+至今仍是一个开放的哲学与数学问题。
+
+\section{结语}
+
+从罗素悖论到 ZFC，从对角线法到连续统假设，集合论的历史几乎就是
+一部「重新理解无穷」的历史。它告诉我们，直觉并不总是可靠，
+而严格的公理化正是数学可靠性的来源。
+
+\begin{quote}
+「数学的本质在于它的自由。」——康托尔
+\end{quote}

@@ -14,6 +14,7 @@ Teaching/
 │   ├── lesson/           教案
 │   ├── bank/             题库
 │   ├── guide/            导学案
+│   ├── extension/        拓展阅读（ElegantPaper）
 │   ├── slides/           课件（Beamer）
 │   ├── figures/          封面与图片素材
 │   └── .vscode/          VS Code + LaTeX Workshop 配置

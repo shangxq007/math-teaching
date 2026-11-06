@@ -9,9 +9,12 @@
 | `lesson/` | 教案 | ElegantBook | 每章一课时，含教学目标/重难点/教学过程/板书/作业 |
 | `bank/` | 题库 | ElegantBook | 题目用 `problem` 环境，解答用 `solution` 环境 |
 | `guide/` | 导学案 | ElegantNote | 每课含学习目标/预习导学/课堂探究/当堂检测/课后作业 |
+| `extension/` | 拓展阅读 | ElegantPaper | 课后延伸与深入，含摘要、关键词、参考文献 |
 | `slides/` | 课件 | Beamer + Metropolis | 16:9 演示文稿，保存即编译 |
 | `common/` | — | — | 共享导言区 `preamble.tex` 与教学宏 `macros.tex` |
 | `figures/` | — | — | 封面与图片素材 |
+
+每个子目录都有自己的 `README.md`，说明该类型的写法与约定。
 
 ## 快速开始
 

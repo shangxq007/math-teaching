@@ -1,0 +1,41 @@
+% 数学拓展阅读 · ElegantPaper
+% 定位：课内知识的延伸与深入，供学有余力的学生课后阅读。
+\documentclass[lang=cn,11pt]{elegantpaper}
+
+\input{../common/preamble}
+\input{../common/macros}
+
+% 拓展阅读配色（覆盖共享导言区的默认绿/橙/青）
+\colorlet{main}{blue!75!black}
+\colorlet{second}{red!55!black}
+\colorlet{third}{teal}
+
+\graphicspath{{../figures/}}
+
+\title{集合之美}
+\author{Shawn Shang}
+\institute{数学教研组}
+\version{0.1}
+\date{2026 年 11 月}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+集合论是现代数学的公共语言，但它的诞生却源于一场深刻的危机。
+本文从「所有集合的集合」这一看似自然的概念出发，介绍罗素悖论与
+公理化集合论的基本框架，并用康托尔对角线法证明无穷也有大小之分，
+最后简述连续统假设这一至今悬而未决的问题。
+\end{abstract}
+
+\keywords{集合论，罗素悖论，ZFC 公理，对角线法，可数集，连续统假设}
+
+\tableofcontents
+\newpage
+
+\input{chapters/01}
+
+\printbibliography
+
+\end{document}
