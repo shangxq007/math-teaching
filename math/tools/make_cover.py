@@ -1,59 +1,86 @@
 #!/usr/bin/env python3
-"""生成数学文档封面横幅。
+"""生成数学文档封面横幅：低多边形山峦（几何风格风景）。
 
 用法：python3 make_cover.py [输出目录]
 
-输出三张 3:1 横幅，分别对应 ElegantBook/ElegantNote 的三个主题色：
-    cover_blue.png   教案   (#3C71B7)
-    cover_green.png  题库   (#007802)
-    cover_cyan.png   导学案 (#1FBABE)
+默认输出三张 3:1 横幅，配色对应三个文档主题：
+    cover_blue.png   教案   ElegantBook blue  structurecolor #3C71B7
+    cover_green.png  题库   ElegantBook green structurecolor #007802
+    cover_cyan.png   导学案 ElegantNote  cyan  ecolor          #1FBABE
 
-图案：同心波纹等高线（单源扩散波），白底，铺满整个横幅。
+图案：渐变天空 + 半隐太阳 + 四层低多边形山脊（空气透视，远浅近深）。
 """
 import sys
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.patches import Polygon, Circle
 
-W, H = 24.0, 8.0          # 3:1
+W, H = 24.0, 8.0          # 3:1 横幅
 DPI = 110
 
 THEMES = {
-    'blue':  (60/255, 113/255, 183/255),   # ElegantBook blue structurecolor
-    'green': (0/255, 120/255, 2/255),      # ElegantBook green structurecolor
-    'cyan':  (31/255, 186/255, 190/255),   # ElegantNote  cyan ecolor
+    'blue':  (60/255, 113/255, 183/255),
+    'green': (0/255, 120/255, 2/255),
+    'cyan':  (31/255, 186/255, 190/255),
 }
 
+# (山脊点数, 基准高度, 起伏幅度, 颜色深度, 随机种子)
+# 颜色深度 0 = 纯白，1 = 纯主题色；远景浅、近景深
+LAYERS = [
+    (11,  0.90, 1.55, 0.18, 3),
+    (13,  0.45, 1.85, 0.36, 4),
+    (15, -0.05, 2.05, 0.58, 5),
+    (18, -0.60, 2.25, 0.82, 6),
+]
 
-def make_cmap(color):
-    """白 -> 主题色 的柔和渐变。"""
-    light = tuple(0.86*np.array(color) + 0.14)
-    mid = tuple(0.62*np.array(color) + 0.38)
-    dark = tuple(0.30*np.array(color))
-    return LinearSegmentedColormap.from_list('cover', [(1, 1, 1), light, mid, color, dark])
+
+def shade(color, f):
+    """往白色混合：f=1 原色，f=0 纯白。"""
+    return tuple(f*c + (1-f) for c in color)
+
+
+def sky(ax, color):
+    """垂直渐变天空：顶部主题色淡彩 -> 地平线纯白。"""
+    n = 400
+    ys = np.linspace(0, 1, n)          # imshow origin='lower'：i=0 在底部
+    c_top = shade(color, 0.42)
+    grad = np.zeros((n, 1, 3))
+    for i, t in enumerate(ys):
+        grad[i, 0, :] = tuple(c_top[k]*t + (1-t) for k in range(3))
+    ax.imshow(grad, extent=[-12, 12, -4, 4], origin='lower', aspect='auto', zorder=0)
+
+
+def ridge_points(rng, n, base, height):
+    """低多边形山脊：n 个随机峰谷点。"""
+    xs = np.linspace(-12, 12, n)
+    hs = rng.uniform(0.25, 1.0, n)
+    hs[0] = hs[-1] = 0.15          # 两端收低，避免贴边
+    return xs, base + height*hs
 
 
 def cover(path, color):
-    x = np.linspace(-12, 12, 620)
-    y = np.linspace(-4, 4, 240)
-    X, Y = np.meshgrid(x, y)
-    R = np.sqrt((X/2.7)**2 + Y**2)
-    Z = np.sin(2.3*R) * np.exp(-0.11*R)
-
     fig = plt.figure(figsize=(W, H), dpi=DPI)
     ax = fig.add_axes([0, 0, 1, 1])
-    ax.set_facecolor('white')
-
-    levels = np.linspace(-1, 1, 48)
-    ax.imshow(Z, extent=[-12, 12, -4, 4], origin='lower',
-              cmap=make_cmap(color), aspect='auto', interpolation='bilinear')
-    ax.contour(X, Y, Z, levels=levels, colors='white', linewidths=0.5, alpha=0.35)
-
-    ax.set_axis_off()
     ax.set_xlim(-12, 12)
     ax.set_ylim(-4, 4)
+    ax.set_axis_off()
+
+    sky(ax, color)
+
+    # 太阳（半隐于远山之后）
+    ax.add_patch(Circle((5.6, 1.55), 0.95, facecolor=shade(color, 1.0),
+                        alpha=0.95, zorder=1, edgecolor='none'))
+
+    # 山峦：从远到近
+    for i, (n, base, height, f, seed) in enumerate(LAYERS):
+        r = np.random.default_rng(seed)
+        xs, ys = ridge_points(r, n, base, height)
+        verts = list(zip(xs, ys)) + [(12.0, -4.0), (-12.0, -4.0)]
+        ax.add_patch(Polygon(verts, closed=True, facecolor=shade(color, f),
+                             edgecolor='none', zorder=2+i))
+
     fig.savefig(path, facecolor='white')
     plt.close(fig)
 
