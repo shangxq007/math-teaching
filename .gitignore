@@ -1,0 +1,46 @@
+# LaTeX 构建中间产物
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+*.nav
+*.snm
+*.vrb
+*.figlist
+*.makefile
+*.dpkg
+*.ptc
+*.bcf-SAVE-ERROR
+*.fdb_latexmk-*
+*-SAVE-ERROR
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot
+*.thm
+*.brf
+_minted*/
+.minted*/
+
+# 编译输出（保留 figures 下的矢量图）
+*.pdf
+!figures/**/*.pdf
+!figures/*.pdf
+
+# 编辑器（保留工作区配置，便于换机器复用）
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+*.swp
+*~
+.DS_Store

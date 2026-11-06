@@ -1,0 +1,58 @@
+% ============================================================
+%  数学教学文档 · 专用环境与命令
+%  用法：在 preamble.tex 之后 \input{../common/macros}
+% ============================================================
+
+% ---------- 教案结构 ----------
+\newenvironment{objective}{%
+  \par\medskip\noindent{\bfseries\large\color{main}教学目标}\par\medskip}{\par\medskip}
+\newenvironment{keypoint}{%
+  \par\medskip\noindent{\bfseries\large\color{second}教学重难点}\par\medskip}{\par\medskip}
+\newenvironment{procedure}{%
+  \par\medskip\noindent{\bfseries\large\color{main}教学过程}\par\medskip}{\par\medskip}
+\newenvironment{board}{%
+  \par\medskip\noindent{\bfseries\large\color{main}板书设计}\par\medskip}{\par\medskip}
+\newenvironment{homework}{%
+  \par\medskip\noindent{\bfseries\large\color{main}作业布置}\par\medskip}{\par\medskip}
+
+% ---------- 导学案结构 ----------
+\newenvironment{learnobjective}{%
+  \par\medskip\noindent{\bfseries\large\color{main}学习目标}\par\medskip}{\par\medskip}
+\newenvironment{preview}{%
+  \par\medskip\noindent{\bfseries\large\color{second}预习导学}\par\medskip}{\par\medskip}
+\newenvironment{explore}{%
+  \par\medskip\noindent{\bfseries\large\color{main}课堂探究}\par\medskip}{\par\medskip}
+\newenvironment{inclasstest}{%
+  \par\medskip\noindent{\bfseries\large\color{main}当堂检测}\par\medskip}{\par\medskip}
+\newenvironment{afterclass}{%
+  \par\medskip\noindent{\bfseries\large\color{main}课后作业}\par\medskip}{\par\medskip}
+
+% ---------- 补齐 elegantnote 缺失的环境 ----------
+% elegantbook 自带 example / problem / solution / proof 等环境；
+% elegantnote 没有，这里按需补上，保证共享宏在两个模板下都能用。
+\ifcsundef{example}{%
+  \newenvironment{example}[1][]{%
+    \par\medskip\noindent{\bfseries\color{main}例题\quad}}{\par\medskip}%
+}{}
+\ifcsundef{problem}{%
+  \newenvironment{problem}[1][]{%
+    \par\medskip\noindent{\bfseries\color{main}问题\quad}}{\par\medskip}%
+}{}
+\ifcsundef{solution}{%
+  \newenvironment{solution}{%
+    \par\medskip\noindent{\bfseries\color{main}解\quad}\itshape}{\par\medskip}%
+}{}
+\ifcsundef{proof}{%
+  \newenvironment{proof}{%
+    \par\medskip\noindent{\bfseries\color{second}证明\quad}}{\hfill$\square$\par\medskip}%
+}{}
+
+% ---------- 常用命令 ----------
+% 重点标注
+\newcommand{\key}[1]{{\color{second}#1}}
+% 答案标注
+\newcommand{\ans}[1]{{\color{main}#1}}
+% 填空下划线
+\newcommand{\blank}{\underline{\hspace{2em}}}
+% 难度标记
+\newcommand{\level}[1]{{\color{main}\textsf{[#1]}}}

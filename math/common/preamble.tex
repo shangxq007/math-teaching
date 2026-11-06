@@ -1,0 +1,43 @@
+% ============================================================
+%  Elegant 数学教学文档 · 共享导言区
+%  用法：在 \documentclass{elegantbook / elegantnote} 之后
+%        \input{../common/preamble}
+%  依赖：TeX Live 2026 + XeLaTeX
+% ============================================================
+
+% ---------- 等宽字体 ----------
+% lmmono10 缺少 λ、≥ 等符号，改用覆盖更全的 DejaVu Sans Mono
+\setmonofont{DejaVu Sans Mono}
+
+% ---------- 数学 ----------
+\usepackage{mathtools}   % amsmath 扩展（\substack、\dcases、\prescript 等）
+\usepackage{bm}          % 粗体数学符号 \bm
+\usepackage{cases}       % 分段函数 / 方程组 \begin{cases}
+\usepackage{cancel}      % 划去 \cancel、\cancelto
+\usepackage{siunitx}     % 单位与数字 \num \SI
+\sisetup{
+  detect-all,
+  per-mode = symbol,
+  range-units = single,
+}
+
+% ---------- 图形 ----------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.pathreplacing, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% ---------- 统一颜色名 ----------
+% elegantbook 定义了 main / second / third；elegantnote 只有 ecolor。
+% 用 \providecolor 补齐，使共享宏在两个模板下都能用。
+\providecolor{main}{RGB}{0,120,2}
+\providecolor{second}{RGB}{230,90,7}
+\providecolor{third}{RGB}{0,160,152}
+
+% ---------- 版式 ----------
+\usepackage{fontawesome5}   % 图标（如无需要可删除本行）
+
+% ---------- 数学字体补丁 ----------
+% elegantbook/elegantnote 的 math=newtx 已加载 newtxmath；
+% 这里补上常用但 newtx 未覆盖的符号字体。
+\usepackage{mathrsfs}       % \mathscr

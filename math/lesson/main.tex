@@ -1,0 +1,37 @@
+% 教案 · ElegantBook
+\documentclass[cn,11pt,color=blue,math=newtx]{elegantbook}
+
+\input{../common/preamble}
+
+% bbding 的 \HandPencilLeft 只带 Metafont 源，XeLaTeX 下会让 xdvipdfmx 报
+% "Cannot proceed without .vf or physical font for PDF output"。
+% 这里改用 manfnt 的 \textdbend（随 knuth-lib 安装，可靠）。
+\renewenvironment{exercise}[1][]{%
+  \refstepcounter{exer}%
+  \par\noindent\makebox[-3pt][r]{%
+    \scriptsize\color{red!90}\textdbend\quad}%
+  \textbf{\color{main}{\exercisename} \theexer #1 }\rmfamily}{%
+  \par\ignorespacesafterend}
+
+\input{../common/macros}
+
+\title{数学教案}
+\subtitle{高中必修}
+\author{编写组}
+\institute{数学教研组}
+\version{0.1}
+\date{\today}
+
+\graphicspath{{../figures/}}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+\input{chapters/01}
+
+\end{document}
