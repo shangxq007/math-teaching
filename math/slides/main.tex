@@ -1,0 +1,40 @@
+% 数学课件 · Beamer（Metropolis 主题，16:9）
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usetheme{metropolis}
+
+\usepackage{ctex}
+\usepackage{amsmath,amssymb}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+
+% 主题色与教案/题库/导学案保持一致
+\definecolor{slidetheme}{RGB}{60,113,183}
+\setbeamercolor{progress bar}{fg=slidetheme}
+\setbeamercolor{frametitle}{bg=slidetheme,fg=white}
+\setbeamercolor{alerted text}{fg=slidetheme}
+\setbeamercolor{footnote mark}{fg=slidetheme}
+
+\title{数学}
+\subtitle{高中必修}
+\author{Shawn Shang}
+\date{2026 年 11 月}
+\institute{数学教研组}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{学习目标}
+  \begin{itemize}
+    \item 理解集合的含义与表示方法；
+    \item 掌握元素与集合的关系；
+    \item 会用符号 $\in$、$\notin$、$\subseteq$ 描述关系。
+  \end{itemize}
+\end{frame}
+
+\input{chapters/01}
+
+\end{document}

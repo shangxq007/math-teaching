@@ -34,6 +34,13 @@
 \providecolor{second}{RGB}{230,90,7}
 \providecolor{third}{RGB}{0,160,152}
 
+% ---------- 封面装饰条配色 ----------
+% elegantbook 默认把标题页的横条设为 second 色（蓝/绿主题下是橙色），
+% 与封面横幅不协调，这里改为跟随主题色 structurecolor。
+% elegantnote 没有 structurecolor，用 \providecolor 兜底。
+\providecolor{structurecolor}{RGB}{60,113,183}
+\colorlet{coverlinecolor}{structurecolor}
+
 % ---------- 版式 ----------
 \usepackage{fontawesome5}   % 图标（如无需要可删除本行）
 

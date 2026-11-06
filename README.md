@@ -7,14 +7,15 @@
 ```
 Teaching/
 ├── README.md
-├── math/                 数学学科
+└── math/                 数学学科
 │   ├── common/           共享导言区与宏
 │   │   ├── preamble.tex
 │   │   └── macros.tex
 │   ├── lesson/           教案
 │   ├── bank/             题库
 │   ├── guide/            导学案
-│   ├── figures/          图片素材
+│   ├── slides/           课件（Beamer）
+│   ├── figures/          封面与图片素材
 │   └── .vscode/          VS Code + LaTeX Workshop 配置
 └── <其他学科>/           后续新增
 ```
