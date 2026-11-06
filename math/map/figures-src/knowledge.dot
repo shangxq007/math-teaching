@@ -1,0 +1,61 @@
+digraph knowledge {
+  rankdir = TB;
+  fontname = "Noto Sans CJK SC";
+  nodesep = 0.30;
+  ranksep = 0.50;
+  node [fontname="Noto Sans CJK SC", fontsize=18, shape=box,
+        style="rounded,filled", margin="0.15,0.09"];
+  edge [fontname="Noto Sans CJK SC", fontsize=13, color="#B0BEC5",
+        fontcolor="#78909C", arrowsize=1.1, penwidth=1.4];
+
+  { rank=same; def; set; }
+  { rank=same; pei; gen; }
+  { rank=same; img; axis; mono; }
+  { rank=same; three; cond; }
+  { rank=same; wd; kou; heng; }
+  { rank=same; f1; f2; f3; }
+
+  // 强制六层各占一行（不可见链）
+  edge [style=invis, weight=30];
+  set -> gen -> mono -> cond -> heng -> f2;
+  edge [style=solid, weight=1];
+
+  def [label="y = ax² + bx + c\n(a ≠ 0)", fillcolor="#ECEFF1", color="#546E7A"];
+  set [label="集合与区间", fillcolor="#ECEFF1", color="#546E7A"];
+
+  pei [label="配方法", fillcolor="#E3F2FD", color="#1565C0"];
+  gen [label="求根公式", fillcolor="#E3F2FD", color="#1565C0"];
+
+  img [label="抛物线图象", fillcolor="#E0F7FA", color="#00838F"];
+  axis [label="对称轴·顶点", fillcolor="#E0F7FA", color="#00838F"];
+  mono [label="单调性与最值", fillcolor="#E0F7FA", color="#00838F"];
+
+  three [label="三个二次", fillcolor="#E8F5E9", color="#2E7D32"];
+  cond [label="包含 ↔ 充要", fillcolor="#E8F5E9", color="#2E7D32"];
+
+  wd [label="韦达定理", fillcolor="#FFF3E0", color="#EF6C00"];
+  kou [label="大于取两边", fillcolor="#FFF3E0", color="#EF6C00"];
+  heng [label="恒成立", fillcolor="#FFF3E0", color="#EF6C00"];
+
+  f1 [label="解不等式", fillcolor="#F3E5F5", color="#7B1FA2"];
+  f2 [label="判断充要", fillcolor="#F3E5F5", color="#7B1FA2"];
+  f3 [label="区间最值", fillcolor="#F3E5F5", color="#7B1FA2"];
+
+  def -> pei;
+  def -> img;
+  set -> cond;
+  pei -> gen;
+  pei -> axis;
+  gen -> three;
+  img -> axis;
+  img -> mono;
+  axis -> mono;
+  three -> wd;
+  three -> kou;
+  three -> cond;
+  wd -> f1;
+  kou -> f1;
+  cond -> f2;
+  mono -> f3;
+  axis -> f3;
+}

@@ -1,0 +1,25 @@
+digraph flow_extreme {
+  rankdir = TB;
+  fontname = "Noto Sans CJK SC";
+  node [fontname="Noto Sans CJK SC", fontsize=11, shape=box,
+        style="rounded,filled", margin="0.14,0.09"];
+  edge [fontname="Noto Sans CJK SC", fontsize=10, color="#757575",
+        fontcolor="#616161", arrowsize=0.8];
+
+  start [label="开始", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+  pei [label="配方求对称轴 x = h\n与顶点纵坐标 k", fillcolor="#E3F2FD", color="#1565C0"];
+  inrange [label="对称轴 h 是否在\n区间 [m, n] 内？", shape=diamond, fillcolor="#FFF3E0", color="#EF6C00"];
+  vertex [label="顶点处取最值\na > 0 取最小，a < 0 取最大", fillcolor="#E8F5E9", color="#2E7D32"];
+  far [label="另一最值在离对称轴\n较远的端点处", fillcolor="#E8F5E9", color="#2E7D32"];
+  mono [label="函数在区间上单调", fillcolor="#E8F5E9", color="#2E7D32"];
+  cmp [label="比较 f(m) 与 f(n)\n的大小", fillcolor="#E3F2FD", color="#1565C0"];
+  out [label="写出最大、最小值", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+
+  start -> pei -> inrange;
+  inrange -> vertex [label="是"];
+  inrange -> mono [label="否"];
+  vertex -> far;
+  far -> out;
+  mono -> cmp;
+  cmp -> out;
+}

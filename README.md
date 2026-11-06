@@ -15,6 +15,7 @@ Teaching/
 │   ├── bank/             题库
 │   ├── guide/            导学案
 │   ├── extension/        拓展阅读（ElegantPaper）
+│   ├── map/              知识图谱与解题流程
 │   ├── slides/           课件（Beamer）
 │   ├── figures/          封面与图片素材
 │   └── .vscode/          VS Code + LaTeX Workshop 配置

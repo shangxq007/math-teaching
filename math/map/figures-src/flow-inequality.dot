@@ -1,0 +1,40 @@
+digraph flow_inequality {
+  rankdir = TB;
+  fontname = "Noto Sans CJK SC";
+  node [fontname="Noto Sans CJK SC", fontsize=11, shape=box,
+        style="rounded,filled", margin="0.14,0.09"];
+  edge [fontname="Noto Sans CJK SC", fontsize=10, color="#757575",
+        fontcolor="#616161", arrowsize=0.8];
+
+  start [label="开始", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+  std [label="化为标准形式\nax² + bx + c > 0\n（或 < 0、≥ 0、≤ 0）", fillcolor="#E3F2FD", color="#1565C0"];
+  aneg [label="a < 0 ?", shape=diamond, fillcolor="#FFF3E0", color="#EF6C00"];
+  mul [label="两边同乘 −1\n不等号方向改变", fillcolor="#E3F2FD", color="#1565C0"];
+  solve [label="解对应方程\nax² + bx + c = 0", fillcolor="#E3F2FD", color="#1565C0"];
+  dlt [label="Δ = b² − 4ac", shape=diamond, fillcolor="#FFF3E0", color="#EF6C00"];
+  two [label="Δ > 0\n两不等实根 x₁ < x₂", fillcolor="#E8F5E9", color="#2E7D32"];
+  one [label="Δ = 0\n重根 x₁", fillcolor="#E8F5E9", color="#2E7D32"];
+  none [label="Δ < 0\n无实根", fillcolor="#E8F5E9", color="#2E7D32"];
+  rtwo [label="> 0：(−∞, x₁) ∪ (x₂, +∞)\n< 0：(x₁, x₂)", fillcolor="#E0F7FA", color="#00838F"];
+  rone [label="> 0：{x | x ≠ x₁}\n< 0：∅\n= 0：{x₁}", fillcolor="#E0F7FA", color="#00838F"];
+  rnone [label="a > 0：> 0 为 R，< 0 为 ∅\na < 0：相反", fillcolor="#E0F7FA", color="#00838F"];
+  check [label="检查端点开闭\n（≥、≤ 时包含端点）", fillcolor="#E3F2FD", color="#1565C0"];
+  out [label="写出解集\n（区间或集合）", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+
+  start -> std;
+  std -> aneg;
+  aneg -> mul [label="是"];
+  aneg -> solve [label="否"];
+  mul -> solve;
+  solve -> dlt;
+  dlt -> two [label="Δ > 0"];
+  dlt -> one [label="Δ = 0"];
+  dlt -> none [label="Δ < 0"];
+  two -> rtwo;
+  one -> rone;
+  none -> rnone;
+  rtwo -> check;
+  rone -> check;
+  rnone -> check;
+  check -> out;
+}
