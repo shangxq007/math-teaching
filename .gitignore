@@ -33,8 +33,8 @@ _minted*/
 
 # 编译输出（保留 figures 下的矢量图）
 *.pdf
-!figures/**/*.pdf
-!figures/*.pdf
+!**/figures/*.pdf
+!**/figures/**/*.pdf
 
 # 编辑器（保留工作区配置，便于换机器复用）
 .vscode/*
