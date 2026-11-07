@@ -45,6 +45,30 @@
 % ---------- 版式 ----------
 \usepackage{fontawesome5}   % 图标（如无需要可删除本行）
 
+% ---------- 紧凑版式（A4 打印） ----------
+% 统一纸张为 A4，边距收窄到 18mm，压缩浮动体与列表间距。
+\geometry{
+  a4paper,
+  left=18mm, right=18mm,
+  top=18mm, bottom=18mm,
+  headheight=2.17cm,
+  headsep=4mm,
+  footskip=12mm
+}
+% 图表与正文的垂直间距
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+% 图注上下间距
+\setlength{\abovecaptionskip}{4pt}
+\setlength{\belowcaptionskip}{2pt}
+% 列表行距（enumitem 由模板加载）
+\setlist[itemize,enumerate]{topsep=2pt, itemsep=1pt, parsep=0pt}
+% 行距：ElegantNote 默认 1.3，收到 1.2
+\linespread{1.2}
+% 段间距
+\setlength{\parskip}{0pt}
+
 % ---------- 数学字体补丁 ----------
 % elegantbook/elegantnote 的 math=newtx 已加载 newtxmath；
 % 这里补上常用但 newtx 未覆盖的符号字体。
