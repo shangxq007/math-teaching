@@ -1,0 +1,43 @@
+\documentclass[border=8pt]{standalone}
+\usepackage{ctex}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}[xscale=1.05, yscale=0.62, line cap=round, line join=round]
+
+% 坐标轴
+\draw[->, gray, line width=0.8pt] (-2.4,0) -- (5.2,0);
+\draw[->, gray, line width=0.8pt] (0,-5.4) -- (0,4.4);
+\node[gray, below left, font=\footnotesize] at (0,0) {$O$};
+
+% 刻度
+\foreach \x in {-2,-1,1,2,3,4,5} \draw[gray] (\x,0.06) -- (\x,-0.06);
+\foreach \y in {-4,-2,2,4} \draw[gray] (0.06,\y) -- (-0.06,\y);
+
+% 抛物线 y = (x-1)^2 - 4
+\draw[blue, line width=1.5pt, domain=-1.9:4.4, samples=120]
+  plot(\x, {(\x-1)*(\x-1)-4});
+
+% 区间 [0,4]：在 x 轴上标出
+\draw[red!70!black, line width=2.2pt] (0,0.22) -- (4,0.22);
+\fill[red!70!black] (0,0.22) circle (2.2pt);
+\fill[red!70!black] (4,0.22) circle (2.2pt);
+\node[red!70!black, above=2pt, font=\small] at (0,0.22) {$m=0$};
+\node[red!70!black, above=2pt, font=\small] at (4,0.22) {$n=4$};
+
+% 顶点
+\fill[blue] (1,-4) circle (2.2pt);
+\node[blue, below, font=\footnotesize] at (1,-4) {顶点 $(1,-4)$};
+
+% 端点
+\fill[red!70!black] (0,-3) circle (2.2pt);
+\node[red!70!black, left, font=\footnotesize] at (0,-3) {$f(0)=-3$};
+\fill[red!70!black] (4,5) circle (2.2pt);
+\node[red!70!black, right, font=\footnotesize] at (4,5) {$f(4)=5$};
+
+\node[blue, font=\small] at (4.3,3.4) {$y=x^2-2x-3$};
+
+\end{tikzpicture}
+\end{document}

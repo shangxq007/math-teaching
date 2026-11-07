@@ -10,7 +10,7 @@ for f in knowledge three-quadratics flow-inequality flow-condition flow-extreme 
 done
 
 # TikZ 图（standalone，需 xelatex）
-for f in set-conditions ineq-on-axis parabola; do
+for f in set-conditions ineq-on-axis parabola interval-extreme; do
   (cd figures-src && xelatex -interaction=nonstopmode -halt-on-error "$f.tex" >/dev/null 2>&1)
   cp "figures-src/$f.pdf" "figures/$f.pdf"
   echo "wrote figures/$f.pdf"

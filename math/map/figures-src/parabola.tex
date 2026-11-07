@@ -16,13 +16,22 @@
 \foreach \x in {-2,-1,1,2,3,4} \draw[gray] (\x,0.06) -- (\x,-0.06);
 \foreach \y in {-4,-2,2} \draw[gray] (0.06,\y) -- (-0.06,\y);
 
+% 刻度数字
+\node[gray, below=2pt, font=\footnotesize] at (-1,0) {$-1$};
+\node[gray, below=2pt, font=\footnotesize] at (3,0) {$3$};
+\node[gray, left=2pt, font=\footnotesize] at (0,-4) {$-4$};
+
+% 对称轴（虚线）
+\draw[gray, dashed, line width=0.7pt] (1,-5.0) -- (1,3.0);
+\node[gray, above=2pt, font=\footnotesize] at (1,3.0) {$x=1$};
+
 % 抛物线 y = (x-3)(x+1)
 \draw[blue, line width=1.5pt, domain=-2.6:4.4, samples=120]
   plot(\x, {(\x-3)*(\x+1)});
 
 % 顶点
 \fill[blue] (1,-4) circle (2.2pt);
-\node[blue, below, font=\footnotesize] at (1,-4) {$(1,-4)$};
+\node[blue, below right, font=\footnotesize] at (1,-4) {$(1,-4)$};
 
 % 与 x 轴交点
 \foreach \x in {-1,3} {
@@ -41,7 +50,7 @@
 \node[font=\small] at (3.9,1.4) {$y>0$};
 
 % 下方区域（<0）
-\node[font=\small] at (1,0.9) {$y<0$};
+\node[font=\small] at (1,-1.6) {$y<0$};
 
 \end{tikzpicture}
 \end{document}
