@@ -5,10 +5,15 @@
 
 \begin{table}[htbp]
 \centering
-\small
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{p{2.6cm}p{4.5cm}p{1.8cm}p{2.5cm}p{0.9cm}}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{
+  >{\raggedright\arraybackslash}p{4.0cm}
+  >{\raggedright\arraybackslash}p{2.9cm}
+  >{\raggedright\arraybackslash}p{2.6cm}
+  >{\raggedright\arraybackslash}p{2.6cm}
+  >{\raggedright\arraybackslash}p{0.9cm}}
 \toprule
 \key{结论} & \key{推导} & \key{适用条件} & \key{易错点} & \key{层级} \\
 \midrule
@@ -20,11 +25,10 @@ $\left(-\dfrac{b}{2a},\dfrac{4ac-b^2}{4a}\right)$
 判别式
 $\Delta=b^2-4ac$
 & 由求根公式中根号内的部分得到
-& 方程必须是一元二次 & 只记公式，不会判断根的个数 & 一级 \\
+& 必须是一元二次方程 & 只记公式，不会判断根的个数 & 一级 \\
 \addlinespace
 韦达定理
-$x_1+x_2=-\dfrac{b}{a}$，
-$x_1x_2=\dfrac{c}{a}$
+$x_1+x_2=-\dfrac{b}{a}$，$x_1x_2=\dfrac{c}{a}$
 & 由求根公式相加、相乘得到
 & $\Delta\geq0$ & 忽略 $\Delta\geq0$ 的前提 & 二级 \\
 \addlinespace
@@ -38,8 +42,7 @@ $x_1x_2=\dfrac{c}{a}$
 & $a\neq0$ & 只记口诀，不会推导 & 三级 \\
 \addlinespace
 恒成立条件
-$ax^2+bx+c>0$ 恒成立
-$\iff a>0$ 且 $\Delta<0$
+$ax^2+bx+c>0$ 恒成立 $\iff a>0$ 且 $\Delta<0$
 & 由「图象全部在 $x$ 轴上方」得到
 & 二次项系数含参时需讨论 & 漏掉 $a=0$ 的讨论 & 二级 \\
 \addlinespace

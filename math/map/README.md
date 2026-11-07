@@ -13,12 +13,13 @@ latexmk -xelatex main
 ## 结构
 
 - `main.tex` — 入口
-- `figures-src/*.dot` — Graphviz 源文件（知识图谱与三张流程图）
-- `figures/*.pdf` — 由 `.dot` 生成的矢量图
-- `chapters/` — 知识图谱、二级结论卡片、解题流程
-- `tools/build-graphs.sh` — 重新生成图片
+- `figures-src/*.dot` — Graphviz 源文件（知识图谱与流程图）
+- `figures-src/*.tex` — TikZ 源文件（数轴、穿根、抛物线等图）
+- `figures/*.pdf` — 由上述源文件生成的矢量图
+- `chapters/` — 知识图谱、二级结论卡片、解题流程、工具页
+- `tools/build-graphs.sh` — 重新生成全部图片（dot + TikZ）
 
-改了 `.dot` 之后跑一次：
+改了图之后跑一次：
 
 ```bash
 sh tools/build-graphs.sh
@@ -30,3 +31,8 @@ sh tools/build-graphs.sh
 - 文字负责「为什么」：每条结论的推导与适用条件。
 
 两者不要重复，否则学生会只看图不看字，或者只看字不看图。
+
+## 使用约定
+
+- 本文档是**复习参考**，不是讲义本体；学生课前课中用的内容在 `../guide/`。
+- 小知识点（如穿根法）只作**补充说明**，不单独展开成节。

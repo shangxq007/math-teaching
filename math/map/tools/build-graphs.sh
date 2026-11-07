@@ -8,3 +8,10 @@ for f in knowledge three-quadratics flow-inequality flow-condition flow-extreme 
   dot -Tpdf "figures-src/$f.dot" -o "figures/$f.pdf"
   echo "wrote figures/$f.pdf"
 done
+
+# TikZ 图（standalone，需 xelatex）
+for f in set-conditions ineq-on-axis parabola; do
+  (cd figures-src && xelatex -interaction=nonstopmode -halt-on-error "$f.tex" >/dev/null 2>&1)
+  cp "figures-src/$f.pdf" "figures/$f.pdf"
+  echo "wrote figures/$f.pdf"
+done

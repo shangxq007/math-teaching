@@ -1,0 +1,88 @@
+% 第 2 课时：二次函数的解析式与图象
+\section{第 2 课时：二次函数的解析式与图象}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 能写出一元二次函数的三种解析式，并会相互转化；
+  \item 会用配方法求顶点坐标与对称轴；
+  \item 会画抛物线草图，并说出开口、对称轴、顶点、单调性与最值。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{知识回顾}
+\begin{itemize}
+  \item 一次函数 $y=kx+b$ 的图象是一条直线，$k$ 决定 \blank；
+  \item 二次函数的一般形式为 \blank。
+\end{itemize}
+
+\subsection{教材速读}
+阅读教材第 $50\sim55$ 页，完成下列问题：
+\begin{enumerate}
+  \item 二次函数的三种解析式是 \blank、\blank、\blank；
+  \item 配方法的关键是加上再减去 \blank。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+\subsection{探究一：配方法}
+\begin{example}
+把 $y=2x^2-4x+1$ 配方成顶点式。
+\end{example}
+\begin{solution}
+提出二次项系数：$y=2(x^2-2x)+1$。
+括号内配方，加上再减去一次项系数一半的平方：
+\[
+  y=2(x^2-2x+1-1)+1=2(x-1)^2-1.
+\]
+故顶点为 $(1,-1)$，对称轴为直线 $x=1$。
+\end{solution}
+
+一般结论：
+\[
+  y=ax^2+bx+c=a\left(x+\frac{b}{2a}\right)^2+\frac{4ac-b^2}{4a},
+\]
+顶点为 $\left(-\dfrac{b}{2a},\dfrac{4ac-b^2}{4a}\right)$。
+
+\subsection{探究二：图象与性质}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.6cm}p{4.8cm}p{4.8cm}}
+\toprule
+ & $a>0$ & $a<0$ \\
+\midrule
+开口方向 & 向上 & 向下 \\
+顶点 & 最小值点 & 最大值点 \\
+单调性 & 对称轴左侧递减，右侧递增 & 对称轴左侧递增，右侧递减 \\
+最值 & 最小值 $\dfrac{4ac-b^2}{4a}$ & 最大值 $\dfrac{4ac-b^2}{4a}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{problem}
+已知 $y=x^2-2x-3$，画出草图并写出顶点、对称轴、单调区间与最值。
+\end{problem}
+\begin{solution}
+配方得 $y=(x-1)^2-4$，故顶点 $(1,-4)$，对称轴 $x=1$，$a=1>0$ 开口向上。
+与 $x$ 轴交点：$x=-1$ 或 $x=3$。
+在 $(-\infty,1]$ 上递减，在 $[1,+\infty)$ 上递增，最小值为 $-4$。
+\end{solution}
+\end{explore}
+
+\begin{inclasstest}
+\begin{enumerate}
+  \item 把 $y=3x^2-6x+2$ 配方成顶点式；
+  \item 求 $y=-x^2+2x+1$ 的顶点、对称轴与最值；
+  \item 求 $y=2x^2+4x+5$ 的最小值。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\begin{enumerate}
+  \item 求 $y=-2x^2+4x-3$ 的顶点、对称轴与最值；
+  \item 画出 $y=x^2-2x-3$ 的草图，并标出顶点与对称轴。
+\end{enumerate}
+\reading{拓展阅读 01}{集合之美}
+\end{afterclass}
