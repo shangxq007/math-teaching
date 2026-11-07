@@ -1,0 +1,71 @@
+\section{三个二次的关系}
+
+一元二次函数、一元二次方程、一元二次不等式是同一件事的三种说法：
+
+\begin{itemize}
+  \item 令 $y=0$，得到一元二次方程，它的解就是函数图象与 $x$ 轴的交点；
+  \item 令 $y>0$（或 $y<0$），得到一元二次不等式，它的解集就是图象在 $x$ 轴上方（或下方）的部分。
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{three-quadratics.pdf}
+  \caption{三个二次的关系}
+\end{figure}
+
+\key{一句话记忆}：方程找交点，不等式找上下，根是边界。
+
+\section{数轴穿根法}
+
+解高次不等式或分式不等式时，数轴穿根法比逐段讨论更快。
+对一元二次不等式，它退化成我们熟悉的「大于取两边，小于取中间」。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{flow-sign-chart.pdf}
+  \caption{数轴穿根法的流程}
+\end{figure}
+
+\key{操作步骤}：
+
+\begin{enumerate}
+  \item 把不等式化成「左边是因式乘积，右边是 $0$」，并使最高次项系数为正；
+  \item 求出所有根，按从小到大标在数轴上；
+  \item 从数轴右上方起笔，依次穿过每个根；
+  \item \key{奇穿偶不穿}：根的重数是奇数（奇重根）就穿过数轴，是偶数（偶重根）就弹回；
+  \item 按不等号方向取数轴上方（$>0$）或下方（$<0$）的区间；
+  \item 检查端点：带等号时包含根。
+\end{enumerate}
+
+\begin{example}
+解不等式 $(x+1)(x-2)(x-4)<0$。
+\end{example}
+\begin{solution}
+根为 $-1$、$2$、$4$（都是一重根，全部穿过）。
+从右上方起笔，依次穿过 $4$、$2$、$-1$，得到符号分布：
+$(-\infty,-1)$ 为负，$(-1,2)$ 为正，$(2,4)$ 为负，$(4,+\infty)$ 为正。
+取小于 $0$ 的部分，解集为 $(-\infty,-1)\cup(2,4)$。
+\end{solution}
+
+\key{一句话记忆}：右上方起笔，奇穿偶不穿，大于取上、小于取下。
+
+\section{温故题卡}
+
+每课开头用 5 分钟做 2--3 道题，复现上一课的结论，不重新讲解。
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.0cm}p{9.6cm}p{2.0cm}}
+\toprule
+\key{课次} & \key{温故题} & \key{复现的结论} \\
+\midrule
+第 2 课 & 把 $y=2x^2-4x+1$ 配方成顶点式 & 配方法 \\
+第 3 课 & 求 $y=x^2-2x-3$ 的顶点与最值 & 顶点与最值 \\
+第 4 课 & 解不等式 $x^2-2x-3<0$ & 解不等式流程 \\
+\bottomrule
+\end{tabular}
+\caption{温故题卡}
+\end{table}

@@ -1,0 +1,20 @@
+digraph flow_sign_chart {
+  rankdir = TB;
+  fontname = "Noto Sans CJK SC";
+  node [fontname="Noto Sans CJK SC", fontsize=12, shape=box,
+        style="rounded,filled", margin="0.14,0.09"];
+  edge [fontname="Noto Sans CJK SC", fontsize=10, color="#757575",
+        fontcolor="#616161", arrowsize=0.8];
+
+  start [label="开始", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+  std [label="化为标准形式\n左边 = 因式的乘积，右边 = 0\n且最高次项系数为正", fillcolor="#E3F2FD", color="#1565C0"];
+  roots [label="求出所有的根\nx₁ < x₂ < … < xₙ", fillcolor="#E3F2FD", color="#1565C0"];
+  mark [label="把根标在数轴上\n（从左到右依次排列）", fillcolor="#E3F2FD", color="#1565C0"];
+  thread [label="从数轴右上方起笔\n依次穿过各根", fillcolor="#E8F5E9", color="#2E7D32"];
+  odd [label="奇重根：穿过数轴\n偶重根：弹回不穿", shape=diamond, fillcolor="#FFF3E0", color="#EF6C00"];
+  sign [label="判断不等号方向\n> 0 取数轴上方\n< 0 取数轴下方", fillcolor="#E8F5E9", color="#2E7D32"];
+  check [label="检查端点开闭\n（≥、≤ 时包含根）", fillcolor="#E3F2FD", color="#1565C0"];
+  out [label="写出解集\n（区间或集合）", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+
+  start -> std -> roots -> mark -> thread -> odd -> sign -> check -> out;
+}

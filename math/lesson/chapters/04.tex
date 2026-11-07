@@ -1,0 +1,119 @@
+% 第 4 课时：区间最值与综合应用
+\chapter{区间最值与综合应用}
+
+\begin{objective}
+\begin{itemize}
+  \item 会对二次函数在给定区间上的最值进行分类讨论；
+  \item 能把恒成立问题转化为最值问题；
+  \item 会用集合的包含关系判断充分条件与必要条件。
+\end{itemize}
+\end{objective}
+
+\begin{keypoint}
+重点：区间最值的分类讨论。\\
+难点：对称轴含参时的讨论；充分条件与必要条件的集合解释。
+\end{keypoint}
+
+\begin{procedure}
+\section{温故}
+照上一课的流程图，解不等式 $x^2-2x-3<0$，并说出解集。
+
+\section{区间上的最值}
+二次函数的最值只可能出现在顶点或区间端点处。
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{p{4.4cm}p{4.4cm}p{4.4cm}}
+\toprule
+对称轴 $x=h$ 的位置 & $a>0$ 的最小值 & $a>0$ 的最大值 \\
+\midrule
+$h<m$ & $f(m)$ & $f(n)$ \\
+$m\leq h\leq n$ & $f(h)$（顶点） & 离对称轴较远的端点 \\
+$h>n$ & $f(n)$ & $f(m)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{example}
+求 $y=x^2-2x-3$ 在区间 $[0,4]$ 上的最大值与最小值。
+\end{example}
+\begin{solution}
+配方得 $y=(x-1)^2-4$，对称轴 $x=1\in[0,4]$。
+$a=1>0$，故最小值在顶点处取得，为 $f(1)=-4$。
+端点值 $f(0)=-3$，$f(4)=5$，故最大值为 $f(4)=5$。
+\end{solution}
+
+\begin{example}
+求 $y=x^2-2x-3$ 在区间 $[m,m+2]$ 上的最小值（$m$ 为参数）。
+\end{example}
+\begin{solution}
+对称轴 $x=1$。分三种情况：
+\begin{itemize}
+  \item 若 $1<m$，即对称轴在区间左侧，函数在区间上递增，最小值为 $f(m)=m^2-2m-3$；
+  \item 若 $m\leq1\leq m+2$，即对称轴在区间内，最小值为 $f(1)=-4$；
+  \item 若 $1>m+2$，即对称轴在区间右侧，函数在区间上递减，最小值为 $f(m+2)=m^2+2m-3$。
+\end{itemize}
+\end{solution}
+
+\section{恒成立问题}
+\begin{example}
+若 $x^2+2x+c>0$ 对任意实数 $x$ 恒成立，求 $c$ 的取值范围。
+\end{example}
+\begin{solution}
+不等式恒成立，即函数 $y=x^2+2x+c$ 的图象全部在 $x$ 轴上方。
+因为 $a=1>0$，只需判别式小于 $0$：
+\[
+  \Delta=4-4c<0\implies c>1.
+\]
+\end{solution}
+
+\section{充分条件与必要条件}
+用集合的包含关系判断：设 $p$ 对应集合 $A$，$q$ 对应集合 $B$。
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{p{4.0cm}p{4.6cm}p{4.6cm}}
+\toprule
+集合关系 & 条件关系 & 记忆 \\
+\midrule
+$A=B$ & $p$ 是 $q$ 的充要条件 & 范围相等 \\
+$A\subsetneqq B$ & $p$ 是 $q$ 的充分不必要条件 & 小推大 \\
+$B\subsetneqq A$ & $p$ 是 $q$ 的必要不充分条件 & 大推小 \\
+互不包含 & 既不充分也不必要 & 推不出 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{example}
+已知 $p$：$x\in(-1,3)$，$q$：$x^2-2x-3<0$。判断 $p$ 是 $q$ 的什么条件。
+\end{example}
+\begin{solution}
+$q$ 的解集为 $(-1,3)$，与 $p$ 的集合相同，即 $A=B$。
+故 $p$ 是 $q$ 的充要条件。
+\end{solution}
+
+\begin{exercise}
+\begin{enumerate}
+  \item 求 $y=-x^2+2x+1$ 在 $[0,3]$ 上的最大值与最小值；
+  \item 若 $x^2-2x+m\geq0$ 恒成立，求 $m$ 的取值范围；
+  \item 设 $p$：$x>3$，$q$：$x^2-2x-3>0$，判断 $p$ 是 $q$ 的什么条件。
+\end{enumerate}
+\end{exercise}
+\end{procedure}
+
+\begin{board}
+\begin{itemize}
+  \item 区间最值：先看对称轴在不在区间内，在则顶点，不在则端点；
+  \item 恒成立：$a>0$ 且 $\Delta<0$（大于恒成立），$a>0$ 且 $\Delta\leq0$（大于等于恒成立）；
+  \item 充要条件：小范围推大范围，范围相等即充要。
+\end{itemize}
+\end{board}
+
+\begin{homework}
+\begin{enumerate}
+  \item 求 $y=2x^2-4x+1$ 在 $[-1,2]$ 上的最大值与最小值；
+  \item 若 $x^2+ax+1>0$ 恒成立，求 $a$ 的取值范围；
+  \item 设 $p$：$x\in(0,2)$，$q$：$x^2-2x<0$，判断 $p$ 是 $q$ 的什么条件；
+  \item 默写一张解题流程图。
+\end{enumerate}
+\end{homework}
