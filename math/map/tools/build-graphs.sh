@@ -4,13 +4,13 @@
 set -e
 cd "$(dirname "$0")/.."
 mkdir -p figures
-for f in knowledge three-quadratics flow-inequality flow-condition flow-extreme flow-sign-chart; do
+for f in knowledge flow-inequality flow-condition flow-extreme; do
   dot -Tpdf "figures-src/$f.dot" -o "figures/$f.pdf"
   echo "wrote figures/$f.pdf"
 done
 
 # TikZ 图（standalone，需 xelatex）
-for f in set-conditions ineq-on-axis parabola interval-extreme; do
+for f in set-conditions ineq-on-axis parabola interval-extreme rational-ineq interval-notation; do
   (cd figures-src && xelatex -interaction=nonstopmode -halt-on-error "$f.tex" >/dev/null 2>&1)
   cp "figures-src/$f.pdf" "figures/$f.pdf"
   echo "wrote figures/$f.pdf"

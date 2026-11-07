@@ -5,7 +5,8 @@
 \begin{itemize}
   \item 会用判别式判断方程根的个数，会用求根公式解方程；
   \item 能说出二次函数、二次方程、二次不等式三者的关系；
-  \item 会用图象法和数轴穿根法解一元二次不等式。
+  \item 会用数轴穿根法解高次不等式与分式不等式；
+  \item 会把解集正确画在数轴上（空心 / 实心）。
 \end{itemize}
 \end{learnobjective}
 
@@ -17,7 +18,8 @@
 阅读教材第 $56\sim64$ 页，完成下列问题：
 \begin{enumerate}
   \item 判别式 $\Delta=$ \blank；
-  \item 求根公式为 \blank。
+  \item 求根公式为 \blank；
+  \item 解不等式时，最高次项系数为负要先 \blank。
 \end{enumerate}
 \end{preview}
 
@@ -50,7 +52,7 @@ $\Delta<0$ & 没有实数根 & 没有交点 \\
   \item 令 $y>0$（或 $y<0$），得到一元二次不等式，它的解集就是函数图象在 $x$ 轴上方（或下方）部分所对应的 $x$ 的取值范围。
 \end{itemize}
 
-\subsection{探究三：解不等式}
+\subsection{探究三：一元二次不等式}
 \begin{example}
 解不等式 $x^2-2x-3<0$。
 \end{example}
@@ -62,33 +64,68 @@ $\Delta<0$ & 没有实数根 & 没有交点 \\
 
 \key{口诀}：大于取两边，小于取中间（适用于 $a>0$ 的情形）。
 
+\subsection{探究四：数轴穿根法}
+对高次不等式，用数轴穿根法更快。它的关键是\key{先看最高次项系数的符号}：
+系数为正从右上方起笔；系数为负就先两边同乘 $-1$（不等号方向改变），化为正。
+\key{一律先化为正}，规则只有一条。
+
 \begin{example}
-解不等式 $(x+1)(x-2)(x-4)<0$（数轴穿根法）。
+解不等式 $(x+1)(x-2)(x-4)<0$。
 \end{example}
 \begin{solution}
-根为 $-1$、$2$、$4$。在数轴上标出后，从右上方起笔依次穿根，
+最高次项系数为正。根为 $-1$、$2$、$4$。在数轴上标出后，从右上方起笔依次穿根，
 得到各段符号依次为 $+$、$-$、$+$、$-$。
 取小于 $0$ 的部分，解集为 $(-\infty,-1)\cup(2,4)$。
 \end{solution}
 
-\key{步骤}：化标准形 $\to$ 求根标轴 $\to$ 右上起笔 $\to$ 奇穿偶不穿 $\to$ 取上下方 $\to$ 查端点。
-
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.92\textwidth]{ineq-on-axis.pdf}
-  \caption{解集在数轴上的表示（空心点表示端点不取）}
+  \caption{穿根折线与解集（空心点表示端点不取）}
 \end{figure}
 
-\key{数轴读法}：大于取数轴上方，小于取数轴下方；空心圈不包含端点，实心点包含端点。
+\key{步骤}：化标准形 $\to$ 求根标轴 $\to$ 右上起笔 $\to$ 奇穿偶不穿 $\to$ 取上下方 $\to$ 查端点。
+
+\subsection{探究五：分式不等式}
+分式不等式也用这条思路：先判断分子、分母的正负，再转化为整式不等式画图求解。
+\[
+  \frac{f(x)}{g(x)}>0 \iff f(x)g(x)>0 \quad (g(x)\neq0).
+\]
+\key{注意}：分母的零点取不到，必须画空心点。
+
+\begin{example}
+解不等式 $\dfrac{x+1}{x-2}\geq0$。
+\end{example}
+\begin{solution}
+等价于 $(x+1)(x-2)\geq0$ 且 $x\neq2$。
+根为 $-1$、$2$，从右上方起笔依次穿根，取大于等于 $0$ 的部分并去掉 $2$，
+解集为 $(-\infty,-1]\cup(2,+\infty)$。
+\end{solution}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{rational-ineq.pdf}
+  \caption{$\dfrac{x+1}{x-2}\geq0$：$-1$ 实心（可取），$2$ 空心（分母零点）}
+\end{figure}
+
+\subsection{探究六：解集在数轴上的表示}
+穿根法是\key{求}解集的方法；本节是把已经求出的解集\key{画}出来。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.72\textwidth]{interval-notation.pdf}
+  \caption{区间在数轴上的三种端点情形}
+\end{figure}
+
+\key{约定}：空心圈表示不含该端点，实心点表示含有该端点。
 \end{explore}
 
 \begin{inclasstest}
-解下列不等式：
 \begin{enumerate}
-  \item $x^2-5x+6>0$；
-  \item $x^2-4x+4\leq0$；
-  \item $x^2+2x+3>0$；
-  \item $(x-1)(x-2)(x-3)\geq0$。
+  \item 解不等式 $x^2-5x+6>0$；
+  \item 解不等式 $x^2-4x+4\leq0$；
+  \item 用数轴穿根法解不等式 $(x-1)(x-2)(x-3)\geq0$；
+  \item 解不等式 $\dfrac{x-1}{x+2}<0$，并把解集画在数轴上。
 \end{enumerate}
 \end{inclasstest}
 
@@ -96,6 +133,7 @@ $\Delta<0$ & 没有实数根 & 没有交点 \\
 \begin{enumerate}
   \item 解不等式 $x^2-3x-4\geq0$；
   \item 解不等式 $-2x^2+4x-3>0$；
-  \item 用数轴穿根法解不等式 $(x+2)(x-1)(x-3)<0$。
+  \item 用数轴穿根法解不等式 $(x+2)(x-1)(x-3)<0$；
+  \item 解不等式 $\dfrac{2x-1}{x-3}\geq1$。
 \end{enumerate}
 \end{afterclass}

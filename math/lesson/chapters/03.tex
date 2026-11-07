@@ -5,7 +5,8 @@
 \begin{itemize}
   \item 会用判别式判断方程根的个数，会用求根公式解方程；
   \item 能说出二次函数、二次方程、二次不等式三者的关系；
-  \item 会用图象法和数轴穿根法解一元二次不等式。
+  \item 会用图象法和数轴穿根法解一元二次不等式；
+  \item 会用数轴穿根法解分式不等式。
 \end{itemize}
 \end{objective}
 
@@ -78,19 +79,51 @@ $\Delta<0$ & 没有实数根 & 没有交点 \\
 
 \key{口诀}：大于取两边，小于取中间（适用于 $a>0$ 的情形）。
 
-\section{数轴穿根法（补充说明）}
-对高次不等式，用数轴穿根法更快。
+\section{数轴穿根法}
+
+对高次不等式，用数轴穿根法更快。它的关键是\key{先看最高次项系数的符号}：
+系数为正从右上方起笔；系数为负就先两边同乘 $-1$（不等号方向改变），化为正。
+\key{一律先化为正}，规则只有一条。
 
 \begin{example}
 解不等式 $(x+1)(x-2)(x-4)<0$。
 \end{example}
 \begin{solution}
-根为 $-1$、$2$、$4$。在数轴上标出后，从右上方起笔依次穿根，
+最高次项系数为正。根为 $-1$、$2$、$4$。在数轴上标出后，从右上方起笔依次穿根，
 得到各段符号依次为 $+$、$-$、$+$、$-$。
 取小于 $0$ 的部分，解集为 $(-\infty,-1)\cup(2,4)$。
 \end{solution}
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{ineq-on-axis.pdf}
+  \caption{穿根折线与解集（空心点表示端点不取）}
+\end{figure}
+
 \key{步骤}：化标准形（最高次项系数化为正）$\to$ 求根标轴 $\to$ 右上起笔 $\to$ 奇穿偶不穿 $\to$ 取上下方 $\to$ 查端点。
+
+\section{分式不等式的解法}
+
+分式不等式也用这条思路：先判断分子、分母的正负，再转化为整式不等式画图求解。
+\[
+  \frac{f(x)}{g(x)}>0 \iff f(x)g(x)>0 \quad (g(x)\neq0).
+\]
+\key{注意}：分母的零点取不到，必须画空心点。
+
+\begin{example}
+解不等式 $\dfrac{x+1}{x-2}\geq0$。
+\end{example}
+\begin{solution}
+等价于 $(x+1)(x-2)\geq0$ 且 $x\neq2$。
+根为 $-1$、$2$，从右上方起笔依次穿根，取大于等于 $0$ 的部分并去掉 $2$，
+解集为 $(-\infty,-1]\cup(2,+\infty)$。
+\end{solution}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{rational-ineq.pdf}
+  \caption{$\dfrac{x+1}{x-2}\geq0$：$-1$ 实心（可取），$2$ 空心（分母零点）}
+\end{figure}
 
 \begin{exercise}
 解下列不等式：
