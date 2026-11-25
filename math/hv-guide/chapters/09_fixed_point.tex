@@ -225,7 +225,123 @@ $0,\infty$ 建立坐标后，分式迭代变成等比数列——这就是共轭
   \label{fig:mobius-two-fixed}
 \end{figure}
 
-\subsection{第 5 节 七问连环母题：解答即笔记}
+\subsection{第 5 节 为什么恰好两个不动点？——源、汇与地球仪的南北极}
+
+第 4 节在射影直线上看不动点，这一节回答一个更基本的问题：
+为什么分式线性变换（以及它的退化情形）\textbf{必然}有两个不动点？
+
+\begin{corebox}{第一性原理：不动点方程天然是二次的}
+令 $f(z)=\dfrac{az+b}{cz+d}$（$ad-bc\neq0$），解 $f(z)=z$：
+\[
+  \frac{az+b}{cz+d}=z\;\Longrightarrow\;cz^{2}+(d-a)z-b=0 .
+\]
+\begin{itemize}
+  \item $c\neq0$ 时这是标准一元二次方程。代数基本定理保证它在
+  $\hat{\mathbb{C}}=\mathbb{C}\cup\{\infty\}$ 上\textbf{恰好两个根（计重数）}；
+  判别式 $\Delta=(a-d)^{2}+4bc$。$\Delta<0$ 时在实轴上「看不见」，
+  但进入复平面立刻恢复为一对共轭复不动点。
+  \item $c=0$ 时退化为线性变换 $f(z)=\tfrac ad z+\tfrac bd$，方程
+  $(d-a)z-b=0$ 只给出一个有限不动点 $z_{1}=\tfrac{b}{a-d}$；第二个不动点
+  藏在 $\infty$：线性变换保持无穷远点不变。
+  \item $\Delta=0$ 时两个不动点重合为一个\textbf{二重不动点}
+  （抛物型），恰是上面两种情形的极限。
+\end{itemize}
+\end{corebox}
+
+\begin{methodbox}{二维流场视角：不动点即「源」与「汇」}
+把 $x_{n+1}=f(x_n)$ 看成一股稳定流动，不动点就是流的两个端点：
+\begin{itemize}
+  \item \textbf{双曲型（$\Delta>0$，两相异实不动点 $x_1,x_2$）}：$x_2$ 是
+  \key{源}（排斥不动点）——附近的点被推开；$x_1$ 是\key{汇}
+  （吸引不动点）——所有流线最终汇入。连接它们的流线是一族
+  过 $x_1,x_2$ 的圆（阿波罗尼奥斯圆），即图~\ref{fig:dipole-flow} 左图。
+  用第 5 章的共轭变量 $w=\dfrac{z-x_1}{z-x_2}$，几何上就是把汇拉到
+  $0$、把源推到 $\infty$，弯曲的圆弧流线瞬间被拉成笔直射线，
+  递推退化为 $w_{n+1}=kw_n$——这正是「共轭化等比」的几何含义。
+  \item \textbf{椭圆型（$\Delta<0$，一对共轭复不动点）}：没有源也没有汇，
+  点列绕两个极点做环流，对应第 8 章的周期数列与复旋转。
+  \item \textbf{抛物型（$\Delta=0$，一个二重不动点 $x_0$）}：源与汇合并
+  为同一个切点；取倒数 $w=\dfrac1{z-x_0}$ 把它送到 $\infty$，环流退化为
+  平行直线平移，即等差数列。
+\end{itemize}
+\end{methodbox}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth,semithick,font=\footnotesize,x=0.92cm,y=0.92cm]
+    %% 左：偶极圆族 + 指向汇的箭头
+    \draw[->,gray] (-3.4,0)--(3.4,0) node[right] {$z$};
+    \foreach \r in {1.15,1.7,2.6,3.9}{
+      \draw[main!45] (0,0) circle (\r);
+      \pgfmathsetmacro{\cx}{2-\r*\r/4}
+      \fill[white] (\cx,0) circle (0.0pt);
+    }
+    % 箭头沿圆周指向 +2
+    \foreach \ang/\r in {150/1.15, 165/1.7, 172/2.6, 176/3.9}{
+      \pgfmathsetmacro{\px}{\r*cos(\ang)+2-\r*\r/4}
+      \pgfmathsetmacro{\py}{\r*sin(\ang)}
+      \draw[second,->,very thick] ({\px-0.06*cos(\ang+90)},{\py-0.06*sin(\ang+90)})
+        -- ({\px+0.06*cos(\ang+90)},{\py+0.06*sin(\ang+90)});
+    }
+    \fill[third] (-2,0) circle (2.2pt) node[below] {$x_2=-2$（源）};
+    \fill[main] (2,0) circle (2.2pt) node[below] {$x_1=2$（汇）};
+    \node[gray!70!black,align=center] at (0,-4.5)
+      {偶极流场：流线从源 $x_2$ 涌出，\\沿圆族汇入汇 $x_1$};
+
+    \node[orange!85!black,align=center,font=\large\bfseries] at (4.5,0)
+      {$\xrightarrow{\displaystyle w=\frac{z-x_1}{z-x_2}}$};
+
+    %% 右：拉直后的放射射线
+    \begin{scope}[shift={(7.2,0)}]
+      \draw[->,gray] (-1.8,0)--(2.6,0) node[right] {$w$};
+      \foreach \a in {30,75,120,160,-30,-75,-120,-160}{
+        \draw[main!45,->] ({1.7*cos(\a)},{1.7*sin(\a)}) -- ({0.25*cos(\a)},{0.25*sin(\a)});
+      }
+      \fill[main] (0,0) circle (2.2pt) node[below right] {$0$（原汇）};
+      \node[gray!70!black,align=center] at (0.4,-2.6)
+        {共轭拉直：$x_1\to0$，$x_2\to\infty$，\\全部流线变成向原点的射线};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{源—汇偶极流场与共轭拉直：$w=(z-x_1)/(z-x_2)$ 把汇 $x_1$ 移到 $0$、
+  把源 $x_2$ 推到 $\infty$，于是「弯的流线 + 逐项等比衰减」变成
+  「直的射线 + 逐项等比衰减」，递推彻底显形}
+  \label{fig:dipole-flow}
+\end{figure}
+
+\begin{advancedonly}
+\paragraph{三维真相：地球仪的南北极}
+把复平面经球极投影包到黎曼球面 $\hat{\mathbb{C}}$ 上后，分式线性变换
+恰好是球面的全体共形自同构 $PSL(2,\mathbb{C})$，其中：
+\begin{itemize}
+  \item \textbf{椭圆型}对应\textbf{刚体旋转}（子群 $PSU(2)$）。欧拉旋转定理：
+  刚体旋转的不动点必是转轴穿出球面的两点，即北极与南极；
+  \item \textbf{双曲型}对应\textbf{沿固定轴的均匀拉伸}（保持该轴两端不动），
+  回到平面上正是「源被推开、汇被吸入」；
+  \item \textbf{抛物型}是两者的极限（$\lambda\to1$），两极重合为一个切向不动点。
+\end{itemize}
+所以「恰好两个不动点」的终极直觉是：球面上的这类变换永远由
+一根穿过球心的轴决定，而轴与球面恰有两个交点——除非轴缩成一个切点。
+（注意：并非所有分式线性变换都是刚体旋转；旋转只覆盖椭圆型。）
+\end{advancedonly}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|p{2.1cm}|p{3.1cm}|p{3.6cm}|p{4.4cm}|}
+\hline
+\textbf{判别式} & \textbf{不动点} & \textbf{球面／流场图像} & \textbf{通项结构} \\
+\hline
+$\Delta>0$ 双曲 & 两相异实不动点 $x_1,x_2$ & 轴上两点固定；平面内源$x_2\to$汇$x_1$沿圆族流动 & $\dfrac{a_n-x_1}{a_n-x_2}$ 为等比数列 \\
+\hline
+$\Delta<0$ 椭圆 & 一对共轭复不动点 & 刚体旋转（绕倾斜轴） & 周期数列／三角振荡 \\
+\hline
+$\Delta=0$ 抛物 & 一个二重不动点 $x_0$ & 平移极限，两极合并为切点 & $\dfrac1{a_n-x_0}$ 为等差数列 \\
+\hline
+$c=0$ 线性 & $z_1$ 与 $\infty$ & 转轴竖直 & $a_n$ 为等比加常数 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{第 6 节 七问连环母题：解答即笔记}
 
 \refstepcounter{hvmasterq}
 \begin{masterq}{不动点与收敛：$a_{n+1}=\dfrac12a_n+1$，$a_0=0$}

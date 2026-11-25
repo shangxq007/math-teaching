@@ -3,10 +3,10 @@
 
 \begin{learnobjective}
 \begin{itemize}
-  \item 会把 ∃ 与 ∀ 互相否定：$\neg\exists\iff\forall\neg$，$\neg\forall\iff\exists\neg$；
+  \item 会把 $\exists$ 与 $\forall$ 互相否定：$\neg\exists\iff\forall\neg$，$\neg\forall\iff\exists\neg$；
   \item 会把「存在」「任意」翻译成解集是否非空、是否为定义域；
-  \item 会用零点定理等存在性定理证明 ∃，不必找出那个具体的值；
-  \item 会用反证法证明 ¬∃ 与 ¬∀，并知道哪一边通常更难；
+  \item 会用零点定理等存在性定理证明 $\exists$，不必找出那个具体的值；
+  \item 会用反证法证明 ¬$\exists$ 与 ¬$\forall$，并知道哪一边通常更难；
   \item 会用长度、距离、个数等量把「结构」变成矛盾。
 \end{itemize}
 \end{learnobjective}
@@ -30,13 +30,13 @@
 
 \begin{explore}
 
-\subsection{视角一：否定——∃ 与 ∀ 的互化}
+\subsection{视角一：否定——$\exists$ 与 $\forall$ 的互化}
 
 \key{要点}
 \begin{itemize}
   \item $\neg(\exists x\,P(x))\iff\forall x\,\neg P(x)$；
         $\neg(\forall x\,P(x))\iff\exists x\,\neg P(x)$。
-  \item 否定量词时，量词要换（∃↔∀），结论也要否定。
+  \item 否定量词时，量词要换（$\\exists \\leftrightarrow \\forall$），结论也要否定。
   \item 双重否定：$\neg\exists x\,\neg P(x)\iff\forall x\,P(x)$（「不存在不满足的」=「全都满足」）。
 \end{itemize}
 
@@ -72,7 +72,7 @@
 \begin{solution}
 $S=\{x\mid(x-3)(x+1)<0\}=(-1,3)$。
 「$\forall x\in S,\ x<4$」即 $S\subseteq(-\infty,4)$，显然成立。
-\key{（回头看：把 ∀ 翻译成集合的包含，正是集合语言的用处）}
+\key{（回头看：把 $\forall$ 翻译成集合的包含，正是集合语言的用处）}
 \end{solution}
 
 \begin{example}
@@ -90,13 +90,13 @@ $S=\{x\mid(x-3)(x+1)<0\}=(-1,3)$。
 解集 $S=\{x\mid(x-1)(x-2)<0\}=(1,2)$，非空，故命题为真。
 \end{solution}
 
-\subsection{视角三：存在性定理——白送的 ∃}
+\subsection{视角三：存在性定理——白送的 $\exists$}
 
 \key{要点}
 \begin{itemize}
   \item 零点定理：$f$ 在 $[a,b]$ 连续且 $f(a)f(b)<0$，则 $\exists c\in(a,b)$ 使 $f(c)=0$。
   \item 介值定理、最值定理、中值定理、抽屉原理，都能白送「存在」。
-  \item 用定理证 ∃，不需要把 $c$ 求出来。
+  \item 用定理证 $\exists$，不需要把 $c$ 求出来。
 \end{itemize}
 
 \begin{example}
@@ -123,12 +123,12 @@ $\exists c\in(1,2)$ 使 $f(c)=0$。
 令 $f(x)=x^3+x-1$，$f(0)=-1<0$，$f(1)=1>0$，由零点定理得证。
 \end{solution}
 
-\subsection{视角四：反证法——证明 ¬∃ 与 ¬∀}
+\subsection{视角四：反证法——证明 ¬$\exists$ 与 ¬$\forall$}
 
 \key{要点}
   \begin{itemize}
-  \item 证 ¬∃（不存在 / 无解）：先假设 ∃，再推出矛盾。
-  \item 证 ¬∀（有反例）：直接找反例。
+  \item 证 ¬$\exists$（不存在 / 无解）：先假设 $\exists$，再推出矛盾。
+  \item 证 ¬$\forall$（有反例）：直接找反例。
   \item 反证法的三步：否定结论 → 推出矛盾 → 肯定原结论。
   \item 矛盾可以来自已知条件、公理、定理，或假设本身。
 \end{itemize}
@@ -161,7 +161,7 @@ $\exists c\in(1,2)$ 使 $f(c)=0$。
 
 \key{要点}
 \begin{itemize}
-  \item 长度大于 $0$ 的集合一定非空：长度是「有 ∃」的便宜办法。
+  \item 长度大于 $0$ 的集合一定非空：长度是「有 $\exists$」的便宜办法。
   \item 覆盖：若有限个区间覆盖 $[0,1]$，则长度之和至少为 $1$。
   \item 离散点集不含区间：区间长度 $>0$，点集长度 $=0$。
   \item 距离：两个不同点的距离 $>0$，可用来造「多出一个点」的矛盾。
@@ -199,9 +199,9 @@ $\cos x=2$ 的解集是空集（因为 $\cos x\leq1$），更不可能含有区�
 
 \key{要点}
 \begin{itemize}
-  \item ∃ 通常好证：断言弱，而且有存在性定理白送。
-  \item ∀ 难证：必须对所有情形给出一致论证，一个反例就推翻。
-  \item ¬∃（不存在）通常最难：要排除所有可能。
+  \item $\exists$ 通常好证：断言弱，而且有存在性定理白送。
+  \item $\forall$ 难证：必须对所有情形给出一致论证，一个反例就推翻。
+  \item ¬$\exists$（不存在）通常最难：要排除所有可能。
   \item 所以先想「证哪一边便宜」，再决定方向。
 \end{itemize}
 
@@ -248,7 +248,7 @@ $\forall$ 要对整段区间成立，需设 $f(x)=x-\sin x$，由 $f'(x)=1-\cos 
 \toprule
 结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
 \midrule
-∃ 与 ∀ 的互化 & 视角一（否定） & 视角四（反证法） \\
+$\exists$ 与 $\forall$ 的互化 & 视角一（否定） & 视角四（反证法） \\
 解集与量词对应 & 视角二（结构） & 视角一（否定） \\
 存在性定理 & 视角三（存在） & 视角六（策略） \\
 反证法 & 视角四（反证） & 视角一（否定） \\
