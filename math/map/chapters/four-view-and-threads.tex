@@ -1,0 +1,78 @@
+\section{四视角等价地图}
+
+代数、几何、集合、映射不是四门互不相干的课，而是\key{同一个数学对象的四种表示}：
+代数负责列方程，几何负责画出来，集合负责下定义，映射负责建模型。
+只要两种表示之间存在保持结构的对应，命题就能沿箭头互相翻译。
+解题时先问「我现在站在哪个视角」，再把问题沿箭头搬到顺手的一侧，算完搬回来；
+两条虚线接口「数形结合」「关系即映射」是最常用的搬运路线。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Stealth,semithick,font=\footnotesize,
+  box/.style={draw,rounded corners,inner sep=4pt,align=center,minimum width=2.2cm}]
+  \node[box,draw=main] (A) at (-2.6,2.2) {代数\\方程};
+  \node[box,draw=second] (G) at (2.6,2.2) {几何\\图形};
+  \node[box,draw=third] (S) at (-2.6,-2.2) {集合\\逻辑};
+  \node[box,draw=gray!60!black] (M) at (2.6,-2.2) {映射\\结构};
+  \node[box,draw=main!70!black,minimum width=2.5cm] (C) at (0,0) {\textbf{同一个}\\数学对象};
+  \draw[<->,main] (C)--(A) node[midway,above left,font=\scriptsize] {列方程};
+  \draw[<->,second] (C)--(G) node[midway,above right,font=\scriptsize] {画出来};
+  \draw[<->,third] (C)--(S) node[midway,below left,font=\scriptsize] {下定义};
+  \draw[<->,gray!60!black] (C)--(M) node[midway,below right,font=\scriptsize] {建模型};
+  \draw[->,gray!55,dashed] (A)--(G) node[midway,above,font=\scriptsize] {数形结合};
+  \draw[->,gray!55,dashed] (S)--(M) node[midway,below,font=\scriptsize] {关系即映射};
+\end{tikzpicture}
+\caption{四视角等价地图：中心是对象本身，四个顶点是它的四种表示；
+实线箭头是「换一副面孔」的翻译动作，虚线是跨视角的常用接口}
+\label{fig:four-view-map}
+\end{figure}
+
+\section{全书知识脉络图}
+
+全书内容可以分成三条主线：几何·结构线从函数一路推进到立体几何与圆锥曲线，
+离散动力线由数列递推走向不动点，连续分析线由导数走向不动点。
+三条线并不孤立：差分与导数是同一个「以直代曲」思想的两端，
+第 8 章的齐次化把二元问题压成一元比例，是射影观点的入口。
+第 0 章集合、逻辑与证明是全程通用的语言底座，第 7 章概率统计独立成篇；
+复习时先确认自己在哪条线上，再借助虚线接口换线。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Stealth,semithick,font=\footnotesize,
+  ch/.style={draw,rounded corners,inner sep=4pt,align=center,minimum width=2.4cm},
+  lanename/.style={rotate=90,anchor=south,font=\scriptsize\bfseries,text=main!70!black}]
+  \node[lanename] at (-0.9,5.7) {几何·结构线};
+  \node[lanename] at (-0.9,3.1) {离散动力线};
+  \node[lanename] at (-0.9,0.5) {连续分析线};
+  % 第 0 层：语言底座与独立章
+  \node[ch,draw=main,fill=main!8] (c0) at (1.4,7.3) {第 0 章\\集合·逻辑·证明};
+  \node[ch,draw=gray!60!black,fill=gray!8] (c7) at (12.2,7.3) {第 7 章\\概率·统计};
+  \draw[->,gray!55,dashed] (c0)--(c7) node[midway,above,font=\scriptsize] {语言通用};
+  % 几何·结构线
+  \node[ch,draw=second] (c1) at (1.4,5.7) {第 1 章\\函数};
+  \node[ch,draw=second] (c2) at (5.0,5.7) {第 2 章\\三角·复数};
+  \node[ch,draw=second] (c3) at (8.6,5.7) {第 3 章\\向量};
+  \node[ch,draw=second] (c4) at (12.2,5.7) {第 4 章\\立几·圆锥曲线};
+  \draw[->,second] (c1)--(c2);
+  \draw[->,second] (c2)--(c3);
+  \draw[->,second] (c3)--(c4);
+  % 离散动力线
+  \node[ch,draw=third] (c5) at (1.4,3.1) {第 5 章\\数列·递推};
+  \node[ch,draw=third] (c9) at (12.2,3.1) {第 9 章\\不动点};
+  \draw[->,third] (c5)--(c9) node[midway,above,font=\scriptsize] {递推·收敛};
+  % 连续分析线
+  \node[ch,draw=main!60!black] (c6) at (5.0,0.5) {第 6 章\\导数};
+  \node[ch,draw=main!60!black,dashed,fill=gray!5] (c8) at (8.6,0.5) {第 8 章\\齐次化};
+  \node[ch,draw=gray!60!black,dashed,fill=gray!5,minimum width=2.6cm] (cP) at (12.2,0.5) {射影·映射观点};
+  \draw[->,main!60!black] (c6)--(c9) node[midway,above,font=\scriptsize] {稳定性};
+  % 跨线接口
+  \draw[<->,gray!55,dashed] (c5)--(c6) node[midway,below,font=\scriptsize] {差分$\leftrightarrow$导数};
+  \draw[->,gray!55,dashed] (c8)--(cP) node[midway,above,font=\scriptsize] {射影};
+  % 语言底座接入主线
+  \draw[->,main!40] (c0)--(c1);
+\end{tikzpicture}
+\caption{全书知识脉络图：实线是各自主线的推进，虚线是跨主线接口；
+三条主线最终在第 9 章不动点汇合，第 8 章齐次化经「射影」接入，
+第 0 章语言底座供全局调用，第 7 章概率统计独立成篇}
+\label{fig:book-map}
+\end{figure}

@@ -1,0 +1,270 @@
+% 专题十三：均值不等式与「1 的代换」
+\section{专题十三：均值不等式与「1 的代换」}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 记住基本不等式 $a+b\geq2\sqrt{ab}$（$a,b>0$），并说清取等条件 $a=b$；
+  \item 会用「和定积最大、积定和最小」求最值，并检验等号能否取到（一正、二定、三相等）；
+  \item 会用「1 的代换」处理 $\dfrac1x+\dfrac1y$ 这类式子：乘上一个等于 $1$ 的条件式再展开；
+  \item 会通过凑项、分离常数，把 $x+\dfrac{1}{x-1}$ 型式子化成可用基本不等式的形式；
+  \item 会在面积、用料等实际背景中列出约束，再用基本不等式求最值。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{导语：一个不等式，两种用法}
+基本不等式 $a+b\geq2\sqrt{ab}$（$a,b>0$）只有两句话，但用法有两种：
+已知积（或能凑出积）求和的\key{最小值}；已知和可求积的\key{最大值}。
+本专题的核心技巧是「1 的代换」：当条件给出 $x+y=$ 常数时，
+把目标式乘以“$1$”（即把条件整体当成 $1$），展开后就出现了 $\dfrac{y}{x}+\dfrac{x}{y}$
+这种可以用基本不等式的结构。
+用五个视角把三个“种子问题”各做一遍，每一步都做\key{取等检验}。
+
+\subsection{种子问题}
+先自己做，再看后面的五个视角。
+\begin{enumerate}
+  \item 已知 $x,y>0$，$x+y=1$，求 $\dfrac1x+\dfrac1y$ 的最小值。
+  \item 已知 $x>1$，求函数 $y=x+\dfrac{1}{x-1}$ 的最小值。
+  \item 用长为 $40\ \mathrm{m}$ 的篱笆一面靠墙围成一个矩形菜园，
+        求菜园面积的最大值（墙作为矩形的一条边，不需要篱笆）。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{视角一：来源——和定积最大、积定和最小}
+
+\key{要点}
+\begin{itemize}
+  \item 基本不等式：若 $a,b>0$，则 $a+b\geq2\sqrt{ab}$，当且仅当 $a=b$ 时取等号。
+  \item 积定求和最小：$a+b\geq2\sqrt{ab}$，等号在 $a=b$ 时取得。
+  \item 和定求积最大：由 $a+b\geq2\sqrt{ab}$ 得 $ab\leq\left(\dfrac{a+b}{2}\right)^2$，
+        等号也在 $a=b$ 时取得。
+  \item 用之前先问三件事：各项是否为正（一正）？和或积是否为定值（二定）？
+        等号能不能取到（三相等）？
+\end{itemize}
+
+\begin{example}
+设 $x,y>0$，$xy=1$，求 $x+y$ 的最小值。
+\end{example}
+\begin{solution}
+由基本不等式，$x+y\geq2\sqrt{xy}=2\sqrt1=2$。
+取等条件为 $x=y$，结合 $xy=1$ 得 $x=y=1$，可以取到。
+\key{取等检验}：$x+y=1+1=2$，成立。故最小值为 $2$。
+\key{（回头看：积定，用 $a+b\geq2\sqrt{ab}$，一步到位）}
+\end{solution}
+
+\begin{problem}
+设 $x,y>0$，$x+y=4$，求 $xy$ 的最大值。
+\end{problem}
+\begin{solution}
+由 $x+y\geq2\sqrt{xy}$ 得 $xy\leq\left(\dfrac{x+y}{2}\right)^2=\left(\dfrac42\right)^2=4$。
+取等条件为 $x=y$，结合 $x+y=4$ 得 $x=y=2$，可以取到。
+\key{取等检验}：$xy=2\times2=4$，成立。故最大值为 $4$。
+\key{（回头看：和定，用 $ab\leq\left(\frac{a+b}{2}\right)^2$）}
+\end{solution}
+
+\subsection{视角二：「1 的代换」——乘上一个 1}
+
+\key{要点}
+\begin{itemize}
+  \item 条件 $x+y=c$ 意味着 $1=\dfrac{x+y}{c}$；把它乘到目标式上，值不变。
+  \item 乘法展开后常出现 $\dfrac{y}{x}+\dfrac{x}{y}$，它们互为倒数，正好用基本不等式。
+  \item 一般地，若条件是 $ax+by=c$，就乘 $\dfrac{ax+by}{c}=1$；倍数可以调整。
+  \item 每次都要写出取等条件并代回原式验算。
+\end{itemize}
+
+\begin{example}
+已知 $x,y>0$，$x+y=1$，求 $\dfrac1x+\dfrac1y$ 的最小值。
+\end{example}
+\begin{solution}
+因为 $x+y=1$，所以
+\[
+  \frac1x+\frac1y=\left(\frac1x+\frac1y\right)(x+y)
+  =1+\frac yx+\frac xy+1=2+\frac yx+\frac xy.
+\]
+由基本不等式 $\dfrac yx+\dfrac xy\geq2\sqrt{\dfrac yx\cdot\dfrac xy}=2$，
+故 $\dfrac1x+\dfrac1y\geq2+2=4$。
+取等条件为 $\dfrac yx=\dfrac xy$，即 $x^2=y^2$，又 $x,y>0$，得 $x=y$；
+结合 $x+y=1$ 得 $x=y=\dfrac12$，可以取到。
+\key{取等检验}：$\dfrac1{1/2}+\dfrac1{1/2}=2+2=4$，成立。故最小值为 $4$。
+\key{（回头看：种子问题 1）}
+\end{solution}
+
+\begin{problem}
+已知 $a,b>0$，$a+b=2$，求 $\dfrac1a+\dfrac4b$ 的最小值。
+\end{problem}
+\begin{solution}
+因为 $a+b=2$，所以
+\[
+  \frac1a+\frac4b=\frac12\left(\frac1a+\frac4b\right)(a+b)
+  =\frac12\left(1+\frac ba+\frac{4a}b+4\right)
+  =\frac12\left(5+\frac ba+\frac{4a}b\right).
+\]
+由基本不等式 $\dfrac ba+\dfrac{4a}b\geq2\sqrt{\dfrac ba\cdot\dfrac{4a}b}=2\sqrt4=4$，
+故 $\dfrac1a+\dfrac4b\geq\dfrac12(5+4)=\dfrac92$。
+取等条件为 $\dfrac ba=\dfrac{4a}b$，即 $b^2=4a^2$，又 $a,b>0$，得 $b=2a$；
+结合 $a+b=2$ 得 $a=\dfrac23$，$b=\dfrac43$，可以取到。
+\key{取等检验}：$\dfrac1{2/3}+\dfrac4{4/3}=\dfrac32+3=\dfrac92$，成立。故最小值为 $\dfrac92$。
+\key{（回头看：把「1」乘上去，就是多了一项可配对的倒数结构）}
+\end{solution}
+
+\subsection{视角三：凑项与分离常数——把变量配成互为倒数}
+
+\key{要点}
+\begin{itemize}
+  \item 目标：把变量部分凑成 $u+\dfrac{c}{u}$ 的形状，使两项乘积为定值。
+  \item 做法：给分子「借」一个常数项。例如
+        $x+\dfrac{1}{x-1}=(x-1)+\dfrac{1}{x-1}+1$。
+  \item 注意凑出的两项必须同号（通常都为正），否则基本不等式不能直接用。
+  \item 等号条件写在括号里：令凑出的两项相等，解出 $x$，再代入检验。
+\end{itemize}
+
+\begin{example}
+已知 $x>1$，求函数 $y=x+\dfrac{1}{x-1}$ 的最小值。
+\end{example}
+\begin{solution}
+当 $x>1$ 时 $x-1>0$，于是
+\[
+  y=x+\frac{1}{x-1}=(x-1)+\frac{1}{x-1}+1
+  \geq2\sqrt{(x-1)\cdot\frac{1}{x-1}}+1=2+1=3.
+\]
+取等条件为 $x-1=\dfrac{1}{x-1}$，即 $(x-1)^2=1$；因 $x>1$，得 $x=2$，可以取到。
+\key{取等检验}：$y=2+\dfrac1{2-1}=3$，成立。故最小值为 $3$。
+\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{problem}
+已知 $x>\dfrac12$，求函数 $y=2x+\dfrac{1}{2x-1}$ 的最小值。
+\end{problem}
+\begin{solution}
+当 $x>\dfrac12$ 时 $2x-1>0$，于是
+\[
+  y=2x+\frac{1}{2x-1}=(2x-1)+\frac{1}{2x-1}+1
+  \geq2\sqrt{(2x-1)\cdot\frac{1}{2x-1}}+1=3.
+\]
+取等条件为 $2x-1=\dfrac{1}{2x-1}$，即 $(2x-1)^2=1$；因 $2x-1>0$，得 $2x-1=1$，即 $x=1$。
+\key{取等检验}：$y=2\cdot1+\dfrac1{2-1}=3$，成立。故最小值为 $3$。
+\key{（回头看：凑项的关键是让两项乘积为常数，常数 $+1$ 不影响取等位置）}
+\end{solution}
+
+\subsection{视角四：易错——正数条件与取等检验}
+
+\key{要点}
+\begin{itemize}
+  \item 基本不等式 $a+b\geq2\sqrt{ab}$ 的前提是 $a,b>0$；负数不能直接用。
+  \item 负数要先变形：$x<0$ 时令 $t=-x>0$，则 $x+\dfrac1x=-\left(t+\dfrac1t\right)\leq-2$，
+        得到的是\key{最大值}而不是最小值。
+  \item 取等检验不能省：写完最值，必须代回等号成立的那个值，看是否真的等于最值。
+  \item 常见的错误还有：忘记条件 $x+y=1$ 而直接用 $\sqrt{xy}$，或漏掉定义域限制。
+\end{itemize}
+
+\begin{example}
+求函数 $y=x^2+\dfrac{1}{x^2}$（$x\neq0$）的最小值。
+\end{example}
+\begin{solution}
+对任意 $x\neq0$，有 $x^2>0$，于是
+\[
+  y=x^2+\frac1{x^2}\geq2\sqrt{x^2\cdot\frac1{x^2}}=2.
+\]
+取等条件为 $x^2=\dfrac1{x^2}$，即 $x^4=1$；又 $x\neq0$，得 $x=\pm1$，可以取到。
+\key{取等检验}：$x=1$ 或 $x=-1$ 时，$y=1+1=2$，成立。故最小值为 $2$。
+\key{（回头看：把 $x^2$ 看成一个整体，正是「整体代换」的思路）}
+\end{solution}
+
+\begin{problem}
+求函数 $y=x+\dfrac1x$ 在 $x<0$ 时的最大值。
+\end{problem}
+\begin{solution}
+$x<0$ 时 $x$ 与 $\dfrac1x$ 都是负数，不能直接用基本不等式。令 $t=-x$，则 $t>0$，
+\[
+  y=x+\frac1x=-\left(-x-\frac1x\right)=-\left(t+\frac1t\right)
+  \leq-2\sqrt{t\cdot\frac1t}=-2.
+\]
+（其中 $t+\dfrac1t\geq2$ 用基本不等式，加负号后不等号方向反转。）
+取等条件为 $t=\dfrac1t$，即 $t^2=1$；又 $t>0$，得 $t=1$，即 $x=-1$，可以取到。
+\key{取等检验}：$x=-1$ 时 $y=-1+\dfrac1{-1}=-2$，成立。故最大值为 $-2$。
+\key{（回头看：符号决定方向——正数求最小，负数求最大，取等位置同样要检验）}
+\end{solution}
+
+\subsection{视角五：几何——面积最大与用料最省}
+
+\key{要点}
+\begin{itemize}
+  \item 实际问题先找约束条件（通常是周长、长度固定），再写目标量（面积、体积）。
+  \item 约束给出「和定」，目标含乘积，就用「和定积最大」。
+  \item 一边靠墙时，篱笆只围三条边：设两条相等的边为 $x$，靠墙的对边为 $y$，则 $2x+y=$ 篱笆长。
+  \item 最值必须代回约束与取等条件双重检验。
+\end{itemize}
+
+\begin{example}
+用长为 $40\ \mathrm{m}$ 的篱笆一面靠墙围成一个矩形菜园，求菜园面积的最大值。
+\end{example}
+\begin{solution}
+设垂直于墙的两边各长 $x\ \mathrm{m}$，平行于墙的一边长 $y\ \mathrm{m}$，则约束为
+$2x+y=40$，且 $x>0$，$y>0$。菜园面积
+\[
+  S=xy=x(40-2x)=\frac12\cdot(2x)\cdot(40-2x).
+\]
+因为 $2x>0$，$40-2x>0$，由基本不等式
+\[
+  (2x)(40-2x)\leq\left(\frac{2x+(40-2x)}{2}\right)^2=\left(\frac{40}{2}\right)^2=400,
+\]
+故 $S\leq\dfrac12\cdot400=200$。
+取等条件为 $2x=40-2x$，即 $x=10$，此时 $y=40-20=20$，可以取到。
+\key{取等检验}：篱笆 $2\cdot10+20=40\ \mathrm{m}$，面积 $10\times20=200\ \mathrm{m}^2$，成立。
+故菜园面积的最大值为 $200\ \mathrm{m}^2$。
+\key{（回头看：种子问题 3）}
+\end{solution}
+
+\begin{problem}
+已知 $a,b>0$，$a+2b=12$，求 $ab$ 的最大值。
+\end{problem}
+\begin{solution}
+把 $a$ 与 $2b$ 看成两个正数，它们的和 $a+2b=12$ 是定值。由基本不等式
+\[
+  a\cdot2b\leq\left(\frac{a+2b}{2}\right)^2=\left(\frac{12}{2}\right)^2=36,
+\]
+两边同除以 $2$，得 $ab\leq18$。
+取等条件为 $a=2b$，结合 $a+2b=12$ 得 $2b+2b=12$，即 $b=3$，$a=6$，可以取到。
+\key{取等检验}：$a+2b=6+6=12$，$ab=6\times3=18$，成立。故 $ab$ 的最大值为 $18$。
+\key{（回头看：目标含 $ab$，就把条件中的 $a+2b$ 当作可用的「和」，积与和的对应关系别搞错系数）}
+\end{solution}
+\end{explore}
+
+\begin{inclasstest}
+\subsection{变式训练}
+只改一个条件，重新做一遍，记得写取等检验。
+\begin{enumerate}
+  \item 已知 $x,y>0$，$xy=4$，求 $x+y$ 的最小值。
+  \item 已知 $x+y=2$，$x,y>0$，求 $\dfrac1x+\dfrac1y$ 的最小值。
+  \item 已知 $x>\dfrac12$，求函数 $y=x+\dfrac{2}{2x-1}$ 的最小值。
+  \item 已知 $a,b>0$，$a+b=1$，求 $\dfrac1a+\dfrac9b$ 的最小值。
+  \item 用长为 $30\ \mathrm{m}$ 的篱笆一面靠墙围成一个矩形菜园，求菜园面积的最大值。
+  \item 求函数 $y=\dfrac{x^2+4}{x}$（$x>0$）的最小值。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection{知识来源对照表}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{3.4cm}p{4.0cm}p{5.6cm}}
+\toprule
+结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
+\midrule
+基本不等式与取等 & 视角一（来源） & 视角四（易错） \\
+1 的代换 & 视角二（代换） & 视角一（来源）、视角三（凑项） \\
+凑项与分离常数 & 视角三（凑项） & 视角二（代换） \\
+正数条件与取等检验 & 视角四（易错） & 视角一（来源） \\
+和定积最大的实际应用 & 视角五（几何） & 视角一（来源） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{下一步}：均值不等式是「配对」的艺术——把变量配成互为倒数的两项，
+或把条件乘进去造出这样的两项。这条线索与专题十一（换元）、专题四（极值）是同一套：
+先让式子变成会做的形状，再动手，最后一定记得检验取等。
+\end{afterclass}

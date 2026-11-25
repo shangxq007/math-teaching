@@ -109,8 +109,8 @@ latexmk -xelatex blueprint   # 细目表
 | 第 5 章 | 数列与离散动态系统 | `hv-guide/chapters/05.tex` ✅ | `hv-bank/chapters/05.tex` ✅ | `manim/sequence-dynamics/` ✅ |
 | 第 6 章 | 导数与局部线性化引擎 | `hv-guide/chapters/06.tex` ✅ | `hv-bank/chapters/06.tex` ✅ | `manim/local-linearization/` ✅ |
 | 第 7 章 | 计数原理、概率空间与统计回归 | `hv-guide/chapters/07.tex` ✅ | `hv-bank/chapters/07.tex` ✅ | `manim/probability-ls/` ✅ |
-| 第 8 章 | 齐次化：把二元问题压成一元比例 | `hv-guide/chapters/08_homogenization.tex` ✅ | `hv-bank/chapters/08.tex` ✅（8 题） | — |
-| 第 9 章 | 不动点：迭代、方程与几何变换的交汇 | `hv-guide/chapters/09_fixed_point.tex` ✅ | `hv-bank/chapters/09.tex` ✅（8 题） | — |
+| 第 8 章 | 齐次化：把二元问题压成一元比例 | `hv-guide/chapters/08_homogenization.tex` ✅ | `hv-bank/chapters/08.tex` ✅（8 题） | `manim/homogenization/` ✅ + `slides/outline-homogenization.md` |
+| 第 9 章 | 不动点：迭代、方程与几何变换的交汇 | `hv-guide/chapters/09_fixed_point.tex` ✅ | `hv-bank/chapters/09.tex` ✅（8 题） | `manim/fixed-point/` ✅ + `slides/outline-fixed-point.md` |
 
 全部完成：`hv-guide` 117 页（教师版；学生版 95）、含跨章联动、附录 A 考纲合法化转译手册、附录 B 强基衔接桥、第 0 章四视角等价地图与全书知识脉络图、各章「多框架对读」卡；`hv-bank` 54 页，均 0 error。
 
