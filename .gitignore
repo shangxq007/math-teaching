@@ -43,6 +43,8 @@ hv-bank/dist/
 *.gif
 math/manim/**/media/
 math/manim/**/videos/
+math/hv-guide/manim/**/media/
+__pycache__/
 
 # 版式打样的编译输出（png 截图保留作对照）
 _preview/*.pdf
