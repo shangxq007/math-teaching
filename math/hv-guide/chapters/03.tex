@@ -1,0 +1,736 @@
+% 高观点导学案：平面向量与空间向量（第 3 章·高观点统一版）
+% 主线：既有大小又有方向的量 → 点集的位移 → 基底下的坐标 → 内积投影算子 → 空间中的方向与法向
+% 四模块：基底分解与坐标表示 → 数量积与投影算子 → 极化恒等式与面积 → 空间向量（方向与法向）
+% 全程突出向量体系的独立地位：向量不是三角／几何的附庸，而是「几何空间代数化」的通用线性语言。
+
+\section{平面向量与空间向量（高观点统一版）}
+
+\begin{methodbox}{多框架对读}
+\small
+\begin{center}
+\begin{tabular}{c|p{2.9cm}|p{5.0cm}|p{3.1cm}}
+\toprule
+视角 & 本章看点 & 别的视角怎么说 & 哪侧最省力 \\
+\midrule
+代数 & 坐标运算、数量积公式 & 有序数对的算术 & 硬算定坐标 \\
+几何 & 分解、投影、法向量 & 图形中看方向与垂直 & 找关系、省计算 \\
+集合 & 向量＝有向线段构成的集合 & 基底＝给集合装坐标系 & 界线性相关无关 \\
+映射 & 点 $\to$ 坐标是同构；投影是算子 & 换基底＝换表示 & 整体搬迁结论 \\
+\bottomrule
+\end{tabular}
+\end{center}
+卡的使用：几何题先问「有没有现成的算子（投影／法向量）」，再决定建系还是综合（总图见第 0 章图~\ref{fig:four-view-map}）。
+\end{methodbox}
+
+第 1 章研究「对应」（函数），第 2 章研究「旋转」（三角函数）；本章登场的向量是第三条独立主线：
+它研究\key{位移的合成与分解}。向量体系相对三角与函数具有显性独立地位——
+三角函数是旋转群的语言，函数是对应的语言，而向量是\key{几何空间代数化}的通用线性语言：
+不依赖角度公式、不依赖函数图象，只用「大小$+$方向」「基底分解」「数量积」三件工具，
+就能把平面与空间中的距离、夹角、平行、垂直、面积全部翻译成代数。
+四个模块层层展开：
+\key{基底分解与坐标表示}（任一向量 $=$ 基底线性组合，唯一）$\to$
+\key{数量积与投影算子}（数量积 $=$ 余弦定理的代数化）$\to$
+\key{极化恒等式与面积}（共起点三向量乘积的秒杀通道）$\to$
+\key{空间向量：方向与法向}（用法向量统一处理空间位置关系）。
+核心思想：\key{选定一组基底，几何就变成了线性代数}。
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 理解向量「既有大小又有方向」的双重属性，区分向量与数量，理解自由向量（可平移）与零向量；
+  \item 理解平面向量基本定理：不共线向量张成整个平面，任一向量有唯一分解；坐标即有序实数对，与第 1 章「一一对应」呼应；
+  \item 掌握数量积的定义、坐标运算与投影公式，能把余弦定理与数量积互译（数量积就是余弦定理的代数化）；
+  \item 掌握极化恒等式 $\overrightarrow{AB}\cdot\overrightarrow{AC}=|\overrightarrow{AM}|^2-|\overrightarrow{MB}|^2$（$M$ 为 $BC$ 中点），会用它秒杀共起点三向量乘积的最值问题；知道面积形式 $S=\frac12|\vec a\times\vec b|$；
+  \item 会把空间向量坐标化，理解平面法向量、直线方向向量，用法向量统一处理线面／面面的平行、垂直与夹角（线面角、二面角）。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection*{知识回顾}
+\begin{itemize}
+  \item 实数加法满足交换律：$a+b=$ \blank；类比思考：向量加法满足交换律吗？\blank；
+  \item 平面直角坐标系中，点 $P$ 的坐标是 \blank（有序实数对／无序数组），它体现了点与 \blank 的一一对应；
+  \item 两直线（斜率存在时）垂直的判定：斜率之积等于 \blank；
+  \item 三角形面积公式 $S=\dfrac12\times$底$\times$ \blank；平行四边形面积 $=$ 底 $\times$ \blank。
+\end{itemize}
+
+\subsection*{教材速读}
+阅读「平面向量」与「空间向量」两章教材，完成下列问题：
+\begin{enumerate}
+  \item 平面向量基本定理要求两个基底向量 \blank（不共线／相等）；
+  \item 设 $\vec a=(x_1,y_1)$，$\vec b=(x_2,y_2)$，则 $\vec a\cdot\vec b=$ \blank；
+  \item 与平面 \blank 的向量叫做该平面的法向量；
+  \item 设直线方向向量为 $\vec s$、平面法向量为 $\vec n$，线面角 $\varphi$ 满足 $\sin\varphi=$ \blank。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{基底分解：平面向量基本定理与坐标表示}
+
+\key{探究一：任一向量都能被基底「唯一拼装」出来}
+
+\key{（1）从「既有大小又有方向的量」到「点集的位移」。}
+向量是既有大小又有方向的量，用有向线段表示；
+两个向量只要大小相等、方向相同就叫\key{相等向量}，与起点位置无关（\key{自由向量}，可平移）。
+位移视角：$\overrightarrow{AB}$ 表示点 $A$ 到点 $B$ 的位移。把所有起点平移到原点 $O$，
+向量 $\overrightarrow{OP}$ 与平面点 $P$ 一一对应——这就是「向量 $=$ 点集的位移」的准确含义。
+规定：零向量 $\vec 0$（长度为 $0$，方向任意）；$\vec a$ 的相反向量记 $-\vec a$。
+
+\key{（2）平面向量基本定理：不共线的两个向量张成整个平面。}
+\begin{derivation}
+定理内容：如果 $\vec e_1,\vec e_2$ 是同一平面内的两个\key{不共线}向量，
+那么对这一平面内的任一向量 $\vec a$，存在\key{唯一}一对实数 $\lambda_1,\lambda_2$，使得
+\[
+  \vec a=\lambda_1\vec e_1+\lambda_2\vec e_2.
+\]
+存在性：过 $\vec a$ 的终点分别作 $\vec e_2,\vec e_1$ 方向的平行线，围成平行四边形，
+两边即 $\lambda_1\vec e_1$ 与 $\lambda_2\vec e_2$（平行四边形法则）。
+唯一性：设 $\vec a=\lambda_1\vec e_1+\lambda_2\vec e_2=\mu_1\vec e_1+\mu_2\vec e_2$，则
+\[
+  (\lambda_1-\mu_1)\vec e_1+(\lambda_2-\mu_2)\vec e_2=\vec 0.
+\]
+若 $\lambda_1\neq\mu_1$，则 $\vec e_1=\dfrac{\mu_2-\lambda_2}{\lambda_1-\mu_1}\vec e_2$，
+与 $\vec e_1,\vec e_2$ 不共线矛盾；故 $\lambda_1=\mu_1$，同理 $\lambda_2=\mu_2$。唯一性得证。
+\end{derivation}
+$\{\vec e_1,\vec e_2\}$ 称为一组\key{基底}。注意基底不唯一、也不要求垂直——
+这是与「坐标轴」的本质区别，也是「选得巧，计算就少」的前提。
+
+\key{（3）坐标：基底下的有序实数对。}
+取\key{正交单位基底} $\vec i,\vec j$（互相垂直、长度都为 $1$），则
+\[
+  \vec a=x\vec i+y\vec j \iff \vec a=(x,y),
+\]
+$(x,y)$ 就是 $\vec a$ 的\key{坐标}。当起点在原点时，向量 $(x,y)$ 恰好指向点 $(x,y)$——
+几何对象（向量／点）、代数对象（有序实数对）、对应关系三者同构，
+这正是第 1 章「笛卡尔积坐标化」思想的延续：\key{坐标 $=$ 向量在基底下的读数}。
+坐标运算规则：
+\[
+  \vec a\pm\vec b=(x_1\pm x_2,\,y_1\pm y_2),\qquad
+  \lambda\vec a=(\lambda x_1,\,\lambda y_1),\qquad
+  |\vec a|=\sqrt{x_1^2+y_1^2}.
+\]
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    % ===== 左：斜基底的一般分解 =====
+    \coordinate (O) at (0,0);
+    \coordinate (E1) at (2,0.5);
+    \coordinate (E2) at (0.6,1.6);
+    \coordinate (P1) at (4,1);
+    \coordinate (P2) at (4.6,2.6);
+    \draw[->, gray] (-0.5,0)--(5,0);
+    \draw[->, gray] (0,-0.5)--(0,3);
+    \fill (O) circle (1pt);
+    \draw[->, third, thick] (O)--(E1) node[right] {$\vec{e}_1$};
+    \draw[->, third, thick] (O)--(E2) node[above left] {$\vec{e}_2$};
+    \draw[->, main!80!black, very thick] (O)--(P2) node[above right] {$\vec{a}=x\vec{e}_1+y\vec{e}_2$};
+    \draw[->, second, thick] (O)--(P1) node[midway,below] {$x\vec{e}_1$};
+    \draw[->, second, thick] (P1)--(P2) node[midway,right] {$y\vec{e}_2$};
+    \draw[dashed, second!70!black] (E2)--(P2);
+    \node[main!70!black] at (0,-0.85) {一般基底：平行四边形法则唯一分解};
+    % ===== 右：正交单位基底与坐标 =====
+    \begin{scope}[xshift=6.6cm]
+      \draw[->, gray] (-0.5,0)--(4.2,0) node[below right] {$x$};
+      \draw[->, gray] (0,-0.5)--(0,3.2) node[above left] {$y$};
+      \foreach \x in {1,2,3} \draw[gray!25, very thin] (\x,-0.4)--(\x,3);
+      \foreach \y in {1,2} \draw[gray!25, very thin] (-0.4,\y)--(4,\y);
+      \fill (0,0) circle (1pt);
+      \draw[->, third, thick] (0,0)--(1,0) node[below] {$\vec{i}=\vec{e}_1$};
+      \draw[->, third, thick] (0,0)--(0,1) node[left] {$\vec{j}=\vec{e}_2$};
+      \draw[->, main!80!black, very thick] (0,0)--(3,2) node[above right] {$\vec{a}=(3,2)$};
+      \draw[->, second, thick] (0,0)--(3,0) node[midway,below] {$3\vec{i}$};
+      \draw[->, second, thick] (3,0)--(3,2) node[midway,right] {$2\vec{j}$};
+      \draw[dashed, second!70!black] (0,2)--(3,2);
+      \node[main!70!black] at (2,-0.85) {正交单位基底：读数即坐标};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{平面向量的基底分解与坐标：左图为任意不共线基底 $\{\vec e_1,\vec e_2\}$ 下 $\vec a=x\vec e_1+y\vec e_2$ 的唯一分解；右图取正交单位基底 $\{\vec i,\vec j\}$ 时，读数 $(x,y)$ 就是平面直角坐标}
+  \label{fig:basis-coord}
+\end{figure}
+
+\key{（4）「基底选得巧，计算就少」。}
+分解的目的不是形式，而是让未知关系落到已知方向上。看一个反复出现的模型：
+
+\begin{example}
+在 $\triangle ABC$ 中，$D$ 在 $BC$ 上且 $BD:DC=1:2$，用基底 $\{\overrightarrow{AB},\overrightarrow{AC}\}$ 表示 $\overrightarrow{AD}$。
+\end{example}
+\begin{solution}
+取 $\overrightarrow{AB},\overrightarrow{AC}$ 为基底。由 $BD:DC=1:2$ 知 $\overrightarrow{BD}=\dfrac13\overrightarrow{BC}$，于是
+\[
+  \overrightarrow{AD}=\overrightarrow{AB}+\overrightarrow{BD}
+  =\overrightarrow{AB}+\frac13\overrightarrow{BC}
+  =\overrightarrow{AB}+\frac13(\overrightarrow{AC}-\overrightarrow{AB})
+  =\frac23\overrightarrow{AB}+\frac13\overrightarrow{AC}.
+\]
+取 $D$ 为中点时即得常用结论 $\overrightarrow{AD}=\dfrac12(\overrightarrow{AB}+\overrightarrow{AC})$。
+\key{一旦基底选定，所有向量都变成有序数对，几何题就变成解方程组。}
+\end{solution}
+
+\begin{conccard}[一级]{平面向量基本定理与坐标表示}{把任意向量用两个不共线向量线性表示；判断三点共线；坐标运算}{认为「基底必须互相垂直」；分解不唯一时怀疑定理；写出坐标却忘记它依赖所选基底}
+$\{\vec e_1,\vec e_2\}$ 不共线 $\implies$ 平面内任一向量 $\vec a$ 都可唯一写成 $\lambda_1\vec e_1+\lambda_2\vec e_2$。
+特别地，$\overrightarrow{OP}=x\overrightarrow{OA}+y\overrightarrow{OB}$ 且 $x+y=1\iff P,A,B$ 三点共线（等和线）。
+\end{conccard}
+
+\subsection{数量积与投影算子}
+
+\key{探究二：数量积是「投影乘模长」，更是余弦定理的代数化}
+
+\key{（1）定义与几何意义。}
+\[
+  \vec a\cdot\vec b=|\vec a|\,|\vec b|\cos\theta,\qquad \theta=\langle\vec a,\vec b\rangle\in[0,\pi].
+\]
+几何读法：先取 $\vec a$ 在 $\vec b$ 方向上的投影 $|\vec a|\cos\theta$（可正可负可为零），再乘以 $|\vec b|$。
+特例：同向 $\vec a\cdot\vec b=|\vec a||\vec b|$；反向 $=-|\vec a||\vec b|$；垂直 $=0$。
+显然 $\vec a\cdot\vec a=|\vec a|^2$——\key{数量积自带求模公式}。
+
+\key{（2）坐标运算：把定义交给分配律。}
+\begin{derivation}
+\begin{align*}
+  \vec a\cdot\vec b
+  &=(x_1\vec i+y_1\vec j)\cdot(x_2\vec i+y_2\vec j)\\
+  &=x_1x_2\,\underbrace{\vec i\cdot\vec i}_{=1}
+    +(x_1y_2+x_2y_1)\,\underbrace{\vec i\cdot\vec j}_{=0}
+    +y_1y_2\,\underbrace{\vec j\cdot\vec j}_{=1}
+  =x_1x_2+y_1y_2.
+\end{align*}
+\end{derivation}
+即「对应坐标相乘再相加」。由此还可直接验证交换律 $\vec a\cdot\vec b=\vec b\cdot\vec a$ 与分配律。
+夹角公式：$\cos\theta=\dfrac{\vec a\cdot\vec b}{|\vec a||\vec b|}=\dfrac{x_1x_2+y_1y_2}{\sqrt{x_1^2+y_1^2}\sqrt{x_2^2+y_2^2}}$。
+
+\key{（3）投影：数量投影与投影向量。}
+\[
+  \text{数量投影}=\frac{\vec a\cdot\vec b}{|\vec b|}=|\vec a|\cos\theta,\qquad
+  \mathrm{proj}_{\vec b}\vec a=\frac{\vec a\cdot\vec b}{|\vec b|^2}\,\vec b.
+\]
+记忆钩子：\key{投影向量 $=$ 数量投影 $\times$ 单位向量}，即 $\mathrm{proj}_{\vec b}\vec a=\left(\vec a\cdot\dfrac{\vec b}{|\vec b|}\right)\dfrac{\vec b}{|\vec b|}$。
+注意分母是 $|\vec b|^2$（保证量纲是长度），且投影方向可以逆着 $\vec b$（钝角时为负）。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \coordinate (O) at (0,0);
+    \coordinate (B) at (4,0);
+    \coordinate (A) at (2.6,2.2);
+    \coordinate (H) at (2.6,0);
+    \draw[->, gray] (-0.4,0)--(4.6,0);
+    \draw[->, gray] (0,-0.4)--(0,2.6);
+    \fill (O) circle (1pt) node[below left] {$O$};
+    \draw[->, main!80!black, very thick] (O)--(B) node[below right] {$\vec{b}$};
+    \draw[->, main!80!black, very thick] (O)--(A) node[above] {$\vec{a}$};
+    \draw[dashed, second, thick] (A)--(H);
+    \draw[->, second, thick] (O)--(H);
+    \draw[gray, thin] (2.35,0)--(2.35,0.25)--(2.6,0.25);
+    \draw[gray] (0.9,0) arc (0:40:0.9);
+    \node[gray!80!black] at (1.2,0.26) {$\theta$};
+    % 两条公式统一放到底部居中说明，避免压到 x 轴与图形外撑宽图幅
+    \node[second, align=center] at (2.1,-0.95)
+      {向量投影 $\mathrm{proj}_{\vec b}\vec a=\dfrac{\vec a\cdot\vec b}{|\vec b|^2}\vec b$\\[3pt]
+       数量投影 $=\dfrac{\vec a\cdot\vec b}{|\vec b|}=|\vec a|\cos\theta$};
+  \end{tikzpicture}
+  \caption{数量积的投影几何：$\vec a$ 在 $\vec b$ 方向上的垂足为 $H$，$OH$ 即投影向量；数量积 $=|\vec b|\times|\vec a|\cos\theta$，即「投影乘模长」}
+  \label{fig:dot-proj}
+\end{figure}
+
+\key{（4）与余弦定理互译：数量积就是余弦定理的代数化。}
+\begin{derivation}
+在 $\triangle ABC$ 中记 $\overrightarrow{CA}=\vec u$，$\overrightarrow{CB}=\vec v$，则 $|\vec u|=b$，$|\vec v|=a$，$|\vec u-\vec v|=|\overrightarrow{BA}|=c$。于是
+\[
+  c^2=|\vec u-\vec v|^2=|\vec u|^2+|\vec v|^2-2\,\vec u\cdot\vec v
+  =a^2+b^2-2ab\cos C,
+\]
+反解即 $\cos C=\dfrac{a^2+b^2-c^2}{2ab}$。
+\end{derivation}
+同一个事实的两种语言：\key{余弦定理是数量积的模长读法，数量积是余弦定理的代数化}。
+第 2 章用「复平面投影」理解 $\cos$，本章用「向量投影」理解 $\cos$——两种语言指向同一个对象。
+
+\begin{example}
+已知 $|\vec a|=4$，$|\vec b|=5$，夹角 $\theta=120^\circ$，求 $\vec a\cdot\vec b$、数量投影与投影向量。
+\end{example}
+\begin{solution}
+\[
+  \vec a\cdot\vec b=4\times5\times\cos120^\circ=20\times\left(-\frac12\right)=-10.
+\]
+数量投影 $=\dfrac{\vec a\cdot\vec b}{|\vec b|}=\dfrac{-10}{5}=-2$（负号说明投影逆着 $\vec b$）；
+投影向量 $=\dfrac{\vec a\cdot\vec b}{|\vec b|^2}\vec b=\dfrac{-10}{25}\vec b=-\dfrac25\vec b$。
+\end{solution}
+
+\begin{conccard}[一级]{数量积与投影}{求模长、判垂直、求夹角、做投影；坐标运算；与余弦定理互译}{把投影向量分母写成 $|\vec b|$；认为 $\vec a\cdot\vec b$ 是向量；默认投影非负}
+$\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta=x_1x_2+y_1y_2$；
+$\mathrm{proj}_{\vec b}\vec a=\dfrac{\vec a\cdot\vec b}{|\vec b|^2}\vec b$，数量投影 $=\dfrac{\vec a\cdot\vec b}{|\vec b|}$。
+$\vec a\perp\vec b\iff\vec a\cdot\vec b=0$（非零向量）。
+\end{conccard}
+
+\begin{commonerror}{投影运算的三个高频失误}
+\paragraph{失误一：分母多除一次模长。}
+投影向量是 $\dfrac{\vec a\cdot\vec b}{|\vec b|^2}\vec b$。若误写 $\dfrac{\vec a\cdot\vec b}{|\vec b|}\vec b$，
+左边是「数量投影（长度）再乘向量」，量纲变成长度的平方，必然出错。
+正确链条：数量投影 $\dfrac{\vec a\cdot\vec b}{|\vec b|}$（一个数）$\to$ 乘单位向量 $\dfrac{\vec b}{|\vec b|}$ $\to$ 投影向量。
+\paragraph{失误二：把数量积当成向量。}
+$\vec a\cdot\vec b$ 是一个\key{实数}（可正可负可为零），不是向量；
+更不能写成 $\vec a\cdot\vec b\,\vec b$ 这种不伦不类的式子。
+\paragraph{失误三：默认投影非负、夹角非钝。}
+$\theta\in[0,\pi]$，钝角时 $\cos\theta<0$，数量投影与数量积都是负数；
+例如上例 $\theta=120^\circ$ 时数量投影为 $-2$。符号携带方向信息，不能丢。
+\end{commonerror}
+
+\subsection{极化恒等式与面积}
+
+\key{探究三：极化恒等式——共起点三向量乘积的秒杀通道}
+
+（恒等式的核心是两向量之积 $\overrightarrow{AB}\cdot\overrightarrow{AC}$；
+下面的中点形式由它配方推出。）
+
+\key{（1）一般的极化恒等式。}
+对任意向量 $\vec u,\vec v$：
+\[
+  \vec u\cdot\vec v=\frac14\left(|\vec u+\vec v|^2-|\vec u-\vec v|^2\right).
+\]
+推导只需展开右边：$|\vec u+\vec v|^2-|\vec u-\vec v|^2=4\,\vec u\cdot\vec v$。
+
+\key{（2）三角形中的中点版本。}
+设 $M$ 是 $BC$ 的中点，则 $\overrightarrow{AB}+\overrightarrow{AC}=2\overrightarrow{AM}$，$\overrightarrow{AB}-\overrightarrow{AC}=\overrightarrow{CB}$，代入得
+\begin{derivation}
+\[
+  \overrightarrow{AB}\cdot\overrightarrow{AC}
+  =\frac14\left(|2\overrightarrow{AM}|^2-|\overrightarrow{CB}|^2\right)
+  =|\overrightarrow{AM}|^2-\frac14|\overrightarrow{CB}|^2
+  =|\overrightarrow{AM}|^2-|\overrightarrow{MB}|^2.
+\]
+\end{derivation}
+这个恒等式把「\key{共起点的两个向量之积}」改写成「\key{动点到中点的距离平方} $-$ 定值」，
+是处理动态最值问题的标准武器。
+
+\begin{example}
+已知圆 $O$ 的半径为 $2$，弦 $BC=2$，点 $A$ 在圆上运动，求 $\overrightarrow{AB}\cdot\overrightarrow{AC}$ 的最大值。
+\end{example}
+\begin{solution}
+取 $M$ 为 $BC$ 中点，则 $|\overrightarrow{MB}|=1$ 为定值，由极化恒等式
+\[
+  \overrightarrow{AB}\cdot\overrightarrow{AC}=|\overrightarrow{AM}|^2-1.
+\]
+问题转化为求 $|\overrightarrow{AM}|$ 的最大值。由垂径定理 $|OM|=\sqrt{2^2-1^2}=\sqrt3$，
+$A$ 在圆上运动时 $|AM|$ 的最大值为 $R+|OM|=2+\sqrt3$（$A$ 位于射线 $MO$ 的延长线与圆的交点）。
+因此
+\[
+  \left(\overrightarrow{AB}\cdot\overrightarrow{AC}\right)_{\max}=(2+\sqrt3)^2-1=6+4\sqrt3.
+\]
+若直接设坐标硬算，将陷入三角换元；\key{极化恒等式一步就把「双动向量乘积」化为「单动点距离」。}
+\end{solution}
+
+\key{（3）面积形式：叉积的模。}
+与数量积配对的是\key{叉积（外积）}：$\vec a\times\vec b$ 是垂直于 $\vec a,\vec b$ 所在平面的向量，
+其模
+\[
+  |\vec a\times\vec b|=|\vec a|\,|\vec b|\,|\sin\theta|
+\]
+恰等于以 $\vec a,\vec b$ 为邻边的平行四边形面积；坐标计算公式为
+\[
+  |\vec a\times\vec b|=|x_1y_2-x_2y_1|,\qquad
+  S_{\triangle ABC}=\frac12|\overrightarrow{AB}\times\overrightarrow{AC}|
+  =\frac12\,|x_1y_2-x_2y_1|.
+\]
+对照记忆：\key{点积管「角与投影」（余弦），叉积管「面积与正弦」}，二者互补。
+
+\begin{example}
+已知 $\vec a=(3,1)$，$\vec b=(2,4)$，求以 $\vec a,\vec b$ 为邻边的三角形面积。
+\end{example}
+\begin{solution}
+\[
+  S=\frac12|x_1y_2-x_2y_1|=\frac12|3\times4-1\times2|=\frac12\times10=5.
+\]
+\end{solution}
+
+注记（高观点）：把三个极化恒等式按三角形面积加权求和，就得到著名的奔驰定理
+$S_{\triangle BOC}\cdot\overrightarrow{OA}+S_{\triangle COA}\cdot\overrightarrow{OB}+S_{\triangle AOB}\cdot\overrightarrow{OC}=\vec 0$
+（$O$ 为 $\triangle ABC$ 内一点）——它是「重心坐标」的面积版；第 7 章统计回归的样本中心点与之同源。
+
+\begin{conccard}[二级]{极化恒等式：共起点三向量乘积}{共起点两向量数量积的最值／范围问题，尤其是「一定弦、一动顶点」模型}{认不出中点结构，仍去建系硬算；把 $|\overrightarrow{MB}|$ 误当 $|BC|$；忽略动点到中点距离的取值范围需按圆／线段讨论}
+$\overrightarrow{AB}\cdot\overrightarrow{AC}=|\overrightarrow{AM}|^2-|\overrightarrow{MB}|^2$（$M$ 为 $BC$ 中点）。
+更一般地 $\vec u\cdot\vec v=\frac14(|\vec u+\vec v|^2-|\vec u-\vec v|^2)$。
+配套面积公式：$S_{\triangle ABC}=\frac12|\overrightarrow{AB}\times\overrightarrow{AC}|=\frac12|x_1y_2-x_2y_1|$。
+\end{conccard}
+
+\subsection{空间向量：方向向量与法向量}
+
+\key{探究四：用法向量统一处理空间中的平行、垂直与夹角}
+
+\key{（1）空间向量坐标化。}
+以 $O$ 为原点、$\vec i,\vec j,\vec k$ 为三条两两垂直的单位向量建立空间直角坐标系，则
+\[
+  \vec a=x\vec i+y\vec j+z\vec k\iff \vec a=(x,y,z),\qquad
+  |\vec a|=\sqrt{x^2+y^2+z^2},
+\]
+\[
+  \vec a\cdot\vec b=x_1x_2+y_1y_2+z_1z_2,\qquad
+  \cos\langle\vec a,\vec b\rangle=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}.
+\]
+几何空间代数化的关键一步：\key{建系 $=$ 给每个点分配坐标，之后所有几何量都是坐标运算}。
+
+\key{（2）平面的法向量。}
+与平面 $\alpha$ 垂直的向量 $\vec n$ 叫做 $\alpha$ 的\key{法向量}。
+一个平面有无穷多个法向量，但它们彼此平行（共线），所以\key{法向量的方向就是平面的「朝向」}。
+若 $\vec n=(A,B,C)$，$P_0(x_0,y_0,z_0)\in\alpha$，则平面方程为
+\[
+  A(x-x_0)+B(y-y_0)+C(z-z_0)=0\quad\text{即}\quad Ax+By+Cz+D=0.
+\]
+求法向量的通用方法：找平面内两个不共线向量 $\vec a,\vec b$，令 $\vec n\cdot\vec a=0$、$\vec n\cdot\vec b=0$ 解方程组。
+
+\key{（3）线面角与二面角。}
+设直线 $l$ 的方向向量为 $\vec s$，平面 $\alpha$ 的法向量为 $\vec n$：
+\[
+  \textbf{线面角 }\varphi:\quad \sin\varphi=\frac{|\vec s\cdot\vec n|}{|\vec s|\,|\vec n|}
+  \quad(\varphi\in[0,\tfrac{\pi}{2}]).
+\]
+注意是\key{正弦}：直线与法向量的夹角与线面角互余。
+设两平面法向量为 $\vec n_1,\vec n_2$：
+\[
+  \textbf{二面角 }\theta:\quad |\cos\theta|=\frac{|\vec n_1\cdot\vec n_2|}{|\vec n_1|\,|\vec n_2|},
+\]
+锐钝要结合图形判断（或用法向量方向调整符号）。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\small]
+    % 两个半平面（平行四边形示意），公共棱为中间那条水平线
+    \fill[main!8] (-2.6,0)--(2.6,0)--(1.9,2.4)--(-3.3,2.4)--cycle;
+    \fill[second!10] (-2.6,0)--(2.6,0)--(1.9,-2.0)--(-3.3,-2.0)--cycle;
+    \draw[thick, main!60!black] (-2.6,0)--(2.6,0)--(1.9,2.4)--(-3.3,2.4)--cycle;
+    \draw[thick, second!50!black] (-2.6,0)--(2.6,0)--(1.9,-2.0)--(-3.3,-2.0)--cycle;
+    % 棱与棱上一点
+    \draw[very thick, gray] (-2.6,0)--(2.6,0);
+    \fill (0,0) circle (1.5pt) node[below left] {$P$};
+    % 二面角的平面角：在两个半平面内分别作垂直于棱的射线
+    \draw[->, third, very thick] (0,0)--(-1.1,1.9) node[above left] {$\vec u\subset\alpha$};
+    \draw[->, third, very thick] (0,0)--(-1.1,-1.6) node[below left] {$\vec v\subset\beta$};
+    % 直角符号：u\perp l，v\perp l（放大并贴近射线）
+    \draw[third!70!black, thin] (0.4,0)--(0.2,0.3464)--(-0.2,0.3464);
+    \draw[third!70!black, thin] (0.4,0)--(0.1736,-0.3296)--(-0.2264,-0.3296);
+    % 平面角 \theta：弧线从 \vec u 跨过 \vec v
+    \draw[main, thick] (0,0) ++(120:0.95) arc (120:235:0.95);
+    \node[main] at (-1.15,0) {$\theta$};
+    % 法向量
+    \draw[->, second, thick] (1.2,1.2)--(2.2,2.6) node[above right] {$\vec n_1$};
+    \draw[->, main, thick] (1.2,-1.0)--(2.2,-2.4) node[below right] {$\vec n_2$};
+    \node[main!70!black] at (-2.6,1.7) {$\alpha$};
+    \node[second!60!black] at (-2.6,-1.4) {$\beta$};
+    \node[gray!70!black] at (2.5,0.28) {$l$};
+    \node[gray!70!black, align=center] at (0,-3.05) {沿棱 $l$ 取点 $P$，在 $\alpha,\beta$ 内分别作垂直于 $l$ 的射线，\\两条射线的夹角即二面角的平面角};
+  \end{tikzpicture}
+  \caption{二面角的几何图：两平面 $\alpha,\beta$ 交于棱 $l$；$\vec u,\vec v$ 分别躺在两个半平面内且都垂直于 $l$（直角符号），夹角就是二面角的平面角 $\theta$。法向量 $\vec n_1,\vec n_2$ 分别垂直于两平面，其夹角与 $\theta$ 相等或互补，故 $|\cos\theta|=\dfrac{|\vec n_1\cdot\vec n_2|}{|\vec n_1||\vec n_2|}$，锐钝需结合图形判断}
+  \label{fig:dihedral-angle}
+\end{figure}
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.4cm}p{6.8cm}p{3.6cm}}
+\toprule
+位置关系 & 向量判据 & 说明 \\
+\midrule
+线线平行 & $\vec s_1\parallel\vec s_2$（即 $\vec s_1\times\vec s_2=\vec 0$） & 方向向量共线 \\
+线线垂直 & $\vec s_1\cdot\vec s_2=0$ & 方向向量垂直 \\
+线面平行 & $\vec s\cdot\vec n=0$ 且 $l\not\subset\alpha$ & 方向向量与法向量垂直 \\
+线面垂直 & $\vec s\parallel\vec n$ & 方向向量与法向量共线 \\
+面面平行 & $\vec n_1\parallel\vec n_2$ & 法向量共线 \\
+面面垂直 & $\vec n_1\cdot\vec n_2=0$ & 法向量垂直 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \coordinate (O) at (0,0);
+    \coordinate (X) at (-2.3,-1.05);
+    \coordinate (Y) at (2.9,-0.75);
+    \coordinate (XY) at (0.6,-1.8);
+    % 平面 α（xOy 平面，z=0）
+    \fill[third!8] (O)--(X)--(XY)--(Y)--cycle;
+    \draw[third!50!black, thin] (O)--(X)--(XY)--(Y)--cycle;
+    \node[third!70!black] at (2.9,-1.05) {$\alpha$};
+    % 坐标轴
+    \draw[->, gray] (O)--(X) node[below left] {$x$};
+    \draw[->, gray] (O)--(Y) node[below right] {$y$};
+    \draw[->, gray] (O)--(0,3.1) node[above] {$z$};
+    % 法向量 n（竖直向上，垂直于平面）
+    \draw[->, third, very thick] (-0.35,-0.5)--(-0.35,1.3) node[pos=0.85,right] {$\vec{n}$};
+    % 直线方向向量 s 穿过平面
+    \coordinate (R) at (1.15,-0.85);
+    \coordinate (S) at (1.7,1.5);
+    \draw[->, main!80!black, very thick] (R)--(S) node[midway,right] {$\vec{s}$};
+    \draw[dashed, gray] (S)--(1.7,0);
+    % 线面角 φ
+    \coordinate (I) at (1.349,0);
+    \draw (1.799,0) arc (0:77:0.45);
+    \node at (1.98,0.4) {$\varphi$};
+    \node[main!70!black] at (0.6,-2.35) {方向向量 $\vec s$、法向量 $\vec n$ 与线面角 $\varphi$};
+  \end{tikzpicture}
+  \caption{空间向量与法向量：平面 $\alpha$ 的法向量 $\vec n$ 指示平面朝向；直线方向向量 $\vec s$ 穿过平面，$\varphi$ 为 $\vec s$ 与其在平面内投影的夹角（线面角）}
+  \label{fig:space-normal}
+\end{figure}
+
+\begin{example}
+正方体 $ABCD-A_1B_1C_1D_1$ 的棱长为 $1$，求二面角 $A_1-BD-C$ 的余弦值。
+\end{example}
+\begin{solution}
+以 $D$ 为原点建系：$D(0,0,0)$，$A(1,0,0)$，$C(0,1,0)$，$B(1,1,0)$，$A_1(1,0,1)$。
+平面 $BDC$ 即底面 $z=0$，取其法向量 $\vec n_1=(0,0,1)$。
+平面 $A_1BD$ 内有 $\overrightarrow{DB}=(1,1,0)$，$\overrightarrow{DA_1}=(1,0,1)$，
+\[
+  \vec n_2=\overrightarrow{DB}\times\overrightarrow{DA_1}
+  =(1\times1-0\times0,\;0\times1-1\times1,\;1\times0-1\times1)=(1,-1,-1).
+\]
+于是
+\[
+  |\cos\theta|=\frac{|\vec n_1\cdot\vec n_2|}{|\vec n_1|\,|\vec n_2|}
+  =\frac{|-1|}{1\times\sqrt3}=\frac{\sqrt3}{3}.
+\]
+取 $BD$ 中点 $M$，$\overrightarrow{MA_1}=(-0.5,-0.5,1)$、$\overrightarrow{MC}=(-0.5,-0.5,0)$ 均与 $BD$ 垂直，
+两者点积为正，故二面角 $A_1-BD-C$ 为锐角，其余弦值为 $\dfrac{\sqrt3}{3}$。
+传统几何法需要作平面角、证垂直、再解三角形；向量法只需建系、算两个法向量、代公式。
+\end{solution}
+
+\begin{example}
+平面 $\alpha,\beta$ 的法向量分别为 $\vec n_1=(2,-1,1)$，$\vec n_2=(1,1,-1)$，直线 $l$ 的方向向量为 $\vec s=(1,2,2)$。
+（1）判断 $l$ 与 $\alpha$ 的位置关系并求线面角；（2）判断 $\alpha$ 与 $\beta$ 的位置关系。
+\end{example}
+\begin{solution}
+（1）$\vec s\cdot\vec n_1=1\times2+2\times(-1)+2\times1=2\neq0$，
+所以 $l$ 与 $\alpha$ \key{相交}（不平行也不在面内）。线面角 $\varphi$ 满足
+\[
+  \sin\varphi=\frac{|\vec s\cdot\vec n_1|}{|\vec s|\,|\vec n_1|}
+  =\frac{2}{\sqrt{1+4+4}\cdot\sqrt{4+1+1}}=\frac{2}{3\sqrt6}=\frac{\sqrt6}{9}.
+\]
+（2）$\vec n_1\cdot\vec n_2=2-1-1=0$，所以两平面的法向量垂直，即 \key{$\alpha\perp\beta$}。
+\end{solution}
+
+\begin{conccard}[二级]{法向量统一处理空间位置关系}{线面／面面的平行、垂直、夹角问题；点到平面距离；存在性问题}{把线面角公式错写成余弦；二面角不判断锐钝；建系时没说明三条轴两两垂直或坐标写错}
+直线方向向量 $\vec s$、法向量 $\vec n$：
+线面平行 $\iff\vec s\cdot\vec n=0$；线面垂直 $\iff\vec s\parallel\vec n$；
+线面角 $\sin\varphi=\dfrac{|\vec s\cdot\vec n|}{|\vec s||\vec n|}$；
+二面角 $|\cos\theta|=\dfrac{|\vec n_1\cdot\vec n_2|}{|\vec n_1||\vec n_2|}$。
+（第 4 章立体几何主干直接调用这套判据与下面的易错清单，不再重复。）
+\end{conccard}
+
+\begin{commonerror}{空间向量建系的三个高频失误}
+\paragraph{失误一：建系不交代垂直性。}
+使用空间直角坐标系前，必须说明所选三条轴（或从同一点出发的三条棱）两两垂直；
+若题目只给出斜角或没有垂直条件，应先证明垂直关系再建系。
+\paragraph{失误二：线面角套错公式。}
+线面角 $\varphi$ 与「方向向量和法向量的夹角」互余，所以
+$\sin\varphi=\dfrac{|\vec s\cdot\vec n|}{|\vec s||\vec n|}$，而不是余弦。
+把 $\vec s$ 换成它在面内的投影，才是余弦关系，切勿混用。
+\paragraph{失误三：二面角不判断锐钝。}
+$|\cos\theta|$ 只给大小；必须结合图形（或取棱上一点，用两个半平面内的向量验号）确定二面角是锐角还是钝角，否则一半情形会丢。
+\end{commonerror}
+
+\begin{advancedonly}
+\key{超纲延伸一：换基底与相似律——同一线性变换，在不同基下「读数不同，变换不动」。}
+
+设线性变换 $T$ 在标准基 $\{\vec e_1,\vec e_2\}$ 下的矩阵为
+$A=\begin{pmatrix}2&1\\0&1\end{pmatrix}$（即 $T(\vec e_1)=(2,0)$，$T(\vec e_2)=(1,1)$）。
+取 $\vec v=(2,1)$，则
+\[
+  T(\vec v)=A\vec v=\begin{pmatrix}2&1\\0&1\end{pmatrix}\begin{pmatrix}2\\1\end{pmatrix}
+  =\tk{\begin{pmatrix}5\\1\end{pmatrix}}.
+\]
+换一组新基 $\mathcal B'=\{\vec u_1,\vec u_2\}$：$\vec u_1=(1,1)$，$\vec u_2=(-1,1)$，
+过渡矩阵 $P=(\vec u_1\ \vec u_2)=\begin{pmatrix}1&-1\\1&1\end{pmatrix}$。
+同一个向量换基后读数要左乘 $P^{-1}$；由 $\det P=2$ 得
+$P^{-1}=\dfrac12\begin{pmatrix}1&1\\-1&1\end{pmatrix}$，于是
+\[
+  [\vec v]_{\mathcal B'}=P^{-1}\begin{pmatrix}2\\1\end{pmatrix}
+  =\tk{\begin{pmatrix}\tfrac32\\[2pt]-\tfrac12\end{pmatrix}},\qquad
+  [T(\vec v)]_{\mathcal B'}=P^{-1}\begin{pmatrix}5\\1\end{pmatrix}
+  =\tk{\begin{pmatrix}3\\-2\end{pmatrix}}.
+\]
+而 $T$ 在新基下的矩阵不再是 $A$，它由相似律给出：
+\[
+  A'=P^{-1}AP
+  =\frac12\begin{pmatrix}1&1\\-1&1\end{pmatrix}
+   \begin{pmatrix}2&1\\0&1\end{pmatrix}
+   \begin{pmatrix}1&-1\\1&1\end{pmatrix}
+  =\tk{\begin{pmatrix}2&0\\-1&1\end{pmatrix}}.
+\]
+验证（一步）：用新矩阵乘新坐标，必须还原像向量的读数，
+\[
+  A'\,[\vec v]_{\mathcal B'}
+  =\begin{pmatrix}2&0\\-1&1\end{pmatrix}
+   \begin{pmatrix}\tfrac32\\[2pt]-\tfrac12\end{pmatrix}
+  =\tk{\begin{pmatrix}3\\-2\end{pmatrix}}=[T(\vec v)]_{\mathcal B'}.
+\]
+\key{$A'=P^{-1}AP$：换基底只是换一把尺子，坐标读数变了，变换本身纹丝不动。}
+顺带一提：$\det A=\det A'=2$——相似矩阵的不变量，正是「换个角度，本质仍在」。
+\end{advancedonly}
+
+\begin{advancedonly}
+\key{超纲延伸二：镜面反射公式——投影走多远，就回头走多远。}
+
+以 $\vec b$ 所在的整条直线为镜面（不只是向量 $\vec b$ 那一截），
+$\vec a$ 的反射像由投影直接写出：
+\[
+  \vec a'=2\,\mathrm{proj}_{\vec b}\vec a-\vec a.
+\]
+取 $\vec a=(2.5,1.5)$，$\vec b=(3,1)$。先投影：
+\[
+  \vec a\cdot\vec b=2.5\times3+1.5\times1=\tk{9},\qquad
+  |\vec b|^2=3^2+1^2=\tk{10},
+\]
+\[
+  \mathrm{proj}_{\vec b}\vec a=\frac{\vec a\cdot\vec b}{|\vec b|^2}\,\vec b
+  =\frac{9}{10}(3,1)=\tk{(2.7,0.9)}.
+\]
+再越过镜面走同样远：
+\[
+  \vec a'=2(2.7,0.9)-(2.5,1.5)=\tk{(2.9,0.3)}.
+\]
+几何解释：垂足 $\mathrm{proj}_{\vec b}\vec a$ 恰好是 $\vec a$ 与 $\vec a'$ 连线的中点，
+也就是说镜面是这条连线的垂直平分线——从 $\vec a$ 到镜面有多远，像就退到另一侧多远。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (2.5,1.5);
+    \coordinate (B) at (3,1);
+    \coordinate (F) at (2.7,0.9);
+    \coordinate (Ap) at (2.9,0.3);
+    % 镜面：\vec b 所在的整条直线（双向延长）
+    \draw[dashed, second, thick] (-1.5,-0.5)--(4.2,1.4);
+    \node[second, below left] at (-1.5,-0.5) {镜面};
+    % 坐标轴
+    \draw[->, gray] (-1.0,0)--(4.6,0);
+    \draw[->, gray] (0,-0.9)--(0,2.6);
+    \fill (O) circle (1pt);
+    % 投影向量（恰好躺在镜面上）与垂足
+    \draw[->, third, very thick] (O)--(F);
+    \fill[third] (F) circle (1.5pt);
+    \node[third] at (1.55,0.30) {$\mathrm{proj}_{\vec b}\vec a$};
+    % 原向量、像向量与镜面方向向量
+    \draw[->, main!80!black, very thick] (O)--(A) node[above left] {$\vec a=(2.5,1.5)$};
+    \draw[->, second, very thick] (O)--(B) node[above right] {$\vec b=(3,1)$};
+    \draw[->, main, very thick] (O)--(Ap) node[right] {$\vec a'=(2.9,0.3)$};
+    % 垂线段与垂足处的直角符号
+    \draw[dashed, gray] (A)--(F)--(Ap);
+    \draw[third!70!black, thin] (2.85,0.95)--(2.80,1.10)--(2.65,1.05);
+  \end{tikzpicture}
+  \caption{镜面反射：以 $\vec b$ 所在直线（虚线）为镜面，$\mathrm{proj}_{\vec b}\vec a$ 是 $\vec a$ 的垂足，$\vec a'=2\,\mathrm{proj}_{\vec b}\vec a-\vec a$；垂足同时也是 $\vec a$ 与 $\vec a'$ 连线的中点}
+  \label{fig:mirror-reflection}
+\end{figure}
+\end{advancedonly}
+
+\begin{method}
+向量解题三步法：
+\begin{enumerate}
+  \item \key{翻译}：把几何条件（中点、平行、垂直、夹角、面积）译成向量语言；
+        不确定从哪下手时，先选一组基底或建立坐标系。有垂直关系优先建系。
+  \item \key{运算}：坐标化或基底化之后，用数量积处理长度与夹角，
+        用「中点公式 $+$ 极化恒等式」处理共起点向量乘积的最值，
+        用方向向量与法向量处理空间位置关系；追求「选得巧，计算就少」。
+  \item \key{回译}：把代数结果翻回几何结论，并检查退化情形
+        （零向量、两向量共线、点在平面内、分母为零）。
+\end{enumerate}
+\end{method}
+
+\begin{summary}
+本章把向量当作「既有大小又有方向的量」$\to$「点集的位移」$\to$「基底下的坐标」$\to$「内积投影算子」$\to$「空间中的方向与法向」层层展开，凸显向量体系相对三角与函数的独立地位：它是几何空间代数化的通用线性语言。
+平面向量基本定理保证任一向量被不共线基底唯一分解，坐标就是有序实数对；数量积 $\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta$ 的几何意义是「投影乘模长」，投影向量 $\mathrm{proj}_{\vec b}\vec a=\frac{\vec a\cdot\vec b}{|\vec b|^2}\vec b$，它与余弦定理互为代数化与几何读法；
+极化恒等式 $\overrightarrow{AB}\cdot\overrightarrow{AC}=|\overrightarrow{AM}|^2-|\overrightarrow{MB}|^2$ 把共起点三向量乘积化为动点到中点的距离平方差，是动态最值的秒杀通道，面积则由叉积的模 $S=\frac12|\vec a\times\vec b|$ 给出；
+空间向量坐标化之后，平面的法向量成为统一语言：线面平行／垂直、线面角、二面角全部化为方向向量与法向量的数量积运算。
+\end{summary}
+
+\end{explore}
+
+\begin{inclasstest}
+\begin{enumerate}
+  \item 已知 $\vec a=(1,2)$，$\vec b=(3,-1)$，求 $\vec a\cdot\vec b$、$|\vec a|$ 以及 $\vec a$ 在 $\vec b$ 上的投影向量；\level{易}
+  \item 已知 $\vec e_1,\vec e_2$ 不共线，$\vec m=\vec e_1+2\vec e_2$，$\vec n=3\vec e_1+k\vec e_2$，若 $\vec m\parallel\vec n$，求实数 $k$；\level{易}
+  \item 半径为 $2$ 的圆中，弦 $BC=2$，点 $A$ 在圆上运动，求 $\overrightarrow{AB}\cdot\overrightarrow{AC}$ 的取值范围；\level{中}
+  \item 平面 $\alpha$ 的法向量 $\vec n_1=(1,2,-1)$，平面 $\beta$ 的法向量 $\vec n_2=(2,1,1)$，判断 $\alpha$ 与 $\beta$ 的位置关系，并求所成锐二面角的余弦值。\level{中}
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection*{基础巩固}
+\begin{enumerate}
+  \item 已知 $\vec a=(2,-1)$，$\vec b=(-3,4)$，求 $\vec a+\vec b$、$\vec a\cdot\vec b$ 与两向量夹角的余弦值；
+  \item 设 $\vec e_1,\vec e_2$ 不共线，$\vec a=\vec e_1+2\vec e_2$。若换用新基底 $\vec e_1'=\vec e_1+\vec e_2$，$\vec e_2'=\vec e_1-\vec e_2$，求 $\vec a$ 在新基底下的坐标，并说明坐标为什么随基底改变而改变。
+\end{enumerate}
+
+\subsection*{进阶提升}
+\begin{enumerate}
+  \item 在 $\triangle ABC$ 中，$AB=3$，$AC=5$，$BC=4$，用极化恒等式求 $\overrightarrow{AB}\cdot\overrightarrow{AC}$；
+  \item 三棱锥 $D-ABC$ 中，$A(1,0,0)$，$B(0,1,0)$，$C(0,0,1)$，$D(0,0,0)$，求二面角 $A-BC-D$ 的余弦值。
+\end{enumerate}
+
+\subsection*{拓展探究}
+\begin{enumerate}
+  \item 用向量方法证明：三角形三条中线交于一点，且该点分每条中线为 $2:1$（提示：先用平面向量基本定理比较系数求交点分比）。
+\end{enumerate}
+
+\subsection*{教师版答案}
+\begin{solution}
+\textbf{基础 1：}$\vec a+\vec b=(2-3,\,-1+4)=(-1,3)$；
+$\vec a\cdot\vec b=2\times(-3)+(-1)\times4=-6-4=-10$；
+\[
+  |\vec a|=\sqrt{2^2+(-1)^2}=\sqrt5,\quad |\vec b|=\sqrt{(-3)^2+4^2}=5,
+\]
+\[
+  \cos\theta=\frac{\vec a\cdot\vec b}{|\vec a||\vec b|}=\frac{-10}{5\sqrt5}=-\frac{2\sqrt5}{5}.
+\]
+\end{solution}
+\begin{solution}
+\textbf{基础 2：}设 $\vec a=\lambda\vec e_1'+\mu\vec e_2'$，即
+\[
+  \vec a=\lambda(\vec e_1+\vec e_2)+\mu(\vec e_1-\vec e_2)
+  =(\lambda+\mu)\vec e_1+(\lambda-\mu)\vec e_2.
+\]
+与 $\vec a=\vec e_1+2\vec e_2$ 比较系数（基本定理保证唯一）：
+\[
+  \lambda+\mu=1,\quad \lambda-\mu=2\implies\lambda=\frac32,\ \mu=-\frac12.
+\]
+故新坐标为 $\left(\dfrac32,-\dfrac12\right)$。
+坐标是「向量在基底下的读数」，基底变了读数自然改变；变的只是坐标，向量本身不变。
+\end{solution}
+\begin{solution}
+\textbf{进阶 1：}取 $BC$ 中点 $M$，$|MB|=2$，中线长
+\[
+  |AM|^2=\frac{2AB^2+2AC^2-BC^2}{4}
+  =\frac{2\times9+2\times25-16}{4}=\frac{52}{4}=13.
+\]
+由极化恒等式
+\[
+  \overrightarrow{AB}\cdot\overrightarrow{AC}=|\overrightarrow{AM}|^2-|\overrightarrow{MB}|^2=13-4=9.
+\]
+（检验：$\cos A=\frac{9+25-16}{2\times3\times5}=\frac{3}{5}$，故 $\overrightarrow{AB}\cdot\overrightarrow{AC}=3\times5\times\frac35=9$。）
+\end{solution}
+\begin{solution}
+\textbf{进阶 2：}平面 $ABC$：由 $A,B,C$ 的坐标知方程为 $x+y+z=1$，法向量 $\vec n_1=(1,1,1)$；
+平面 $DBC$ 过原点且含 $B,C$，方程为 $x=0$，法向量 $\vec n_2=(1,0,0)$。
+\[
+  |\cos\theta|=\frac{|\vec n_1\cdot\vec n_2|}{|\vec n_1||\vec n_2|}
+  =\frac{1}{\sqrt3\times1}=\frac{\sqrt3}{3}.
+\]
+取 $BC$ 中点 $M(0,\tfrac12,\tfrac12)$，$\overrightarrow{MA}=(1,-\tfrac12,-\tfrac12)$、$\overrightarrow{MD}=(0,-\tfrac12,-\tfrac12)$ 均与 $\overrightarrow{BC}=(0,1,-1)$ 垂直，且点积为正，故二面角 $A-BC-D$ 为锐角，余弦值为 $\dfrac{\sqrt3}{3}$。
+\end{solution}
+\begin{solution}
+\textbf{拓展：}取 $A$ 为原点，记 $\overrightarrow{AB}=\vec b$，$\overrightarrow{AC}=\vec c$。
+设 $D,E$ 分别为 $BC,CA$ 的中点，则
+\[
+  \overrightarrow{AD}=\frac{\vec b+\vec c}{2},\qquad
+  \overrightarrow{BE}=\overrightarrow{AE}-\overrightarrow{AB}=\frac{\vec c}{2}-\vec b.
+\]
+设中线 $AD$ 与 $BE$ 交于点 $P$，令 $\overrightarrow{AP}=t\,\overrightarrow{AD}=\dfrac{t}{2}\vec b+\dfrac{t}{2}\vec c$；
+另一方面 $\overrightarrow{AP}=\overrightarrow{AB}+s\,\overrightarrow{BE}=(1-s)\vec b+\dfrac{s}{2}\vec c$。
+由平面向量基本定理比较系数：
+\[
+  \frac t2=1-s,\qquad \frac t2=\frac s2
+  \implies s=t,\ \frac t2=1-t\implies t=\frac23.
+\]
+故 $AP:PD=BP:PE=2:1$。由对称性，$P$ 也在中线 $CF$（$F$ 为 $AB$ 中点）上，即三条中线共点，且该点（重心）分每条中线为 $2:1$。
+这正是解析几何与统计中「均值点」的向量面孔（第 7 章样本中心与之同源）。
+\end{solution}
+\reading{拓展阅读 09}{向量：几何空间的通用线性语言}
+\end{afterclass}

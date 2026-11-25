@@ -1,0 +1,208 @@
+% 专题九：三角函数的图象与性质
+\section{专题九：三角函数的图象与性质}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 会用单位圆与图象两个角度看三角函数；
+  \item 会用同角关系、诱导公式、辅助角公式化简求值；
+  \item 会求 $y=A\sin(\omega x+\varphi)+b$ 的周期、最值与单调区间；
+  \item 会用三角函数描述简单的周期现象。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{导语：一个量，两张图}
+角 $\alpha$ 的三角函数，既可以在单位圆上读出来（$\sin\alpha=y$，$\cos\alpha=x$），
+也可以在图象上读出来（$y=\sin x$ 或 $y=\cos x$ 的函数值）。
+同一个问题，用单位圆看是几何，用图象看是函数，用公式看是代数。
+本专题用五个视角把三个“种子问题”各做一遍。
+
+\subsection{种子问题}
+先自己做，再看后面的五个视角。
+\begin{enumerate}
+  \item 求 $y=\sin x+\cos x$ 的最大值。
+  \item 求 $y=2\sin\left(2x+\dfrac{\pi}{3}\right)$ 的周期、最大值与单调递增区间。
+  \item 比较 $\sin\dfrac{\pi}{5}$ 与 $\cos\dfrac{\pi}{5}$ 的大小。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{视角一：单位圆——三角函数的几何定义}
+
+\key{要点}
+\begin{itemize}
+  \item 单位圆中，角 $\alpha$ 的终边交圆于 $P(x,y)$，则 $\sin\alpha=y$，$\cos\alpha=x$，
+        $\tan\alpha=\dfrac{y}{x}$。
+  \item 终边相同的角三角函数值相同：$\sin(\alpha+2k\pi)=\sin\alpha$。
+  \item 诱导公式的几何含义：角的终边关于 $x$ 轴、$y$ 轴、原点对称时，
+        坐标的符号怎么变。
+\end{itemize}
+
+\begin{example}
+求 $\sin\dfrac{7\pi}{6}$ 与 $\cos\dfrac{7\pi}{6}$。
+\end{example}
+\begin{solution}
+$\dfrac{7\pi}{6}=\pi+\dfrac{\pi}{6}$，终边在第三象限，
+$\sin\dfrac{7\pi}{6}=-\dfrac12$，$\cos\dfrac{7\pi}{6}=-\dfrac{\sqrt3}{2}$。
+\key{（回头看：单位圆上读符号，比背公式快）}
+\end{solution}
+
+\begin{problem}
+已知角 $\alpha$ 的终边过点 $(-4,3)$，求 $\sin\alpha$、$\cos\alpha$、$\tan\alpha$。
+\end{problem}
+\begin{solution}
+$r=\sqrt{(-4)^2+3^2}=5$，$\sin\alpha=\dfrac35$，$\cos\alpha=-\dfrac45$，$\tan\alpha=-\dfrac34$。
+\end{solution}
+
+\subsection{视角二：图象——五点法与周期}
+
+\key{要点}
+\begin{itemize}
+  \item 五点法：令 $\omega x+\varphi$ 依次取 $0,\dfrac{\pi}{2},\pi,\dfrac{3\pi}{2},2\pi$。
+  \item 周期：$y=\sin x$、$y=\cos x$ 为 $2\pi$；$y=\tan x$ 为 $\pi$；
+        $y=A\sin(\omega x+\varphi)$ 为 $\dfrac{2\pi}{|\omega|}$。
+  \item 图象上的高低、疏密，对应函数的值域与周期。
+\end{itemize}
+
+\begin{example}
+用五点法在 $[0,2\pi]$ 上画 $y=2\sin x$ 的图象，并写出五个关键点。
+\end{example}
+\begin{solution}
+取 $x=0,\dfrac{\pi}{2},\pi,\dfrac{3\pi}{2},2\pi$，得 $y=0,2,0,-2,0$。
+五个关键点为 $(0,0)$、$\left(\dfrac{\pi}{2},2\right)$、$(\pi,0)$、
+$\left(\dfrac{3\pi}{2},-2\right)$、$(2\pi,0)$。
+\end{solution}
+
+\begin{problem}
+求 $y=2\sin\left(2x+\dfrac{\pi}{3}\right)$ 的周期与最大值。
+\end{problem}
+\begin{solution}
+$T=\dfrac{2\pi}{2}=\pi$；最大值为振幅 $2$。
+\key{（回头看：种子问题 2）}
+\end{solution}
+
+\subsection{视角三：代数——同角关系、诱导公式与辅助角公式}
+
+\key{要点}
+\begin{itemize}
+  \item 同角关系：$\sin^2\alpha+\cos^2\alpha=1$，$\tan\alpha=\dfrac{\sin\alpha}{\cos\alpha}$。
+  \item 诱导公式口诀：奇变偶不变，符号看象限。
+  \item 辅助角公式：$a\sin x+b\cos x=\sqrt{a^2+b^2}\sin(x+\varphi)$，
+        其中 $\tan\varphi=\dfrac ba$。
+\end{itemize}
+
+\begin{example}
+求 $y=\sin x+\cos x$ 的最大值。
+\end{example}
+\begin{solution}
+$y=\sqrt2\sin\left(x+\dfrac{\pi}{4}\right)$，最大值为 $\sqrt2$。
+\key{（回头看：种子问题 1）}
+\end{solution}
+
+\begin{example}
+比较 $\sin\dfrac{\pi}{5}$ 与 $\cos\dfrac{\pi}{5}$ 的大小。
+\end{example}
+\begin{solution}
+$\cos\dfrac{\pi}{5}=\sin\left(\dfrac{\pi}{2}-\dfrac{\pi}{5}\right)=\sin\dfrac{3\pi}{10}$。
+因为 $\dfrac{\pi}{5}<\dfrac{3\pi}{10}$，且 $y=\sin x$ 在 $\left[0,\dfrac{\pi}{2}\right]$ 上递增，
+故 $\sin\dfrac{\pi}{5}<\sin\dfrac{3\pi}{10}=\cos\dfrac{\pi}{5}$。
+\key{（回头看：种子问题 3）}
+\end{solution}
+
+\begin{problem}
+化简 $\cos\left(\dfrac{\pi}{2}+\alpha\right)+\sin(\pi-\alpha)$。
+\end{problem}
+\begin{solution}
+$\cos\left(\dfrac{\pi}{2}+\alpha\right)=-\sin\alpha$，$\sin(\pi-\alpha)=\sin\alpha$，故原式 $=0$。
+\end{solution}
+
+\subsection{视角四：函数——单调性与最值}
+
+\key{要点}
+\begin{itemize}
+  \item 求单调区间：把 $\omega x+\varphi$ 看成一个整体，代入 $y=\sin x$ 的单调区间。
+  \item 求最值：先看值域（含 $A$、$b$），必要时配方或用导数。
+  \item 三角函数与二次函数可以互相转化：$\sin^2 x+\sin x$ 可配方，
+        $\sin x+\cos x$ 可化成一个正弦。
+\end{itemize}
+
+\begin{example}
+求 $y=2\sin\left(2x+\dfrac{\pi}{3}\right)$ 的单调递增区间。
+\end{example}
+\begin{solution}
+由 $-\dfrac{\pi}{2}+2k\pi\leq2x+\dfrac{\pi}{3}\leq\dfrac{\pi}{2}+2k\pi$，
+解得 $-\dfrac{5\pi}{12}+k\pi\leq x\leq\dfrac{\pi}{12}+k\pi$（$k\in\mathbb{Z}$）。
+\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{problem}
+求 $y=2\sin^2 x-4\sin x+1$ 在 $x\in\left[\dfrac{\pi}{6},\dfrac{5\pi}{6}\right]$ 上的最大值与最小值。
+\end{problem}
+\begin{solution}
+令 $t=\sin x$，由 $x\in\left[\dfrac{\pi}{6},\dfrac{5\pi}{6}\right]$ 得 $t\in\left[\dfrac12,1\right]$。
+$y=2t^2-4t+1=2(t-1)^2-1$，在 $\left[\dfrac12,1\right]$ 上递减。
+最大值 $y\left(\dfrac12\right)=-\dfrac12$，最小值 $y(1)=-1$。
+\end{solution}
+
+\subsection{视角五：模型——周期现象}
+
+\key{要点}
+\begin{itemize}
+  \item 周期现象可用 $y=A\sin(\omega x+\varphi)+b$ 刻画：
+        $A$ 是振幅，$T=\dfrac{2\pi}{\omega}$，$b$ 是平衡位置。
+  \item 读题时先找最大值、最小值与周期，再反推参数。
+\end{itemize}
+
+\begin{example}
+某地一天的温度可用 $T(t)=8\sin\left(\dfrac{\pi}{12}t-\dfrac{7\pi}{12}\right)+20$ 近似描述，
+求最高温度、最低温度与周期。
+\end{example}
+\begin{solution}
+最高 $20+8=28$（℃），最低 $20-8=12$（℃），周期 $T=\dfrac{2\pi}{\pi/12}=24$（小时）。
+\end{solution}
+
+\begin{problem}
+一个弹簧振子的位移满足 $y=5\sin(2\pi t)$（cm，s），求振幅、周期与 $t=0.25$ s 时的位移。
+\end{problem}
+\begin{solution}
+振幅 $5$ cm，周期 $1$ s；$t=0.25$ 时 $y=5$ cm。
+\end{solution}
+\end{explore}
+
+\begin{inclasstest}
+\subsection{变式训练}
+只改一个条件，重新做一遍。
+\begin{enumerate}
+  \item 求 $y=\sqrt3\sin x+\cos x$ 的最大值与最小正周期；
+  \item 求 $y=3\sin\left(\dfrac{x}{2}-\dfrac{\pi}{4}\right)$ 的振幅、周期与初相；
+  \item 求 $y=3\sin\left(2x-\dfrac{\pi}{6}\right)+1$ 的单调递减区间；
+  \item 比较 $\cos\dfrac{2\pi}{7}$ 与 $\cos\dfrac{3\pi}{7}$ 的大小；
+  \item 已知 $\tan\alpha=2$，求 $\dfrac{\sin\alpha+\cos\alpha}{\sin\alpha-\cos\alpha}$；
+  \item 某港口水深 $h=6+4\sin\left(\dfrac{\pi}{6}t\right)$，求一天中水深大于 $8$ m 的时间段。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection{知识来源对照表}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{3.4cm}p{4.0cm}p{5.6cm}}
+\toprule
+结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
+\midrule
+单位圆定义 & 视角一（几何） & 视角二（图象）、视角三（代数） \\
+五点法与周期 & 视角二（图象） & 视角四（函数） \\
+同角关系与诱导公式 & 视角三（代数） & 视角一（几何） \\
+辅助角公式 & 视角三（代数） & 视角四（函数） \\
+单调区间与最值 & 视角四（函数） & 视角二（图象） \\
+周期现象模型 & 视角五（模型） & 视角四（函数） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{下一步}：三角函数是“周期函数”的代表；它的单调区间、最值与二次函数的处理
+（配方、整体代换）完全同构——这正是专题四、专题六的工具。
+\end{afterclass}

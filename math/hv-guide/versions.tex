@@ -1,0 +1,199 @@
+% ============================================================
+%  四合一多版本条件编译引擎（\ifteacher × \ifbasic）
+% ------------------------------------------------------------
+%  用法：在 main.tex 导言区最后 \input{versions}，
+%        再设置两行开关，然后 \input{main_body}。
+%
+%  四种组合（改两行即可，无需复制任何文件）：
+%    \teachertrue  \basicfalse   完整教师版（默认母版）
+%    \teacherfalse \basicfalse   完整学生版（隐藏解析与填空答案）
+%    \teachertrue  \basictrue    薄弱生教师版（显化脚手架 + 完整答案）
+%    \teacherfalse \basictrue    薄弱生学生版（保留 \tk 留白横线）
+%
+%  本文件只依赖已加载的宏包（xcolor / tcolorbox / environ），
+%  不修改 common/，故对 ../hv-bank 等其他分册零影响。
+% ============================================================
+
+% ---------- 布尔开关 ----------
+\newif\ifteacher          % 教师解析版 / 学生留白版
+\newif\ifbasic            % 基础通关版 / 完整高观点版
+\newif\ifdemomode         % 是否挂载示范章节 chapters/demo_multiversion
+
+% 安全默认（main.tex 的两行开关覆盖此处）
+\teachertrue
+\basicfalse
+\demomodefalse
+
+% ---------- 零残留隐藏所需 ----------
+\usepackage{environ}      % \NewEnviron（隐藏时不留空白）
+
+% ---------- 版本标签（封面 / 页眉自动显示） ----------
+\newcommand{\versionlabel}{%
+  \ifteacher 教师解析版\else 学生留白版\fi
+  \,\textperiodcentered\,
+  \ifbasic 基础通关版\else 完整高观点版\fi}
+
+% ============================================================
+%  一、版本内容分流环境
+% ============================================================
+
+% 仅完整版渲染；薄弱生版彻底忽略（不占位）
+% 用途：莫比乌斯矩阵、射影同构、压轴第 3–4 阶梯难题等
+\NewEnviron{advancedonly}{%
+  \ifbasic\else
+    \par\medskip
+    \BODY
+    \par\medskip
+  \fi
+}
+
+% 仅薄弱生版渲染；完整版彻底忽略
+% 用途：课前 15 分钟计算过关、大白话口诀、半成品步步填空
+\NewEnviron{basiconly}{%
+  \ifbasic
+    \par\medskip
+    \BODY
+    \par\medskip
+  \fi
+}
+
+% ============================================================
+%  二、双模填空宏 \tk{...} 与内联版本选择 \vchoice{}{}
+% ============================================================
+
+% 教师版：红色下划线答案；学生版：等宽下划线留白（版面稳定）
+% 内容一律写成裸数学式（不带 $）。\underline 继承当前模式，
+% 而 \sbox 的盒子内容始终是文本模式、必须自带数学定界符。
+\newcommand{\tk}[1]{%
+  \ifteacher
+    \ifmmode
+      {\color{second}\underline{#1}}%
+    \else
+      {\color{second}\underline{$\displaystyle#1$}}%
+    \fi
+  \else
+    \sbox0{$\displaystyle#1$}%
+    \underline{\hspace{\wd0}}%
+  \fi
+}
+
+% 同一句子里的措辞切换：完整版文本 / 薄弱生大白话文本
+\newcommand{\vchoice}[2]{%
+  \ifbasic #2\else #1\fi}
+
+% ============================================================
+%  三、解答环境重定义（教师版带边框【剖析与标准解答】）
+% ============================================================
+\RenewDocumentEnvironment{solution}{+b}{%
+  \ifteacher
+    \par\medskip
+    \begin{tcolorbox}[
+      breakable, enhanced, sharp corners,
+      colback=main!3, colframe=main!60!black, boxrule=0.5pt,
+      title={\bfseries 剖析与标准解答}, coltitle=black, fonttitle=\small,
+      top=5pt,
+    ]
+    #1
+    \end{tcolorbox}%
+  \else
+    % 学生版：不留内容，只保留少量书写留白
+    \par\noteblank[6ex]%
+  \fi
+}{}
+
+% ============================================================
+%  四、语义化盒子（corebox / methodbox / trapbox / warmupbox）
+% ============================================================
+
+% 核心概念盒（绿）
+\newtcolorbox{corebox}[1]{
+  breakable, enhanced, sharp corners,
+  colback=main!4, colframe=main!60!black, boxrule=0.6pt,
+  title={\bfseries #1}, coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=main!60!black, boxrule=0.4pt},
+  top=7pt,
+}
+
+% 方法归纳盒（青）
+\newtcolorbox{methodbox}[1]{
+  breakable, enhanced, sharp corners,
+  colback=third!5, colframe=third!60!black, boxrule=0.5pt,
+  title={\bfseries #1}, coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=third!60!black, boxrule=0.4pt},
+  top=7pt,
+}
+
+% 易错陷阱盒（红）
+\newtcolorbox{trapbox}[1]{
+  breakable, enhanced, sharp corners,
+  colback=second!4, colframe=second!65!black, boxrule=0.5pt,
+  title={\bfseries 陷阱：#1}, coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=second!65!black, boxrule=0.4pt},
+  top=7pt,
+}
+
+% 课前热身盒（蓝）
+\newtcolorbox{warmupbox}[1]{
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!4, colframe=structurecolor!70!black, boxrule=0.5pt,
+  title={\bfseries #1}, coltitle=black, fonttitle=\small,
+  top=6pt,
+}
+
+% ============================================================
+%  五、按章（节）自动编号的 example / exercise 环境
+%  注：elegantnote 自带 example 计数器（\c@example），故另立
+%      hvexample / hvexercise 计数，避免与模板冲突；编号仍按节累计。
+% ============================================================
+\newcounter{hvexample}[section]
+\renewcommand{\thehvexample}{\thesection.\arabic{hvexample}}
+
+\RenewDocumentEnvironment{example}{O{}}{%
+  \refstepcounter{hvexample}%
+  \par\medskip\noindent
+  {\bfseries\color{main}例题\thehvexample\IfValueT{#1}{：#1}\quad}%
+}{\par\medskip}
+
+\newcounter{hvexercise}[section]
+\renewcommand{\thehvexercise}{\thesection.\arabic{hvexercise}}
+
+\NewDocumentEnvironment{exercise}{O{}}{%
+  \refstepcounter{hvexercise}%
+  \par\medskip\noindent
+  {\bfseries\color{third}练习\thehvexercise\IfValueT{#1}{：#1}\quad}%
+}{\par\medskip}
+
+% ============================================================
+%  六、七问连环母题（Scaffolded Master Problem）载体环境
+% ------------------------------------------------------------
+%  定位：一道母题挂载 (1)–(7) 个递进小问，学生做题留白处写下的
+%        推理本身就是这一章的学习笔记。写作规范见 ARCHITECTURE.md。
+% ============================================================
+
+\newcounter{hvmasterq}[section]
+\renewcommand{\thehvmasterq}{\thesection.\arabic{hvmasterq}}
+
+% 母题盒：标题自动编号；盒内用 enumerate[label=(\arabic*)] 写七问
+% 注意：计数器由调用方在 \begin{masterq} 前手动 \refstepcounter{hvmasterq}，
+%       不要把 \refstepcounter 写进本定义的选项里（tcolorbox 会反复展开选项，
+%       导致编译卡在分页计算）。
+\newtcolorbox{masterq}[1]{
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 七问连环母题\thehvmasterq：#1},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt,
+}
+
+% 每问末尾的笔记归档标签：\logotag{存档类别}（如「核心公理」「大招公式」）
+\newcommand{\logotag}[1]{%
+  \hfill\textcolor{third}{\small\ttfamily【笔记归档·#1】}}

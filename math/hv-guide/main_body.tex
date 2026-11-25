@@ -1,0 +1,58 @@
+% ============================================================
+%  main_body.tex —— 正文主体（由 main.tex 在设置好版本开关后 \input）
+%  拆分原因：四合一多版本编译时，包装文件只需复写「两行开关」，
+%  再 \input{main_body}，避免导言区内容四处重复、彼此漂移。
+% ============================================================
+
+\title{数学导学案·高观点系列}
+\author{Shawn Shang}
+\date{2026 年 11 月}
+
+\graphicspath{{../figures/}{../map/figures/}}
+
+\begin{document}
+
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  \makebox[\textwidth]{%
+    \includegraphics[width=\paperwidth]{cover_cyan.png}}\par
+  \vfill
+  {\Huge\bfseries\color{ecolor!70!black} 数学导学案·高观点系列\par}
+  \vskip 1.2em
+  {\large 结构主义视角下的高中数学\par}
+  \vskip 0.8em
+  {\large 第 0 章 — 第 9 章\par}
+  \vskip 0.8em
+  {\large\versionlabel\par}
+  \vskip 2.5em
+  {\large Shawn Shang\par}
+  \vfill
+  {\normalsize 2026 年 11 月\par}
+\end{titlepage}
+\tableofcontents
+
+% 让第一个 \section 编号为 0（第 0 章是总纲）
+\setcounter{section}{-1}
+
+\input{chapters/00}
+\input{chapters/01}
+\input{chapters/02}
+\input{chapters/03}
+\input{chapters/04}
+\input{chapters/05}
+\input{chapters/06}
+\input{chapters/07}
+\input{chapters/08_homogenization}
+\input{chapters/09_fixed_point}
+
+% 示范章节（仅当 main.tex 中 \demomotrue 时挂载）
+\ifdemomode
+  \input{chapters/demo_multiversion}
+\fi
+
+\appendix
+\input{chapters/appA_legalization}
+\input{chapters/appB_honors_bridge}
+
+\end{document}

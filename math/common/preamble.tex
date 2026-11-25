@@ -73,3 +73,8 @@
 % elegantbook/elegantnote 的 math=newtx 已加载 newtxmath；
 % 这里补上常用但 newtx 未覆盖的符号字体。
 \usepackage{mathrsfs}       % \mathscr
+
+% ---------- 补集符号 ----------
+% ctex / ElegantLaTeX 都不加载 unicode-math，\complement 未定义，
+% 而 amsmath、amssymb 也没有。这里统一补上（用 Unicode ∁）。
+\providecommand{\complement}{\mathop{∁}}

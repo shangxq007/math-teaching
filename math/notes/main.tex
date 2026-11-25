@@ -1,0 +1,40 @@
+% 笔记 · ElegantNote
+% 定位：学生课上记、课后补的笔记本。版心留白为主，提示语为辅。
+%   与导学案的分工：导学案是「任务」（要填的空有标准答案）；
+%   笔记是「记录」（留白处写什么由学生自己决定）。
+%   与讲义的分工：讲义是完整正文；笔记只给骨架和空位。
+\documentclass[cn,11pt,color=cyan,math=newtx,normal]{elegantnote}
+
+\input{../common/preamble}
+\input{../common/macros}
+\input{../common/envs}
+
+% 笔记版心加宽，留出更多书写空间
+\geometry{left=20mm, right=20mm, top=18mm, bottom=18mm}
+
+\title{数学笔记}
+\author{Shawn Shang}
+\date{2026 年 11 月}
+
+\graphicspath{{../figures/}}
+
+\begin{document}
+
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  \makebox[\textwidth]{%
+    \includegraphics[width=\paperwidth]{../figures/cover_cyan.png}}\par
+  \vfill
+  {\Huge\bfseries\color{ecolor!70!black} 数学笔记\par}
+  \vskip 1.2em
+  {\large 高中必修\par}
+  \vskip 2.5em
+  {\large Shawn Shang\par}
+  \vfill
+  {\normalsize 2026 年 11 月\par}
+\end{titlepage}
+
+\input{chapters/01}
+
+\end{document}

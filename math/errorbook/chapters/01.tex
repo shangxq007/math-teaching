@@ -1,0 +1,30 @@
+% 错题本 · 第 1 章示例
+\section{集合与常用逻辑用语}
+
+\begin{mistake}[概念不清]
+（原题）设 $A=\{x\mid x^2=a\}$，求集合 $A$ 中的元素。
+
+\wrong{由 $x^2=a$ 得 $x=\sqrt{a}$，故 $A=\{\sqrt{a}\}$。}
+
+\correct{必须讨论 $a$ 的符号：$a<0$ 时 $A=\varnothing$；$a=0$ 时 $A=\{0\}$；
+$a>0$ 时 $A=\{-\sqrt{a},\sqrt{a}\}$。}
+
+\variant{把条件改为 $A=\{x\mid x^2=a,\ x\in\mathbf{Z}\}$，结论又如何？}
+
+\reflect{错因：把「解方程」当成「求集合」，丢掉了解集为空与多解的情形。
+今后见到含参方程求集合，先问「解是否存在、有几个」。}
+\end{mistake}
+
+\begin{mistake}[运算错误]
+（原题）已知 $A=\{x\mid -1<x\le 2\}$，$B=\{x\mid x\ge 0\}$，求 $\complement_{\mathbf{R}}(A\cap B)$。
+
+\wrong{$A\cap B=(0,2]$，故补集为 $(-\infty,0]\cup(2,+\infty)$。}
+
+\correct{端点要逐个核对：$A$ 含 $2$ 不含 $-1$，$B$ 含 $0$，所以 $A\cap B=[0,2]$，
+补集为 $(-\infty,0)\cup(2,+\infty)$。}
+
+\variant{若改为求 $\complement_{\mathbf{R}}(A\cup B)$ 呢？}
+
+\reflect{错因：把 $A$ 的左端点 $-1$ 与 $B$ 的左端点 $0$ 混用，交集左端凭感觉写。
+今后先分别在数轴上标出两个集合，再逐段取交。}
+\end{mistake}

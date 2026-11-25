@@ -1,0 +1,20 @@
+digraph flow_trig {
+  rankdir = TB;
+  fontname = "Noto Sans CJK SC";
+  node [fontname="Noto Sans CJK SC", fontsize=11, shape=box,
+        style="rounded,filled", margin="0.14,0.09"];
+  edge [fontname="Noto Sans CJK SC", fontsize=10, color="#757575",
+        fontcolor="#616161", arrowsize=0.8];
+
+  start [label="开始", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+  std [label="化为标准形\ny = A sin(ωx + φ) + b", fillcolor="#E3F2FD", color="#1565C0"];
+  A [label="振幅 |A|\n（纵向拉伸）", fillcolor="#E8F5E9", color="#2E7D32"];
+  omega [label="周期 T = 2π / |ω|\n（横向缩放）", fillcolor="#E8F5E9", color="#2E7D32"];
+  phi [label="初相 φ\n平移 φ / ω", fillcolor="#E8F5E9", color="#2E7D32"];
+  b [label="平衡位置 b", fillcolor="#E8F5E9", color="#2E7D32"];
+  max [label="最大值 |A| + b\n最小值 -|A| + b", fillcolor="#E3F2FD", color="#1565C0"];
+  five [label="五点法作图\n令 ωx + φ 依次取\n0, π/2, π, 3π/2, 2π", fillcolor="#E3F2FD", color="#1565C0"];
+  out [label="写出性质与图象", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+
+  start -> std -> A -> omega -> phi -> b -> max -> five -> out;
+}

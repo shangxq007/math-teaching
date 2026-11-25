@@ -1,0 +1,38 @@
+% 理论概要 · ElegantNote
+% 定位：讲义的骨架版。只保留定义、定理、公式与它们之间的逻辑顺序，
+%   不写引入、不写例题（或只留一道最必要的例题），不写练习。
+%   用途：① 教师备课提纲；② 学生考前 10 分钟过一遍理论；③ 复习课底稿。
+%   与讲义的分工：讲义回答「为什么、怎么用」；概要回答「有哪些、什么关系」。
+\documentclass[cn,11pt,color=cyan,math=newtx,normal]{elegantnote}
+
+\input{../common/preamble}
+\input{../common/macros}
+\input{../common/envs}
+
+\title{数学理论概要}
+\author{Shawn Shang}
+\date{2026 年 11 月}
+
+\graphicspath{{../figures/}{../map/figures/}}
+
+\begin{document}
+
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  \makebox[\textwidth]{%
+    \includegraphics[width=\paperwidth]{../figures/cover_cyan.png}}\par
+  \vfill
+  {\Huge\bfseries\color{ecolor!70!black} 数学理论概要\par}
+  \vskip 1.2em
+  {\large 高中必修 · 骨架版\par}
+  \vskip 2.5em
+  {\large Shawn Shang\par}
+  \vfill
+  {\normalsize 2026 年 11 月\par}
+\end{titlepage}
+\tableofcontents
+
+\input{chapters/01}
+
+\end{document}

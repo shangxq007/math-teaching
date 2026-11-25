@@ -1,0 +1,718 @@
+% 高观点导学案：计数原理、概率测度空间与统计线性逼近（第 7 章·高观点版）
+% 主线：把「不确定性」纳入集合框架——样本空间是集合，概率是其上的归一化计数测度；
+%       条件概率 = 样本全集缩小后的空间缩放；全概率/贝叶斯 = 完备互斥划分；
+%       回归直线 = 散点云的竖直最小二乘投影；独立性检验 = 小概率事件原理的统计反证法；
+%       压轴收官：新定义情境题的四步破题法（翻译 → 特例 → 归纳 → 严格证明）。
+
+\section{计数原理、概率测度空间与统计线性逼近（高观点版）}
+
+\begin{methodbox}{多框架对读}
+\small
+\begin{center}
+\begin{tabular}{c|p{2.9cm}|p{5.0cm}|p{3.1cm}}
+\toprule
+视角 & 本章看点 & 别的视角怎么说 & 哪侧最省力 \\
+\midrule
+代数 & 计数公式、期望方差 & 符号对象的机械运算 & 硬算分布列 \\
+几何 & 散点、回归直线、面积测度 & 图形的位置与拟合 & 看趋势、估相关 \\
+集合 & 样本空间、事件、完备划分 & 事件＝子集；概率＝测度 & 界互斥与独立 \\
+映射 & $X:\Omega\to\mathbb R$；最小二乘＝投影 & 换到残差正交的坐标系 & 一图读懂相关 \\
+\bottomrule
+\end{tabular}
+\end{center}
+卡的使用：概率题先画维恩图与树图（集合），统计题先想「投影到哪个子空间」（总图见第 0 章图~\ref{fig:four-view-map}）。
+\end{methodbox}
+
+第 0 章确立了集合与逻辑这一全书语言，第 4 章把向量确立为空间的通用线性语言，第 6 章把曲线局部化为直线；
+本章把「不确定性」也纳入同一个框架——随机试验的样本空间 $\Omega$ 是一个集合，概率是定义在其上的\key{归一化计数测度}；
+条件概率 $P(B\mid A)$ 的本质是把样本全集 $\Omega$ 缩小为子集 $A$ 之后的\key{空间缩放}；
+线性回归方程是二维散点云在竖直方向上的\key{最小二乘投影直线}，独立性检验则是「小概率事件原理」支配下的\key{统计学反证法}。
+四个模块层层展开：
+\key{计数原理的集合本质}（并集基数与笛卡尔积基数，排列＝有序单射、组合＝无序子集族，捆绑／插空／隔板三技法）$\to$
+\key{概率空间的归一化测度}（古典与几何概型的统一除法，条件概率＝空间缩放，全概率与贝叶斯＝完备互斥划分）$\to$
+\key{统计线性逼近}（百分位数规则，回归直线必过样本中心，独立性检验的统计反证）$\to$
+\key{新定义情境题破题模板}（翻译符号集合 $\to$ 构造小规模特例 $\to$ 归纳猜想通项 $\to$ 反证法／数学归纳法严格证明）。
+核心思想：\key{随机性不是结构的对立面，而是有限集合上的测度；统计不是死记公式，而是「投影逼近 $+$ 小概率反证」；压轴新定义题的本质是「把陌生符号翻译回熟悉的集合与结构」。}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 理解分类加法原理即互斥子集并集的基数公式 $|A\cup B|=|A|+|B|$，分步乘法原理即笛卡尔积的基数公式 $|A\times B|=|A|\cdot|B|$；
+  \item 理解排列是有序单射序列、组合是无序 $k$ 元子集族，掌握 $A_n^k$ 与 $C_n^k$ 的关系 $A_n^k=C_n^k\cdot k!$；
+  \item 掌握捆绑法、插空法、隔板法的适用结构，会把「相邻／不相邻／相同元素分堆」问题翻译为标准计数模型；
+  \item 会把古典概型与几何概型统一为归一化测度 $P(A)=\mu(A)/\mu(\Omega)$，说出概率三条公理（非负性、规范性、可加性）；
+  \item 理解条件概率 $P(B\mid A)=\dfrac{P(A\cap B)}{P(A)}$ 是样本空间缩小为 $A$ 后的重新归一化，会用全概率公式与贝叶斯公式；
+  \item 掌握百分位数的计算规则，理解回归直线 $\hat y=\hat bx+\hat a$ 是竖直残差平方和最小的投影直线且必过 $(\bar x,\bar y)$；
+  \item 理解独立性检验 $K^2$ 统计量背后的「小概率事件原理」，能正确陈述检验结论；
+  \item 掌握新定义情境题的四步破题法（读懂符号集合 $\to$ 小规模特例 $\to$ 归纳猜想 $\to$ 反证法／数学归纳法严格证明）。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection*{知识回顾}
+\begin{itemize}
+  \item 若 $A\cap B=\varnothing$，则 $|A\cup B|=$ \blank；
+  \item 完成一件事有两类互斥的途径，第一类有 $n_1$ 种方法、第二类有 $n_2$ 种方法，则共有 \blank 种方法；
+  \item 古典概型：$P(A)=$ \blank；几何概型：$P(A)=$ \blank；
+  \item 样本相关系数 $r$ 满足 $|r|$ \blank $1$，$r>0$ 表示两个变量 \blank 相关；
+  \item 反证法的逻辑结构：假设结论不成立，推出 \blank，从而肯定原结论。
+\end{itemize}
+
+\subsection*{教材速读}
+阅读「计数原理」「概率」「成对数据的统计」相关教材，完成下列问题：
+\begin{enumerate}
+  \item 排列数公式 $A_n^m=$ \blank；组合数公式 $C_n^m=$ \blank；
+  \item 条件概率公式 $P(B\mid A)=$ \blank（要求 \blank $\ne0$）；
+  \item 全概率公式：若 $A_1,\dots,A_n$ 是 $\Omega$ 的完备互斥划分，则 $P(B)=$ \blank；
+  \item 回归直线 $\hat y=\hat bx+\hat a$ 必过样本中心 \blank，且 $\hat a=$ \blank（用 $\bar x,\bar y,\hat b$ 表示）；
+  \item 独立性检验统计量 $K^2=$ \blank（设 $2\times2$ 列联表中四个数据为 $a,b,c,d$）。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{计数原理：并集、笛卡尔积与三类经典技法}
+
+\key{探究一：计数不是数数，而是集合的度量}
+
+\key{（1）两个原理的集合本质。}
+设完成一件事的所有可能结果构成集合 $\Omega$。若 $\Omega$ 被分成两个互斥的子集 $\Omega=A\sqcup B$（即 $A\cap B=\varnothing$），则
+\[
+  |\Omega|=|A\sqcup B|=|A|+|B|,
+\]
+这就是\key{分类加法原理}：各类之间「不重不漏」，求总数就是求互斥子集并集的基数。
+若完成一件事要分两步：第一步的结果集为 $A$、第二步的结果集为 $B$，则所有可能结果组成笛卡尔积
+\[
+  \Omega=A\times B=\{(a,b)\mid a\in A,\ b\in B\},\qquad |\Omega|=|A\times B|=|A|\cdot|B|,
+\]
+这就是\key{分步乘法原理}：每一步的选择共同确定一个有序对，求总数就是求积集的基数。
+一句话对照：加法管「或」（不交并），乘法管「且」（有序积）。
+
+\begin{example}
+从 5 名男同学和 4 名女同学中选出 3 人组成学习小组（不分职务），有多少种选法？若从中选出 3 人分别担任语文、数学、英语三科课代表，又有多少种选法？
+\end{example}
+\begin{solution}
+第一问只关心「选出的集合」，是无序的 $3$ 元子集族，用组合：
+\[
+  C_9^3=\frac{9!}{3!\,6!}=84 .
+\]
+第二问关心「谁对应哪一科」，是有序安排：先选后排，由分步乘法原理
+\[
+  C_9^3\cdot A_3^3=84\times6=504\quad(\text{或直接 }A_9^3=9\times7\times8=504).
+\]
+两问相差 $3!=6$ 倍——正是「无序」与「有序」的差别。
+\end{solution}
+
+\key{（2）排列与组合：有序单射与无序子集。}
+从 $n$ 个不同元素中取出 $k$ 个排成一列，相当于构造一个单射 $\{1,2,\dots,k\}\hookrightarrow\{1,2,\dots,n\}$，其个数为排列数
+\[
+  A_n^k=n(n-1)\cdots(n-k+1)=\frac{n!}{(n-k)!}.
+\]
+从 $n$ 个不同元素中取出 $k$ 个组成子集（不计顺序），其个数为组合数
+\[
+  C_n^k=\frac{A_n^k}{k!}=\frac{n!}{k!\,(n-k)!},
+\]
+因为「先选后排」＝「选子集」乘「子集全排列」：$A_n^k=C_n^k\cdot k!$——这正是分步乘法原理的一次应用。
+特别地，$C_n^k=C_n^{n-k}$（选 $k$ 个留下等价于选 $n-k$ 个淘汰）。
+
+\key{（3）三类经典技法的结构对号。}
+\begin{itemize}
+  \item \key{捆绑法（必相邻）}：把必须相邻的 $m$ 个元素捆成一个「大元素」，先与其他元素一起排，再解开内部排列：
+    $n$ 个元素中指定 $m$ 个相邻的排法 $=(n-m+1)!\cdot A_m^m$。
+  \item \key{插空法（不相邻）}：先排其余 $n$ 个元素（产生 $n+1$ 个空位，含两端），再把 $m$ 个元素插入 $m$ 个不同的空位：$A_n^n\cdot A_{n+1}^{\,m}$。（此处的 $n$ 指「其余元素个数」，与上一行捆绑法中 $n$ 为总元素数的口径不同。）
+  \item \key{隔板法（相同元素分堆）}：不定方程 $x_1+x_2+\cdots+x_m=n\ (x_i\in\mathbb N^*)$ 的正整数解，对应把 $n$ 个相同小球排成一排后在 $n-1$ 个空隙中插入 $m-1$ 块板，解数为
+    \[
+      C_{n-1}^{\,m-1}.
+    \]
+    若允许 $x_i=0$，先令 $x_i'=x_i+1$ 化为正整数解，得 $C_{n+m-1}^{\,m-1}$。
+\end{itemize}
+
+\begin{example}
+（1）6 人站成一排，甲、乙必须相邻，有多少种站法？
+（2）6 人站成一排，甲、乙互不相邻，有多少种站法？
+（3）求 $x+y+z=10$ 的正整数解的组数。
+\end{example}
+\begin{solution}
+（1）捆绑：甲乙捆成一个大元素，与其余 4 人共 5 个元素全排列，甲乙内部再交换：
+\[
+  A_5^5\cdot A_2^2=120\times2=240 .
+\]
+（2）插空：先排其余 4 人，产生 5 个空位，甲乙选 2 个空位排列：
+\[
+  A_4^4\cdot A_5^2=24\times20=480 .
+\]
+（3）隔板：10 个相同小球排一排，9 个空隙插 2 块板分成 3 份（每份至少 1）：
+\[
+  C_9^2=36 .
+\]
+\end{solution}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    % ---------- 左：文氏图 ----------
+    \draw[gray] (-1.7,-1.6) rectangle (3.9,1.6);
+    \begin{scope}
+      \clip (0,0) circle (1.15);
+      \fill[second!20] (-1.8,-1.7) rectangle (4.0,1.7);
+    \end{scope}
+    \begin{scope}
+      \clip (1.4,0) circle (1.15);
+      \fill[third!20] (-1.8,-1.7) rectangle (4.0,1.7);
+    \end{scope}
+    \begin{scope}
+      \clip (0,0) circle (1.15);
+      \fill[main!32] (1.4,0) circle (1.15);
+    \end{scope}
+    \draw (0,0) circle (1.15);
+    \draw (1.4,0) circle (1.15);
+    \node at (-0.62,0) {$A$};
+    \node at (2.02,0) {$B$};
+    \node[main!70!black] at (0.7,-0.05) {\small \color{white}$A\cap B$};
+    \node[gray!70!black] at (0.7,1.4) {$A\cup B$};
+    \node[gray!70!black] at (-1.5,1.4) {$U$};
+    % ---------- 右：卡诺图式网格 ----------
+    \begin{scope}[xshift=5.4cm, yshift=0.5cm]
+      \draw (0,0) rectangle (3.0,2.4);
+      \draw (1.5,0)--(1.5,2.4);
+      \draw (0,1.2)--(3.0,1.2);
+      \node at (0.75,1.8) {$A\cap B$};
+      \node at (2.25,1.8) {$A\cap\bar B$};
+      \node at (0.75,0.6) {$\bar A\cap B$};
+      \node at (2.25,0.6) {$\bar A\cap\bar B$};
+      \node[above] at (0.75,2.4) {$B$};
+      \node[above] at (2.25,2.4) {$\bar B$};
+      \node[left] at (0,1.8) {$A$};
+      \node[left] at (0,0.6) {$\bar A$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{集合运算的卡诺图式表示：左图文氏图中 $A\cup B$ 是「或」、$A\cap B$ 是「且」；右图 $2\times2$ 网格穷举两个事件的四种组合，对应概率论中样本空间的完备互斥划分}
+  \label{fig:ch07-venn}
+\end{figure}
+
+\begin{commonerror}{易错诊断室：可重复与不可重复、有序与无序}
+\paragraph{失误一：有序、无序混淆。}
+从 5 人中选 3 人「组成代表团」用 $C_5^3=10$；若「分别担任三个不同职务」就要用 $A_5^3=60$。
+题干中出现「分配、担任、排成一列、编号」等词，结果自带顺序，必须按有序处理。
+\paragraph{失误二：平均分组忘记除序。}
+把 6 人平均分成 3 组（每组 2 人）：若直接写 $C_6^2C_4^2C_2^2=90$，等于把三个无区别的组又按顺序数了一遍，
+正确的组数为
+\[
+  \frac{C_6^2C_4^2C_2^2}{3!}=\frac{90}{6}=15 .
+\]
+\key{分组若无编号（与「分到三个不同地方」区别开），组间要除以组数的阶乘。}
+\paragraph{失误三：可重复与不可重复混淆。}
+3 个人从 5 种口味冰淇淋中各选一种：口味可被多人重复选择时，由分步乘法原理有 $5^3=125$ 种；
+若规定三人口味互不相同，则相当于从 5 种中取 3 种的排列 $A_5^3=60$。
+一字之差，原理全变——务必先确认「选过的还能不能再选」。
+\end{commonerror}
+
+\begin{conccard}[一级]{计数原理的集合本质与三技法}{一切计数问题，尤其是含「相邻／不相邻／平均分组」的排列组合题}{有序无序混淆；平均分组忘除序；可重复当成不可重复；隔板法忽略「每份至少一个」}
+分类加法＝互斥子集并集基数：$|A\sqcup B|=|A|+|B|$；
+分步乘法＝笛卡尔积基数：$|A\times B|=|A|\cdot|B|$；
+排列＝有序单射序列 $A_n^k=\frac{n!}{(n-k)!}$，组合＝无序子集族 $C_n^k=\frac{A_n^k}{k!}$；
+捆绑：$(n-m+1)!\,A_m^m$；插空：$A_n^nA_{n+1}^{\,m}$；
+隔板：$x_1+\cdots+x_m=n$ 的正整数解数 $=C_{n-1}^{\,m-1}$。
+\end{conccard}
+
+\subsection{概率测度：归一化、空间缩放与完备划分}
+
+\key{探究二：概率是定义在样本空间上的「归一化集合测度」}
+
+\key{（1）古典概型与几何概型的统一。}
+任何随机试验的样本空间 $\Omega$ 都是一个集合。在其上定义一个「大小」函数 $\mu$（测度）：
+古典概型中 $\mu$ 是计数测度（$\mu(A)=|A|$），几何概型中 $\mu$ 是长度／面积／体积。
+只要每个基本结果等可能，就有统一的归一化公式
+\[
+  P(A)=\frac{\mu(A)}{\mu(\Omega)}.
+\]
+由此可直接验证概率的三条公理：非负性 $P(A)\ge0$、规范性 $P(\Omega)=1$、互斥可加性 $P(A\sqcup B)=P(A)+P(B)$——它们不过是测度的归一化性质。
+
+\begin{example}
+在区间 $[0,1]$ 上任取两点 $X,Y$，求 $|X-Y|\le\dfrac12$ 的概率。
+\end{example}
+\begin{solution}
+样本空间是单位正方形 $\Omega=[0,1]^2$，$\mu(\Omega)=1$。
+满足 $|X-Y|>\dfrac12$ 的区域是直线 $Y=X\pm\dfrac12$ 之外的两个三角形，每个面积为 $\dfrac12\left(\dfrac12\right)^2=\dfrac18$。
+故
+\[
+  P(|X-Y|\le\tfrac12)=1-2\times\tfrac18=\tfrac34 .
+\]
+古典（数点）与几何（量面积）在此只是测度 $\mu$ 的不同，算法同为「除以全集」。
+\end{solution}
+
+\key{（2）条件概率 $P(B\mid A)$：样本空间的缩放。}
+事件 $A$ 发生后，样本全集由 $\Omega$ 缩小为子集 $A$，每个结果仍在 $A$ 内等可能。
+新样本空间上的归一化给出
+\[
+  P(B\mid A)=\frac{P(A\cap B)}{P(A)}\qquad(P(A)>0).
+\]
+几何读法：\key{把 $A$ 当作新的「全宇宙」，概率质量重新按 $P(A)$ 缩放}。它仍满足三条公理（规范性 $P(\Omega\mid A)=1$、可加性），因此是以 $A$ 为底的合法概率。
+
+\begin{example}
+10 张考签中有 1 张中奖，5 人依次不放回抽取。证明：无论先抽后抽，每人中奖概率都等于 $\dfrac1{10}$（抽签公平性）。
+\end{example}
+\begin{solution}
+第 1 人显然为 $\frac1{10}$。
+第 2 人中奖 $=$「第 1 人未中且第 2 人中」，由乘法公式与缩小的样本空间：
+\[
+  P=P(\text{第 1 人未中})\cdot P(\text{第 2 人中}\mid\text{第 1 人未中})
+  =\frac{9}{10}\times\frac{1}{9}=\frac{1}{10}.
+\]
+第 3 人同理：$\frac{9}{10}\times\frac{8}{9}\times\frac{1}{8}=\frac1{10}$。
+第 4、5 人同理（依次缩小样本空间后概率仍为 $\frac1{10}$）。
+可见「先抽优势」是错觉——条件概率把空间缩小后自动抹平了顺序差异。
+\end{solution}
+
+\key{（3）全概率公式与贝叶斯公式：完备互斥划分。}
+若 $\Omega=A_1\sqcup A_2\sqcup\cdots\sqcup A_n$（$A_i$ 两两不交、并为全集，称为\key{完备互斥划分}），则
+\[
+  P(B)=\sum_{i=1}^{n}P(A_i)\,P(B\mid A_i)\quad(\text{全概率公式}),
+\]
+它是面积可加性 $\mu(B)=\sum\mu(A_i\cap B)$ 的直接翻译：把 $B$ 沿划分切成互不重叠的碎片再求和。
+反过来，已知 $B$ 发生了，反推它是哪个碎片贡献的：
+\[
+  P(A_j\mid B)=\frac{P(A_j)\,P(B\mid A_j)}{\sum\limits_{i=1}^{n}P(A_i)\,P(B\mid A_i)}\quad(\text{贝叶斯公式}).
+\]
+全概率是「由因及果」，贝叶斯是「由果溯因」：$P(A_j)$ 是先验概率，$P(A_j\mid B)$ 是纳入证据 $B$ 后的后验概率。
+
+\begin{example}
+某厂三条流水线产量占比为 $50\%,30\%,20\%$，次品率分别为 $2\%,3\%,5\%$。任取一件产品，（1）求是次品的概率；（2）若它是次品，求它来自第一条流水线的概率。
+\end{example}
+\begin{solution}
+记 $A_i$ 为「产品来自第 $i$ 条流水线」，$B$ 为「取到次品」。
+（1）由全概率公式
+\[
+  P(B)=0.5\times0.02+0.3\times0.03+0.2\times0.05=0.010+0.009+0.010=0.029 .
+\]
+（2）由贝叶斯公式
+\[
+  P(A_1\mid B)=\frac{0.5\times0.02}{0.029}=\frac{0.010}{0.029}=\frac{10}{29}\approx0.345 .
+\]
+\end{solution}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    % ---------- 左：完备划分的面积分解 ----------
+    \draw[thick] (0,0) rectangle (8,3);
+    \draw (4,0)--(4,3);
+    \draw (6.4,0)--(6.4,3);
+    \fill[main!30] (0,2.4) rectangle (4,3);
+    \fill[main!30] (4,2.1) rectangle (6.4,3);
+    \fill[main!30] (6.4,1.5) rectangle (8,3);
+    \draw[thick] (0,0) rectangle (8,3);
+    \draw (4,0)--(4,3);
+    \draw (6.4,0)--(6.4,3);
+    \node[main!80!black] at (2,2.7) {$0.010$};
+    \node[main!80!black] at (5.2,2.55) {$0.009$};
+    \node[main!80!black] at (7.2,2.25) {$0.010$};
+    \node[align=center] at (2,-0.42) {$A_1$\\ $P(A_1)=0.5$};
+    \node[align=center] at (5.2,-0.42) {$A_2$\\ $P(A_2)=0.3$};
+    \node[align=center] at (7.2,-0.42) {$A_3$\\ $P(A_3)=0.2$};
+    \node[gray!70!black] at (-0.35,3.3) {$\Omega$};
+    \node[align=center] at (4,-1.15) {$P(B)=0.010+0.009+0.010=0.029$\\(列宽 $\propto P(A_i)$，块高 $\propto P(B\mid A_i)$ 统一放大 $30$ 倍)\\(暗色块面积 $\propto P(A_i\cap B)$，数字为 $P(A_i\cap B)$)};
+    % ---------- 右：概率树 ----------
+    \begin{scope}[xshift=9.2cm]
+      \node[circle,fill=black,inner sep=1.6pt] (r) at (0,1.85) {};
+      \node[above left] at (r) {$\Omega$};
+      \node[circle,fill=black,inner sep=1.6pt] (a1) at (1.8,3.25) {};
+      \node[circle,fill=black,inner sep=1.6pt] (a2) at (1.8,1.85) {};
+      \node[circle,fill=black,inner sep=1.6pt] (a3) at (1.8,0.45) {};
+      \node[right] at (a1) {$A_1$};
+      \node[right] at (a2) {$A_2$};
+      \node[right] at (a3) {$A_3$};
+      \node[circle,fill=main,inner sep=1.6pt] (b1) at (4.2,3.75) {};
+      \node[circle,fill=gray,inner sep=1.6pt] (nb1) at (4.2,2.75) {};
+      \node[circle,fill=main,inner sep=1.6pt] (b2) at (4.2,2.35) {};
+      \node[circle,fill=gray,inner sep=1.6pt] (nb2) at (4.2,1.35) {};
+      \node[circle,fill=main,inner sep=1.6pt] (b3) at (4.2,0.95) {};
+      \node[circle,fill=gray,inner sep=1.6pt] (nb3) at (4.2,-0.05) {};
+      \draw (r)--(a1) (r)--(a2) (r)--(a3);
+      \draw[main] (a1)--(b1); \draw[gray] (a1)--(nb1);
+      \draw[main] (a2)--(b2); \draw[gray] (a2)--(nb2);
+      \draw[main] (a3)--(b3); \draw[gray] (a3)--(nb3);
+      \node at (0.55,2.75) {$0.5$};
+      \node at (0.9,2.15) {$0.3$};
+      \node at (0.55,1.0) {$0.2$};
+      \node[main,left] at (2.95,3.65) {$0.02$}; \node[gray,left] at (2.95,2.9) {$0.98$};
+      \node[main,left] at (2.95,2.25) {$0.03$}; \node[gray,left] at (2.95,1.5) {$0.97$};
+      \node[main,left] at (2.95,0.85) {$0.05$}; \node[gray,left] at (2.95,0.1) {$0.95$};
+      \node[main,right=2mm] at (b1) {$B$: $0.010$};
+      \node[gray,right=2mm] at (nb1) {$B^c$: $0.490$};
+      \node[main,right=2mm] at (b2) {$B$: $0.009$};
+      \node[gray,right=2mm] at (nb2) {$B^c$: $0.291$};
+      \node[main,right=2mm] at (b3) {$B$: $0.010$};
+      \node[gray,right=2mm] at (nb3) {$B^c$: $0.190$};
+      \node[align=center] at (2.1,-0.8) {$P(B)=0.010+0.009+0.010=0.029$\\[2pt]$P(A_1\mid B)=\frac{0.010}{0.029}=\frac{10}{29}\approx0.345$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{样本空间的完备互斥划分（全概率·贝叶斯）：左图中 $\Omega=A_1\sqcup A_2\sqcup A_3$，列宽正比于 $P(A_i)$、每列内暗色块高度正比于 $P(B\mid A_i)$（统一放大 $30$ 倍的示意图），故暗色块面积正比于 $P(A_i\cap B)$；右图沿树枝把每个 $A_i$ 再按条件概率分叉，路径概率求和得 $P(B)$，贝叶斯公式则由结果 $B$ 沿树反向回溯到原因 $A_1$}
+  \label{fig:ch07-partition}
+\end{figure}
+
+\begin{conccard}[一级]{归一化测度：条件概率、全概率与贝叶斯}{几何概型、条件概率、由果溯因类应用题、医学筛查类情境}{把 $P(B\mid A)$ 与 $P(A\mid B)$ 混为一谈；划分不满足「不重不漏」就套全概率；只记住公式不理解「空间缩放」的几何意义}
+$P(A)=\mu(A)/\mu(\Omega)$（古典＝计数测度，几何＝长度／面积／体积）；
+条件概率＝空间缩放：$P(B\mid A)=P(A\cap B)/P(A)$；
+全概率：$P(B)=\sum_i P(A_i)P(B\mid A_i)$；
+贝叶斯（由果溯因）：$P(A_j\mid B)=\dfrac{P(A_j)P(B\mid A_j)}{\sum_i P(A_i)P(B\mid A_i)}$。
+\end{conccard}
+
+\subsection{统计线性逼近：最小二乘投影与统计反证}
+
+\key{探究三：回归直线是散点云的「最小二乘投影」；独立性检验是统计反证法}
+
+\key{（1）百分位数：位置的度量。}
+把 $n$ 个数据从小到大排列，计算 $i=n\times p\%$：
+\begin{itemize}
+  \item 若 $i$ 不是整数，第 $p$ 百分位数是第 $\lceil i\rceil$ 项（向上取整的下一项）；
+  \item 若 $i$ 是整数，第 $p$ 百分位数是第 $i$ 项与第 $i+1$ 项的平均数。
+\end{itemize}
+
+\begin{example}
+求数据 $12,7,9,15,10,8,11,13,6,14$ 的第 $25$ 百分位数与第 $50$ 百分位数。
+\end{example}
+\begin{solution}
+排序：$6,7,8,9,10,11,12,13,14,15$，共 $n=10$ 个。
+\[
+  i_1=10\times25\%=2.5\ (\text{非整数})\Rightarrow \text{第 }25\text{ 百分位数是第 }3\text{ 项 }=8;
+\]
+\[
+  i_2=10\times50\%=5\ (\text{整数})\Rightarrow \text{第 }50\text{ 百分位数}=\frac{\text{第 }5\text{ 项}+\text{第 }6\text{ 项}}{2}=\frac{10+11}{2}=10.5 .
+\]
+\end{solution}
+
+\key{（2）回归直线：竖直残差平方和最小的投影线。}
+给定散点 $(x_1,y_1),\dots,(x_n,y_n)$，在直线族 $\hat y=bx+a$ 中挑选一条，使各点到直线的\key{竖直距离}（残差 $e_i=y_i-\hat y_i$）的平方和最小：
+\[
+  Q(a,b)=\sum_{i=1}^{n}(y_i-bx_i-a)^2\ \longrightarrow\ \min .
+\]
+
+\begin{derivation}
+对 $a,b$ 分别求偏导并令其为零：
+\[
+  \frac{\partial Q}{\partial a}=-2\sum_{i=1}^n(y_i-bx_i-a)=0
+  \ \Longrightarrow\ na+b\sum x_i=\sum y_i\ \Longrightarrow\ a=\bar y-b\bar x .
+\]
+\[
+  \frac{\partial Q}{\partial b}=-2\sum_{i=1}^nx_i(y_i-bx_i-a)=0 .
+\]
+把 $a=\bar y-b\bar x$ 代入，利用 $\sum(x_i-\bar x)=0$，得
+\[
+  \sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)-b\sum_{i=1}^n(x_i-\bar x)^2=0,
+\]
+故
+\[
+  \hat b=\frac{\sum\limits_{i=1}^n(x_i-\bar x)(y_i-\bar y)}{\sum\limits_{i=1}^n(x_i-\bar x)^2},
+  \qquad \hat a=\bar y-\hat b\,\bar x .
+\]
+几何性质：$(\hat a,\hat b)$ 满足 $\hat a=\bar y-\hat b\,\bar x$，即点 $(\bar x,\bar y)$ 恒在直线上——\key{回归直线必过样本中心 $(\bar x,\bar y)$}。
+这与第 6 章「以直代曲」、第 4 章「正交投影」同源：最小二乘就是把观测向量 $\vec y$ 向由 $\vec 1$ 与 $\vec x$ 张成的平面作投影，残差与平面正交。
+\end{derivation}
+
+\begin{example}
+已知 5 组成对数据 $(1,2),(2,3),(3,5),(4,6),(5,8)$，求回归方程并计算样本相关系数 $r$。
+\end{example}
+\begin{solution}
+\[
+  \bar x=3,\quad \bar y=\frac{2+3+5+6+8}{5}=4.8 .
+\]
+\[
+  \sum(x_i-\bar x)(y_i-\bar y)=(-2)(-2.8)+(-1)(-1.8)+0\times0.2+1\times1.2+2\times3.2=15,
+\]
+\[
+  \sum(x_i-\bar x)^2=4+1+0+1+4=10,\quad
+  \sum(y_i-\bar y)^2=7.84+3.24+0.04+1.44+10.24=22.8 .
+\]
+所以
+\[
+  \hat b=\frac{15}{10}=1.5,\qquad \hat a=4.8-1.5\times3=0.3,
+  \qquad \hat y=1.5x+0.3 .
+\]
+\[
+  r=\frac{15}{\sqrt{10\times22.8}}=\frac{15}{\sqrt{228}}\approx0.993 ,
+\]
+高度正相关（$|r|\le1$ 正是由第 6 章柯西不等式保证的）。
+\end{solution}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \draw[->,gray] (-0.4,0)--(5.9,0) node[below right] {$x$};
+    \draw[->,gray] (0,-0.6)--(0,8.9) node[above left] {$y$};
+    \foreach \x in {1,...,5} \draw (\x,0.06)--(\x,-0.06) node[below] {\x};
+    \foreach \y in {2,4,6,8} \draw (0.06,\y)--(-0.06,\y) node[left] {\y};
+    \draw[second,very thick,domain=-0.2:5.5,samples=2] plot (\x,{1.5*\x+0.3});
+    \node[second] at (0.55,4.6) {$\hat y=1.5x+0.3$};
+    \foreach \x/\y in {1/2,2/3,3/5,4/6,5/8}{
+      \draw[second!80,dashed,very thick] (\x,\y)--(\x,{1.5*\x+0.3});
+      \fill[main] (\x,\y) circle (1.7pt);
+    }
+    \node[second,right] at (1.04,1.9) {$e_1$};
+    \node[second,right] at (2.04,3.15) {$e_2$};
+    \node[second,left] at (2.96,4.98) {$e_3$};
+    \node[second,right] at (4.04,6.15) {$e_4$};
+    \node[second,right] at (5.04,7.9) {$e_5$};
+    \draw[third,dashed,thick] (2.68,4.8)--(3.32,4.8);
+    \draw[third,dashed,thick] (3,4.48)--(3,5.12);
+    \fill[third] (3,4.8) circle (1.7pt);
+    \node[third,right] at (3.35,4.86) {$(\bar x,\bar y)=(3,4.8)$};
+    \fill[main] (2.9,8.55) circle (1.7pt); \node[right] at (2.98,8.55) {观测点};
+    \draw[second,very thick] (4.1,8.55)--(4.5,8.55); \node[right] at (4.58,8.55) {回归直线};
+  \end{tikzpicture}
+  \caption{最小二乘回归：回归直线 $\hat y=1.5x+0.3$ 使各观测点到直线的竖直残差 $e_1,\dots,e_5$（橙色虚线）平方和最小；它必然穿过样本中心 $(\bar x,\bar y)=(3,4.8)$}
+  \label{fig:ch07-leastsq}
+\end{figure}
+
+\key{（3）独立性检验：小概率事件原理的统计反证法。}
+$2\times2$ 列联表
+\[
+  \begin{array}{c|cc|c}
+    & y_1 & y_2 & \text{合计}\\\hline
+    x_1 & a & b & a+b\\
+    x_2 & c & d & c+d\\\hline
+    \text{合计} & a+c & b+d & n
+  \end{array}
+\]
+若两变量无关（零假设 $H_0$），应有 $ad\approx bc$。统计量
+\[
+  K^2=\frac{n(ad-bc)^2}{(a+b)(c+d)(a+c)(b+d)}
+\]
+度量实际数据偏离「无关」的程度。逻辑结构与第 0 章的反证法完全同构：先承认 $H_0$ 成立，则 $K^2$ 很大是\key{小概率事件}；它竟然发生了，就有理由拒绝 $H_0$。常用临界值：$K^2\ge3.841$ 对应犯错概率不超过 $5\%$，$K^2\ge6.635$ 对应不超过 $1\%$。
+
+\begin{example}
+调查 $200$ 人（男、女各 $100$ 人）对某项政策的支持情况：男性中 $70$ 人支持、$30$ 人反对；女性中 $50$ 人支持、$50$ 人反对。是否有 $99\%$ 以上的把握认为性别与支持态度有关？
+\end{example}
+\begin{solution}
+\[
+  K^2=\frac{200\times(70\times50-30\times50)^2}{100\times100\times120\times80}
+  =\frac{200\times2000^2}{9.6\times10^7}
+  =\frac{8\times10^8}{9.6\times10^7}\approx8.33 .
+\]
+因为 $8.33>6.635$，所以在犯错误的概率不超过 $0.01$ 的前提下，认为性别与支持态度有关——即有 $99\%$ 以上的把握。
+\end{solution}
+
+\begin{commonerror}{独立性检验的三个高频失误}
+\paragraph{失误一：把结论说过头。}
+正确表述是「在犯错误的概率不超过 $0.01$ 的前提下认为有关」或「有 $99\%$ 的把握认为有关」，
+而不是「两变量有 $99\%$ 的关系」——$K^2$ 只衡量证据强度，不量化关联程度。
+\paragraph{失误二：忽略样本量 $n$。}
+公式分子含 $n$，同样比例的列联表，样本量扩大 $10$ 倍，$K^2$ 也扩大 $10$ 倍，结论可能完全不同；小样本下比例再悬殊也不宜下强结论。
+\paragraph{失误三：把检验结论当成因果关系。}
+「有关」不等于「导致」：独立性检验只能发现关联，因果方向须由实际背景另行论证。
+\end{commonerror}
+
+\begin{conccard}[一级]{最小二乘回归与独立性检验}{成对数据的回归计算、相关性判断、列联表分析}{把回归直线当成必过原点的比例函数；以为 $K^2$ 大就证明因果关系；计算 $\hat b$ 时忘除以 $\sum(x_i-\bar x)^2$；百分位数忽略 $i$ 是否为整数}
+$\hat b=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sum(x_i-\bar x)^2}$，$\hat a=\bar y-\hat b\bar x$，必过 $(\bar x,\bar y)$；
+百分位数看 $i=n\cdot p\%$ 是否整数；
+$K^2=\frac{n(ad-bc)^2}{(a+b)(c+d)(a+c)(b+d)}$，对照 $3.841$（$0.05$）、$6.635$（$0.01$）下结论。
+\end{conccard}
+
+\subsection{压轴收官：新定义情境题的四步破题法}
+
+\key{探究四：新定义题不是考知识，是考「翻译」}
+
+新高考压轴常以全新符号、新运算、新集合开场，陌生感是纸老虎。通用四步法：
+\key{第一步，读懂符号集合}——把每个新名词逐字翻译为已有的集合语言（元素是什么？满足什么条件？运算封闭吗？）；
+\key{第二步，构造小规模特例试探}——取 $n=1,2,3$ 等最小情形，逐一列举，列出数表；
+\key{第三步，归纳猜想通项}——从特例中找规律、猜公式（归纳只指方向，不能当证明）；
+\key{第四步，严格证明}——用双射（一一对应）、数学归纳法或反证法把猜想钉死。
+
+\begin{method}[新定义情境题的四步破题流程]
+\begin{enumerate}
+  \item \key{翻译}：逐句把新定义的符号「转译」成集合、映射、计数或概率语言，画出韦恩图或数表；
+  \item \key{特例}：取最小的参数（$n=1,2,3$ 或最小非平凡情形）把结果全部列出，观察结构；
+  \item \key{归纳}：由特例数据猜想通项／公式／计数法则，并明确写出猜想；
+  \item \key{证明}：优先寻找双射（把新对象一一对应到已知模型），否则用数学归纳法（与自然数相关）或反证法（唯一性、不存在性）。
+\end{enumerate}
+\end{method}
+
+\begin{problem}
+\key{压轴题一（新定义 $+$ 计数）}设 $n\ge k\ge1$。称 $\{1,2,\dots,n\}$ 的 $k$ 元子集 $A=\{a_1,a_2,\dots,a_k\}$（$a_1<a_2<\dots<a_k$）为「稀疏集」，若其中任意两个不同元素之差的绝对值不小于 $2$（即不含相邻整数）。记稀疏集的个数为 $f(n,k)$。
+（1）列举 $n=5,\ k=2$ 的全部稀疏集，并求 $f(5,2)$；再求 $f(5,3)$；
+（2）依（1）猜想 $f(n,k)$ 的表达式，并给出严格证明。
+\end{problem}
+\begin{solution}
+\key{【第一步：读懂符号集合】}「稀疏集」＝$\{1,\dots,n\}$ 中不含相邻数的 $k$ 元子集，$f(n,k)$ 是这类子集的个数。
+\key{【第二步：小规模特例】}（1）$n=5,k=2$：枚举得
+\[
+  \{1,3\},\{1,4\},\{1,5\},\{2,4\},\{2,5\},\{3,5\},
+\]
+共 $6$ 个，即 $f(5,2)=6=C_4^2$。
+$n=5,k=3$：只能取 $\{1,3,5\}$，故 $f(5,3)=1=C_3^3$。
+再试 $f(4,2)=3=C_3^2$、$f(6,2)=10=C_5^2$。
+\key{【第三步：归纳猜想】}各值都等于 $C_{\,n-k+1}^{\,k}$，故猜想
+\[
+  f(n,k)=C_{\,n-k+1}^{\,k}.
+\]
+\key{【第四步：严格证明（双射法）】}设稀疏集 $A=\{a_1<\dots<a_k\}$，令
+\[
+  b_i=a_i-(i-1)\quad(i=1,\dots,k).
+\]
+由 $a_{i+1}-a_i\ge2$ 得 $b_{i+1}-b_i=(a_{i+1}-a_i)-1\ge1$，即 $b_1<b_2<\dots<b_k$；
+又 $b_1=a_1\ge1$，$b_k=a_k-(k-1)\le n-k+1$，故 $\{b_1,\dots,b_k\}$ 是 $\{1,\dots,n-k+1\}$ 的任意 $k$ 元子集。
+反之，任取 $1\le b_1<\dots<b_k\le n-k+1$，令 $a_i=b_i+(i-1)$，则 $a_{i+1}-a_i=b_{i+1}-b_i+1\ge2$，回到一个稀疏集。
+两个方向互为逆映射，构成\key{一一对应}，故
+\[
+  f(n,k)=C_{\,n-k+1}^{\,k}.\ \surd
+\]
+\key{这一步同时解释了「为什么恰好是隔板模型」：减去的 $(i-1)$ 相当于预先在每个选中元素后面放好一个「隔离空位」，隔板数从 $n-1$ 缩为 $n-k+1$。}
+\end{solution}
+
+\begin{problem}
+\key{压轴题二（新定义 $+$ 概率统计）}一批共 $6$ 件产品中有 $2$ 件次品，现逐个检查（不放回）。定义「转正等待次数」$X$ 为：首次抽到正品时已经检查过的产品件数。
+（1）求 $X$ 的分布列与数学期望 $E(X)$；
+（2）若改为有放回抽取，$X$ 服从什么分布？比较两种情形的期望并解释差异原因。
+\end{problem}
+\begin{solution}
+\key{【第一步：翻译】}$X$ 是取值于 $\{1,2,3\}$ 的离散随机变量（最多查 3 件必出正品，因为只有 2 件次品）。
+\key{【第二步：小特例手算】}
+\[
+  P(X=1)=\frac{4}{6}=\frac{2}{3};
+\]
+\[
+  P(X=2)=P(\text{第 1 件次品})\cdot P(\text{第 2 件正品}\mid\text{第 1 件次品})
+  =\frac{2}{6}\times\frac{4}{5}=\frac{4}{15};
+\]
+\[
+  P(X=3)=P(\text{前两件均为次品})=\frac{2}{6}\times\frac{1}{5}=\frac{1}{15}.
+\]
+\key{【第三步：归纳校验】}$\frac23+\frac{4}{15}+\frac{1}{15}=1$，分布列为
+\[
+  \begin{array}{c|ccc}
+    X & 1 & 2 & 3\\\hline
+    P & \dfrac{2}{3} & \dfrac{4}{15} & \dfrac{1}{15}
+  \end{array}
+\]
+\key{【第四步：期望与对比】}
+\[
+  E(X)=1\times\frac{2}{3}+2\times\frac{4}{15}+3\times\frac{1}{15}
+  =\frac{10}{15}+\frac{8}{15}+\frac{3}{15}=\frac{21}{15}=\frac{7}{5}.
+\]
+（2）有放回时每次命中正品概率恒为 $\frac{4}{6}=\frac23$，$X$ 服从参数 $p=\frac23$ 的几何分布：
+\[
+  P(X=k)=\left(\frac{1}{3}\right)^{k-1}\cdot\frac{2}{3}\ (k\ge1),\qquad E(X)=\frac{1}{p}=\frac{3}{2}.
+\]
+$\frac{3}{2}>\frac{7}{5}$：不放回时次品一旦被抽出，剩下产品中正品浓度上升，等待时间自然缩短——这正是条件概率「空间缩放」在期望上的体现。
+\end{solution}
+
+\begin{conccard}[二级]{新定义情境题四步破题法}{强基、新高考压轴中「新运算、新集合、新统计量」类题目}{把归纳猜想的结论直接当证明使用；跳过特例直接硬算；翻译时漏掉隐含约束（如 $n\ge k$）}
+第一步 翻译：逐句转译为集合／映射语言，画图表；
+第二步 特例：$n=1,2,3$ 全部列举；
+第三步 归纳：写出猜想公式；
+第四步 证明：双射（计数）、数学归纳法（自然数命题）、反证法（唯一性与不存在）。
+\end{conccard}
+
+\begin{summary}
+本章把「不确定性」彻底纳入第 0 章的集合框架：样本空间 $\Omega$ 是集合，概率是归一化计数测度 $P(A)=\mu(A)/\mu(\Omega)$；
+计数问题的本质是并集基数（分类加法）与笛卡尔积基数（分步乘法），排列与组合分别是「有序单射」与「无序子集族」；
+条件概率 $P(B\mid A)$ 是把样本全集缩小为 $A$ 后的空间缩放，全概率与贝叶斯公式源于样本空间的完备互斥划分（由因及果与由果溯因）；
+线性回归直线是散点云的竖直最小二乘投影，必过样本中心 $(\bar x,\bar y)$；独立性检验则是「小概率事件原理」下的统计反证法；
+压轴新定义题按「翻译符号 $\to$ 特例试探 $\to$ 归纳猜想 $\to$ 严格证明」四步破题。
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{2.5cm}p{4.7cm}p{4.5cm}p{1.4cm}}
+\toprule
+引擎部件 & 核心操作 & 把什么变成什么 & 对应探究 \\
+\midrule
+计数两原理 & $|A\sqcup B|=|A|+|B|$；$|A\times B|=|A|\,|B|$ & 分类（或）$\to$ 并；分步（且）$\to$ 积 & 探究一 \\
+排列与组合 & $A_n^k=\frac{n!}{(n-k)!}$；$C_n^k=\frac{A_n^k}{k!}$ & 有序单射序列 $\to$ 无序 $k$ 元子集族 & 探究一 \\
+三技法 & 捆绑／插空／隔板 $C_{n-1}^{m-1}$ & 相邻、不相邻、相同分堆 $\to$ 标准模型 & 探究一 \\
+归一化测度 & $P(A)=\mu(A)/\mu(\Omega)$ & 古典与几何 $\to$ 同一除法 & 探究二 \\
+条件概率 & $P(B\mid A)=\frac{P(A\cap B)}{P(A)}$ & 样本全集 $\Omega\to$ 子集 $A$：缩放归一 & 探究二 \\
+全概率·贝叶斯 & $P(B)=\sum_iP(A_i)P(B\mid A_i)$ & 由因及果 $\leftrightarrow$ 由果溯因 & 探究二 \\
+最小二乘回归 & $\min\sum(y_i-\hat bx_i-\hat a)^2$，过 $(\bar x,\bar y)$ & 散点云 $\to$ 竖直投影直线 & 探究三 \\
+独立性检验 & $K^2$ 对临界值 & 关联判断 $\to$ 小概率反证 & 探究三 \\
+四步破题 & 翻译 $\to$ 特例 $\to$ 归纳 $\to$ 严格证 & 陌生符号 $\to$ 熟悉结构 & 探究四 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{随机性不是结构的对立面，而是有限集合上的测度；统计不是死记公式，而是「最小二乘投影 $+$ 小概率反证」的合体；新定义压轴的本质是把陌生符号翻译回熟悉的集合与结构。}
+\end{summary}
+
+\end{explore}
+
+\begin{inclasstest}
+\begin{enumerate}
+  \item 从 6 名同学中选出 3 人，分别担任语文、数学、英语三科课代表，共有多少种不同的选法？\level{易}
+  \item 把 10 个相同的小球放入 3 个不同的盒子，每个盒子至少放 1 个，共有多少种放法？\level{易}
+  \item 口袋中装有 5 个红球、3 个白球，不放回地取 3 个球。已知取出的第一个球是红球，求取出的第三个球也是红球的概率。\level{中}
+  \item 已知某组成对数据的样本中心为 $(\bar x,\bar y)=(3,5)$，且 $\sum(x_i-\bar x)(y_i-\bar y)=12$，$\sum(x_i-\bar x)^2=4$。求回归直线方程，并指出它必过的定点。\level{难}
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection*{基础巩固}
+\begin{enumerate}
+  \item 6 人站成一排，甲、乙、丙三人必须站在一起，有多少种站法？
+  \item 袋中有 3 个红球、2 个白球，不放回地依次取出 2 个球，求第二次取到红球的概率。
+\end{enumerate}
+
+\subsection*{进阶提升}
+\begin{enumerate}
+  \item 甲、乙两人射击的命中率分别为 $0.8$ 与 $0.7$，各射击一次。已知恰有一人命中，求命中者是甲的概率。
+  \item 将 5 个不同的小球放入 3 个不同的盒子，每个盒子至少放 1 个，有多少种放法？
+\end{enumerate}
+
+\subsection*{拓展探究}
+\begin{enumerate}
+  \item （强基／竞赛）设 $n\ge k\ge1$。称 $\{1,2,\dots,n\}$ 的 $k$ 元子集 $A$ 为「强稀疏集」，若其中任意两个不同元素之差至少为 $3$。记其个数为 $g(n,k)$。
+  （1）列出 $n=6,k=2$ 的全部强稀疏集，求 $g(6,2)$；
+  （2）猜想 $g(n,k)$ 的表达式并用双射法证明；
+  （3）比较 $g(n,k)$ 与本章 $f(n,k)$ 的大小，说明理由。
+\end{enumerate}
+
+\subsection*{教师版答案}
+\begin{solution}
+\textbf{基础 1：}把甲、乙、丙三人捆成一个大元素，与其余 3 人共 4 个元素全排列，三人内部再全排列：
+\[
+  A_4^4\cdot A_3^3=24\times6=144 .
+\]
+\end{solution}
+\begin{solution}
+\textbf{基础 2：}方法一（全概率）：
+\[
+  P=\frac35\times\frac24+\frac25\times\frac34=\frac{6}{20}+\frac{6}{20}=\frac{3}{5}.
+\]
+方法二（抽签公平性）：先后手对称，第二次取到红球的概率等于第一次取到红球的概率 $\frac35$。
+\end{solution}
+\begin{solution}
+\textbf{进阶 1：}记 $A$ 为「甲命中」，$B$ 为「乙命中」，$A,B$ 独立。
+\[
+  P(\text{恰有一人命中})=P(A\bar B)+P(\bar A B)=0.8\times0.3+0.2\times0.7=0.38 .
+\]
+由条件概率（把样本空间缩小为「恰有一人命中」）：
+\[
+  P(A\mid \text{恰有一人命中})=\frac{0.24}{0.38}=\frac{12}{19}\approx0.632 .
+\]
+\end{solution}
+\begin{solution}
+\textbf{进阶 2：}由容斥原理（全集减去有空盒的放法）：
+\[
+  3^5-C_3^1\cdot2^5+C_3^2\cdot1^5=243-96+3=150 .
+\]
+\end{solution}
+\begin{solution}
+\textbf{拓展：}（1）$n=6,k=2$：枚举得
+\[
+  \{1,4\},\{1,5\},\{1,6\},\{2,5\},\{2,6\},\{3,6\},
+\]
+共 $6$ 个，即 $g(6,2)=6$。
+（2）猜想：$g(n,k)=C_{\,n-2k+2}^{\,k}$（约定 $m<k$ 时 $C_m^k=0$，对应不可能情形）。
+双射证明：设强稀疏集 $A=\{a_1<\dots<a_k\}$，$a_{i+1}-a_i\ge3$。令
+\[
+  b_i=a_i-2(i-1)\quad(i=1,\dots,k),
+\]
+则 $b_{i+1}-b_i=(a_{i+1}-a_i)-2\ge1$，即 $b_1<\dots<b_k$；且 $b_1\ge1$，$b_k=a_k-2(k-1)\le n-2k+2$，
+故 $\{b_1,\dots,b_k\}$ 是 $\{1,\dots,n-2k+2\}$ 的任意 $k$ 元子集；反之 $a_i=b_i+2(i-1)$ 给出逆映射。一一对应，故 $g(n,k)=C_{\,n-2k+2}^{\,k}$。
+（3）「强稀疏集」一定是「稀疏集」，反之不然（如 $\{1,3\}$ 稀疏但不强稀疏），前者集合族是后者的真子族，故除 $k=1$ 等平凡情形外恒有
+\[
+  g(n,k)<f(n,k).
+\]
+\end{solution}
+
+\reading{拓展阅读 13}{概率：从计数测度到样本空间}
+\end{afterclass}

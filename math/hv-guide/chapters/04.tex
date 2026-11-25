@@ -1,0 +1,669 @@
+% 高观点导学案：立体几何与圆锥曲线大一统（第 4 章·高观点统一版）
+% 主线：仿射变换（圆压缩为椭圆）→ 三维圆锥截面（Dandelin）→ 考纲安全落地双层法 → 解析几何主干 → 立体几何主干（向量法统一）
+% 核心思想：圆锥曲线不是三类孤立的二次曲线，而是同一个三维对象（圆锥面）与不同倾角平面的相遇方式；
+%           高观点负责「预判答案」，考纲通法负责「写出满分」。
+
+\section{立体几何与圆锥曲线大一统（高观点版）}
+
+\begin{methodbox}{多框架对读}
+\small
+\begin{center}
+\begin{tabular}{c|p{2.9cm}|p{5.0cm}|p{3.1cm}}
+\toprule
+视角 & 本章看点 & 别的视角怎么说 & 哪侧最省力 \\
+\midrule
+代数 & 标准方程、判别式、弦长 & 坐标满足的条件 & 硬算与判别 \\
+几何 & 轨迹形状、仿射变换、二面角 & 图形的位置与度量 & 猜结论、估范围 \\
+集合 & 曲线＝点集；平行垂直＝关系 & 条件即约束的集合 & 界存在与唯一 \\
+映射 & 仿射把圆映成椭圆；投影降维 & 换表示＝换坐标系 & 整体保持性质 \\
+\bottomrule
+\end{tabular}
+\end{center}
+卡的使用：解析几何先问「这是哪个变换下的不变量」，再决定代数硬算还是几何巧解（总图见第 0 章图~\ref{fig:four-view-map}）。
+\end{methodbox}
+
+第 3 章把向量确立为「几何空间代数化」的通用语言；本章再向前一步，打通立体几何与解析几何的维度壁垒：
+椭圆不过是圆在\key{仿射变换}下的像，圆锥曲线不过是圆锥面在不同倾角平面上的\key{截线}——
+维度不是障碍，变换才是本质。五个模块层层展开：
+\key{仿射变换：从圆到椭圆的降维打击}（圆沿一个方向均匀压缩即得椭圆，共线、平行、中点、相切、面积比全部保持）$\to$
+\key{Dandelin 视角}（椭圆／双曲线／抛物线是同一个圆锥面被不同倾角平面所截的结果）$\to$
+\key{考纲安全落地的双层法}（高观点 10 秒预设定点定值，考纲通法写满分步骤）$\to$
+\key{解析几何主干}（定义、标准方程、直线与圆锥曲线的位置关系、定点定值通法）$\to$
+\key{立体几何主干}（线面关系、空间角与距离，向量法全面落地）。
+核心思想：\key{圆锥曲线不是三类孤立的二次曲线，而是同一个三维对象与不同平面的相遇方式}。
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 理解仿射变换 $T:(x,y)\mapsto\left(x,\frac{b}{a}y\right)$，会把椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ 看作圆 $x^2+y^2=a^2$ 的压缩像；
+  \item 掌握仿射不变量清单（共线、平行、中点、相切、面积比 $S_{\text{椭圆}}=\frac{b}{a}S_{\text{圆}}$），会用它秒算椭圆内接三角形面积最值；
+  \item 知道圆锥曲线的 Dandelin 球证法：焦点—准线定义的统一，$e=\frac{\cos\beta}{\cos\alpha}$；
+  \item 掌握「高观点预判 $+$ 考纲通法」双层解题策略：极点极线预设定点定值，设线—联立—韦达—判别式写满分步骤；
+  \item 掌握椭圆／双曲线／抛物线的定义与标准方程，直线与圆锥曲线位置关系的判别式、弦长与中点弦公式，以及定点定值问题的通法步骤；
+  \item 掌握线面平行／垂直的判定与性质、空间角（线面角、二面角）与点到平面距离，会用向量法统一处理（与第 3 章衔接）。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection*{知识回顾}
+\begin{itemize}
+  \item 圆的标准方程是 \blank；把圆沿 $y$ 轴按比例 $\frac{b}{a}$ 均匀压缩后得到的图形是 \blank；
+  \item 椭圆上任意一点到两焦点的距离之和等于 \blank；双曲线则对应距离之差的绝对值等于 \blank；
+  \item 直线与一元二次方程联立后，判别式 $\Delta>0$ 表示有 \blank 个不同实根（交点）；
+  \item 直线与平面平行的判定定理：平面外一条直线与此平面内一条直线 \blank，则线面平行。
+\end{itemize}
+
+\subsection*{教材速读}
+阅读「圆锥曲线」与「立体几何」两章教材，完成下列问题：
+\begin{enumerate}
+  \item 椭圆定义要求 $2a$ \blank $2c$（填 $>$ 或 $<$）；双曲线要求 $2a$ \blank $2c$；
+  \item 抛物线 $y^2=2px\,(p>0)$ 的焦点坐标是 \blank，准线方程是 \blank；
+  \item 弦长公式 $|AB|=\sqrt{1+k^2}\cdot$ \blank；
+  \item 点到平面的距离可用等体积法或 \blank 法求解。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{仿射变换：从圆到椭圆的降维打击}
+
+\key{探究一：把椭圆「压」回圆，把难题「降」回熟题}
+
+\key{（1）一个变换看出椭圆的身世。}
+设圆 $C:x^2+y^2=a^2$。作变换
+\[
+  T:\begin{pmatrix}x\\y\end{pmatrix}\longmapsto\begin{pmatrix}x\\ \frac{b}{a}y\end{pmatrix},\qquad 0<b\le a.
+\]
+它把每一点沿 $y$ 轴方向按比例 $\frac{b}{a}$ \key{均匀压缩}：水平方向不动，竖直方向整体变扁。
+设 $(x,y)\in C$，记 $(X,Y)=T(x,y)$，则 $x=X,\ y=\frac{a}{b}Y$，代入圆方程得
+\[
+  X^2+\left(\frac{a}{b}Y\right)^2=a^2
+  \iff \frac{X^2}{a^2}+\frac{Y^2}{b^2}=1.
+\]
+于是 \key{椭圆就是圆在仿射变换 $T$ 下的像}。$T$ 是线性变换（矩阵 $\mathrm{diag}\left(1,\frac{b}{a}\right)$），所以它仍然把直线变成直线——这是下面所有「保持」的根源。
+
+\key{（2）仿射不变量清单。}
+因为 $T$ 把直线变成直线、且保持线段上的分比，以下事实全部保持：
+\begin{itemize}
+  \item \key{共线性}：三点共线 $\xrightarrow{T}$ 三点共线；
+  \item \key{平行性}：$m\parallel m'\iff T(m)\parallel T(m')$；
+  \item \key{中点}：线段的中点变为像线段的中点（$T$ 保持定比分点）；
+  \item \key{相切}：直线与圆锥曲线相切（联立后 $\Delta=0$）的关系保持，因为 $T$ 可逆且把直线变直线；
+  \item \key{面积}：任意平面图形的面积都乘以同一常数 $|\det T|=\frac{b}{a}$，故
+  \[
+    S_{\text{椭圆}}=\frac{b}{a}\,S_{\text{圆}}.
+  \]
+\end{itemize}
+\key{面积比与图形的具体形状无关}，这是仿射变换最锋利的性质。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    % ---------- 左：圆与内接正三角形 ----------
+    \draw[->, gray] (-2.5,0)--(2.7,0) node[below right] {$x$};
+    \draw[->, gray] (0,-2.3)--(0,2.6) node[above left] {$y$};
+    \fill[second!10] (0,0) circle (2);
+    \draw[main!70!black, very thick] (0,0) circle (2);
+    \fill[third!18] (0,2)--(-1.732,-1)--(1.732,-1)--cycle;
+    \draw[third!70!black, very thick] (0,2)--(-1.732,-1)--(1.732,-1)--cycle;
+    \fill (0,0) circle (1pt) node[below left] {$O$};
+    \node[gray!70!black] at (1.15,-0.32) {$a$};
+    \node[second!70!black] at (0,-2.02) {圆 $x^2+y^2=a^2$：$S_{\max}=\dfrac{3\sqrt3}{4}a^2$};
+    % ---------- 右：压缩后的椭圆 ----------
+    \begin{scope}[xshift=6.9cm]
+      \draw[->, gray] (-2.5,0)--(2.7,0) node[below right] {$x$};
+      \draw[->, gray] (0,-2.3)--(0,2.6) node[above left] {$y$};
+      \fill[second!10] (0,0) ellipse (2 and 1.2);
+      \draw[main!70!black, very thick] (0,0) ellipse (2 and 1.2);
+      \fill[third!18] (0,1.2)--(-1.732,-0.6)--(1.732,-0.6)--cycle;
+      \draw[third!70!black, very thick] (0,1.2)--(-1.732,-0.6)--(1.732,-0.6)--cycle;
+      \fill (0,0) circle (1pt) node[below left] {$O$};
+      \node[gray!70!black] at (1.15,-0.32) {$a$};
+      \node[gray!70!black] at (-0.45,1.2) {$b$};
+      \node[second!70!black] at (0,-2.02) {椭圆：$S_{\max}=\dfrac{b}{a}S_{\text{圆}}=\dfrac{3\sqrt3}{4}ab$};
+    \end{scope}
+    % ---------- 中间：压缩映射 ----------
+    \draw[->, main!80!black, very thick] (3.0,2.0)--(3.7,2.0)
+      node[midway,above] {$\displaystyle\binom{x}{y}\mapsto\binom{x}{\frac{b}{a}y}$};
+  \end{tikzpicture}
+  \caption{仿射压缩：左图为圆 $x^2+y^2=a^2$（取 $a=2$）及其内接正三角形；右图为沿 $y$ 轴按比例 $\frac{b}{a}=0.6$ 压缩后的椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$（$b=1.2$），内接正三角形同步变形为内接三角形，面积同乘 $\frac{b}{a}$}
+  \label{fig:affine-compress}
+\end{figure}
+
+\key{（3）降维打击：面积最值一步出答案。}
+因为 $T$ 把所有三角形的面积同乘一个正常数，\key{「面积最大」在变换下保持}：
+椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ 的内接三角形中，面积最大者正是圆 $x^2+y^2=a^2$ 的内接正三角形在 $T$ 下的像。
+圆的内接正三角形面积为 $\frac{3\sqrt3}{4}a^2$，于是
+\[
+  S_{\max}=\frac{b}{a}\cdot\frac{3\sqrt3}{4}a^2=\frac{3\sqrt3}{4}ab.
+\]
+一个只含 $a,b$ 的干净答案——选填题可直接秒答。
+
+\begin{example}
+求椭圆 $E:\dfrac{x^2}{4}+\dfrac{y^2}{3}=1$ 的内接三角形面积的最大值。
+\end{example}
+\begin{solution}
+这里 $a=2,\ b=\sqrt3$，压缩比为 $\frac{b}{a}=\frac{\sqrt3}{2}$。对应的圆半径为 $2$，其内接正三角形面积为
+\[
+  S_{\text{圆}}=\frac{3\sqrt3}{4}\cdot 2^2=3\sqrt3.
+\]
+故
+\[
+  S_{\max}=\frac{b}{a}S_{\text{圆}}=\frac{\sqrt3}{2}\cdot 3\sqrt3=\frac92
+  \quad\left(\text{或直接用 }\frac{3\sqrt3}{4}ab=\frac{3\sqrt3}{4}\cdot2\cdot\sqrt3=\frac92\right).
+\]
+若按常规方法设三个动点坐标硬算，将陷入多元三角换元；\key{仿射变换一步就把「陌生题」变回「课本题」}。
+\end{solution}
+
+\begin{conccard}[一级]{仿射变换：椭圆是圆的压缩像}{椭圆内接三角形面积最值、共线／平行／中点类的比例问题、面积比的快速换算}{认为仿射变换保持角度与垂直；把「面积比恒定」误用于周长比；压缩后忘记新图形是椭圆而非相似形}
+$T:(x,y)\mapsto\left(x,\frac{b}{a}y\right)$ 把圆 $x^2+y^2=a^2$ 变为椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$；
+共线、平行、中点、相切保持，面积同乘 $|\det T|=\frac{b}{a}$，故 $S_{\text{椭圆}}=\frac{b}{a}S_{\text{圆}}$，$S_{\triangle\max}=\frac{3\sqrt3}{4}ab$。
+\end{conccard}
+
+\begin{commonerror}{仿射变换「能保持什么、不能保持什么」}
+\paragraph{失误一：以为角度也保持。}
+仿射变换 $T$ 只保证「直线 $\to$ 直线、分比不变」，\key{不保持角度、不保持垂直、不保持长度}。
+例如圆内接正三角形的一个内角是 $60^\circ$，压缩成椭圆的内接三角形后三个角一般不再是 $60^\circ$。
+所以「椭圆 $\xrightarrow{\text{仿射}}$ 圆」可以搬用共线、平行、中点、面积比，却\textbf{不能}搬用直角与角度关系。
+\paragraph{失误二：把面积比套到周长比上。}
+周长在 $y$ 方向被压缩后会改变（弧长的积分并不同乘一个常数），只有\key{面积}这类二维测度才同乘 $|\det T|$。
+\paragraph{失误三：忽略 $b>a$ 的情形。}
+若沿 $y$ 轴拉伸（$\frac{b}{a}>1$），同样的推导给出 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$（$b>a$），焦点在 $y$ 轴上。
+公式 $S_{\max}=\frac{3\sqrt3}{4}ab$ 对两种情形都成立，但焦点位置要看 $a,b$ 谁大。
+\end{commonerror}
+
+\subsection{Dandelin 视角：圆锥曲线是三维截线}
+
+\key{探究二：把解析几何的二次曲线放回立体几何的三维空间}
+
+\key{（1）圆锥面与截面倾角。}
+以 $z$ 轴为中心轴、半顶角为 $\alpha$ 的圆锥面方程为
+\[
+  x^2+y^2=z^2\tan^2\alpha .
+\]
+用一个平面去截它，截线的类型只取决于平面与中心轴的夹角 $\beta$（取锐角）：
+\begin{itemize}
+  \item $\beta>\alpha$：平面较「平」，只切断一侧锥面，得\key{椭圆}（$\beta=90^\circ$ 时退化为圆）；
+  \item $\beta=\alpha$：平面恰好与一条母线平行，得\key{抛物线}；
+  \item $\beta<\alpha$：平面较「陡」，同时切断两侧锥面，得\key{双曲线}。
+\end{itemize}
+并且离心率由这两个角完全决定：
+\[
+  e=\frac{\cos\beta}{\cos\alpha}.
+\]
+检验：$\beta=90^\circ\Rightarrow e=0$（圆）；$\beta=\alpha\Rightarrow e=1$（抛物线）；$\beta<\alpha\Rightarrow\cos\beta>\cos\alpha\Rightarrow e>1$（双曲线）。
+\key{三类圆锥曲线从此不是三个定义，而是同一个对象的三种截法。}
+
+\key{（2）Dandelin 球：把「和／差为定值」做成肉眼可见。}
+在截面与锥面围成的空间内放入与圆锥面相切、又与截面相切的球（Dandelin 球），它们与截面的切点就是焦点（椭圆、双曲线用两个球，抛物线用一个球）。
+设 $P$ 为截线上任一点，过 $P$ 的母线先后穿过两个切圆所在的平面。由「从一点向球引两条切线，切线长相等」：
+\[
+  |PF_1|=P\text{ 到第一个切圆的母线段长},\qquad |PF_2|=P\text{ 到第二个切圆的母线段长}.
+\]
+两段之和（椭圆）或之差（双曲线）恰为两切圆之间的母线长——这是一个与 $P$ 无关的定值。于是
+\[
+  \text{椭圆：}\ |PF_1|+|PF_2|=\text{定值};\qquad
+  \text{双曲线：}\ \bigl||PF_1|-|PF_2|\bigr|=\text{定值}.
+\]
+\key{（3）统一的焦点—准线关系。}
+抛物线情形只有一个球，但它已经足以给出统一定义。设 $\sigma$ 为球与圆锥的切圆所在平面，$l=\pi\cap\sigma$ 即准线（$\pi$ 为截面），$\delta$ 为 $\pi$ 与 $\sigma$ 的夹角。
+设 $P$ 为截线上任一点，$h$ 为 $P$ 到 $\sigma$ 的距离，$T$ 为过 $P$ 的母线与切圆的交点。由「从一点向球引两条切线，切线长相等」：
+\[
+  |PF|=|PT|=\frac{h}{\cos\alpha},
+  \qquad
+  d(P,l)=\frac{h}{\sin\delta}.
+\]
+两式相除得
+\[
+  \frac{|PF|}{d(P,l)}=\frac{\sin\delta}{\cos\alpha}.
+\]
+而 $\sigma\perp$ 轴线，故 $\sin\delta=\cos\beta$，代入即得
+\[
+  \frac{|PF|}{d(P,l)}=\frac{\cos\beta}{\cos\alpha}=e.
+\]
+对椭圆、双曲线，把同一计算分别用到两个 Dandelin 球上，每一对「焦点—准线」都满足同一比值 $e$。
+一般地，三种曲线统一为 \key{焦点—准线定义}：到定点（焦点）与定直线（准线）的距离之比为常数 $e$ 的点的轨迹，$e<1$ 为椭圆，$e=1$ 为抛物线，$e>1$ 为双曲线。
+这正是「立体几何中的球与平面」给「解析几何中的二次曲线」发的身份证。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    % ================= 面板一：椭圆 =================
+    \begin{scope}[xshift=0cm]
+      \draw[dashed, gray!60] (0,-2.55)--(0,2.55);
+      \draw[gray!70, thin] (0,0)--(1.162,2.492) (0,0)--(-1.162,2.492)
+                         (0,0)--(1.162,-2.492) (0,0)--(-1.162,-2.492);
+      \draw[second, very thick] (-2.068,0.685)--(2.068,1.415);
+      \node[second!70!black] at (1.65,0.95) {截面};
+      \draw[main!45!black, fill=main!8] (0,0.7347) circle (0.3106);
+      \fill (0,0) circle (1pt);
+      \fill[main] (-0.054,1.041) circle (1.2pt);
+      \fill[main] (0.135,1.074) circle (1.2pt);
+      % 两个焦点过近，合并为一个标注，并用引导线指出，避免标签互相叠字或压轴
+      \node[main] at (1.05,0.45) {$\scriptstyle F_1,F_2$};
+      \draw[main!55, thin] (0.78,0.52)--(0.18,1.0);
+      \draw[main!80!black, thick] (1.62,2.42) ellipse (0.42 and 0.20);
+      \node[main!70!black] at (0,-2.95) {$\beta>\alpha\Rightarrow$ 椭圆$\ (e<1)$};
+    \end{scope}
+    % ================= 面板二：抛物线 =================
+    \begin{scope}[xshift=4.9cm]
+      \draw[dashed, gray!60] (0,-2.55)--(0,2.55);
+      \draw[gray!70, thin] (0,0)--(1.162,2.492) (0,0)--(-1.162,2.492)
+                         (0,0)--(1.162,-2.492) (0,0)--(-1.162,-2.492);
+      \draw[second, very thick] (-0.465,0.503)--(0.740,3.086);
+      \node[second!70!black] at (0.72,0.62) {截面};
+      \draw[main!45!black, fill=main!8] (0,0.75) circle (0.317);
+      \fill (0,0) circle (1pt);
+      \fill[main] (-0.287,0.884) circle (1.2pt) node[above] {$\scriptstyle F$};
+      \draw[main!80!black, thick] (1.28,2.62) parabola bend (1.68,2.34) (2.08,2.62);
+      \node[main!70!black] at (0,-2.95) {$\beta=\alpha\Rightarrow$ 抛物线$\ (e=1)$};
+    \end{scope}
+    % ================= 面板三：双曲线 =================
+    \begin{scope}[xshift=9.8cm]
+      \draw[dashed, gray!60] (0,-2.55)--(0,2.55);
+      \draw[gray!70, thin] (0,0)--(1.162,2.492) (0,0)--(-1.162,2.492)
+                         (0,0)--(1.162,-2.492) (0,0)--(-1.162,-2.492);
+      \draw[second, very thick] (-0.330,-0.671)--(0.330,2.871);
+      \node[second!70!black] at (0.42,2.55) {截面};
+      \draw[main!45!black, fill=main!8] (0,0.3495) circle (0.1477);
+      \draw[main!45!black, fill=main!8] (0,-0.8370) circle (0.3537);
+      \fill (0,0) circle (1pt);
+      \fill[main] (-0.026,0.495) circle (1.2pt) node[left] {$\scriptstyle F_1$};
+      \fill[main] (-0.061,-0.489) circle (1.2pt) node[left] {$\scriptstyle F_2$};
+      \draw[main!80!black, thick] (1.30,2.10) .. controls (1.78,2.32) and (1.78,2.52) .. (1.30,2.74);
+      \draw[main!80!black, thick] (2.02,2.10) .. controls (1.54,2.32) and (1.54,2.52) .. (2.02,2.74);
+      \node[main!70!black] at (0,-2.95) {$\beta<\alpha\Rightarrow$ 双曲线$\ (e>1)$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Dandelin 示意（轴截面）：同一个圆锥面被不同倾角的平面所截。$\beta>\alpha$ 得椭圆（两个 Dandelin 球各切出一个焦点），$\beta=\alpha$ 得抛物线（一个球切出焦点），$\beta<\alpha$ 得双曲线（两个球分置两侧锥面）；右上方小图标为截线实形}
+  \label{fig:dandelin}
+\end{figure}
+
+\begin{example}
+圆锥的半顶角 $\alpha=30^\circ$，分别用与轴线夹角 $\beta=60^\circ,30^\circ,15^\circ$ 的平面去截，判断截线类型并求离心率。
+\end{example}
+\begin{solution}
+由 $e=\dfrac{\cos\beta}{\cos\alpha}$，其中 $\cos30^\circ=\frac{\sqrt3}{2}$：
+\[
+  \beta=60^\circ:\ e=\frac{\cos60^\circ}{\cos30^\circ}=\frac{1/2}{\sqrt3/2}=\frac{\sqrt3}{3}<1\Rightarrow\text{椭圆};
+\]
+\[
+  \beta=30^\circ:\ e=\frac{\cos30^\circ}{\cos30^\circ}=1\Rightarrow\text{抛物线};
+\]
+\[
+  \beta=15^\circ:\ e=\frac{\cos15^\circ}{\cos30^\circ}\approx\frac{0.966}{0.866}\approx1.12>1\Rightarrow\text{双曲线}.
+\]
+只需要比较两个角的大小，就能立刻判定类型——这是「维度打通」带来的预判力。
+\end{solution}
+
+\begin{conccard}[二级]{圆锥曲线的统一：截面与焦点—准线}{判断截线类型、求离心率、理解三类曲线定义的统一性}{把 $\beta$ 与 $\alpha$ 的大小关系记反；忘记 $\beta=90^\circ$ 是圆；以为双曲线需要「两个分开的圆锥」}
+圆锥面 $x^2+y^2=z^2\tan^2\alpha$ 被与轴线夹角为 $\beta$ 的平面所截：
+$\beta>\alpha$ 椭圆（$\beta=90^\circ$ 为圆），$\beta=\alpha$ 抛物线，$\beta<\alpha$ 双曲线；
+统一离心率 $e=\dfrac{\cos\beta}{\cos\alpha}$，统一定义为 $\dfrac{|PF|}{d(P,l)}=e$。
+\end{conccard}
+
+\subsection{考纲安全落地：高观点预判与通法满分的双层法}
+
+\key{探究三：上层用高观点「看透」，下层用考纲通法「写全」}
+
+高考解析几何解答题的特点是：答案往往可以被高观点瞬间看穿，但阅卷只看考纲允许的推理链。
+因此最稳的策略是\key{双层法}：先用高观点（极点极线、仿射变换）确定目标与答案，再用考纲通法（设线、联立、韦达、判别式）把过程写得滴水不漏。
+
+\key{（1）高观点的两个预判工具。}
+\begin{itemize}
+  \item \key{极点极线预设定点定值}：椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ 外一点 $P(x_0,y_0)$ 的两条切线的切点连线（切点弦）方程为
+  \[
+    \frac{x_0x}{a^2}+\frac{y_0y}{b^2}=1,
+  \]
+  它被称为 $P$ 的\key{极线}。若 $P$ 在定直线 $x=m$ 上运动，则极线 $\frac{mx}{a^2}+\frac{y_0y}{b^2}=1$ 恒过定点 $\left(\frac{a^2}{m},0\right)$——不必动笔算，定点已出。
+  \item \key{仿射变换秒算面积最值}：涉及椭圆内接图形面积的最值，先仿射回圆，用圆的结果乘 $\frac{b}{a}$ 即可。
+\end{itemize}
+
+\key{（2）考纲通法的标准四步。}
+设线 $\to$ 联立 $\to$ 韦达 $\to$ 回代（并用判别式检验）。每一步都要写在卷面上，因为分步给分。
+
+\begin{example}[两层对照示范]
+椭圆 $E:\dfrac{x^2}{4}+\dfrac{y^2}{2}=1$，动点 $P$ 在定直线 $x=2$ 上，过 $P$ 作 $E$ 的两条切线，切点分别为 $A,B$。求证：直线 $AB$ 恒过定点，并求出该定点。
+\end{example}
+\begin{solution}
+\key{第一步（高观点预判）。}设 $P(2,t)$。由极线公式，$AB$ 即 $P$ 的极线：
+\[
+  \frac{2x}{4}+\frac{ty}{2}=1\iff x+ty=2,
+\]
+它显然恒过 $(2,0)$。十秒钟，答案已经到手。
+
+\key{第二步（考纲通法落地）。}设 $A(x_1,y_1),B(x_2,y_2)$。
+由隐函数求导（第 6 章）：椭圆两边对 $x$ 求导得 $\frac{2x}{4}+\frac{2yy'}{2}=0$，即 $y'=-\frac{b^2x}{a^2y}=-\frac{x}{2y}$。
+所以椭圆在 $A$ 处的切线方程为
+\[
+  y-y_1=-\frac{x_1}{2y_1}(x-x_1).
+\]
+利用 $\frac{x_1^2}{4}+\frac{y_1^2}{2}=1$ 化简，得切线的简洁形式
+\[
+  \frac{x_1x}{4}+\frac{y_1y}{2}=1.
+\]
+（若尚未学求导，也可设切线斜率 $k$，联立椭圆后令 $\Delta=0$，推出同一结果。）
+因为 $P(2,t)$ 同时在两条切线上，代入得
+\[
+  \frac{2x_1}{4}+\frac{ty_1}{2}=1,\qquad \frac{2x_2}{4}+\frac{ty_2}{2}=1,
+  \iff x_1+ty_1=2,\quad x_2+ty_2=2.
+\]
+这说明 $A,B$ 都在直线 $x+ty=2$ 上；两点确定一条直线，故
+\[
+  AB:\ x+ty=2.
+\]
+令 $y=0$ 得 $x=2$，与 $t$ 无关，所以 $AB$ \key{恒过定点 $(2,0)$}。
+
+\key{对照结论}：高观点负责「知道往哪走」（预判定点 $(2,0)$），通法负责「写得干净」（求导得切线、两点定直线）。二者分工明确，考场最稳。
+\end{solution}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \draw[->, gray] (-2.9,0)--(4.4,0) node[below right] {$x$};
+    \draw[->, gray] (0,-2.2)--(0,2.9) node[above left] {$y$};
+    % 椭圆
+    \fill[second!8] (0,0) ellipse (2 and 1.4142);
+    \draw[main!70!black, very thick] (0,0) ellipse (2 and 1.4142);
+    % 极线（切点弦）
+    \draw[third!70!black, thick, dashed] (-0.5,2.75)--(2.0,-1.0);
+    % 两条切线
+    \draw[main!80!black, thick] (3,1)--($(1.771,-0.657)!-0.4!(3,1)$);
+    \draw[main!80!black, thick] (3,1)--($(0.411,1.384)!-0.4!(3,1)$);
+    % 过 P 的动弦
+    \draw[second, thick] (-1.809,-0.603)--(3.75,1.25);
+    % 点与标注
+    \fill (0,0) circle (1pt);
+    \fill[main] (3,1) circle (1.6pt) node[right] {$P(x_0,y_0)$};
+    \fill[third] (1.771,-0.657) circle (1.6pt) node[below right] {$A$};
+    \fill[third] (0.411,1.384) circle (1.6pt) node[above left] {$B$};
+    \fill[second] (1.809,0.603) circle (1.6pt) node[above right] {$M$};
+    \fill[second] (-1.809,-0.603) circle (1.6pt) node[below left] {$N$};
+    \node[third!70!black, anchor=west] at (0.15,2.05) {$AB$：$P$ 的极线（切点弦）};
+    \node[second!70!black, anchor=west] at (0.15,-1.7) {过 $P$ 的动弦 $MN$};
+  \end{tikzpicture}
+  \caption{极点极线与切点弦：椭圆 $\frac{x^2}{4}+\frac{y^2}{2}=1$ 外一点 $P(3,1)$，$PA,PB$ 为切线、$A,B$ 为切点，则 $AB$ 即 $P$ 的极线；过 $P$ 的任意弦 $MN$ 与极线的关系给出定点定值问题的预判。当 $P$ 在定直线 $x=m$ 上运动时，极线 $\frac{mx}{a^2}+\frac{y_0y}{b^2}=1$ 恒过定点 $\left(\frac{a^2}{m},0\right)$}
+  \label{fig:pole-polar}
+\end{figure}
+
+注记（高观点对偶）：把上面的推理倒过来即得逆命题——过定点 $(2,0)$ 的直线与椭圆交于 $A,B$，则 $A,B$ 处切线的交点必在直线 $x=2$ 上。
+这在极点极线理论中称为 \key{La Hire 对偶}：点 $P$ 在点 $Q$ 的极线上 $\iff$ 点 $Q$ 在点 $P$ 的极线上。
+
+\begin{method}[双层法：高观点预判 $+$ 通法满分]
+\begin{enumerate}
+  \item \key{预判}：先问「答案大概长什么样」。定点定值类问题用极线公式扫一眼；面积最值类问题先仿射回圆算一遍；
+  \item \key{设线}：设动直线（含参数）或设动点坐标，注意斜率不存在的情形要单独讨论；
+  \item \key{联立}：与圆锥曲线方程联立，消元得到关于 $x$（或 $y$）的一元二次方程；
+  \item \key{韦达}：先写 $\Delta>0$ 保证两交点，再写 $x_1+x_2,\ x_1x_2$；
+  \item \key{回代}：把目标量（数量积、斜率、面积、中点）用韦达结果表示，整理成关于参数的式子；
+  \item \key{定值}：令参数系数为零（或「对任意参数成立」列方程组）求出定点／定值，最后回代检验。
+\end{enumerate}
+\end{method}
+
+\subsection{解析几何主干：定义、方程与直线的位置关系}
+
+\key{探究四：把「二次曲线」拆成三件通用工具}
+
+\key{（1）三大定义与标准方程。}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{1.5cm}p{4.6cm}p{3.5cm}p{3.0cm}p{1.9cm}}
+\toprule
+曲线 & 定义 & 标准方程 & 焦点 & 离心率 \\
+\midrule
+椭圆 & $|PF_1|+|PF_2|=2a\ (2a>2c)$ & $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1\ (a>b>0)$ & $(\pm c,0),\ c^2=a^2-b^2$ & $e=\dfrac ca\in(0,1)$ \\
+双曲线 & $\bigl||PF_1|-|PF_2|\bigr|=2a\ (2a<2c)$ & $\dfrac{x^2}{a^2}-\dfrac{y^2}{b^2}=1$ & $(\pm c,0),\ c^2=a^2+b^2$ & $e=\dfrac ca>1$ \\
+抛物线 & $|PF|=d(P,l)$ & $y^2=2px\ (p>0)$ & $\left(\dfrac p2,0\right)$，准线 $x=-\dfrac p2$ & $e=1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+三条定义其实是同一件事（到焦点与到准线的距离比为 $e$）的特例；$a,b,c$ 的关系只需记「椭圆 $c^2=a^2-b^2$、双曲线 $c^2=a^2+b^2$、抛物线只有一个 $p$」。
+
+\key{（2）直线与圆锥曲线的位置关系：联立 $+$ 判别式。}
+设直线 $l:y=kx+m$，与圆锥曲线方程联立、消去 $y$，得到关于 $x$ 的一元二次方程 $Ax^2+Bx+C=0$（$A$ 可能为 $0$），则
+\[
+  \Delta>0\iff \text{两个不同公共点};\quad
+  \Delta=0\iff \text{相切（一个公共点）};\quad
+  \Delta<0\iff \text{无公共点}.
+\]
+对抛物线等特殊情形，还要检查二次项系数 $A=0$（直线平行于对称轴）时的退化情况——此时方程退化为一次方程，最多一个交点。
+
+\key{（3）弦长公式。}
+设两交点为 $A(x_1,y_1),B(x_2,y_2)$，则
+\[
+  |AB|=\sqrt{1+k^2}\,|x_1-x_2|
+  =\sqrt{1+k^2}\cdot\frac{\sqrt{\Delta}}{|A|}.
+\]
+若直线写成 $x=my+n$，则改用 $|AB|=\sqrt{1+m^2}\,|y_1-y_2|$。记忆钩子：\key{弦长 $=$ 水平（竖直）投影 $\times$ 放大因子}。
+
+\key{（4）中点弦：点差法。}
+设 $A(x_1,y_1),B(x_2,y_2)$ 在椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ 上，$M(x_0,y_0)$ 为 $AB$ 的中点。两式相减：
+\[
+  \frac{(x_1+x_2)(x_1-x_2)}{a^2}+\frac{(y_1+y_2)(y_1-y_2)}{b^2}=0.
+\]
+代入 $x_1+x_2=2x_0,\ y_1+y_2=2y_0$，得
+\[
+  k_{AB}=\frac{y_1-y_2}{x_1-x_2}=-\frac{b^2x_0}{a^2y_0},
+  \qquad\text{等价地}\quad k_{AB}\cdot k_{OM}=-\frac{b^2}{a^2}.
+\]
+\key{点差法的实质是「中点 $\Rightarrow$ 斜率」}，但必须回代检验直线与椭圆确有两交点。
+
+\begin{example}
+椭圆 $E:\dfrac{x^2}{4}+\dfrac{y^2}{2}=1$ 的一条弦 $AB$ 以 $M(1,1)$ 为中点，求直线 $AB$ 的方程与弦长。
+\end{example}
+\begin{solution}
+由点差法（$a^2=4,b^2=2,x_0=y_0=1$）：
+\[
+  k_{AB}=-\frac{b^2x_0}{a^2y_0}=-\frac{2}{4}=-\frac12.
+\]
+故直线 $AB:y-1=-\frac12(x-1)$，即
+\[
+  x+2y-3=0.
+\]
+检验（韦达）：代入椭圆得
+\[
+  \frac{x^2}{4}+\frac{\left(-\frac x2+\frac32\right)^2}{2}=1
+  \iff 3x^2-6x+1=0,
+\]
+$\Delta=36-12=24>0$，确有两个交点。$x_1+x_2=2$（中点横坐标为 $1$，一致），
+\[
+  |x_1-x_2|=\frac{\sqrt{24}}{3}=\frac{2\sqrt6}{3},
+  \qquad
+  |AB|=\sqrt{1+\left(-\frac12\right)^2}\cdot\frac{2\sqrt6}{3}
+  =\frac{\sqrt5}{2}\cdot\frac{2\sqrt6}{3}=\frac{\sqrt{30}}{3}.
+\]
+\end{solution}
+
+\begin{conccard}[二级]{直线与圆锥曲线：判别式、弦长、中点弦}{位置关系判定、弦长计算、中点弦方程、弦中点轨迹}{忽略二次项系数为 $0$ 的退化；点差法不检验 $\Delta$；弦长公式漏乘 $\sqrt{1+k^2}$ 或把分母写成 $\sqrt\Delta$}
+联立得 $Ax^2+Bx+C=0$：$\Delta>0$ 相交、$\Delta=0$ 相切、$\Delta<0$ 相离；
+$|AB|=\sqrt{1+k^2}\cdot\frac{\sqrt\Delta}{|A|}$；
+中点弦斜率 $k=-\dfrac{b^2x_0}{a^2y_0}$，且 $k\cdot k_{OM}=-\dfrac{b^2}{a^2}$。
+\end{conccard}
+
+\begin{commonerror}{直线与圆锥曲线联立的三个高频失误}
+\paragraph{失误一：忘记讨论二次项系数为 $0$。}
+消元后若 $x^2$ 项系数含参数（如直线与抛物线联立），它可能为 $0$，此时方程退化为一元一次方程，只有一个交点。
+必须先声明「当 $A=0$ 时……；当 $A\ne0$ 时……」。
+\paragraph{失误二：点差法求出斜率就直接写答案。}
+点差法只保证「若 $M$ 是中点，则斜率必为 $k$」，并不保证这样的弦真的存在。
+必须回代验证 $\Delta>0$（上面例题中 $\Delta=24>0$ 才可写）。
+\paragraph{失误三：弦长公式张冠李戴。}
+$|x_1-x_2|=\frac{\sqrt\Delta}{|A|}$ 只是水平投影；弦长还要乘 $\sqrt{1+k^2}$。
+若直线设为 $x=my+n$，则应乘 $\sqrt{1+m^2}$ 并对 $y$ 用韦达，切勿混用。
+\end{commonerror}
+
+\begin{conccard}[三级]{定点定值问题的通法骨架}{含参数的动直线与圆锥曲线相交，证明某点／某量为定值}{只算特殊位置就下结论；忽略判别式；参数没有全部消去就说「定值」}
+设线（含参数）$\to$ 联立 $\to$ 韦达（先 $\Delta>0$）$\to$ 把目标量表示成参数的式子 $\to$ 令各参数系数为零（或对任意参数成立）$\to$ 解出定点／定值并回代检验。
+高观点（极线、仿射）用于提前预判答案，通法用于写满步骤。
+\end{conccard}
+
+\subsection{立体几何主干：位置关系、空间角与向量法}
+
+\key{探究五：判定靠逻辑，计算靠向量}
+
+\key{（1）线面平行与垂直：判定和性质是一体两面。}
+\begin{itemize}
+  \item \key{线面平行}：平面外一条直线与此平面内一条直线平行 $\implies$ 线面平行（判定）；
+        线面平行 $\implies$ 过该直线的任一平面与原平面的交线与该直线平行（性质）。
+  \item \key{线面垂直}：一条直线与平面内\key{两条相交}直线都垂直 $\implies$ 线面垂直（判定）；
+        线面垂直 $\implies$ 垂直于平面内任意直线（性质）；垂直于同一平面的两直线互相平行。
+  \item \key{面面关系}：线面平行 $+$ 线线平行可推面面平行；线面垂直可推面面垂直。它们是上述两个判定的「升级版」。
+\end{itemize}
+解题时的固定动作：\key{要证平行，先找「面内一条线与它平行」；要证垂直，先找「面内两条相交线与它垂直」}。
+
+\key{（2）空间角与距离的定义。}
+\begin{itemize}
+  \item \key{线面角}：斜线与它在平面内的射影所成的角，范围 $\left[0,\frac\pi2\right]$；线面垂直时为 $\frac\pi2$，线面平行或在面内时为 $0$；
+  \item \key{二面角}：在棱上取一点，在两个半平面内分别作垂直于棱的射线，两射线的夹角即二面角的平面角；
+  \item \key{点到平面的距离}：点到平面的垂线段长。几何法常用\key{等体积法}（换底面，体积不变）；向量法用公式 $d=\frac{|\overrightarrow{AP}\cdot\vec n|}{|\vec n|}$。
+\end{itemize}
+
+\key{（3）向量法：把第 3 章的工具全部调用过来。}
+以方向向量 $\vec s$ 与法向量 $\vec n$ 为「两个抓手」，空间位置关系与度量可全部坐标化。
+线面平行／垂直、线面角、二面角四条判据与三个高频失误已在第 3 章
+完整给出（点面距公式也出自同一套向量法），此处不重复；
+本章只补一条应用——点到平面的距离
+\[
+  d=\frac{|\overrightarrow{AP}\cdot\vec n|}{|\vec n|}\quad(A\in\alpha),
+\]
+即 $\overrightarrow{AP}$ 在法向量方向上投影的绝对值；几何法常用等体积法对照。
+
+\begin{example}
+四棱锥 $P-ABCD$ 中，底面 $ABCD$ 是边长为 $2$ 的正方形，$PA\perp$ 底面 $ABCD$，$PA=2$。
+（1）求证：$BD\perp$ 平面 $PAC$；（2）求点 $A$ 到平面 $PCD$ 的距离；（3）求二面角 $A-PC-D$ 的余弦值。
+\end{example}
+\begin{solution}
+以 $A$ 为原点，$\overrightarrow{AB},\overrightarrow{AD},\overrightarrow{AP}$ 分别为 $x,y,z$ 轴建立空间直角坐标系（三条轴两两垂直），则
+\[
+  A(0,0,0),\ B(2,0,0),\ C(2,2,0),\ D(0,2,0),\ P(0,0,2).
+\]
+（1）$\overrightarrow{BD}=(-2,2,0)$，$\overrightarrow{AC}=(2,2,0)$，$\overrightarrow{AP}=(0,0,2)$。
+\[
+  \overrightarrow{BD}\cdot\overrightarrow{AC}=-4+4=0,\qquad
+  \overrightarrow{BD}\cdot\overrightarrow{AP}=0,
+\]
+故 $BD\perp AC$ 且 $BD\perp AP$。又 $AC\cap AP=A$，所以 $BD\perp$ 平面 $PAC$。
+
+（2）$\overrightarrow{PC}=(2,2,-2)$，$\overrightarrow{PD}=(0,2,-2)$，平面 $PCD$ 的法向量
+\[
+  \vec n=\overrightarrow{PC}\times\overrightarrow{PD}=(0,4,4)\parallel(0,1,1).
+\]
+点 $A$ 到平面 $PCD$ 的距离
+\[
+  d=\frac{|\overrightarrow{AD}\cdot\vec n|}{|\vec n|}
+  =\frac{|(0,2,0)\cdot(0,1,1)|}{\sqrt2}=\frac{2}{\sqrt2}=\sqrt2.
+\]
+几何法对照（等体积法）：
+$V_{P-ACD}=\frac13 S_{\triangle ACD}\cdot PA=\frac13\cdot2\cdot2=\frac43$；
+又 $PD^2+CD^2=8+4=12=PC^2$，故 $\triangle PCD$ 在 $D$ 处为直角，$S_{\triangle PCD}=\frac12\cdot2\sqrt2\cdot2=2\sqrt2$。
+由 $\frac13 S_{\triangle PCD}\cdot h=\frac43$ 得 $h=\sqrt2$，与向量法一致。
+
+（3）平面 $APC$ 的法向量 $\vec n_1=\overrightarrow{AP}\times\overrightarrow{AC}=(-4,4,0)\parallel(-1,1,0)$；平面 $PCD$ 的法向量 $\vec n_2=(0,1,1)$。
+\[
+  |\cos\theta|=\frac{|\vec n_1\cdot\vec n_2|}{|\vec n_1|\,|\vec n_2|}
+  =\frac{|0+1+0|}{\sqrt2\cdot\sqrt2}=\frac12.
+\]
+取 $PC$ 的中点 $M(1,1,1)$，把 $\overrightarrow{MA}=(-1,-1,-1)$、$\overrightarrow{MD}=(-1,1,-1)$ 去掉沿 $\overrightarrow{PC}$ 方向的分量，得到二面角平面角的两条边，计算得其夹角余弦为 $\frac12>0$，故二面角 $A-PC-D$ 为锐角，其余弦值为
+\[
+  \cos\theta=\frac12.
+\]
+传统几何法需要作平面角、证垂直、再解三角形；向量法只需建系、算两个法向量、代公式。
+\end{solution}
+
+\begin{conccard}[一级]{立体几何的「判定—性质」闭环}{证平行／垂直时的辅助线设计}{只会背定理不会用；找错「面内两条相交直线」；用缺少相交条件的向量}
+证线面平行：面外线 $\parallel$ 面内线；证线面垂直：直线 $\perp$ 面内两条相交直线；
+线面垂直 $\Rightarrow$ 线线垂直；线面平行 $+$ 相交平面 $\Rightarrow$ 线线平行。
+几何法与向量法各有胜场：垂直关系明显时优先几何法（等体积、三垂线），坐标好写时优先向量法。
+\end{conccard}
+
+\begin{summary}
+本章用「仿射变换 $+$ 三维截面 $+$ 向量法」三件武器打通了立体几何与解析几何的维度壁垒。
+椭圆是圆沿 $y$ 轴按比例 $\frac{b}{a}$ 的均匀压缩像，仿射不变量（共线、平行、中点、相切、面积比）全部保持，故椭圆内接三角形最大面积为 $\frac{3\sqrt3}{4}ab$；
+Dandelin 球说明椭圆／双曲线／抛物线是同一个圆锥面被不同倾角平面所截的结果，统一为焦点—准线定义，离心率 $e=\frac{\cos\beta}{\cos\alpha}$；
+考场上层的「高观点预判」（极线公式预设定点、仿射变换秒算面积）与下层的「考纲通法」（设线—联立—韦达—判别式）合成双层法，既看得透又写得全；
+解析几何主干落实为定义与标准方程表、判别式判位置、弦长公式与中点弦点差法，以及定点定值问题的六步通法；
+立体几何主干落实为线面平行／垂直的判定与性质、空间角与距离，并由第 3 章的方向向量与法向量统一处理。
+\key{维度不是障碍，变换才是本质；答案是预判出来的，步骤是通法写出来的。}
+\end{summary}
+
+\end{explore}
+
+\begin{inclasstest}
+\begin{enumerate}
+  \item 把圆 $x^2+y^2=9$ 沿 $y$ 轴按比例 $\frac23$ 均匀压缩，写出所得椭圆方程，并求其内接三角形面积的最大值；\level{易}
+  \item 求抛物线 $y^2=8x$ 的焦点坐标与准线方程；\level{易}
+  \item 若直线 $y=x+m$ 与椭圆 $\dfrac{x^2}{4}+\dfrac{y^2}{2}=1$ 有两个不同的交点，求实数 $m$ 的取值范围；当两者相切时 $m$ 取何值？\level{中}
+  \item 三棱锥 $O-ABC$ 中，$OA,OB,OC$ 两两垂直，$OA=1,OB=2,OC=3$，求直线 $OC$ 与平面 $ABC$ 所成角的正弦值。\level{中}
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection*{基础巩固}
+\begin{enumerate}
+  \item 求椭圆 $\dfrac{x^2}{16}+\dfrac{y^2}{12}=1$ 的半长轴、半短轴、半焦距、焦点坐标与离心率；椭圆上任意一点到两焦点距离之和是多少？
+  \item 求双曲线 $\dfrac{x^2}{9}-\dfrac{y^2}{16}=1$ 的实轴长、虚轴长、离心率与渐近线方程。
+\end{enumerate}
+
+\subsection*{进阶提升}
+\begin{enumerate}
+  \item 椭圆 $E:\dfrac{x^2}{4}+y^2=1$，动点 $P$ 在定直线 $x=4$ 上，过 $P$ 作 $E$ 的两条切线，切点分别为 $A,B$，求证：直线 $AB$ 恒过定点，并求出该定点。
+  \item 椭圆 $E:\dfrac{x^2}{9}+\dfrac{y^2}{4}=1$ 中，以 $M\left(\dfrac32,1\right)$ 为中点的弦所在直线方程为何？该弦的长度是多少？
+\end{enumerate}
+
+\subsection*{拓展探究}
+\begin{enumerate}
+  \item （极点极线的一般化）已知椭圆 $E:\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$，$P(x_0,y_0)$ 为 $E$ 外一点，过 $P$ 作两条切线，切点分别为 $A,B$。
+  \begin{enumerate}
+    \item 求证：切点弦（极线）$AB$ 的方程为 $\dfrac{x_0x}{a^2}+\dfrac{y_0y}{b^2}=1$；
+    \item 若 $P$ 在定直线 $x=m\ (m\neq0)$ 上运动，求 $AB$ 恒过的定点，并用第 6 章的隐函数求导检验 $a=2,b=\sqrt2,x_0=2$ 的特例。
+  \end{enumerate}
+  （提示：设切点 $(x_1,y_1)$，用隐函数求导求切线斜率，化简时利用 $\frac{x_1^2}{a^2}+\frac{y_1^2}{b^2}=1$。）
+\end{enumerate}
+
+\subsection*{教师版答案}
+\begin{solution}
+\textbf{基础 1：}$a^2=16,b^2=12\Rightarrow a=4,b=2\sqrt3$；$c^2=a^2-b^2=4\Rightarrow c=2$。
+焦点 $(\pm2,0)$，离心率 $e=\dfrac ca=\dfrac12$；椭圆上任意一点到两焦点距离之和为 $2a=8$。
+\end{solution}
+\begin{solution}
+\textbf{基础 2：}$a^2=9,b^2=16\Rightarrow a=3,b=4$；$c^2=a^2+b^2=25\Rightarrow c=5$。
+实轴长 $2a=6$，虚轴长 $2b=8$，离心率 $e=\dfrac53$，渐近线 $y=\pm\dfrac{b}{a}x=\pm\dfrac43x$。
+\end{solution}
+\begin{solution}
+\textbf{进阶 1：}设 $P(4,t)$。由极线公式（或设切点用求导推导），切点弦 $AB$ 的方程为
+\[
+  \frac{4x}{4}+\frac{ty}{1}=1\iff x+ty=1.
+\]
+令 $y=0$ 得 $x=1$，与 $t$ 无关，故 $AB$ 恒过定点 $(1,0)$。
+\end{solution}
+\begin{solution}
+\textbf{进阶 2：}由点差法，$k_{AB}=-\dfrac{b^2x_0}{a^2y_0}=-\dfrac{4\cdot\frac32}{9\cdot1}=-\dfrac23$。
+直线 $AB:y-1=-\dfrac23\left(x-\dfrac32\right)$，即
+\[
+  2x+3y-6=0.
+\]
+代入椭圆：$\dfrac{x^2}{9}+\dfrac{\left(2-\frac23x\right)^2}{4}=1
+\iff \dfrac29x^2-\dfrac23x=0$，得 $x=0$ 或 $x=3$。
+对应交点为 $(0,2)$ 与 $(3,0)$（恰为椭圆的两个顶点），中点确为 $\left(\dfrac32,1\right)$，弦长
+\[
+  |AB|=\sqrt{(3-0)^2+(0-2)^2}=\sqrt{13}.
+\]
+\end{solution}
+\begin{solution}
+\textbf{拓展：（1）}设 $A(x_1,y_1)$。椭圆两边对 $x$ 求导：$\dfrac{2x}{a^2}+\dfrac{2yy'}{b^2}=0\Rightarrow y'=-\dfrac{b^2x}{a^2y}$。
+故 $A$ 处切线为 $y-y_1=-\dfrac{b^2x_1}{a^2y_1}(x-x_1)$，整理：
+\[
+  a^2y_1y-a^2y_1^2=-b^2x_1x+b^2x_1^2
+  \iff b^2x_1x+a^2y_1y=b^2x_1^2+a^2y_1^2
+  =a^2b^2\left(\frac{x_1^2}{a^2}+\frac{y_1^2}{b^2}\right)=a^2b^2,
+\]
+两边除以 $a^2b^2$ 得切线方程 $\dfrac{x_1x}{a^2}+\dfrac{y_1y}{b^2}=1$。
+因为 $P(x_0,y_0)$ 在切线上，所以 $\dfrac{x_1x_0}{a^2}+\dfrac{y_1y_0}{b^2}=1$；同理 $\dfrac{x_2x_0}{a^2}+\dfrac{y_2y_0}{b^2}=1$。
+这表明 $A,B$ 都在直线 $\dfrac{x_0x}{a^2}+\dfrac{y_0y}{b^2}=1$ 上，两点定一直线，即为 $AB$ 的方程。
+
+\textbf{（2）}令 $x_0=m$，极线为 $\dfrac{mx}{a^2}+\dfrac{y_0y}{b^2}=1$。令 $y=0$ 得 $x=\dfrac{a^2}{m}$，与 $y_0$ 无关，故 $AB$ 恒过定点 $\left(\dfrac{a^2}{m},0\right)$。
+特例检验：$a=2,b=\sqrt2,m=2$，定点为 $\left(\dfrac{4}{2},0\right)=(2,0)$；极线方程 $\dfrac{2x}{4}+\dfrac{y_0y}{2}=1$ 即 $x+y_0y=2$，当 $y_0=1$ 时 $x+y=2$ 过 $(2,0)$，与课堂例题一致。
+\end{solution}
+\reading{拓展阅读 10}{圆锥曲线：同一个三维对象的三种截面}
+\end{afterclass}

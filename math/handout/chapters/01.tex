@@ -1,0 +1,126 @@
+% 第 1 章：集合与常用逻辑用语
+% 对应湘教版必修第一册 第 1 章
+% 讲义写法约定见 chapters/README.md
+\chapter{集合与常用逻辑用语}
+
+本章是高中数学的起点，也是后面所有代数语言的基础。集合给出「研究对象的整体」
+这一说法，常用逻辑用语给出「条件」这一说法；两者合起来，才能把「若 $p$ 则 $q$」
+这样一句话说清楚。
+
+\section{集合的含义与表示}
+
+\begin{definition}
+我们把研究对象统称为\textbf{元素}，把一些元素组成的总体叫做\textbf{集合}（简称\textbf{集}）。
+\end{definition}
+
+\begin{itemize}
+  \item 元素与集合的关系只有两种：$a\in A$（$a$ 属于 $A$）或 $a\notin A$（$a$ 不属于 $A$）；
+  \item 构成两个集合的元素完全一样，则称两集合相等，记作 $A=B$；
+  \item 集合中元素的三性：\textbf{确定性}（是否属于，没有中间状态）、
+        \textbf{互异性}（同一个元素只算一次）、\textbf{无序性}（次序无关）。
+\end{itemize}
+
+\subsection{两种表示方法}
+
+\begin{description}
+  \item[列举法] 把元素一一列出，用大括号括起，如 $\{1,2,3\}$。
+        适用于元素个数有限且不多的情形。
+  \item[描述法] 用「代表元素 + 约束条件」表示，一般形式为
+        $\{x\in I\mid p(x)\}$。例如 $\{x\in\mathbf{R}\mid x^2-1=0\}$。
+\end{description}
+
+\begin{example}
+用列举法表示集合 $\{x\in\mathbf{Z}\mid -2<x\le 3\}$。
+\end{example}
+\begin{solution}
+逐一检验整数：$-1,0,1,2,3$，故为 $\{-1,0,1,2,3\}$。
+\end{solution}
+
+\begin{derivation}
+为什么描述法里必须写代表元素？比较下面三个集合：
+\[
+  \{x\mid x^2=1\},\qquad \{y\mid y^2=1\},\qquad \{(x,y)\mid x^2+y^2=1\}.
+\]
+前两个的代表元素都是单个实数，约束条件都是「平方等于 1」，所以都是 $\{-1,1\}$，彼此相等；
+第三个的代表元素是有序数对 $(x,y)$，约束条件是「到原点距离为 1」，所以是单位圆上的点集。
+代表元素决定「元素是什么」，约束条件决定「元素满足什么」，两者缺一不可。
+\end{derivation}
+
+\begin{commonerror}{把方程的解当成集合}
+写 $\{x^2-1=0\}$ 是错的：描述法里竖线前是代表元素，竖线后是条件，
+不能把整个方程当作集合。正确写法是 $\{x\mid x^2-1=0\}$ 或直接 $\{-1,1\}$。
+\end{commonerror}
+
+\begin{exercise}
+用适当的方法表示下列集合：
+\begin{enumerate}
+  \item 由 $1,2,3,4,5$ 组成的集合；
+  \item 函数 $y=x^2-1$ 的图象与 $x$ 轴交点的横坐标；
+  \item 所有大于 $3$ 的实数。
+\end{enumerate}
+\end{exercise}
+
+\section{充分条件与必要条件}
+
+设 $p$ 对应集合 $A$，$q$ 对应集合 $B$。
+
+\begin{theorem}
+$p$ 是 $q$ 的充分条件 $\iff A\subseteq B$；$p$ 是 $q$ 的必要条件 $\iff B\subseteq A$。
+\end{theorem}
+
+\begin{derivation}
+若 $A\subseteq B$，则「$x$ 满足 $p$」即 $x\in A$，必有 $x\in B$ 即满足 $q$，
+所以 $p$ 能推出 $q$，即 $p$ 是 $q$ 的充分条件。反过来，若 $p$ 是 $q$ 的充分条件，
+则每个 $x\in A$ 都满足 $q$，即 $x\in B$，故 $A\subseteq B$。
+\end{derivation}
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{3.4cm}p{4.6cm}p{3.4cm}}
+\toprule
+集合关系 & 条件关系 & 记忆 \\
+\midrule
+$A=B$ & $p$ 是 $q$ 的充要条件 & 范围相等 \\
+$A\subsetneqq B$ & $p$ 是 $q$ 的充分不必要条件 & 小推大 \\
+$B\subsetneqq A$ & $p$ 是 $q$ 的必要不充分条件 & 大推小 \\
+互不包含 & 既不充分也不必要 & 推不出 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{example}
+已知 $p$：$x\in(-1,3)$，$q$：$x^2-2x-3<0$。判断 $p$ 是 $q$ 的什么条件。
+\end{example}
+\begin{solution}
+$q$ 的解集为 $(-1,3)$，与 $p$ 的集合相同，即 $A=B$。故 $p$ 是 $q$ 的充要条件。
+\end{solution}
+
+\begin{summary}
+\begin{itemize}
+  \item 集合三要素：确定性、互异性、无序性；表示方法：列举法 $\{1,2,3\}$、描述法 $\{x\mid p(x)\}$；
+  \item 条件关系用集合包含关系判定：小范围推大范围，范围相等即充要；
+  \item 描述法中代表元素与约束条件共同决定集合，比较集合先看代表元素。
+\end{itemize}
+\end{summary}
+
+\begin{method}
+判断条件关系的三步：
+\begin{enumerate}
+  \item 分别解出 $p$、$q$ 对应的集合 $A$、$B$；
+  \item 比较 $A$、$B$ 的包含关系；
+  \item 按「小推大」的口诀下结论，并回代一个具体数值检验。
+\end{enumerate}
+\end{method}
+
+\begin{exercise}
+\begin{enumerate}
+  \item 设 $A=\{x\mid x^2-5x+6<0\}$，$B=\{x\mid 1<x<a\}$，若 $A\subseteq B$，求 $a$ 的取值范围；
+  \item 设 $p$：$x\in(0,2)$，$q$：$x^2-2x<0$，判断 $p$ 是 $q$ 的什么条件；
+  \item 思考：$\{1,1,2\}$ 能否表示一个集合？为什么？
+\end{enumerate}
+\end{exercise}
+
+% 课后阅读指引（指向 ../extension/）
+\reading{01}{集合之美}

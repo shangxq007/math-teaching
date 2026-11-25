@@ -1,0 +1,355 @@
+% ==========================================================
+% 第 9 章 不动点：迭代、方程与几何变换的交汇
+% 说明：本文件为纯正文片段，由 main_body.tex 挂载；
+%       使用 versions.tex 的 \tk / \vchoice / advancedonly /
+%       basiconly / solution / 盒子与七问母题环境。
+% ==========================================================
+
+\section{不动点：迭代、方程与几何变换的交汇（高观点版）}
+
+\begin{methodbox}{多框架对读}
+\small
+\begin{center}
+\begin{tabular}{c|p{2.9cm}|p{5.0cm}|p{3.1cm}}
+\toprule
+视角 & 本章看点 & 别的视角怎么说 & 哪侧最省力 \\
+\midrule
+代数 & 解 $x=F(x)$、构造 $b_n=a_n-x^*$ & 把不动点当方程的根 & 求解析式 \\
+几何 & 曲线与对角线的交点、变换的不动心 & 位置关系与轨迹形状 & 看收敛、判稳定 \\
+集合 & 轨道 $\{a_n\}$ 与其聚点 & 值集、吸引域／排斥域 & 讨论存在与唯一 \\
+映射 & 停留点 $F(p)=p$；Möbius 射影 & 换坐标系＝换表示 & 非线性 $\to$ 等比 \\
+\bottomrule
+\end{tabular}
+\end{center}
+卡的使用：四类不动点（数列／方程／变换／分式）共用同一句话——$F(p)=p$；算不下去就换表示（总图见第 0 章图~\ref{fig:four-view-map}）。
+\end{methodbox}
+
+\begin{warmupbox}{读法（先看这里）}
+不动点只有一个定义：映射 $F$ 中满足 $F(p)=p$ 的点 $p$。
+它有三副面孔：数列递推 $a_{n+1}=F(a_n)$（离散自迭代）、
+方程 $f(x)=x$（曲线与对角线的交点）、几何变换（旋转中心、
+位似中心、分式变换）。三者的共同动作是\key{换坐标系，把锚点
+搬到原点}——这正是第 8 章齐次化、第 5 章平移／旋转的内核。
+本章把这条线索单独展开，第 5 章与第 8 章的应用改为引用。
+\end{warmupbox}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 把数列看成 $\mathbb{N}\to\mathbb{R}$ 的（离散）函数，把递推看成映射的自迭代；
+  \item 会用不动点方程 $x=F(x)$ 与稳定性判据 $|F'(x^*)|$ 处理一阶递推；
+  \item 理解连续情形 $f(x)=x$ 的图解法与第 6 章隐零点、切线放缩的联系；
+  \item 知道旋转中心、位似中心、仿射定点都是不动点的特例；
+  \item 理解齐次坐标 $(u,v)$ 为什么能把分式迭代线性化（详见第 5 章）。
+\end{itemize}
+\end{learnobjective}
+
+\subsection{第 1 节 数列是自然数集上的函数：递推即迭代}
+
+数列 $a_n$ 本质是函数 $a:\mathbb{N}\to\mathbb{R}$，$n\mapsto a_n$。
+一阶递推 $a_{n+1}=F(a_n)$ 就是映射 $F$ 的\key{自迭代}：
+$a_1=F(a_0),\ a_2=F(F(a_0)),\dots$，数列是 $F$ 的一条轨道。
+于是
+\[
+  \text{不动点}\ x^*=F(x^*)
+  \iff \text{点 }(x^*,x^*)\text{ 同时在 }F\text{ 的图象与对角线 }y=x\text{ 上}.
+\]
+\textbf{稳定性判据}：在 $x^*$ 附近线性化 $F(x)\approx x^*+F'(x^*)(x-x^*)$，
+故
+\[
+  |F'(x^*)|<1\Rightarrow\text{收缩（稳定）},\quad
+  |F'(x^*)|>1\Rightarrow\text{扩张（不稳定）},\quad
+  |F'(x^*)|=1\Rightarrow\text{看高阶项（临界）}.
+\]
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[x=0.9cm,y=0.9cm,>=Stealth,semithick,font=\footnotesize]
+      \draw[->,gray] (-1,0)--(3,0);
+      \draw[->,gray] (0,-1)--(0,3);
+      \draw[gray!60,dashed,domain=-1:3] plot(\x,\x);
+      \draw[main,very thick,domain=-1:3] plot(\x,{0.5*\x+1});
+      \fill[second] (2,2) circle (1.6pt) node[above right] {$x^*=2$};
+      \draw[third,thick] (0,0)--(0,1)--(1,1)--(1,1.5)--(1.5,1.5)--(1.5,1.75)--(1.75,1.75);
+      \node[gray!70!black] at (1.5,-0.65) {$F(x)=\tfrac12x+1$：收缩};
+    \end{tikzpicture}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[x=0.9cm,y=0.9cm,>=Stealth,semithick,font=\footnotesize]
+      \draw[->,gray] (-1,0)--(3,0);
+      \draw[->,gray] (0,-1)--(0,3);
+      \draw[gray!60,dashed,domain=-1:3] plot(\x,\x);
+      \draw[main,very thick,domain=-0.5:2] plot(\x,{2*\x-1});
+      \fill[second] (1,1) circle (1.6pt) node[below left] {$x^*=1$};
+      \draw[third,thick] (1.2,1.2)--(1.2,1.4)--(1.4,1.4)--(1.4,1.8)--(1.8,1.8)--(1.8,2.6);
+      \node[gray!70!black] at (1.5,-0.65) {$G(x)=2x-1$：扩张};
+    \end{tikzpicture}
+  \end{minipage}
+  \caption{不动点的两种命运：同一张「$F$ 的图象＋对角线」图上，左图 $|F'|<1$，蛛网阶梯螺旋收拢到 $x^*$；右图 $|G'|>1$，阶梯被弹开。斜率与对角线 $y=x$ 的比较就是稳定性判据}
+  \label{fig:cobweb-pair}
+\end{figure}
+
+\begin{methodbox}{不动点法三步}
+\begin{enumerate}[label=(\arabic*), itemsep=2pt]
+  \item \key{找}：解 $x^*=F(x^*)$（可能不止一个）；
+  \item \key{判}：算 $|F'(x^*)|$ 定稳定／不稳定；
+  \item \key{化}：令 $b_n=a_n-x^*$，则 $b_{n+1}\approx F'(x^*)\,b_n$；
+        稳定时 $b_n\to0$，并可用等比模型写出通项。
+\end{enumerate}
+常见变体：分式递推用 $\dfrac{a_n-x_1}{a_n-x_2}$ 作商（第 5 章探究五），
+双曲型递推用三角／指数代换。
+\end{methodbox}
+
+\subsection{第 2 节 连续情形：方程 $f(x)=x$ 与图解法}
+
+把 $f(x)=x$ 改写成 $\varphi(x)=f(x)-x=0$：不动点就是 $\varphi$ 的零点。
+几何上，它是曲线 $y=f(x)$ 与直线 $y=x$ 的交点。
+\begin{example}[方程 $x=\cos x$ 在 $(0,\tfrac\pi2)$ 内有唯一解]
+\vspace{-1mm}
+\begin{solution}
+$\varphi(x)=\cos x-x$，$\varphi(0)=1>0$，$\varphi(\tfrac\pi2)=-\tfrac\pi2<0$，
+由零点定理至少有一解；又 $\varphi'(x)=-\sin x-1<0$ 严格递减，故唯一。
+进一步 $|\varphi'|$ 与压缩性：$f(x)=\cos x$ 的导数 $|f'|=\sin x<1$ 在
+$(0,\tfrac\pi2)$ 成立，故 $f$ 是压缩映射，迭代 $x_{n+1}=\cos x_n$
+对任意初值都收敛到该唯一不动点——这就是第 6 章「隐零点＋单调性」
+的几何版本。
+\end{solution}
+\end{example}
+\textbf{与考纲的接口}：求超越方程的近似解（二分法）本质是不断把区间
+压缩到不动点；证明 $f(x)\ge x$ 型不等式（如 $e^x\ge x+1$）则是在
+比较曲线与对角线的位置（见第 6 章切线放缩）。
+
+\subsection{第 3 节 几何变换的不动点：旋转中心、位似中心与仿射定点}
+
+\begin{itemize}
+  \item \key{旋转}：转角 $\theta\not\equiv0\pmod{2\pi}$ 的平面旋转只有
+        \textbf{中心}一个不动点；
+  \item \key{位似}：位似中心不动，其余点沿射线伸缩；
+  \item \key{平移}：平面上没有不动点（它的「不动点」在无穷远处）；
+  \item \key{仿射变换} $(x,y)\mapsto A\binom xy+\vec b$：不动点满足
+        $(A-I)\binom xy=-\vec b$，当 $\det(A-I)\neq0$ 时唯一。
+        椭圆的中心就是两方向伸缩变换的公共不动点（见第 4 章）。
+\end{itemize}
+直觉：任何「保结构」的变换都可以先找到它的不动点，再把坐标原点
+搬过去——剩下的表达式往往立刻简化（第 8 章的平移手术刀、第 5 章
+的旋转消交叉项都是这一招）。
+
+\subsection{第 4 节 分式迭代与齐次坐标：射影视角}
+
+一次分式变换 $x\mapsto\dfrac{ax+b}{cx+d}$ 本身不是线性的，但把 $x$
+写成两个量的比 $x=u/v$ 之后，分子分母各自线性组合：
+\[
+  x_{n+1}=\frac{a\,x_n+b}{c\,x_n+d}
+  \iff
+  \binom{u_{n+1}}{v_{n+1}}
+  =\begin{pmatrix}a&b\\ c&d\end{pmatrix}\binom{u_n}{v_n},
+  \qquad x_n=\frac{u_n}{v_n}.
+\]
+关键在第二步：点 $(u,v)$ 与 $\lambda(u,v)$ 表示同一个 $x$（射影点），
+所以「二维向量的线性作用」可以「投影」为一维分式作用。第 5 章
+探究三已由此证明：\key{分式迭代的不动点 $=$ 矩阵的特征方向}
+（推导与数值例子见第 5 章，此处不重复）。这里只看一件事：为什么
+$(u,v)$ 与 $\lambda(u,v)$ 是同一点。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth,semithick,font=\footnotesize,x=1.1cm,y=1.1cm]
+    \draw[->,gray] (-0.5,0)--(4.6,0) node[right] {$u$};
+    \draw[->,gray] (0,-0.5)--(0,3.1) node[above] {$v$};
+    \draw[main!60!black,dashed,very thick] (0,1)--(4.5,1) node[right] {$v=1$（投影线）};
+    % 两条射线：同一条射线上取两个代表元
+    \draw[second,very thick,->] (0,0)--(2.1,1.05);
+    \draw[third,very thick,->] (0,0)--(1.05,2.1);
+    \foreach \p/\lab/\pos in {(2,1)/{$x=2$}/above right,(1,2)/{$x=\tfrac12$}/above left}
+      \fill[main] \p circle (1.6pt) node[\pos] {\lab};
+    \fill (0,0) circle (1.2pt) node[below left] {$O$};
+    \node[gray!70!black,align=center] at (2.2,-0.7) {同一条过原点的射线上的 $(u,v)$、$(2u,2v)$\\投影到 $v=1$ 上得到同一个 $x=u/v$};
+  \end{tikzpicture}
+  \caption{齐次坐标：用有序数对 $(u,v)$ 刻画比值 $x=u/v$。射线上的所有代表元落在投影线 $v=1$ 的同一点上，于是「一维分式迭代」升级为「二维线性迭代」}
+  \label{fig:ray-projective}
+\end{figure}
+
+\textbf{双不动点的几何图像}：设 $M$ 的两个不动点为 $p,q$（射影直线上）。
+取新坐标
+\[
+  X=\frac{x-p}{\,x-q\,},
+\]
+它把 $p$ 送到 $0$、$q$ 送到 $\infty$；在此坐标下 $M$ 退化为\emph{纯伸缩}
+$X\mapsto\lambda X$，其中 $\lambda$ 正是转移矩阵两特征值之比（第 5 章探究五）。
+于是
+\[
+  |\lambda|<1\Rightarrow X\to0\ \ (x\to p),\qquad
+  |\lambda|>1\Rightarrow X\to\infty\ \ (x\to q).
+\]
+换言之：\key{两条特征方向在射影直线上就是两个不动点}；以 $p,q$ 为
+$0,\infty$ 建立坐标后，分式迭代变成等比数列——这就是共轭变换的几何全貌。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[>=Stealth,semithick,font=\footnotesize,x=1.2cm,y=1.2cm]
+      \draw[->,gray] (-3.2,0)--(3.6,0);
+      \node[gray!70!black,right] at (3.6,0) {$x$（射影直线）};
+      \fill[main] (-2,0) circle (1.5pt) node[below] {$p$};
+      \fill[second] (1.4,0) circle (1.5pt) node[below] {$q$};
+      \draw[third,thick,->] (-1.2,0.28)--(-0.45,0.28);
+      \draw[third,thick,->] (0.1,0.28)--(0.9,0.28);
+      \node[gray!70!black,align=center] at (0.2,-1.0)
+        {区间 $(p,q)$ 内 $X<0$，$|X|$ 越滚越大，\\$x$ 被拉向 $q$（$|\lambda|>1$）};
+    \end{tikzpicture}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[>=Stealth,semithick,font=\footnotesize,x=1.0cm,y=1.0cm]
+      \draw[->,gray] (-2.4,0)--(2.6,0) node[right] {$u$};
+      \draw[->,gray] (0,-0.8)--(0,2.6) node[above] {$v$};
+      \draw[main!60!black,dashed,thick] (-2.2,1)--(2.4,1) node[right] {$v=1$};
+      \node[gray!70!black,left] at (-0.02,1) {$1$};
+      \draw[main,very thick,->] (0,0)--(-1.05,0.55);
+      \draw[main,very thick,dashed] (0,0)--(-2.1,1.05);
+      \draw[second,very thick,->] (0,0)--(2.4,1.2);
+      \fill[main] (-0.6,0.3) circle (1.4pt) node[below] {$(u,v)$};
+      \node[main!70!black,above] at (-1.5,0.82) {$\times\lambda$};
+      \fill[third] (-2,1) circle (1.4pt) node[below] {$p$};
+      \fill[third] (2,1) circle (1.4pt) node[below] {$q$};
+      \node[gray!70!black,align=center] at (0,-0.55)
+        {两条特征直线 $\leftrightarrow$ 两个不动点};
+    \end{tikzpicture}
+  \end{minipage}
+  \caption{双不动点的几何：左图在射影直线上，$X=(x-p)/(x-q)$ 使 $p\leftrightarrow0$、
+  $q\leftrightarrow\infty$，迭代退化为 $X\mapsto\lambda X$（图示 $|\lambda|>1$，轨道被拉向 $q$）；
+  右图回到 $(u,v)$ 平面，两条过原点的特征直线分别对应 $p,q$，作用即沿射线作伸缩}
+  \label{fig:mobius-two-fixed}
+\end{figure}
+
+\subsection{第 5 节 七问连环母题：解答即笔记}
+
+\refstepcounter{hvmasterq}
+\begin{masterq}{不动点与收敛：$a_{n+1}=\dfrac12a_n+1$，$a_0=0$}
+\begin{enumerate}[label=(\arabic*), itemsep=3pt]
+\item \textbf{画图与数值感知}：算出 $a_1,a_2,a_3,a_4$，描点并猜极限。\logotag{核心公理}
+\item \textbf{多视角结构翻译}：把该递推分别看成（i）$\mathbb{N}\to\mathbb{R}$
+的函数迭代、（ii）平面直角坐标系中曲线 $y=\tfrac12x+1$ 与直线 $y=x$
+的交点问题。\logotag{结构翻译}
+\item \textbf{考纲规范通法}：用不动点法求通项，写出关键步骤
+（令 $b_n=a_n-x^*$，\tk{} 填空）。\logotag{考纲通法}
+\item \textbf{高观点降维秒杀}：用 $|F'(x^*)|$ 直接写出
+$|a_n-x^*|=2\cdot2^{-n}$，并与第 6 章局部线性化对读。\logotag{大招公式}
+\item \textbf{公式变形家族生成}：推导 $a_{n+1}=pa_n+q$ 的完整公式族
+（$p\neq1$、$p=1$、$|p|>1$ 三种情形）。\logotag{公式族}
+\item \textbf{参数变式与逆向追问}：由 $a_2=\tfrac32$、$a_3=\tfrac74$
+反求 $p,q$；再回答：若 $\lim a_n=5$ 且 $p=\tfrac12$，求 $q$。\logotag{充要边界}
+\item \textbf{边界陷阱与错题排雷}：某同学习惯「设 $\lim a_n=L$，代入得
+$L=\tfrac12L+1$」，请指出缺少哪个前提，并举反例说明。\logotag{避坑铁律}
+\end{enumerate}
+\end{masterq}
+
+\begin{solution}
+(1) $a_1=1,\ a_2=\dfrac32,\ a_3=\dfrac74,\ a_4=\dfrac{15}8$，
+趋向 $2$。
+
+(2) （i）$F(x)=\tfrac12x+1$ 的自迭代；（ii）交点为
+联立 $y=\tfrac12x+1$ 与 $y=x$ 的解 $(2,2)$。
+
+(3) $x^*=\tfrac12x^*+1\Rightarrow x^*=2$。令 $b_n=a_n-2$，则
+$b_{n+1}=a_{n+1}-2=\tfrac12(a_n-2)=\tfrac12 b_n$，$b_0=-2$，故
+$b_n=-2\left(\tfrac12\right)^n$，
+\[
+  a_n=2-2^{\,1-n}.
+\]
+检验：$n=0$ 时 $a_0=0$，$n=1$ 时 $a_1=1$。
+
+(4) $|F'(2)|=\tfrac12<1$，故 $|a_n-2|=|b_n|=2\cdot2^{-n}$ 指数衰减；
+第 6 章的局部线性化 $F(x)\approx 2+\tfrac12(x-2)$ 正是这一步的连续版。
+
+(5) $a_{n+1}=pa_n+q$：$x^*=px^*+q\Rightarrow x^*=\dfrac{q}{1-p}\ (p\neq1)$，
+$a_n=x^*+p^n(a_0-x^*)$；$p=1$ 时退化为等差 $a_n=a_0+nq$；
+$|p|>1$ 且 $a_0\neq x^*$ 时 $|a_n|\to\infty$。
+
+(6) 由 $a_2=pa_1+q$、$a_3=pa_2+q$ 相减得
+$p=\dfrac{a_3-a_2}{a_2-a_1}=\dfrac{1/4}{1/2}=\dfrac12$，
+$q=a_2-pa_1=\dfrac32-\dfrac12=1$。
+若 $\lim a_n=5$ 且 $p=\tfrac12$，则 $5=\dfrac q{1-1/2}=2q$，故 $q=\dfrac52$。
+
+(7) 「取极限」需要先证明极限存在（单调有界或压缩映射）；反例：
+$a_{n+1}=-a_n$、$a_0=1$ 振荡无极限，而方程 $x=-x$ 有唯一解 $0$——
+\textbf{不动点存在不等于轨道收敛}。
+\end{solution}
+
+\refstepcounter{hvmasterq}
+\begin{masterq}{分式迭代：$x_{n+1}=1+\dfrac1{x_n}$，$x_0=1$}
+\begin{enumerate}[label=(\arabic*), itemsep=3pt]
+\item \textbf{画图与数值感知}：算出 $x_1,x_2,x_3,x_4$，观察奇数项与
+偶数项各自的走向。\logotag{核心公理}
+\item \textbf{多视角结构翻译}：把它写成连分数 $x=1+\dfrac1{1+\dfrac1{1+\cdots}}$
+与二次方程 $x^2-x-1=0$。\logotag{结构翻译}
+\item \textbf{考纲规范通法}：证明奇数子列递增、偶数子列递减且有共同
+极限 $\varphi=\dfrac{1+\sqrt5}{2}$（用 $\tk{}$ 搭骨架）。\logotag{考纲通法}
+\item \textbf{高观点降维秒杀}：指出这是矩阵 $\begin{pmatrix}1&1\\1&0\end{pmatrix}$
+的迭代，特征值之比给出收敛速率 $\dfrac{1}{\varphi^2}$（见第 5 章）。\logotag{大招公式}
+\item \textbf{公式变形家族生成}：证明 $x_n=\dfrac{F_{n+2}}{F_{n+1}}$（$F_n$ 为
+斐波那契数），并由此得到 $\varphi$ 的连分数与渐进分数。\logotag{公式族}
+\item \textbf{参数变式与逆向追问}：若 $x_0=\varphi$ 会怎样？求使 $x_2=\varphi$
+的 $x_0$；再把递推改成 $x_{n+1}=k+\dfrac1{x_n}$，求不动点与收敛范围。\logotag{充要边界}
+\item \textbf{边界陷阱与错题排雷}：某同学由 $\lim x_n=L$ 直接写
+$L=1+\dfrac1L$。请指出两处逻辑漏洞（存在性、正负号），并举出
+$x_0<0$ 时的反例。\logotag{避坑铁律}
+\end{enumerate}
+\end{masterq}
+
+\begin{solution}
+(1) $x_1=2,\ x_2=\dfrac32,\ x_3=\dfrac53,\ x_4=\dfrac85$；奇数项递减、
+偶数项递增，夹在 $1.6$ 附近。
+
+(2) 迭代不变量：若 $x_n>0$，则 $x_{n+1}>1$；不动点满足
+$x=1+\dfrac1x\Rightarrow x^2-x-1=0\Rightarrow \varphi=\dfrac{1+\sqrt5}{2}$
+（负根 $-\dfrac1\varphi<0$ 舍去，因 $x_n>0$）。
+
+(3) 设 $f(x)=1+\dfrac1x$，则 $x_{n+2}=f(f(x_n))=\dfrac{2x_n+1}{x_n+1}$。
+直接证明：$x_{2k}$ 递增、$x_{2k+1}$ 递减，且
+$|x_{n+1}-\varphi|=\dfrac{|x_n-\varphi|}{x_n\varphi}\le\dfrac1\varphi|x_n-\varphi|$
+（因为 $x_n\ge1$），故两者夹逼到 $\varphi$。
+
+(4) $\binom{u_{n+1}}{v_{n+1}}=\begin{pmatrix}1&1\\1&0\end{pmatrix}\binom{u_n}{v_n}$，
+$x_n=u_n/v_n$；矩阵特征值为 $\varphi$ 与 $-1/\varphi$，故
+$|x_n-\varphi|\sim C\varphi^{-2n}$（公比 $\left|\lambda_2/\lambda_1\right|
+=\dfrac1{\varphi^2}$，见第 5 章探究五）。
+
+(5) 归纳（取 $F_0=0,F_1=1$）：$x_0=\dfrac{F_2}{F_1}=\dfrac11=1$，且
+$1+\dfrac1{x_n}=1+\dfrac{F_{n+1}}{F_{n+2}}
+=\dfrac{F_{n+2}+F_{n+1}}{F_{n+2}}=\dfrac{F_{n+3}}{F_{n+2}}$，
+故 $x_n=\dfrac{F_{n+2}}{F_{n+1}}$。
+
+(6) $x_0=\varphi\Rightarrow$ 常数列 $\varphi$；反向递推
+$x_n=\dfrac1{x_{n+1}-1}$，由 $x_2=\varphi$ 得 $x_1=\varphi$、$x_0=\varphi$。
+一般地 $x_{n+1}=k+\dfrac1{x_n}$ 的不动点为
+$\dfrac{k+\sqrt{k^2+4}}2$，$k>0$ 时正根稳定（$|f'|=1/x^{*2}<1$）。
+
+(7) 漏洞一：未先证明极限存在；漏洞二：取极限时未说明保号。
+方程 $L=1+\dfrac1L$ 的负根 $-\dfrac{1-\sqrt5}{2}$ 本身合法，
+但它与 $x_n>0$ 的保号性矛盾，不能作为数列的极限。反例：
+$x_0=-1$ 时 $x_1=0$，$x_2$ 无定义——定义域与符号必须先交代。
+\end{solution}
+
+\begin{conccard}{不动点：一把万能锚}{递推求通项与收敛性、超越方程近似解、几何变换的简化、分式迭代}{把「不动点存在」当成「轨道收敛」；未验证极限存在就取极限；忽略定义域与符号}
+\vchoice{遇到「迭代／递推／方程 $f(x)=x$／变换简化」，先找不动点，
+再判 $|F'|$，最后决定坐标系搬到哪里。}{记住三步：解 $x=F(x)$，
+算 $|F'|$，搬原点。第 5、6、8 章都靠这一招联动。}
+\end{conccard}
+
+\begin{notezone}{章末归档：不动点二级结论 + 七问笔记功能}
+\textbf{二级结论}：（1）一阶递推 $a_{n+1}=pa_n+q$ 的不动点
+$x^*=\dfrac q{1-p}$，$a_n=x^*+p^n(a_0-x^*)$；
+（2）稳定性 $|F'(x^*)|<1\Leftrightarrow$ 局部收缩；
+（3）分式迭代的不动点＝矩阵特征方向（第 5 章）；
+（4）齐次坐标 $(u,v)$ 把一维分式作用提升为二维线性作用；
+（5）换坐标系（平移／旋转／齐次化）都是把不动点搬到原点。
+
+\textbf{七问与笔记功能}：(1) 数值感知 $\to$ 概念引入；(2) 三视角
+翻译 $\to$ 性质定义；(3) 考纲通法 $\to$ 规范书写；(4) 高观点秒杀
+$\to$ 大招笔记；(5) 公式族 $\to$ 题型拓展；(6) 逆向追问 $\to$ 充要
+边界；(7) 陷阱排雷 $\to$ 错题本。
+\end{notezone}

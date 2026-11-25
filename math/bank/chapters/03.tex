@@ -1,57 +1,318 @@
-% 第 3 课时：二次函数与方程、不等式
-\section{二次函数与方程、不等式}
+% 第 3 章：函数、幂函数、指数函数、对数函数
+\chapter{函数、幂函数、指数函数、对数函数}
 
-\begin{problem}[易]
-解方程 $x^2-5x+6=0$。
+\section{函数的概念与表示}
+
+\begin{problem}\level{易}
+求函数 $y=\sqrt{x-1}+\dfrac{1}{x-2}$ 的定义域。
 \end{problem}
 \begin{solution}
-$(x-2)(x-3)=0$，故 $x=2$ 或 $x=3$。
+需 $x-1\geq0$ 且 $x-2\neq0$，即 $x\geq1$ 且 $x\neq2$。
+定义域为 $[1,2)\cup(2,+\infty)$。
 \end{solution}
 
-\begin{problem}[易]
-解不等式 $x^2-5x+6>0$。
+\begin{problem}\level{中}
+求函数 $y=\dfrac{\sqrt{x+2}}{x-3}$ 的定义域。
 \end{problem}
 \begin{solution}
-方程两根为 $2$、$3$，$a=1>0$，大于取两边，解集为 $(-\infty,2)\cup(3,+\infty)$。
+需 $x+2\geq0$ 且 $x-3\neq0$，即 $x\geq-2$ 且 $x\neq3$。
+定义域为 $[-2,3)\cup(3,+\infty)$。
 \end{solution}
 
-\begin{problem}[中]
-解不等式 $x^2-4x+4\leq0$。
+\begin{problem}\level{中}
+设 $f(x)=\begin{cases}x+1,&x\leq0,\\ x^2,&x>0.\end{cases}$ 求 $f(-2)$、$f(0)$、$f(1)$。
 \end{problem}
 \begin{solution}
-$\Delta=0$，方程有重根 $x=2$。不等式化为 $(x-2)^2\leq0$，解集为 $\{2\}$。
+$f(-2)=-1$；$f(0)=0+1=1$；$f(1)=1^2=1$。
 \end{solution}
 
-\begin{problem}[中]
-解不等式 $x^2+2x+3>0$。
+\begin{problem}\level{中}
+下列对应中，哪些是函数？(1) $x\mapsto x^2$（$x\in\mathbb{R}$）；(2) $x\mapsto\pm\sqrt{x}$（$x\geq0$）。
 \end{problem}
 \begin{solution}
-$\Delta=4-12=-8<0$，方程无实根，又 $a=1>0$，故解集为 $\mathbb{R}$。
+(1) 是函数；(2) 不是，因为 $x=4$ 对应 $y=\pm2$，一个 $x$ 对应了两个 $y$。
 \end{solution}
 
-\begin{problem}[中]
-解不等式 $-x^2+2x+3>0$。
+\begin{problem}\level{难}
+若函数 $f(x)=\sqrt{ax^2+2x+3}$ 的定义域为 $\mathbb{R}$，求 $a$ 的取值范围。
 \end{problem}
 \begin{solution}
-两边同乘 $-1$ 得 $x^2-2x-3<0$，解集为 $(-1,3)$。
+需 $ax^2+2x+3\geq0$ 对任意 $x$ 恒成立。
+若 $a=0$，则 $2x+3\geq0$ 不恒成立；故 $a>0$ 且 $\Delta=4-12a\leq0$，
+解得 $a\geq\dfrac13$。
 \end{solution}
 
-\begin{problem}[难]
-用数轴穿根法解不等式 $(x+1)(x-2)(x-4)<0$。
+\begin{problem}\level{中}
+设 $f(x)$ 对任意实数 $x,y$ 都有 $f(x+y)=f(x)+f(y)$，求 $f(0)$ 并判断奇偶性。
 \end{problem}
 \begin{solution}
-根为 $-1$、$2$、$4$。从右上方起笔穿根，各段符号依次为 $+$、$-$、$+$、$-$。
-取小于 $0$ 的部分，解集为 $(-\infty,-1)\cup(2,4)$。
+令 $x=y=0$ 得 $f(0)=0$；令 $y=-x$ 得 $f(-x)=-f(x)$，故 $f$ 是奇函数。
 \end{solution}
 
-\begin{problem}[难]
-解关于 $x$ 的不等式 $x^2-(a+1)x+a<0$（$a$ 为参数）。
+\begin{problem}\level{中}
+设 $f(x)$ 是 $\mathbb{R}$ 上的增函数，$f(2)=1$，$f(5)=4$，解不等式 $f(2x-1)<4$。
 \end{problem}
 \begin{solution}
-因式分解得 $(x-1)(x-a)<0$。
-\begin{itemize}
-  \item 若 $a>1$，解集为 $(1,a)$；
-  \item 若 $a=1$，不等式为 $(x-1)^2<0$，解集为 $\emptyset$；
-  \item 若 $a<1$，解集为 $(a,1)$。
-\end{itemize}
+$f(2x-1)<4=f(5)$，由递增得 $2x-1<5$，即 $x<3$。
+\end{solution}
+
+\begin{problem}\level{难}
+已知 $f(x)$ 是偶函数，且 $x\geq0$ 时 $f(x)=x^2-2x$，求 $x<0$ 时的解析式。
+\end{problem}
+\begin{solution}
+设 $x<0$，则 $-x>0$，$f(-x)=x^2+2x$，由偶函数得 $f(x)=x^2+2x$。
+\end{solution}
+
+\begin{problem}\level{难}
+说明 $y=f(2x-1)$ 的图象可由 $y=f(x)$ 的图象经过怎样的变换得到。
+\end{problem}
+\begin{solution}
+先把横坐标缩短为原来的 $\dfrac12$ 得 $y=f(2x)$，再向右平移 $\dfrac12$ 个单位得 $y=f(2x-1)$。
+\end{solution}
+
+\section{函数的基本性质}
+
+\begin{problem}\level{中}
+用定义证明 $f(x)=2x+1$ 在 $\mathbb{R}$ 上单调递增。
+\end{problem}
+\begin{solution}
+任取 $x_1<x_2$，$f(x_1)-f(x_2)=2(x_1-x_2)<0$，即 $f(x_1)<f(x_2)$，故递增。
+\end{solution}
+
+\begin{problem}\level{中}
+求 $f(x)=x^2$ 的单调区间。
+\end{problem}
+\begin{solution}
+在 $(-\infty,0]$ 上单调递减，在 $[0,+\infty)$ 上单调递增。
+\end{solution}
+
+\begin{problem}\level{中}
+判断下列函数的奇偶性：$f(x)=x^3$，$g(x)=x^2+1$，$h(x)=x^2+x$。
+\end{problem}
+\begin{solution}
+$f$ 是奇函数；$g$ 是偶函数；$h$ 既不是奇函数也不是偶函数。
+\end{solution}
+
+\begin{problem}\level{难}
+已知 $f(x)$ 是奇函数，且当 $x>0$ 时 $f(x)=x^2-2x$，求 $x<0$ 时 $f(x)$ 的解析式。
+\end{problem}
+\begin{solution}
+设 $x<0$，则 $-x>0$，$f(-x)=x^2+2x$。由 $f(-x)=-f(x)$ 得 $f(x)=-x^2-2x$。
+\end{solution}
+
+\begin{problem}\level{难}
+已知 $f(x)$ 是偶函数，且 $x<0$ 时 $f(x)=x^2-3x$，求 $x>0$ 时的解析式。
+\end{problem}
+\begin{solution}
+设 $x>0$，则 $-x<0$，$f(-x)=x^2+3x$。由 $f(-x)=f(x)$ 得 $f(x)=x^2+3x$。
+\end{solution}
+
+\begin{problem}\level{中}
+求 $f(x)=x^2-2x+3$ 在 $[0,3]$ 上的最大值与最小值。
+\end{problem}
+\begin{solution}
+$f(x)=(x-1)^2+2$，对称轴 $x=1\in[0,3]$，最小值 $f(1)=2$；
+端点 $f(0)=3$，$f(3)=6$，最大值 $6$。
+\end{solution}
+
+\section{实数指数幂与幂函数}
+
+\begin{problem}\level{易}
+计算 $\dfrac{2^{1/2}\cdot2^{3/2}}{2^{-1}}$。
+\end{problem}
+\begin{solution}
+$\dfrac{2^{1/2+3/2}}{2^{-1}}=2^{2+1}=2^3=8$。
+\end{solution}
+
+\begin{problem}\level{中}
+化简 $\sqrt[3]{\dfrac{a^6}{b^3}}$（$a,b>0$）。
+\end{problem}
+\begin{solution}
+$\dfrac{\sqrt[3]{a^6}}{\sqrt[3]{b^3}}=\dfrac{a^2}{b}$。
+\end{solution}
+
+\begin{problem}\level{中}
+化简 $\sqrt[4]{a^8}\cdot\sqrt[3]{a^{-3}}$（$a>0$）。
+\end{problem}
+\begin{solution}
+$\sqrt[4]{a^8}=a^2$，$\sqrt[3]{a^{-3}}=a^{-1}$，故原式 $=a$。
+\end{solution}
+
+\begin{problem}\level{中}
+比较 $1.5^{1/2}$ 与 $1.4^{1/2}$、$1.5^{-1}$ 与 $1.4^{-1}$ 的大小。
+\end{problem}
+\begin{solution}
+$y=x^{1/2}$ 在 $[0,+\infty)$ 递增，故 $1.5^{1/2}>1.4^{1/2}$；
+$y=x^{-1}$ 在 $(0,+\infty)$ 递减，故 $1.5^{-1}<1.4^{-1}$。
+\end{solution}
+
+\begin{problem}\level{难}
+已知幂函数 $f(x)=x^{\alpha}$ 的图象过点 $(2,8)$，求 $\alpha$，并判断 $f$ 的奇偶性。
+\end{problem}
+\begin{solution}
+$2^{\alpha}=8=2^3$，故 $\alpha=3$。$f(x)=x^3$ 是奇函数。
+\end{solution}
+
+\section{指数函数}
+
+\begin{problem}\level{易}
+求函数 $y=2^{x-1}$ 所过的定点。
+\end{problem}
+\begin{solution}
+令 $x-1=0$ 得 $x=1$，此时 $y=1$，故过定点 $(1,1)$。
+\end{solution}
+
+\begin{problem}\level{中}
+比较 $2^{1.5}$ 与 $2^{1.6}$、$0.5^{1.5}$ 与 $0.5^{1.6}$。
+\end{problem}
+\begin{solution}
+$y=2^x$ 递增，故 $2^{1.5}<2^{1.6}$；$y=0.5^x$ 递减，故 $0.5^{1.5}>0.5^{1.6}$。
+\end{solution}
+
+\begin{problem}\level{中}
+求 $y=\left(\dfrac13\right)^{x-2}$ 过的定点。
+\end{problem}
+\begin{solution}
+令 $x-2=0$ 得 $x=2$，此时 $y=1$，故过定点 $(2,1)$。
+\end{solution}
+
+\begin{problem}\level{难}
+解不等式 $2^{x^2-3x}<8$。
+\end{problem}
+\begin{solution}
+$8=2^3$，故 $x^2-3x<3$，即 $x^2-3x-3<0$。
+解得 $\dfrac{3-\sqrt{21}}{2}<x<\dfrac{3+\sqrt{21}}{2}$。
+\end{solution}
+
+\begin{problem}\level{难}
+某细菌每 20 分钟分裂一次，开始 1 个，写出 $t$ 分钟后的数量，并求 2 小时后的数量。
+\end{problem}
+\begin{solution}
+$N(t)=2^{t/20}$；$N(120)=2^6=64$。
+\end{solution}
+
+\section{对数与对数函数}
+
+\begin{problem}\level{易}
+计算 $\log_2 24-\log_2 3$。
+\end{problem}
+\begin{solution}
+$\log_2\dfrac{24}{3}=\log_2 8=3$。
+\end{solution}
+
+\begin{problem}\level{中}
+用换底公式求 $\log_8 32$。
+\end{problem}
+\begin{solution}
+$\log_8 32=\dfrac{\log_2 32}{\log_2 8}=\dfrac53$。
+\end{solution}
+
+\begin{problem}\level{中}
+计算 $\log_3 18-\log_3 2+\log_3\dfrac13$。
+\end{problem}
+\begin{solution}
+$\log_3\dfrac{18}{2}+\log_3\dfrac13=\log_3 9-1=2-1=1$。
+\end{solution}
+
+\begin{problem}\level{中}
+求函数 $y=\log_2(x-1)$ 所过的定点。
+\end{problem}
+\begin{solution}
+令 $x-1=1$ 得 $x=2$，此时 $y=0$，故过定点 $(2,0)$。
+\end{solution}
+
+\begin{problem}\level{中}
+当 $x>1$ 时，比较 $\log_2 x$ 与 $\log_{1/2} x$ 的大小。
+\end{problem}
+\begin{solution}
+$x>1$ 时 $\log_2 x>0$，$\log_{1/2} x<0$，故 $\log_2 x>\log_{1/2} x$。
+\end{solution}
+
+\begin{problem}\level{难}
+解不等式 $\log_2(x-1)<3$。
+\end{problem}
+\begin{solution}
+需 $x-1>0$ 且 $x-1<2^3=8$，即 $1<x<9$。
+\end{solution}
+
+\begin{problem}\level{难}
+已知 $\log_2 a+\log_2 b=3$（$a,b>0$），求 $\dfrac1a+\dfrac1b$ 的最小值。
+\end{problem}
+\begin{solution}
+由条件得 $ab=8$。$\dfrac1a+\dfrac1b=\dfrac{a+b}{ab}\geq\dfrac{2\sqrt{ab}}{ab}
+=\dfrac{2\sqrt8}{8}=\dfrac{\sqrt2}{2}$，当 $a=b=2\sqrt2$ 时取等号。
+\end{solution}
+
+\section{函数与方程}
+
+\begin{problem}\level{中}
+判断 $f(x)=x^3-x-1$ 在区间 $(1,2)$ 内是否有零点。
+\end{problem}
+\begin{solution}
+$f(1)=-1<0$，$f(2)=5>0$，且 $f$ 连续，由零点存在定理，在 $(1,2)$ 内至少有一个零点。
+\end{solution}
+
+\begin{problem}\level{中}
+若 $f(x)=x^3+2x-1$ 在 $(0,1)$ 上有零点，能否断定它只有一个？
+\end{problem}
+\begin{solution}
+能。$f'(x)=3x^2+2>0$，$f$ 在 $\mathbb{R}$ 上单调递增，故零点唯一。
+\end{solution}
+
+\begin{problem}\level{中}
+判断 $f(x)=x^3-3x+1$ 在 $(0,1)$ 内是否有零点。
+\end{problem}
+\begin{solution}
+$f(0)=1>0$，$f(1)=-1<0$，由零点存在定理，在 $(0,1)$ 内至少有一个零点。
+\end{solution}
+
+\begin{problem}\level{难}
+用二分法求 $x^3-3x+1=0$ 在 $(0,1)$ 内的近似解（精确到 $0.1$）。
+\end{problem}
+\begin{solution}
+$f(0)=1$，$f(1)=-1$，中点 $0.5$，$f(0.5)=-0.375<0$，缩为 $(0,0.5)$；
+中点 $0.25$，$f(0.25)=0.266>0$，缩为 $(0.25,0.5)$；
+中点 $0.375$，$f(0.375)=-0.075<0$，缩为 $(0.25,0.375)$，长度 $0.125>0.1$；
+中点 $0.3125$，$f(0.3125)=0.093>0$，缩为 $(0.3125,0.375)$，长度 $0.0625<0.1$。
+近似解可取 $0.3$（或 $0.4$）。
+\end{solution}
+
+\begin{problem}\level{难}
+判断 $f(x)=\ln x+x-2$ 在 $(1,2)$ 内是否有零点，是否唯一。
+\end{problem}
+\begin{solution}
+$f(1)=-1<0$，$f(2)=\ln2>0$，由零点存在定理至少有一个零点；
+又 $f'(x)=\dfrac1x+1>0$，$f$ 在 $(0,+\infty)$ 上递增，故零点唯一。
+\end{solution}
+
+\section{函数模型及其应用}
+
+\begin{problem}\level{中}
+比较 $2^x$、$x^2$、$\log_2 x$ 在 $x$ 很大时的增长快慢。
+\end{problem}
+\begin{solution}
+$x$ 充分大时，指数增长最快，幂增长次之，对数增长最慢，即 $2^x>x^2>\log_2 x$。
+\end{solution}
+
+\begin{problem}\level{中}
+某地区人口年增长率 $1\%$，大约多少年翻一番？
+\end{problem}
+\begin{solution}
+$1.01^n=2\implies n=\log_{1.01}2=\dfrac{\ln2}{\ln1.01}\approx70$。
+\end{solution}
+
+\begin{problem}\level{难}
+某商品价格每年上涨 $5\%$，现在价格为 $a$ 元，问多少年后价格超过 $2a$ 元？
+\end{problem}
+\begin{solution}
+$a(1.05)^n>2a\implies(1.05)^n>2\implies n>\log_{1.05}2=\dfrac{\ln2}{\ln1.05}\approx14.2$，
+故 $15$ 年后超过 $2a$ 元。
+\end{solution}
+
+\begin{problem}\level{难}
+已知某放射性物质的半衰期为 $T$，剩余质量 $m=m_0\left(\dfrac12\right)^{t/T}$。
+若经过 $3T$，剩余质量是原来的多少？
+\end{problem}
+\begin{solution}
+$m=m_0\left(\dfrac12\right)^3=\dfrac{m_0}{8}$，即原来的 $\dfrac18$。
 \end{solution}

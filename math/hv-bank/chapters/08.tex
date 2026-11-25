@@ -1,0 +1,198 @@
+% 第 8 章：齐次化——把二元问题压成一元比例
+\chapter{齐次化：把二元问题压成一元比例}
+
+\section{次数扫描与配比：先看结构再动手}
+
+\begin{problem}\level{易}
+(1) 判断 $\dfrac{x^2}{y}$ 是几次齐次式，并说明理由；
+(2) 展开 $\left(\dfrac1x+\dfrac3y\right)(x+3y)$，指出它由哪四项组成；
+(3) 若 $x>0,\ y>0$ 且 $x+y=1$，求 $\dfrac1x+\dfrac1y$ 的最小值。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+齐次式指各项次数相同的式子，次数＝分子次数$-$分母次数。第 (3) 问目标式
+$\frac1x+\frac1y$ 是 $-1$ 次，约束 $x+y=1$ 是 $1$ 次；把约束以「$1$ 的代换」
+乘进去即可配成 $0$ 次齐次式。
+\paragraph{标准解题步骤}
+(1) $x^2/y$ 的次数为 $2-1=1$，是一次齐次式。
+(2) $\left(\frac1x+\frac3y\right)(x+3y)=1+\dfrac{3y}{x}+\dfrac{3x}{y}+9
+=10+\dfrac{3y}{x}+\dfrac{3x}{y}$。
+(3) 由 $x+y=1$ 得
+\[
+  \frac1x+\frac1y=\left(\frac1x+\frac1y\right)(x+y)
+  =2+\frac yx+\frac xy\ge2+2\sqrt{\frac yx\cdot\frac xy}=4,
+\]
+当且仅当 $x=y=\frac12$ 时取等。验算：$x=y=\frac12$ 时值为 $4$。
+\paragraph{学生典型易错点诊断}
+一是把「一次齐次式」误判为二次（只看分子最高次）；二是展开时漏掉交叉项；
+三是不写取等条件，或在使用基本不等式后忘记检验等号能否达到。
+规避方法：先数次数、再代 $1$、最后检查取等。
+\end{solution}
+
+\begin{problem}\level{中}
+已知 $x>0,\ y>0$，$2x+y=1$，求 $\dfrac1x+\dfrac2y$ 的最小值，并分别用「通法」（$1$ 的代换）与「齐次化」（令 $t=\dfrac yx$）各算一遍。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+两种方法都是利用约束消元：通法直接把 $1$ 换成 $2x+y$；齐次化先把约束
+除以 $x$ 得到 $2+t=\frac1x$，再把目标式写成关于 $t$ 的一元式。
+\paragraph{标准解题步骤}
+通法：
+\[
+  \frac1x+\frac2y=\left(\frac1x+\frac2y\right)(2x+y)
+  =3+\frac{y}{x}+\frac{2x}{y}\ge3+2\sqrt2,
+\]
+当且仅当 $\frac yx=\frac{2x}{y}$ 即 $y=\sqrt2\,x$ 时取等，结合 $2x+y=1$
+得 $x=\frac1{2+\sqrt2},\ y=\frac{\sqrt2}{2+\sqrt2}$。
+齐次化：令 $t=\frac yx>0$，则 $\frac1x+\frac2y$ 中 $\frac{2}{y}=\frac{2}{tx}$，
+约束给出 $x(2+t)=1$，即 $x=\frac1{2+t}$，于是
+\[
+  \frac1x+\frac2y=(2+t)+\frac{2}{t}=2+t+\frac2t\ge2+2\sqrt2,
+\]
+当 $t=\sqrt2$ 时取等，与通法一致。
+验算：$t=\sqrt2$ 时值为 $2+2\sqrt2$。
+\paragraph{学生典型易错点诊断}
+常见错误是把约束 $2x+y=1$ 直接写成 $y=1-2x$ 代入后忘了讨论定义域
+$x\in(0,\tfrac12)$；或齐次化后漏掉 $x$ 与 $t$ 的关系式，导致量纲不一致。
+规避方法：换元后立刻写出「谁表示谁」的关系式，并标注取值范围。
+\end{solution}
+
+\begin{problem}\level{中}
+已知 $x>0,\ y>0$，$\dfrac1x+\dfrac2y=1$，求 $x+y$ 的最小值（用齐次化，并指出换元的关键）。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+约束左端是 $-1$ 次、右端是 $0$ 次，两边除以 $y$（或写成 $t=y/x$）即可全部
+化为 $t$ 的式子；目标 $x+y=x(1+t)$ 也是同一条思路。
+\paragraph{标准解题步骤}
+令 $t=\dfrac yx>0$，则 $\frac1x+\frac2y=\frac1x\left(1+\frac2t\right)=1$，
+得 $x=1+\dfrac2t$，于是
+\[
+  x+y=x(1+t)=\left(1+\frac2t\right)(1+t)
+  =2+t+\frac2t\ge2+2\sqrt2,
+\]
+当且仅当 $t=\sqrt2$ 时取等，此时 $x=1+\sqrt2,\ y=2+\sqrt2$。
+验算：$\frac1{1+\sqrt2}+\frac2{2+\sqrt2}=(\sqrt2-1)+(2-\sqrt2)=1$ ✓，
+$x+y=3+2\sqrt2$ ✓。
+\paragraph{学生典型易错点诊断}
+最容易在「$x$ 用 $t$ 表示」一步出错：由 $\frac1x(1+\frac2t)=1$ 应得
+$x=1+\frac2t$，而不是 $x=\frac{t}{t+2}$。规避方法：把约束看成关于 $x$ 的
+方程解出 $x$，再代入目标式，最后回头验算一次。
+\end{solution}
+
+\section{判别式与最值：齐次式的两条出口}
+
+\begin{problem}\level{中}
+曲线 $xy=1$ 与直线 $y=kx+2$ 有交点，求 $k$ 的取值范围，并指出何时相切。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+双曲线与直线的交点问题归结为关于 $x$ 的方程有实根；分式方程去分母后
+仍需保证分母非零，故要单独检验使分母为零的情形。
+\paragraph{标准解题步骤}
+代入得 $kx^2+2x-1=0$。有实根要求
+$\Delta=4+4k\ge0\Rightarrow k\ge-1$；$k=0$ 时方程退化为 $2x-1=0$，
+对应交点 $\left(\frac12,2\right)$ 仍在曲线上。故 $k\in[-1,+\infty)$，
+最小值在 $k=-1$ 处取到（此时直线与双曲线相切）。
+验算：$k=-1$ 时方程 $-x^2+2x-1=0$ 有重根 $x=1$，切点 $(1,1)$ 满足 $xy=1$。
+\paragraph{学生典型易错点诊断}
+一是忘记讨论 $k=0$ 使二次项消失；二是把 $\Delta\ge0$ 当成充分条件而忽略
+分母零点；三是把切点坐标算错。规避方法：去分母后必查「二次项系数是否为零」
+与「分母为零的点」。
+\end{solution}
+
+\begin{problem}\level{难}
+已知 $x>0,\ y>0$ 且 $xy=1$，求 $\dfrac{x^2+xy+y^2}{x+y}$ 的最小值。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+分子分母都是二次齐次式，比值与缩放无关，可用一个总量（如 $t=x+y$）表示；
+$xy=1$ 又给出 $t\ge2$ 的下界，于是单变量函数的最值可直接求。
+\paragraph{标准解题步骤}
+令 $t=x+y\ge2\sqrt{xy}=2$。分子 $x^2+xy+y^2=(x+y)^2-xy=t^2-1$，故
+\[
+  \frac{x^2+xy+y^2}{x+y}=\frac{t^2-1}{t}=t-\frac1t .
+\]
+函数 $g(t)=t-\frac1t$ 在 $[2,+\infty)$ 上递增（$g'(t)=1+\frac1{t^2}>0$），
+故最小值在 $t=2$ 处取得：$g(2)=2-\frac12=\frac32$，此时 $x=y=1$。
+验算：$x=y=1$ 时原式 $=\frac{1+1+1}{2}=\frac32$ ✓。
+\paragraph{学生典型易错点诊断}
+一是试图直接对原式用基本不等式而找不到配凑方式；二是设 $t=x+y$ 后
+忘记 $t$ 的范围 $[2,+\infty)$，把 $t-\frac1t$ 的单调性写错方向。
+规避方法：齐次式先问「能不能用一个总量表示」，再用单调性收尾。
+\end{solution}
+
+\begin{problem}\level{中}
+已知 $\sqrt{x}+\sqrt{y}=2$，求 $x+y$ 的最小值与最大值。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+根式是半次项，先平方升次：$x+y=(\sqrt x+\sqrt y)^2-2\sqrt{xy}$，
+问题转化为在定和条件下求 $\sqrt{xy}$ 的范围。
+\paragraph{标准解题步骤}
+记 $s=\sqrt x+\sqrt y=2$，由 $\sqrt{xy}\le\frac{\sqrt x+\sqrt y}{2}=1$ 得
+\[
+  x+y=4-2\sqrt{xy}\ge4-2=2,
+\]
+当且仅当一项为 $0$（如 $x=0,\ y=4$）时取等。验算：$(1,1)$ 时 $x+y=2$；
+$(0,4)$ 时 $x+y=4$。故最小值 $2$ 在 $x=y=1$ 处取得，最大值 $4$ 在
+$(0,4)$ 或 $(4,0)$ 处取得。
+\paragraph{学生典型易错点诊断}
+最易把两个取等情形张冠李戴：$\sqrt{xy}$ 最大对应 $x+y$ 最小，反之亦然；
+另一个错误是忽略端点 $\sqrt{xy}=0$ 可以取到（因为允许 $x=0$ 或 $y=0$）。
+规避方法：先确定中间量的范围，再换算目标的最值，最后逐一验算取等点。
+\end{solution}
+
+\begin{problem}\level{难}
+有人把 $\dfrac{xy}{(2x+y)^2}$ 齐次化时只除了一次 $x$，写成 $\dfrac{y/x}{2+y/x}$。请指出错在哪里，并写出正确结果。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+齐次化的合法性来自「分子分母同除同一个量」，且要保证除后仍是同一式子；
+本题分母是平方，除 $x^2$ 才能化成关于 $\frac yx$ 的式子。
+\paragraph{标准解题步骤}
+错因：分母 $(2x+y)^2$ 只除了一个 $x$，\textbf{分母少除了一个 $x$}。
+正确做法是分子分母同除 $x^2$：
+\[
+  \frac{xy}{(2x+y)^2}=\frac{xy/x^2}{(2x+y)^2/x^2}
+  =\frac{y/x}{(2+y/x)^2}.
+\]
+检验：取 $x=1,\ y=2$，原式 $=\frac{2}{16}=\frac18$；正确式
+$=\frac{2}{(2+2)^2}=\frac{2}{16}=\frac18$ ✓；错式 $=\frac{2}{2+2}=\frac12$ ✗。
+\paragraph{学生典型易错点诊断}
+把「齐次化」误解为「把分子分母都出现 $x$ 的地方随便除掉一个」；
+平方项展开时忘记指数也要分配到括号外。规避方法：除完立刻代一组具体数
+（如 $x=1,y=2$）验算，最快发现错位。
+\end{solution}
+
+\begin{problem}\level{中}
+已知 $x>0,\ y>0$ 且 $x^2+y^2=2xy+1$，求 $\dfrac{x^2+y^2}{xy}$ 的取值范围。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+条件与目标都是二次齐次式，作商 $t=\dfrac xy>0$ 即可全部一元化；条件提供
+$t$ 的方程，目标是 $t+\frac1t$ 型。
+\paragraph{标准解题步骤}
+由 $x^2+y^2=2xy+1$ 两边除以 $xy$ 得
+\[
+  t+\frac1t=2+\frac1{xy}.
+\]
+又 $xy\le\frac{x^2+y^2}{2}$? 这里更直接：令 $t=\frac yx$，则
+$x^2+y^2=x^2(1+t^2)$、$2xy=2tx^2$，条件化为
+\[
+  x^2(1+t^2-2t)=1\Rightarrow x^2(t-1)^2=1,
+\]
+故 $t\neq1$ 且 $x=\frac1{|t-1|}$。目标
+\[
+  \frac{x^2+y^2}{xy}=\frac{1+t^2}{t}=t+\frac1t\ge2,
+\]
+等号当 $t=1$ 时取得——但 $t=1$ 被条件排除（否则 $0=1$），故下界不可达；
+取 $t\to1$ 时值 $\to2$。当 $t\to+\infty$ 或 $t\to0^+$ 时目标 $\to+\infty$。
+故取值范围为 $(2,+\infty)$。
+验算：取 $t=2$，则 $x=\frac1{1}=1,\ y=2$：条件 $1+4=2\cdot2+1=5$ ✓；
+目标 $=\frac{5}{2}=2.5\in(2,+\infty)$ ✓。
+\paragraph{学生典型易错点诊断}
+一是把 $t=1$ 当作可取到的等号点而写下闭区间 $[2,+\infty)$；
+二是在「$t$ 与 $x$」之间转换时忘记条件给出的 $x^2(t-1)^2=1$。
+规避方法：换元后先求新变量的\textbf{完整}范围（含被排除的值），再谈最值。
+\end{solution}

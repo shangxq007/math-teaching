@@ -1,0 +1,42 @@
+% 第 1 章：集合与常用逻辑用语 · 理论概要
+% 概要写法约定见 chapters/README.md
+\section{集合与常用逻辑用语}
+
+\begin{definition}[集合与元素]
+研究对象称为\textbf{元素}，元素组成的总体称为\textbf{集合}。
+元素与集合的关系：$a\in A$ 或 $a\notin A$。
+\end{definition}
+
+\begin{definition}[集合相等]
+构成两个集合的元素完全一样，则 $A=B$。
+\end{definition}
+
+\begin{definition}[元素三性]
+确定性、互异性、无序性。
+\end{definition}
+
+\subsection{表示方法}
+\begin{itemize}
+  \item 列举法：$\{1,2,3\}$；
+  \item 描述法：$\{x\in I\mid p(x)\}$，代表元素与约束条件共同决定集合。
+\end{itemize}
+
+\subsection{常用数集}
+$\mathbf{N}$、$\mathbf{N}^{*}$、$\mathbf{Z}$、$\mathbf{Q}$、$\mathbf{R}$。
+
+\begin{theorem}[包含与条件]
+设 $p$ 对应集合 $A$，$q$ 对应集合 $B$，则
+\[
+  p\text{ 是 }q\text{ 的充分条件}\iff A\subseteq B,\qquad
+  p\text{ 是 }q\text{ 的必要条件}\iff B\subseteq A.
+\]
+\end{theorem}
+
+\begin{derivation}
+$A\subseteq B$ 表示「满足 $p$ 的一定满足 $q$」，即 $p\Rightarrow q$，
+故 $p$ 是 $q$ 的充分条件；反向同理。
+\end{derivation}
+
+\begin{summary}
+判断条件关系：解出 $A,B$，比较包含关系，按「小推大」下结论。
+\end{summary}

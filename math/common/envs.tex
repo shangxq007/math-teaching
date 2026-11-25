@@ -1,0 +1,122 @@
+% ============================================================
+%  数学教学文档 · 共用教学环境（第四块：环境与盒子）
+%  用法：在 preamble.tex、macros.tex 之后 \input{../common/envs}
+%  提供：derivation / summary / commonerror / method（讲义）
+%        conccard（结论卡片）
+%        notezone / noteblank（笔记）
+%        mistake / wrong / correct / variant / reflect（错题本）
+%        fastcard（速查表）
+%        reflection（教学反思）
+% ============================================================
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% ---------- 讲义用 ----------
+% 推导：左侧竖线 + 白色标题条
+\newtcolorbox{derivation}{
+  breakable, enhanced, sharp corners,
+  colback=main!3, colframe=main!3,
+  boxrule=0pt, leftrule=2pt, left=10pt, top=6pt, bottom=4pt,
+  title={\bfseries\color{main!80!black}推导},
+  coltitle=main!80!black, fonttitle=\small,
+  attach boxed title to top left={xshift=0mm, yshift=-1.5mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=main!60!black, boxrule=0.4pt},
+}
+
+% 本节小结
+\newtcolorbox{summary}{
+  breakable, enhanced, sharp corners,
+  colback=third!5, colframe=third!60!black, boxrule=0.5pt,
+  title={\bfseries 本节小结}, coltitle=black, fonttitle=\small,
+  top=6pt,
+}
+
+% 易错点
+\newtcolorbox{commonerror}[1]{
+  breakable, enhanced, sharp corners,
+  colback=second!4, colframe=second!65!black, boxrule=0.5pt,
+  title={\bfseries 易错点：#1}, coltitle=black, fonttitle=\small,
+  top=6pt,
+}
+
+% 方法归纳
+\newtcolorbox{method}{
+  breakable, enhanced, sharp corners,
+  colback=main!3, colframe=main!55!black, boxrule=0.4pt,
+  title={\bfseries 方法归纳}, coltitle=black, fonttitle=\small,
+  top=6pt,
+}
+
+% ---------- 结论卡片 ----------
+% \begin{conccard}[层级]{结论}{适用条件}{易错点} 推导正文 \end{conccard}
+\NewDocumentEnvironment{conccard}{ O{二级} m m m +b }{%
+  \begin{tcolorbox}[
+    breakable, enhanced, sharp corners,
+    colback=main!4, colframe=main!65!black, boxrule=0.6pt,
+    title={\bfseries #2}, coltitle=black, fonttitle=\small,
+    attach boxed title to top left={xshift=2mm, yshift=-2mm},
+    boxed title style={sharp corners, colback=white,
+      colframe=main!65!black, boxrule=0.4pt},
+    top=7pt,
+  ]%
+  {\small #5}\par\vspace{0.6ex}%
+  {\footnotesize
+    \textbf{\color{main}适用条件：}#3\par
+    \vspace{0.2ex}%
+    \textbf{\color{second}易错点：}#4\par
+    \vspace{0.2ex}%
+    \textbf{\color{third}层级：}#1%
+  }%
+  \end{tcolorbox}%
+}{}
+
+% ---------- 笔记用 ----------
+\newtcolorbox{notezone}[1]{
+  breakable, enhanced, sharp corners,
+  colback=yellow!4, colframe=yellow!45!orange, boxrule=0.5pt,
+  title={\bfseries 笔记：#1}, coltitle=black, fonttitle=\small,
+  top=6pt,
+}
+% 留白（供学生手写）
+\newcommand{\noteblank}[1][6ex]{\vspace{#1}}
+
+% ---------- 错题本用 ----------
+% \begin{mistake}[错因分类] 原题与四个小段 \end{mistake}
+\NewDocumentEnvironment{mistake}{ O{概念不清} +b }{%
+  \begin{tcolorbox}[
+    breakable, enhanced, sharp corners,
+    colback=red!3, colframe=red!50!black, boxrule=0.5pt,
+    title={\bfseries 错题（#1）}, coltitle=black, fonttitle=\small,
+    top=6pt,
+  ]#2\end{tcolorbox}%
+}{}
+\newcommand{\wrong}[1]{\par{\bfseries\color{red!70!black}错解：}#1\par}
+\newcommand{\correct}[1]{\par{\bfseries\color{main}正解：}#1\par}
+\newcommand{\variant}[1]{\par{\bfseries\color{third}变式：}#1\par}
+\newcommand{\reflect}[1]{\par{\bfseries\color{second}反思：}#1\par}
+
+% ---------- 速查表用 ----------
+\newtcolorbox{fastcard}[1]{
+  enhanced, sharp corners, breakable=false,
+  colback=main!3, colframe=main!55!black, boxrule=0.4pt,
+  title={\bfseries #1}, coltitle=black, fonttitle=\small,
+  top=5pt,
+}
+
+% ---------- 答案与解析用 ----------
+\newtcolorbox{ansblock}[1]{
+  breakable, enhanced, sharp corners,
+  colback=green!3, colframe=green!45!black, boxrule=0.4pt,
+  title={\bfseries 答案：#1}, coltitle=black, fonttitle=\small,
+  top=5pt,
+}
+
+% ---------- 教学反思用 ----------
+\newtcolorbox{teachreflect}[1]{
+  breakable, enhanced, sharp corners,
+  colback=third!4, colframe=third!60!black, boxrule=0.4pt,
+  title={\bfseries 教学反思：#1}, coltitle=black, fonttitle=\small,
+  top=5pt,
+}

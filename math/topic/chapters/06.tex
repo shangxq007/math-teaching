@@ -1,0 +1,240 @@
+% 专题六：凸性、差分与整数最值
+\section{专题六：凸性、差分与整数最值}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 会用作差法证明平方非负类不等式；
+  \item 会说凸函数的中点不等式，并用它处理平均值问题；
+  \item 会用一阶、二阶差分判断数列的增减与离散凸性；
+  \item 会用离散调整法处理整数约束下的最值。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{导语：同一个问题，五个看法}
+“$a^2+b^2$ 与 $\dfrac{(a+b)^2}{2}$ 谁大”——用平方非负能证，用凸函数能证，用切线能证；
+把变量换成整数，还能用“调整法”求最值；把变量换成数列，还能用差分判断。
+本专题用五个视角把三个“种子问题”各做一遍，
+重点是体会“连续”与“离散”只是同一思想的两种表现。
+
+\subsection{种子问题}
+先自己做，再看后面的五个视角。
+\begin{enumerate}
+  \item 证明：对任意实数 $a,b$，$a^2+b^2\geq\dfrac{(a+b)^2}{2}$，并说明等号条件。
+  \item 设 $x+y=5$，$x,y\in\mathbb{R}$，求 $x^2+y^2$ 的最小值。
+  \item 设 $x+y=5$，$x,y\in\mathbb{Z}$，求 $x^2+y^2$ 的最小值。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+\subsection{视角一：来源——从平方非负到凸性}
+
+\key{要点}
+\begin{itemize}
+  \item 许多不等式都来自同一个事实：$(\sqrt a-\sqrt b)^2\geq0$，展开得 $a+b\geq2\sqrt{ab}$。
+  \item 一般地，$A\geq B\iff A-B\geq0$：证明不等式的本质是构造一个非负表达式。
+  \item 平方非负还解释了凸性：$f(x)=x^2$ 的图象是“下凸”的。
+\end{itemize}
+
+\begin{example}
+证明：对任意实数 $a,b$，$a^2+b^2\geq\dfrac{(a+b)^2}{2}$。
+\end{example}
+\begin{solution}
+作差：
+\[
+  a^2+b^2-\frac{(a+b)^2}{2}
+  =\frac{2a^2+2b^2-a^2-2ab-b^2}{2}
+  =\frac{(a-b)^2}{2}\geq0.
+\]
+等号当且仅当 $a=b$。\key{（回头看：种子问题 1）}
+\end{solution}
+
+\begin{problem}
+证明：对任意实数 $a,b$，$a^2+b^2\geq2ab$，并说明等号条件。
+\end{problem}
+\begin{solution}
+$a^2+b^2-2ab=(a-b)^2\geq0$，等号当且仅当 $a=b$。
+\end{solution}
+
+\subsection{视角二：函数——凸函数与 Jensen 不等式}
+
+\key{要点}
+\begin{itemize}
+  \item \key{凸函数}（下凸）：对任意 $x,y$，有
+  \[
+    f\left(\frac{x+y}{2}\right)\leq\frac{f(x)+f(y)}{2}.
+  \]
+  几何意义：图象上任意两点的连线（割线）在图象上方。
+  \item $f(x)=x^2$ 是凸函数，因为它满足上式。
+  \item \key{Jensen 不等式}：对凸函数 $f$ 与 $n$ 个点，
+  \[
+    f\left(\frac{x_1+\cdots+x_n}{n}\right)\leq\frac{f(x_1)+\cdots+f(x_n)}{n}.
+  \]
+\end{itemize}
+
+\begin{example}
+用凸函数证明：对任意实数 $a,b$，$a^2+b^2\geq\dfrac{(a+b)^2}{2}$。
+\end{example}
+\begin{solution}
+$f(x)=x^2$ 是凸函数，故
+\[
+  \left(\frac{a+b}{2}\right)^2=f\left(\frac{a+b}{2}\right)\leq\frac{f(a)+f(b)}{2}=\frac{a^2+b^2}{2}.
+\]
+整理即得 $a^2+b^2\geq\dfrac{(a+b)^2}{2}$。
+\key{（回头看：种子问题 1 的函数证法）}
+\end{solution}
+
+\begin{problem}
+用 Jensen 不等式证明：对任意实数 $x_1,\dots,x_n$，
+$\dfrac{x_1^2+\cdots+x_n^2}{n}\geq\left(\dfrac{x_1+\cdots+x_n}{n}\right)^2$。
+\end{problem}
+\begin{solution}
+$f(x)=x^2$ 凸，故 $\dfrac{f(x_1)+\cdots+f(x_n)}{n}\geq f\left(\dfrac{x_1+\cdots+x_n}{n}\right)$，即得。
+\end{solution}
+
+\begin{problem}
+已知 $x+y=2$，用 Jensen 不等式证明 $(x^2-2x-3)+(y^2-2y-3)\geq-8$。
+\end{problem}
+\begin{solution}
+设 $f(t)=t^2-2t-3$，则 $f$ 是凸函数。由 Jensen 不等式，
+\[
+  \frac{f(x)+f(y)}{2}\geq f\left(\frac{x+y}{2}\right)=f(1)=-4,
+\]
+故 $f(x)+f(y)\geq-8$，即 $(x^2-2x-3)+(y^2-2y-3)\geq-8$。
+\end{solution}
+\key{（贯穿题：$f(x)=x^2-2x-3$ 已在专题一、二、三、四、五出现）}
+
+\subsection{视角三：几何——切线与割线}
+
+\key{要点}
+\begin{itemize}
+  \item \key{割线不等式}：凸函数在 $[a,b]$ 上的图象位于连接两端点的线段下方。
+  \item \key{切线不等式}：可导凸函数的图象位于任意切线的上方，即 $f(x)\geq f(x_0)+f'(x_0)(x-x_0)$。
+  \item 例：$e^x\geq1+x$（在 $x=0$ 处的切线）。
+\end{itemize}
+
+\begin{example}
+用割线不等式证明：当 $0\leq x\leq1$ 时，$x^2\leq x$。
+\end{example}
+\begin{solution}
+$f(x)=x^2$ 是凸函数，连接 $(0,0)$ 与 $(1,1)$ 的割线是 $y=x$，
+故在 $[0,1]$ 上 $x^2\leq x$。
+\end{solution}
+
+\begin{problem}
+用切线不等式证明：对任意实数 $x$，$x^2\geq2x-1$，并说明等号条件。
+\end{problem}
+\begin{solution}
+$f(x)=x^2$ 在 $x_0=1$ 处的切线为 $y=1+2(x-1)=2x-1$，
+由切线不等式 $x^2\geq2x-1$，等号当且仅当 $x=1$。
+\end{solution}
+
+\subsection{视角四：离散——差分：把导数搬到数列}
+
+\key{要点}
+\begin{itemize}
+  \item 一阶差分：$\Delta a_n=a_{n+1}-a_n$；二阶差分：$\Delta^2 a_n=a_{n+2}-2a_{n+1}+a_n$。
+  \item 对应关系：$\Delta a_n>0\leftrightarrow$ 递增；$\Delta a_n<0\leftrightarrow$ 递减；
+        $\Delta^2 a_n\geq0\leftrightarrow$ 离散凸（类似 $f''\geq0$）。
+  \item 离散凸数列满足 $2a_{n+1}\leq a_n+a_{n+2}$——正是凸函数中点不等式的离散形式。
+\end{itemize}
+
+\begin{example}
+设 $a_n=n^2$，求 $\Delta a_n$ 与 $\Delta^2 a_n$，并判断离散凸性。
+\end{example}
+\begin{solution}
+$\Delta a_n=(n+1)^2-n^2=2n+1$；
+$\Delta^2 a_n=(n+2)^2-2(n+1)^2+n^2=2$。
+$\Delta^2 a_n=2>0$，故 $\{a_n\}$ 是离散凸数列。
+\key{（回头看：种子问题 1 的离散形式）}
+\end{solution}
+
+\begin{problem}
+设 $a_n=n^2-2n$，求 $\Delta a_n$ 与 $\Delta^2 a_n$。
+\end{problem}
+\begin{solution}
+$\Delta a_n=(n+1)^2-2(n+1)-(n^2-2n)=2n-1$；
+$\Delta^2 a_n=2$。
+\end{solution}
+
+\subsection{视角五：应用——整数最值：连续到离散}
+
+\key{要点}
+\begin{itemize}
+  \item 整数约束下的最值：先用连续方法求出下界，再看能否取到。
+  \item \key{离散调整法}：若两整数相差至少 $2$，把它们同时向中间调整 $1$，平方和会减小。
+  \item 反复调整，直到两数相差不超过 $1$，即达最小。
+\end{itemize}
+
+\begin{example}
+设 $x+y=5$，$x,y\in\mathbb{R}$，求 $x^2+y^2$ 的最小值。
+\end{example}
+\begin{solution}
+由种子问题 1：$x^2+y^2\geq\dfrac{(x+y)^2}{2}=\dfrac{25}{2}$，等号在 $x=y=\dfrac52$ 时成立。
+故最小值为 $\dfrac{25}{2}$。\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{example}
+设 $x+y=5$，$x,y\in\mathbb{Z}$，求 $x^2+y^2$ 的最小值。
+\end{example}
+\begin{solution}
+整数时不能取 $x=y=\dfrac52$。若 $x\geq y+2$，则
+\[
+  x^2+y^2-\big[(x-1)^2+(y+1)^2\big]=2(x-y)-2>0,
+\]
+即把两数同时向中间调整 $1$，平方和会减小。
+反复调整，直到 $|x-y|\leq1$，取 $(x,y)=(2,3)$ 或 $(3,2)$，最小值为 $4+9=13$。
+\key{（回头看：种子问题 3）}
+\end{solution}
+
+\begin{problem}
+设 $x+y=7$，$x,y\in\mathbb{Z}$，求 $x^2+y^2$ 的最小值。
+\end{problem}
+\begin{solution}
+连续最小为 $\dfrac{49}{2}=24.5$（$x=y=3.5$）；整数取 $(3,4)$ 或 $(4,3)$，最小值为 $9+16=25$。
+\end{solution}
+
+\begin{problem}
+设 $a+b+c=3$，用 Jensen 不等式求 $a^2+b^2+c^2$ 的最小值。
+\end{problem}
+\begin{solution}
+$f(t)=t^2$ 是凸函数，由 Jensen 不等式
+$\dfrac{a^2+b^2+c^2}{3}\geq\left(\dfrac{a+b+c}{3}\right)^2=1$，
+故 $a^2+b^2+c^2\geq3$，当 $a=b=c=1$ 时取等号。
+\end{solution}
+\key{（贯穿题：$a^2+b^2$ 型已在专题二、六出现）}
+\end{explore}
+
+\begin{inclasstest}
+\subsection{变式训练}
+只改一个条件，重新做一遍。
+\begin{enumerate}
+  \item 证明：对 $a,b,c\in\mathbb{R}$，$a^2+b^2+c^2\geq ab+bc+ca$。
+  \item 已知 $a+b+c=6$，求 $a^2+b^2+c^2$ 的最小值。
+  \item 设数列 $a_n=n^2-2n$，判断它是否为离散凸数列。
+  \item 设 $x+y=7$，$x,y\in\mathbb{Z}$，求 $x^2+y^2$ 的最小值。
+  \item 用凸函数 $f(x)=x^2$ 的割线不等式，求 $x^2$ 在 $[0,2]$ 上的一个上界。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection{知识来源对照表}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{3.4cm}p{4.0cm}p{5.6cm}}
+\toprule
+结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
+\midrule
+平方非负 & 视角一（来源） & 视角二（函数）、视角四（离散） \\
+凸函数与 Jensen & 视角二（函数） & 视角三（几何）、视角五（应用） \\
+切线与割线 & 视角三（几何） & 视角二（函数） \\
+一阶 / 二阶差分 & 视角四（离散） & 视角二（函数） \\
+离散调整法 & 视角五（应用） & 视角四（离散） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{下一步}：凸性与内积有深刻联系——平方范数本身就是凸函数。见专题七。
+\end{afterclass}

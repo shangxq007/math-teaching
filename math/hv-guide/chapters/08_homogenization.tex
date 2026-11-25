@@ -1,0 +1,490 @@
+% ==========================================================
+% 第 8 章 齐次化：把二元问题压成一元比例
+% 说明：本文件为纯正文片段，由 main_body.tex 挂载；
+%       使用 versions.tex 的 \tk / \vchoice / advancedonly /
+%       basiconly / solution / 四个盒子。
+% ==========================================================
+
+\section{齐次化：把二元问题压成一元比例（高观点结构版）}
+
+\begin{methodbox}{多框架对读}
+\small
+\begin{center}
+\begin{tabular}{c|p{2.9cm}|p{5.0cm}|p{3.1cm}}
+\toprule
+视角 & 本章看点 & 别的视角怎么说 & 哪侧最省力 \\
+\midrule
+代数 & 同除配凑、$1$ 的代换、换元 & 符号的恒等变形 & 硬算最值 \\
+几何 & 比值 $t=\frac yx$＝射线斜率 & 点 $(x,y)$ 落在一条过原点射线上 & 看比例、判范围 \\
+集合 & 齐次式按次数分层 & 同次＝缩放不变的性质 & 界次数与符号 \\
+映射 & 齐次坐标 $\to$ 射影直线 & $(u,v)\sim\lambda(u,v)$，$x=u/v$ & 升到第 9 章接口 \\
+\bottomrule
+\end{tabular}
+\end{center}
+卡的使用：二元分式最值先数次数、再定「$1$ 的代换还是 $t=\frac yx$」，最后回代数收尾（总图见第 0 章图~\ref{fig:four-view-map}）。
+\end{methodbox}
+
+\begin{warmupbox}{读法（先看这里）}
+齐次化不是「大招」，而是一句结构主义的第一性原理：\textbf{把
+$n$ 个自由变量的绝对尺度约掉，只留下 $n-1$ 个比例。}
+遇到二元（$x,y$）的对称式，先问一句：它们能不能合并成一个
+分数 $t=\dfrac{y}{x}$？能，就降维；不能，就先配平次数。
+
+（本章与第 5、6 章互为表里：第 6 章「条件最值四大标准动作」给出
+「1 的代换」这一入口，第 5 章用矩阵特征方向处理分式递推；本章把
+两者背后的原理——齐次化——上升为第一性原理并展开成完整方法链。）
+\end{warmupbox}
+
+\begin{corebox}{第一性原理}
+设 $P(x,y)=0$ 是一条曲线方程，$Q(x,y)$ 是待求的目标式。若存在
+正数 $\lambda$ 使得 $Q(\lambda x,\lambda y)=\lambda^{d}\,Q(x,y)$，
+则 $Q$ 是 $d$ 次齐次的，它的取值只依赖于比例 $t=y/x$，与点的
+绝对位置无关。非齐次的问题之所以难，是因为混进了不同次数的
+项——\textbf{齐次化就是把这些项强行配到同一个次数上}。
+\end{corebox}
+
+\begin{methodbox}{次数扫描雷达（动手前先扫一遍）}
+给每一项标一个「次数」，像雷达一样先扫描整个式子：
+\begin{center}
+\begin{tikzpicture}[scale=0.9, font=\small]
+\draw[->] (-0.4,0)--(9.6,0) node[right] {$x$ 轴：项};
+\draw[->] (0,-0.5)--(0,3.4);
+\foreach \x/\h/\lab/\deg [count=\i] in {
+  1.4/0.5/常数项/0,
+  3.2/1.0/一次项/1,
+  5.0/1.5/二次项/2,
+  6.8/2.0/分式项/-1,
+  8.6/2.5/根式项/{1/2}} {
+  \draw[main, thick] (\x,0)--(\x,\h);
+  \node[above] at (\x,\h) {\lab};
+  \node[below] at (\x,-0.18) {$\deg$ 次};
+}
+\node[below] at (5.0,-0.66) {（柱高仅为扫描顺序，次数见下方标签）};
+\end{tikzpicture}
+\end{center}
+（常数 $0$ 次、$x$ 与 $y$ 各 $1$ 次、$x^2/xy/y^2$ 为 $2$ 次、
+$\dfrac1x$ 为 $-1$ 次、$\sqrt{x}$ 为 $\tfrac12$ 次。）
+\textbf{判据}：一个式子是齐次的，当且仅当所有项次数相同。
+\end{methodbox}
+
+\begin{methodbox}{方法归纳：同除主元最高次幂（降维的钥匙）}\label{met:homo-divide}
+若已经确认各项同次，就同除「主元」的最高次幂，把 $n$ 个变量
+压成比例。例如二元齐次式同除 $x^2$（同除 $y^2$ 亦可，此时
+比例换成 $x/y=1/t$），只剩
+$t=\dfrac{y}{x}$：
+\[
+\frac{x^2+2xy+y^2}{x^2}=1+2t+t^2 .
+\]
+一元化之后，剩下的就是单变量函数的最值问题——\textbf{这就是
+齐次化的全部收益：把二元压成一元}。
+\end{methodbox}
+
+\subsection{第 1 节 常规通法与齐次化的第一次对照}
+
+\begin{example}[已知 $x>0,\ y>0,\ 2x+y=1$，求 $xy$ 的最大值]
+\vspace{-1mm}
+\begin{solution}
+\textbf{考纲通法}：$y=1-2x$，故 $xy=x(1-2x)=-2x^2+x$，
+开口向下，顶点在 $x=\dfrac14$，最大值为 $\tk{\dfrac18}$。
+
+\textbf{齐次化视角}：目标与约束同时齐次化，把分母补成
+\[
+\frac{xy}{(2x+y)^2}=\frac{xy}{1}.
+\]
+令 $t=\dfrac{y}{x}>0$，则上式右端化为
+\[
+\frac{t}{(2+t)^2}.
+\]
+由 AM–GM（$(t+2)^2\ge 8t$），有 $\dfrac{t}{(2+t)^2}\le\dfrac18$，
+等号在 $t=2$ 即 $y=2x$、$x=\dfrac14,\ y=\dfrac12$ 时成立。
+两种算法给出同一个答案 $\tk{\dfrac18}$。
+\end{solution}
+\end{example}
+
+\begin{conccard}{齐次化入口：把约束等式当 1 乘进目标式}{二元对称式的最值、范围题}{只会代入消元，不会「补次数」}
+约束条件「$2x+y=1$」提供了 \textbf{一个} 齐次化入口：任何
+目标式都可以乘上 $(2x+y)^k$ 而不改变取值，从而把混次的式子
+全部抬到同一次数。\vchoice{乘方指数 $k$ 的选取原则是「让所有项次数相等」。}{看到等式条件，就想想能不能拿它当 1 来乘。}
+\end{conccard}
+
+\subsection{第 2 节 五大配平手术刀}
+
+\begin{methodbox}{手术刀之一「1 的代换」升次}
+条件等式本身等于 $1$（或可化成 $1$），把它乘进目标式，
+低次项立刻被抬成齐次式。
+\[
+\left(\frac1x+\frac1y\right)\cdot 1
+=\left(\frac1x+\frac1y\right)(x+y)
+=2+\frac{y}{x}+\frac{x}{y}\ge 4 .
+\]
+\end{methodbox}
+
+\begin{methodbox}{手术刀之二 平移原点，把方程归一}
+把原点移到图形的中心（或对称中心），一次项/常数项会被
+消掉，方程立刻变成标准型。
+\[
+x^2+y^2-2x=0\ \xrightarrow{\ X=x-1,\ Y=y\ }\ X^2+Y^2=1,
+\]
+于是 $x+y=X+Y+1\in[\tk{1-\sqrt2},\ \tk{1+\sqrt2}]$。
+\end{methodbox}
+
+\begin{methodbox}{手术刀之三 平方升次，剥掉根号}
+$\sqrt{x}$ 的次数是 $\tfrac12$，平方一次就升到整次。
+已知 $\sqrt{x}+\sqrt{y}=1$，则
+\[
+x+y=(\sqrt{x}+\sqrt{y})^2-2\sqrt{xy}=1-2\sqrt{xy},
+\]
+再用 $\sqrt{x}\cdot\sqrt{y}\le\left(\dfrac{\sqrt{x}+\sqrt{y}}{2}\right)^2=\dfrac14$
+得 $x+y\ge\tk{\dfrac12}$。
+\end{methodbox}
+
+\begin{methodbox}{手术刀之四 分解与组合降次}
+高次式先分解，往往能拆出可以约分的因式。
+\[
+\frac{1}{x(x+1)}=\frac1x-\frac1{x+1},\qquad
+x^3+y^3=(x+y)(x^2-xy+y^2).
+\]
+\end{methodbox}
+
+\begin{methodbox}{手术刀之五 旋转消交叉项}
+二次曲线
+\[
+Ax^2+Bxy+Cy^2+\cdots=0
+\]
+的交叉项 $Bxy$ 用平移消不掉，换一招：把坐标轴旋转角度 $\theta$，
+\[
+x=x'\cos\theta-y'\sin\theta,\qquad y=x'\sin\theta+y'\cos\theta .
+\]
+代回后令 $x'y'$ 的系数为 $0$，即得消交叉项的条件
+\[
+\cot 2\theta=\frac{A-C}{B}
+\qquad\text{（等价地 }\tan 2\theta=\frac{B}{A-C}\text{；当 }A=C\text{ 时用前者）}.
+\]
+特例 $xy=1$：这里 $A=C=0,\ B=1$，故 $\cot 2\theta=0$，取 $\theta=45^\circ$，
+\[
+xy=1\ \xrightarrow{\ \theta=45^\circ\ }\ \frac{x'^2}{2}-\frac{y'^2}{2}=1,
+\]
+等轴双曲线还原为标准型（$a=b=\sqrt2$）。
+\textbf{完整推导、图与数列中的复特征值应用见第 5 章。}
+\end{methodbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85, font=\small]
+% 椭圆平移齐次化示意：从原点出发的斜率射线
+\draw[gray!60, thick] (0,0) ellipse (3.2 and 2.0);
+\draw[->, main, very thick] (0,0)--(3.6,2.4);
+\draw[dashed, third] (0,0)--(3.6,-1.2);
+\node[right] at (3.65,2.4) {$k=\dfrac{y}{x}>0$};
+\node[right] at (3.65,-1.2) {$k<0$};
+\fill[second] (0,0) circle (2pt) node[below left] {新原点};
+\node at (0,-2.5) {$k=\dfrac{y}{x}$ 的符号决定直线落在哪个象限};
+\end{tikzpicture}
+\end{center}
+
+\begin{conccard}{五把配平手术刀：升次、平移、平方、分解、旋转}{混次式、根式、分式迭代、含交叉项的二次曲线}{只背大招名称，不动手配平次数}
+五把手术刀的共同目标是把方程「摆正」：前四把在\textbf{次数}上
+配平，第五把在\textbf{坐标方向}上配平，消掉交叉项 $Bxy$。
+判断该用哪一把，只需回看次数扫描的结果——缺几次就补几次，
+多几次就降几次；遇到交叉项 $Bxy$ 就转坐标轴（第 5 章有完整推导），
+直到方程露出标准型。
+\vchoice{严格地说，配平后问题就化为关于 $t=y/x$ 的一元函数，导数或基本不等式都可直接上手。}{口诀：次数不齐先配平，同除主元变一元；方向不正先旋转。}
+\end{conccard}
+
+\begin{advancedonly}
+\subsection{第 3 节 射影桥梁：为什么齐次化天然有效}
+
+第 5 章探究三已经证明：分式迭代（莫比乌斯变换）
+\[
+x_{n+1}=\frac{a\,x_n+b}{c\,x_n+d}\qquad(ad-bc\neq0)
+\]
+的不动点恰是矩阵 $\begin{pmatrix}a&b\\c&d\end{pmatrix}$ 的特征方向，
+特征值之比就是双不动点构造的公比（推导与图见第 5 章
+图~\ref{fig:eigen-fixed}；不动点的一般理论与双不动点的几何图见第 9 章
+图~\ref{fig:mobius-two-fixed}）。这里只补上齐次化的动机：
+
+\textbf{齐次式天生属于射影。} 把 $(u,v)$ 与 $\lambda(u,v)$ 视为同一个
+射影点，比值 $x=u/v$ 就是它的坐标；分子、分母同次的式子在这条射线
+上取确定值。于是「找不动点」在射影语言里就是「求特征方向」——
+齐次化把非线性的分式迭代重新线性化了。
+
+\begin{example}[设 $x_{n+1}=\dfrac{2x_n+1}{x_n+2}$，$x_0=1$，求 $\displaystyle\lim_{n\to\infty}x_n$]
+\vspace{-1mm}
+\begin{solution}
+矩阵 $M=\begin{pmatrix}2&1\\1&2\end{pmatrix}$ 的特征值为
+$\lambda_1=3,\lambda_2=1$，特征向量分别沿
+$\binom{1}{1}$ 与 $\binom{1}{-1}$，对应不动点 $x=1$ 与 $x=-1$。
+$x_0=1$ 恰在 $x=1$ 处，故极限为 $\tk{1}$。
+\end{solution}
+\end{example}
+\end{advancedonly}
+
+\begin{basiconly}
+\subsection{第 3 节 大白话版：比例不变，大小随意}
+
+把 $(x,y)$ 想成一条过原点的射线上的点。把 $x,y$ 同时放大
+$k$ 倍，点在射线上滑动，但「谁是谁的几倍」没变。齐次式
+只认这条射线，不认点在射线上的位置——所以它可以只用一个
+字母 $t$ 说话。
+
+\textbf{照样子填空}：$\dfrac{xy}{(2x+y)^2}$ 的分子分母同除
+$x^2$ 后得到 $\dfrac{\underline{\quad t\quad}}{(2+\underline{\quad t\quad})^2}$。
+\end{basiconly}
+
+\subsection{第 4 节 跨章实战：五题对照（含三道双解）}
+
+\begin{problem}[闪电战 1] 已知 $x>0,\ y>0,\ x+2y=1$，求 $x^2+y^2$ 的最小值。\end{problem}
+\begin{solution}
+齐次化：$(x^2+y^2)(x+2y)^2=x^2+y^2$。令 $t=\dfrac{y}{x}$，
+左边化为 $\dfrac{1+t^2}{(1+2t)^2}$。由柯西不等式
+$(1+2t)^2\le(1^2+2^2)(1+t^2)$，得
+$\dfrac{1+t^2}{(1+2t)^2}\ge\dfrac15$，等号在 $t=2$
+即 $y=2x$、$x=\dfrac15,\ y=\dfrac25$ 处取得。最小值为 $\tk{\dfrac15}$。
+\end{solution}
+
+\begin{problem}[闪电战 2] 已知 $x^2+y^2-2x-4y=0$，求 $x+y$ 的取值范围。\end{problem}
+\begin{solution}
+配方：$(x-1)^2+(y-2)^2=5$，令
+$X=x-1,\ Y=y-2$，则 $X^2+Y^2=5$，
+$x+y=X+Y+3\in[3-\sqrt{10},\ 3+\sqrt{10}]$。
+\end{solution}
+
+\begin{problem}[双解对照 1] 已知 $x>0,\ y>0,\ \dfrac1x+\dfrac2y=1$，求 $x+y$ 的最小值。\end{problem}
+\begin{solution}
+\textbf{通法}：$x+y=(x+y)\left(\dfrac1x+\dfrac2y\right)
+=3+\dfrac{y}{x}+\dfrac{2x}{y}\ge3+2\sqrt2$。
+
+\textbf{齐次化}：令 $t=\dfrac{y}{x}$，约束化为
+$\dfrac1x+\dfrac{2}{tx}=1\Rightarrow x=1+\dfrac2t$，
+于是 $x+y=x(1+t)=\left(1+\dfrac2t\right)(1+t)
+=1+t+\dfrac2t+2\ge3+2\sqrt2$。两种写法同解。
+\end{solution}
+
+\begin{problem}[双解对照 2] 曲线 $xy=1$ 与直线 $y=kx+2$ 有交点，求 $k$ 的范围。\end{problem}
+\begin{solution}
+代入得 $kx^2+2x-1=0$。有实根要求判别式
+$\Delta=4+4k\ge0\Rightarrow k\ge-1$；$k=0$ 时方程为
+$2x-1=0$，对应交点 $\left(\dfrac12,2\right)$，仍在曲线上。
+故 $k\in[-1,+\infty)$，最小值在 $k=-1$ 处取到（相切）。
+\end{solution}
+
+\begin{problem}[双解对照 3] 已知 $\sqrt{x}+\sqrt{y}=2$，求 $x+y$ 的最小值与最大值。\end{problem}
+\begin{solution}
+平方：$x+y=4-2\sqrt{xy}$。由
+$\sqrt{xy}\le\dfrac{\sqrt{x}+\sqrt{y}}{2}=1$ 得 $x+y\ge2$；
+又 $x+y=(\sqrt{x}+\sqrt{y})^2-2\sqrt{xy}\le4$（当一项为 $0$ 时取等）。
+故最小值 $\tk{2}$，最大值 $\tk{4}$。
+\end{solution}
+
+\begin{inclasstest}{当堂检测（4 题）}
+\begin{enumerate}[label=\arabic*., itemsep=2pt]
+\item 次数扫描：$\dfrac{x^2}{y}$ 是\underline{\hspace{2em}}次齐次式。
+\item 已知 $x>0,\ y>0,\ x+y=1$，则 $xy$ 的最大值是\underline{\hspace{2em}}。
+\item 曲线 $x^2+y^2-6x=0$ 平移后的标准方程是\underline{\hspace{2em}}。
+\item 已知 $x>0,\ y>0$ 且 $\dfrac1x+\dfrac1y=1$，则 $x+y$ 的最小值是\underline{\hspace{2em}}。
+\end{enumerate}
+\begin{solution}
+\tk{一}；\tk{\dfrac14}；\tk{(x-3)^2+y^2=9}；\tk{4}。
+\end{solution}
+\end{inclasstest}
+
+\begin{homework}{分层作业}
+\textbf{基础层（步步填空）}：已知 $x>0,\ y>0,\ x+3y=1$，则
+$\dfrac1x+\dfrac3y=1+\underline{\quad}+\dfrac{3y}{x}+\underline{\quad}
+\ge\underline{\quad}$。
+
+\textbf{提高层（双解对照）}：已知 $x>0,\ y>0,\ 2x+3y=1$，
+求 $\dfrac{1}{x}+\dfrac{1}{y}$ 的最小值（写出通法与齐次化两种）。
+
+\begin{solution}
+基础层：$\tk{\dfrac{3x}{y}}$，$\tk{9}$，$\tk{16}$。\\
+提高层：$\left(\dfrac1x+\dfrac1y\right)(2x+3y)
+=5+\dfrac{3y}{x}+\dfrac{2x}{y}\ge5+2\sqrt6$，最小值
+$\tk{5+2\sqrt6}$。
+\end{solution}
+\end{homework}
+
+\begin{commonerror}{易错点：把「同除」用反了方向}
+常见的错误是把 $\dfrac{xy}{(2x+y)^2}$ 齐次化时只除一次，
+错写成 $\dfrac{y/x}{2+y/x}$——\textbf{分母少除了一个 $x$}。
+正确写法是分子分母\textbf{同除同一个量} $x^2$：
+\[
+  \dfrac{xy}{(2x+y)^2}=\dfrac{y/x}{(2+y/x)^2}.
+\]
+次数差才保持不变；除完应当立刻检查「分子还剩几次、分母还剩几次」。
+\end{commonerror}
+
+\begin{conccard}[二级]{什么时候必须齐次化，什么时候不必}{条件最值、曲线与直线的位置关系、根式最值}{不管题目长什么样都硬凑 $t=y/x$；或只会代入消元，从不配次数}
+先看次数结构：目标式与约束能配成同次（或经平方、平移后可配平）时，
+齐次化一步降为一元 $t$；消元后是一元二次、只问有无实根时，判别式
+更直接；含 $\sqrt{\phantom{x}}$ 的半次项先平方升次，再决定走哪条路。
+\end{conccard}
+
+% ==========================================================
+%  第 5 节 七问连环母题（解答即笔记 · Scaffolded Master Problem）
+% ==========================================================
+
+\subsection{第 5 节 七问连环母题：解答即笔记}
+
+\begin{warmupbox}{母题怎么用（先看这里）}
+本节两道大题，每道挂载七个递进小问。\vchoice{它们不是练习题，
+而是「会说话的笔记」：第 (1)–(3) 问替代概念与规范书写笔记，
+第 (4)–(6) 问替代大招、公式族与充要边界笔记，第 (7) 问替代
+错题本。做完一道，这一章的框架就长在你的解题纸上。}{每道题顺着
+七步走即可：先算具体数值，再翻译结构，然后规范推导、降维秒杀、
+推广公式、逆向追问，最后排雷。}
+\end{warmupbox}
+
+\refstepcounter{hvmasterq}
+\begin{masterq}{线性约束 $x+y=1$：从 $\dfrac1x+\dfrac1y$ 长出一族不等式}
+设 $x>0,\ y>0,\ x+y=1$。
+\begin{enumerate}[label=(\arabic*), itemsep=3pt]
+\item \textbf{画图与数值感知}：计算 $(x,y)=\left(\dfrac14,\dfrac34\right)$、
+$\left(\dfrac12,\dfrac12\right)$、$\left(\dfrac34,\dfrac14\right)$ 处
+$\dfrac1x+\dfrac1y$ 的值，描点并补出草图。\logotag{核心公理}
+\item \textbf{多视角结构翻译}：用集合语言写出点集；指出它在坐标系中的
+几何形状；再用恒等式把 $\dfrac1x+\dfrac1y$ 改写成只含 $xy$ 的式子。\logotag{结构翻译}
+\item \textbf{考纲规范通法}：用基本不等式求 $\dfrac1x+\dfrac1y$ 的最小值，
+写出取等条件与关键步骤（用 \tk{} 填空）。\logotag{考纲通法}
+\item \textbf{高观点降维秒杀}：令 $t=\dfrac{y}{x}$，把 $\dfrac1x+\dfrac1y$
+写成 $t$ 的函数并用一行不等式收束，与第 (3) 问核对。\logotag{大招公式}
+\item \textbf{公式变形家族生成}：推广到 $x+y=s$、$ax+by=1$，并推导
+$\dfrac1{x^2}+\dfrac1{y^2}$ 的下界。\logotag{公式族}
+\item \textbf{参数变式与逆向追问}：已知 $\dfrac1x+\dfrac1y=5$ 且 $x+y=1$，
+反求 $x,y$；再回答：使 $\dfrac1x+\dfrac1y\ge m$ 恒成立的 $m$ 最大是多少？\logotag{充要边界}
+\item \textbf{边界陷阱与错题排雷}：某同学删去「$x,y>0$」后仍写
+$\dfrac1x+\dfrac1y\ge4$。请举反例推翻它，并说明原题有没有最大值。\logotag{避坑铁律}
+\end{enumerate}
+\end{masterq}
+
+\begin{solution}
+(1) $\dfrac{16}{3}$，$\tk{4}$，$\dfrac{16}{3}$；图象关于 $x=\dfrac12$ 对称，
+两端趋于 $+\infty$。
+
+(2) $\{(x,y)\mid x>0,\ y>0,\ x+y=1\}$；第一象限内连接 $(1,0)$ 与
+$(0,1)$ 的线段；$\dfrac1x+\dfrac1y=\dfrac{x+y}{xy}=\tk{\dfrac{1}{xy}}$。
+
+(3) $xy\le\left(\dfrac{x+y}{2}\right)^2=\dfrac14$，故
+$\dfrac1x+\dfrac1y=\dfrac1{xy}\ge\tk{4}$，当且仅当 $x=y=\dfrac12$。
+
+(4) $x=\dfrac{1}{1+t},\ y=\dfrac{t}{1+t}$，于是
+$\dfrac1x+\dfrac1y=(1+t)+\dfrac{1+t}{t}=2+t+\dfrac1t\ge\tk{4}$
+（$t=1$ 取等），与 (3) 一致。
+
+(5) (a) $x+y=s$：$\dfrac1x+\dfrac1y=\dfrac{s}{xy}\ge\dfrac{s}{s^2/4}
+=\tk{\dfrac4s}$；
+(b) $ax+by=1$：$\dfrac1x+\dfrac1y=\left(\dfrac1x+\dfrac1y\right)(ax+by)
+=a+b+\dfrac{ay}{x}+\dfrac{bx}{y}\ge a+b+2\sqrt{ab}=\tk{(\sqrt a+\sqrt b)^2}$；
+(c) $\dfrac1{x^2}+\dfrac1{y^2}=\left(\dfrac1x+\dfrac1y\right)^2-\dfrac{2}{xy}
+\ge16-8=\tk{8}$。
+
+(6) $xy=\dfrac15$，故 $x,y$ 是 $z^2-z+\dfrac15=0$ 的两根，即
+$\tk{\dfrac{5\pm\sqrt5}{10}}$；$m_{\max}=\tk{4}$（恰为下确界）。
+
+(7) 反例：$x=2,\ y=-1$ 满足 $x+y=1$，但 $\dfrac1x+\dfrac1y=-\dfrac12<4$。
+原题中 $x\to0^+$ 时 $\dfrac1x+\dfrac1y\to+\infty$，故只有最小值、无最大值。
+\end{solution}
+
+\refstepcounter{hvmasterq}
+\begin{masterq}{二次约束 $x^2+y^2=1$：齐次化与「1 的代换」双剑合璧}
+设 $x^2+y^2=1\ (x>0,\ y>0)$。
+\begin{enumerate}[label=(\arabic*), itemsep=3pt]
+\item \textbf{画图与数值感知}：计算 $\left(\dfrac{\sqrt2}{2},\dfrac{\sqrt2}{2}\right)$、
+$\left(\dfrac35,\dfrac45\right)$、$\left(\dfrac12,\dfrac{\sqrt3}{2}\right)$ 处
+$\dfrac1{x^2}+\dfrac1{y^2}$ 与 $\dfrac{x}{y}+\dfrac{y}{x}$ 的值，并在单位圆
+第一象限弧上描点。\logotag{核心公理}
+\item \textbf{多视角结构翻译}：用集合 $\{(\cos\theta,\sin\theta)\mid
+0<\theta<\tfrac\pi2\}$ 重写点集；指出几何形状；说明 $x^2+y^2=1$ 为什么
+可以当作「1」乘进任何式子。\logotag{结构翻译}
+\item \textbf{考纲规范通法}：求 $\dfrac1{x^2}+\dfrac1{y^2}$ 的最小值，
+写出取等条件（用 \tk{} 填空）。\logotag{考纲通法}
+\item \textbf{高观点降维秒杀}：把 $\dfrac1{x^2}+\dfrac1{y^2}$ 配成分子分母
+同次（乘「1」再除「1」），令 $t=\dfrac{y}{x}$ 一行出结果，并顺手得到
+$\dfrac{x}{y}+\dfrac{y}{x}$ 的下界。\logotag{大招公式}
+\item \textbf{公式变形家族生成}：推导 $x^2+y^2=r^2$、$x^2+2y^2=1$ 情形下
+$\dfrac1{x^2}+\dfrac1{y^2}$、$\dfrac1{x^2}+\dfrac2{y^2}$ 与
+$\dfrac1{x^4}+\dfrac1{y^4}$ 的下界。\logotag{公式族}
+\item \textbf{参数变式与逆向追问}：已知 $\dfrac1{x^2}+\dfrac1{y^2}=5$ 且
+$x^2+y^2=1$，求 $x^2,y^2$；若去掉「$x,y>0$」只保留 $x^2+y^2=1$，
+最小值是否改变？\logotag{充要边界}
+\item \textbf{边界陷阱与错题排雷}：错解「$xy\le\dfrac12\Rightarrow
+\dfrac1{xy}\ge2\Rightarrow\dfrac1{x^2y^2}\ge4$」的哪一步依赖了符号条件？
+写出防错铁律。\logotag{避坑铁律}
+\end{enumerate}
+\end{masterq}
+
+\begin{solution}
+(1) $\left(\dfrac{\sqrt2}{2},\dfrac{\sqrt2}{2}\right)$：$\dfrac1{x^2}+\dfrac1{y^2}=4$，
+$\dfrac{x}{y}+\dfrac{y}{x}=2$；
+$\left(\dfrac35,\dfrac45\right)$：$\dfrac{25}{9}+\dfrac{25}{16}
+=\tk{\dfrac{625}{144}}$，$\dfrac{x}{y}+\dfrac{y}{x}=\dfrac34+\dfrac43
+=\tk{\dfrac{25}{12}}$；
+$\left(\dfrac12,\dfrac{\sqrt3}{2}\right)$：$4+\dfrac43=\tk{\dfrac{16}{3}}$。
+
+(2) 几何上是单位圆在第一象限的四分之一圆弧；代数上 $x^2+y^2=1$ 是
+「1 的代换」的合法来源（乘以它不改变任何式子的取值）。
+
+(3) $\dfrac1{x^2}+\dfrac1{y^2}=\dfrac{x^2+y^2}{x^2y^2}=\dfrac1{x^2y^2}$，
+而 $xy\le\dfrac{x^2+y^2}{2}=\dfrac12\Rightarrow x^2y^2\le\dfrac14$，
+故原式 $\ge\tk{4}$，等号当且仅当 $x=y=\dfrac{\sqrt2}{2}$。
+
+(4) 乘「1」：$\dfrac1{x^2}+\dfrac1{y^2}
+=\dfrac{(x^2+y^2)^2}{x^2y^2}$；令 $t=\dfrac{y}{x}$ 得
+$\dfrac{(1+t^2)^2}{t^2}=\left(t+\dfrac1t\right)^2\ge4$；同一行顺手得到
+$\dfrac{x}{y}+\dfrac{y}{x}=t+\dfrac1t\ge\tk{2}$。
+
+(5) (a) $x^2+y^2=r^2\Rightarrow\dfrac1{x^2}+\dfrac1{y^2}
+=\dfrac{r^4}{x^2y^2}\ge\tk{\dfrac{4}{r^2}}$；
+(b) $\left(\dfrac1{x^2}+\dfrac2{y^2}\right)(x^2+2y^2)
+=5+2\left(\dfrac{y^2}{x^2}+\dfrac{x^2}{y^2}\right)\ge5+4=9$，
+故 $\dfrac1{x^2}+\dfrac2{y^2}\ge\tk{9}$（等号 $x^2=y^2=\dfrac13$）；
+(c) $\dfrac1{x^4}+\dfrac1{y^4}\ge\dfrac{2}{x^2y^2}\ge\tk{8}$。
+
+(6) 令 $u=x^2,\ v=y^2$，则 $u+v=1,\ \dfrac{u+v}{uv}=5\Rightarrow uv=\dfrac15$，
+故 $u,v=\tk{\dfrac{5\pm\sqrt5}{10}}$；去掉正数限制后结论不变（只含平方项），
+但仍需 $x,y\neq0$。
+
+(7) 「$\dfrac1{xy}\ge2$」这一步要求 $xy>0$；若 $xy<0$，不等号方向相反。
+本题最终正确只是因为又平方了一次。防错铁律：取倒数或用基本不等式前，
+先确认各项同号。
+\end{solution}
+
+\begin{basiconly}
+\subsection{第 5 节 大白话版：两道母题的半成品脚手架}
+母题一：两人分一个蛋糕，$x,y$ 是各拿多少。怎么分，倒数的和最小？
+先试四等分点：$x=\dfrac14$ 时 $\dfrac1x+\dfrac1y=\dfrac{16}{3}$；
+正中间 $x=\dfrac12$ 时等于 \underline{\hspace{2em}}，看起来最小。
+于是猜想：\underline{\hspace{2em}} 时最小，最小值 \underline{\hspace{2em}}。
+
+母题二：单位圆上找一点。试 $x=y=\dfrac{\sqrt2}{2}$，得
+$\dfrac1{x^2}+\dfrac1{y^2}=4$；试 $x=\dfrac12,\ y=\dfrac{\sqrt3}{2}$，
+得 $\dfrac{16}{3}$。故最小值是 \underline{\hspace{2em}}，
+取到在 \underline{\hspace{2em}}。
+\end{basiconly}
+
+\begin{advancedonly}
+\textbf{射影眼光看这两道母题}：第 (4) 问的比值 $t=y/x$ 是射影直线上的
+坐标，齐次式只认射影点、不认代表元（同第 3 节的射影视角）。把母题一
+的约束换成 $ax+by=1$ 后，(5)(b) 的取等条件 $\dfrac{ay}{x}=\dfrac{bx}{y}$
+给出最优比例 $t^*=\sqrt{b/a}$，即最优射线的方向比为 $\sqrt b:\sqrt a$——
+配平问题变成求一条射线与一条直线的交点。
+\end{advancedonly}
+
+\begin{conccard}{连环母题：做一题 = 学一节}{概念引入、性质翻译、规范书写、大招结论、公式族、充要边界、错题本七类笔记一次生成}{把母题当普通大题，只做最后一问}
+\vchoice{做完这两道题，留白处就是一份《齐次化》随身笔记：第 (1)(2) 问
+是概念与性质，第 (3) 问是考场书写，第 (4)(5) 问是大招与公式表，
+第 (6) 问是逆向思维，第 (7) 问是错题本。}{基础较弱的同学先完成
+第 (1)–(3) 问即可达标；第 (4)–(7) 问留给学有余力者。}
+\end{conccard}
+
+\begin{notezone}{章末归档：齐次化二级结论 + 七问笔记功能}
+\textbf{二级结论}（方法链压缩版）：（1）齐次式的值只依赖比例 $t=y/x$；
+（2）约束等式可以当 $1$ 乘进目标式完成升次（第 6 章入口、本章展开）；
+（3）半次项平方可升为整次；（4）平移可以消去一次项，一般理论见
+第 5 章；（5）分式迭代的不动点对应矩阵特征方向（第 5 章）。
+
+\textbf{七问与笔记功能}：(1) 画图与数值感知 $\to$ 概念引入笔记；
+(2) 三视角结构翻译 $\to$ 性质定义笔记；(3) 考纲规范通法 $\to$ 规范
+书写笔记；(4) 高观点降维秒杀 $\to$ 二级结论与大招笔记；(5) 公式变形
+家族 $\to$ 题型拓展笔记；(6) 参数变式与逆向追问 $\to$ 充要条件与逻辑
+笔记；(7) 边界陷阱排雷 $\to$ 错题本易错点笔记。
+\end{notezone}

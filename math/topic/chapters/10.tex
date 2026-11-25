@@ -1,0 +1,203 @@
+% 专题十：抽象函数与函数符号
+\section{专题十：抽象函数与函数符号}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 理解函数是“非空数集之间的对应”，能说出三要素；
+  \item 明白 $f(x)$ 是对应关系作用在 $x$ 上的结果，能读懂 $f(x+1)$、$f(-x)$、$f(2x)$；
+  \item 会用赋值法处理抽象函数，判断奇偶性、单调性与周期性；
+  \item 能把函数符号的变化与图象的平移、对称对应起来。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{导语：没有解析式的函数}
+有的函数不给出解析式，只给出它的性质（如 $f(x+y)=f(x)+f(y)$）。
+这类问题考的不是计算，而是对“函数”这个概念本身的理解：
+$x$ 是自变量，$f$ 是对应关系，$f(x)$ 是结果。
+本专题用五个视角把三个“种子问题”各做一遍。
+
+\subsection{种子问题}
+先自己做，再看后面的五个视角。
+\begin{enumerate}
+  \item 设 $f(x)$ 是定义在 $\mathbb{R}$ 上的函数，对任意 $x,y$ 有 $f(x+y)=f(x)+f(y)$。
+        求 $f(0)$，并判断 $f$ 的奇偶性。
+  \item 已知 $f(x)$ 是偶函数，且 $x\geq0$ 时 $f(x)=x^2-2x$。求 $x<0$ 时的解析式，
+        并说明 $y=f(x-1)$ 的图象与 $y=f(x)$ 的图象的关系。
+  \item 设 $f(x)$ 是 $\mathbb{R}$ 上的增函数，且 $f(2)=1$，$f(5)=4$。解不等式 $f(2x-1)<4$。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{视角一：来源——对应与三要素}
+
+\key{要点}
+\begin{itemize}
+  \item 函数 $f:A\to B$：对 $A$ 中任意 $x$，在 $B$ 中有唯一确定的 $f(x)$ 与之对应。
+  \item 三要素：定义域、对应关系、值域。对应关系 $f$ 是自变量与函数值之间的规则，
+        与用什么字母表示无关。
+  \item 判断两个函数是否相同，看定义域与对应关系是否都相同。
+\end{itemize}
+
+\begin{example}
+判断下列对应是不是函数：(1) $x\mapsto x^2$（$x\in\mathbb{R}$）；
+(2) $x\mapsto\pm\sqrt{x}$（$x\geq0$）。
+\end{example}
+\begin{solution}
+(1) 是；(2) 不是，因为一个 $x$ 对应了两个 $y$。
+\end{solution}
+
+\begin{problem}
+若 $f(x)$ 与 $g(x)=\sqrt{x^2}$ 是同一个函数，求 $f$ 的定义域。
+\end{problem}
+\begin{solution}
+$g(x)=|x|$，定义域 $\mathbb{R}$。要与 $g$ 相同，$f$ 的定义域也必须是 $\mathbb{R}$。
+\end{solution}
+
+\subsection{视角二：符号——$f(x)$ 与图象变换}
+
+\key{要点}
+\begin{itemize}
+  \item $f(x-1)$ 的图象：把 $y=f(x)$ 的图象\key{向右}平移 $1$ 个单位。
+  \item $f(x)+1$ 的图象：向上平移 $1$ 个单位。
+  \item $f(-x)$ 的图象：与 $y=f(x)$ 关于 $y$ 轴对称；$-f(x)$ 的图象：关于 $x$ 轴对称。
+  \item $f(2x)$ 的图象：横坐标缩短为原来的 $\dfrac12$。
+  \item 记忆：括号里加减是“左右”，括号外加减是“上下”，负号在括号内是“翻折”。
+\end{itemize}
+
+\begin{example}
+已知 $f(x)$ 是偶函数，且 $x\geq0$ 时 $f(x)=x^2-2x$，说明 $y=f(x-1)$ 的图象与 $y=f(x)$ 的图象的关系。
+\end{example}
+\begin{solution}
+$y=f(x-1)$ 是把 $y=f(x)$ 的图象向右平移 $1$ 个单位得到的。
+\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{problem}
+函数 $y=f(2x-1)$ 的图象可由 $y=f(x)$ 的图象经过怎样的变换得到？
+\end{problem}
+\begin{solution}
+先把 $y=f(x)$ 的横坐标缩短为原来的 $\dfrac12$，得 $y=f(2x)$；
+再向右平移 $\dfrac12$ 个单位，得 $y=f\left(2\left(x-\dfrac12\right)\right)=f(2x-1)$。
+\end{solution}
+
+\subsection{视角三：性质——奇偶性、单调性、周期性的抽象判定}
+
+\key{要点}
+  \begin{itemize}
+  \item 赋值法：给 $x,y$ 赋特殊值（$0$、$1$、$-x$ 等），从关系式中读出性质。
+  \item 奇偶性：若 $f(-x)=f(x)$ 为偶函数；若 $f(-x)=-f(x)$ 为奇函数。
+  \item 单调性：抽象函数比较大小，把不等式两边都写成 $f(\text{某数})$ 的形式。
+  \item 周期性：若 $f(x+T)=f(x)$，则 $T$ 是一个周期；若 $f(x+2)=-f(x)$，则周期为 $4$。
+\end{itemize}
+
+\begin{example}
+设 $f(x)$ 对任意 $x,y$ 有 $f(x+y)=f(x)+f(y)$，求 $f(0)$ 并判断奇偶性。
+\end{example}
+\begin{solution}
+令 $x=y=0$，得 $f(0)=2f(0)$，故 $f(0)=0$。
+再令 $y=-x$，得 $f(0)=f(x)+f(-x)$，即 $f(-x)=-f(x)$，故 $f$ 是奇函数。
+\key{（回头看：种子问题 1）}
+\end{solution}
+
+\begin{problem}
+设 $f(x+2)=-f(x)$，求 $f(x)$ 的一个周期。
+\end{problem}
+\begin{solution}
+$f(x+4)=f((x+2)+2)=-f(x+2)=f(x)$，故 $4$ 是一个周期。
+\end{solution}
+
+\begin{problem}
+设 $f(x)$ 是 $\mathbb{R}$ 上的增函数，且 $f(2)=1$，$f(5)=4$，解不等式 $f(2x-1)<4$。
+\end{problem}
+\begin{solution}
+$4=f(5)$，故 $f(2x-1)<f(5)$。由 $f$ 递增，得 $2x-1<5$，即 $x<3$。
+\key{（回头看：种子问题 3）}
+\end{solution}
+
+\subsection{视角四：运算——赋值法与复合}
+
+\key{要点}
+\begin{itemize}
+  \item 赋值法：在关系式中代入特殊值，把“抽象”变成“具体”。
+  \item 复合函数 $f(g(x))$：先算内层 $g(x)$，再代入外层 $f$。
+  \item 抽象函数的求值，通常靠“凑”出关系式中出现的结构。
+\end{itemize}
+
+\begin{example}
+已知 $f(x)$ 对任意 $x,y$ 有 $f(xy)=f(x)+f(y)$（$x,y>0$），且 $f(2)=1$，求 $f(8)$。
+\end{example}
+\begin{solution}
+$f(8)=f(4\cdot2)=f(4)+f(2)=f(2\cdot2)+f(2)=f(2)+f(2)+f(2)=3$。
+\end{solution}
+
+\begin{problem}
+已知 $f(x+1)=2f(x)$，且 $f(0)=1$，求 $f(3)$。
+\end{problem}
+\begin{solution}
+$f(1)=2f(0)=2$，$f(2)=2f(1)=4$，$f(3)=2f(2)=8$。
+\end{solution}
+
+\subsection{视角五：几何——图象的对称与平移}
+
+\key{要点}
+\begin{itemize}
+  \item 偶函数的图象关于 $y$ 轴对称：$f(x)=f(-x)$。
+  \item 奇函数的图象关于原点对称：$f(-x)=-f(x)$。
+  \item 若 $f(a+x)=f(a-x)$，则图象关于直线 $x=a$ 对称。
+  \item 函数符号的变化与图象变换一一对应（见视角二）。
+\end{itemize}
+
+\begin{example}
+已知 $f(x)$ 是偶函数，且 $x\geq0$ 时 $f(x)=x^2-2x$，求 $x<0$ 时的解析式。
+\end{example}
+\begin{solution}
+设 $x<0$，则 $-x>0$，$f(-x)=x^2+2x$。由偶函数 $f(x)=f(-x)$，得 $f(x)=x^2+2x$。
+\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{problem}
+若 $f(2+x)=f(2-x)$ 对任意 $x$ 成立，说出 $y=f(x)$ 的图象的对称性。
+\end{problem}
+\begin{solution}
+图象关于直线 $x=2$ 对称。
+\end{solution}
+\end{explore}
+
+\begin{inclasstest}
+\subsection{变式训练}
+只改一个条件，重新做一遍。
+\begin{enumerate}
+  \item 设 $f(x)$ 对任意 $x,y$ 有 $f(x+y)=f(x)f(y)$，且 $f(1)=2$，求 $f(3)$；
+  \item 已知 $f(x)$ 是奇函数，且 $x>0$ 时 $f(x)=x^2+2x$，求 $x<0$ 时的解析式；
+  \item 设 $f(x)$ 是 $\mathbb{R}$ 上的减函数，$f(1)=3$，$f(4)=-1$，解不等式 $f(x+1)>3$；
+  \item 设 $f(x+1)=-f(x)$，求 $f(x)$ 的一个周期；
+  \item 说明 $y=f(-2x)$ 的图象可由 $y=f(x)$ 的图象经过怎样的变换得到；
+  \item 若 $f(1+x)=f(1-x)$ 且 $f(0)=2$，求 $f(2)$。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection{知识来源对照表}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{3.4cm}p{4.0cm}p{5.6cm}}
+\toprule
+结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
+\midrule
+对应与三要素 & 视角一（来源） & 视角三（性质） \\
+$f(x)$ 与图象变换 & 视角二（符号） & 视角五（几何） \\
+赋值法 & 视角三（性质） & 视角四（运算） \\
+奇偶性、单调性、周期性 & 视角三（性质） & 视角一（来源） \\
+复合与求值 & 视角四（运算） & 视角二（符号） \\
+对称与平移 & 视角五（几何） & 视角二（符号） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{下一步}：函数符号 $f$ 是“对应关系”，它作用在 $x$、$x-1$、$-x$ 上会得到不同的图象；
+把这条线索记牢，指对函数、三角函数的图象变换都只是它的特例。
+\end{afterclass}

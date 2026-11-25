@@ -1,0 +1,67 @@
+% 命题细目表 · 教师用（A4 竖版）
+% 定位：组卷的前置环节。先定「考什么、怎么考、占多少分、多难」，再往 main.tex 填题。
+%   用法：填完本表，照表在 ../exam/main.tex 里逐题落实。
+%   一个单元格改动，卷面题号就要跟着动——所以先改表，再改卷。
+\documentclass[11pt]{ctexart}
+
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{enumitem}
+\setlist{itemsep=2pt, parsep=0pt}
+
+\title{命题细目表}
+\author{2026 年秋季高一数学期中考试}
+\date{2026 年 11 月}
+
+\begin{document}
+\maketitle
+
+\section{基本信息}
+\begin{itemize}
+  \item 考试性质：期中考试；满分 120 分；用时 100 分钟；题量 15 题；
+  \item 难度比例：易 : 中 : 难 $=4:4:2$（平时测验取 $5:3:2$）；
+  \item 覆盖面：必修第一册第 1～3 章。
+\end{itemize}
+
+\section{细目表}
+\begin{longtable}{llllcc}
+\toprule
+考点 & 题型 & 题号 & 分值 & 难度 & 预估用时 \\
+\midrule
+\endfirsthead
+\toprule
+考点 & 题型 & 题号 & 分值 & 难度 & 预估用时 \\
+\midrule
+\endhead
+集合的交并补 & 选择 & 1 & 5 & 易 & 2 min \\
+二次函数最值 & 选择 & 2 & 5 & 易 & 3 min \\
+不等关系 & 选择 & 3 & 5 & 中 & 3 min \\
+同角三角 & 选择 & 4 & 5 & 中 & 3 min \\
+复数运算 & 选择 & 5 & 5 & 易 & 2 min \\
+向量数量积 & 选择 & 6 & 5 & 中 & 3 min \\
+对数定义域 & 选择 & 7 & 5 & 中 & 3 min \\
+等差数列 & 选择 & 8 & 5 & 中 & 3 min \\
+定积分 & 填空 & 9 & 5 & 中 & 4 min \\
+齐次三角式 & 填空 & 10 & 5 & 中 & 4 min \\
+切线方程 & 填空 & 11 & 5 & 中 & 4 min \\
+二项式系数 & 填空 & 12 & 5 & 中 & 4 min \\
+函数单调与最值 & 解答 & 13 & 20 & 中 & 12 min \\
+解三角形 & 解答 & 14 & 20 & 中 & 12 min \\
+椭圆方程 & 解答 & 15 & 20 & 难 & 14 min \\
+\midrule
+合计 & & 15 题 & 120 & & 100 min \\
+\bottomrule
+\end{longtable}
+
+\section{组卷注意事项}
+\begin{itemize}
+  \item 题号全卷连续（选择 1～8、填空 9～12、解答 13～15），不要分节重排；
+  \item 同一考点的题不要扎堆，选择、填空、解答里各分散一道；
+  \item 每道解答题必须写清「已知—求—解」三要素，并留出作答空间；
+  \item 改完本表后，核对卷首「共 $N$ 页、$M$ 题、满分 $X$ 分」三项与本表合计一致。
+\end{itemize}
+
+\end{document}

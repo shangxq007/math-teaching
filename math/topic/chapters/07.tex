@@ -1,0 +1,263 @@
+% 专题七：内积与柯西不等式
+\section{专题七：内积与柯西不等式}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 会用平方非负证明二维柯西不等式，并说明等号条件；
+  \item 会用内积、长度与投影解释柯西不等式；
+  \item 会用判别式或配方法给出一般形式的证明；
+  \item 会通过构造向量解决平方和、分式和与条件最值问题。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{导语：同一个问题，五个看法}
+$(a^2+b^2)(c^2+d^2)$ 与 $(ac+bd)^2$ 谁大？
+平方非负能证（$(ad-bc)^2\geq0$），向量的长度与夹角能证，二次函数判别式能证，配方也能证。
+同一个柯西不等式，把代数、几何、函数三个领域连了起来。
+本专题用五个视角把三个“种子问题”各做一遍。
+
+\subsection{种子问题}
+先自己做，再看后面的五个视角。
+\begin{enumerate}
+  \item 证明二维柯西不等式：$(a^2+b^2)(c^2+d^2)\geq(ac+bd)^2$，并说明等号条件。
+  \item 证明：对 $a,b,c>0$，$(a+b+c)\left(\dfrac1a+\dfrac1b+\dfrac1c\right)\geq9$。
+  \item 已知 $x+y=1$，求 $F(x,y)=\dfrac{x^2}{2}+\dfrac{y^2}{3}$ 的最小值。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+\subsection{视角一：来源——从平方非负到柯西}
+
+\key{要点}
+\begin{itemize}
+  \item 出发点仍是平方非负：$(ad-bc)^2\geq0$。
+  \item 展开即得二维柯西不等式。
+  \item 等号条件：$ad-bc=0$，即两向量 $(a,b)$ 与 $(c,d)$ 线性相关。
+\end{itemize}
+
+\begin{example}
+证明：$(a^2+b^2)(c^2+d^2)\geq(ac+bd)^2$。
+\end{example}
+\begin{solution}
+作差：
+\[
+  (a^2+b^2)(c^2+d^2)-(ac+bd)^2
+  =a^2d^2+b^2c^2-2abcd
+  =(ad-bc)^2\geq0.
+\]
+等号当且仅当 $ad=bc$（即两向量 $(a,b)$、$(c,d)$ 线性相关）。
+\key{（回头看：种子问题 1）}
+\end{solution}
+
+\begin{problem}
+证明：$(a^2+b^2+c^2)(x^2+y^2+z^2)\geq(ax+by+cz)^2$。
+\end{problem}
+\begin{solution}
+$(a^2+b^2+c^2)(x^2+y^2+z^2)-(ax+by+cz)^2=(ay-bx)^2+(az-cx)^2+(bz-cy)^2\geq0$。
+\end{solution}
+
+\subsection{视角二：几何——内积、长度与投影}
+
+\key{要点}
+\begin{itemize}
+  \item 向量内积：$\langle\mathbf u,\mathbf v\rangle=\sum a_ib_i$；长度：$\|\mathbf u\|=\sqrt{\sum a_i^2}$。
+  \item 几何意义：$\langle\mathbf u,\mathbf v\rangle=\|\mathbf u\|\,\|\mathbf v\|\cos\theta$，而 $|\cos\theta|\leq1$，故
+  \[
+    |\langle\mathbf u,\mathbf v\rangle|\leq\|\mathbf u\|\,\|\mathbf v\|.
+  \]
+  \item 等号当且仅当两向量线性相关（方向相同或相反，或其一为零向量）。
+\end{itemize}
+
+\begin{example}
+用内积证明 $(a^2+b^2)(c^2+d^2)\geq(ac+bd)^2$。
+\end{example}
+\begin{solution}
+取 $\mathbf u=(a,b)$，$\mathbf v=(c,d)$，则
+$\langle\mathbf u,\mathbf v\rangle=ac+bd$，$\|\mathbf u\|^2=a^2+b^2$，$\|\mathbf v\|^2=c^2+d^2$。
+由内积不等式即得。
+\key{（回头看：种子问题 1 的几何证法）}
+\end{solution}
+
+\begin{problem}
+用内积解释：为什么 $(a^2+b^2)(c^2+d^2)=(ac+bd)^2$ 当且仅当 $(a,b)$ 与 $(c,d)$ 共线？
+\end{problem}
+\begin{solution}
+等号即 $|\cos\theta|=1$，也就是两向量方向相同或相反（夹角 $0$ 或 $\pi$），即线性相关。
+\end{solution}
+
+\subsection{视角三：函数——判别式与配方}
+
+\key{要点}
+\begin{itemize}
+  \item 关键表达式：$\|\mathbf u-t\mathbf v\|^2\geq0$ 对任意实数 $t$ 成立。
+  \item 展开得关于 $t$ 的二次函数：
+  \[
+    \|\mathbf v\|^2t^2-2\langle\mathbf u,\mathbf v\rangle\,t+\|\mathbf u\|^2\geq0.
+  \]
+  \item 它恒非负 $\iff$ 判别式 $\Delta\leq0$，即柯西不等式。
+  \item 也可以配方：最小值在 $t=\dfrac{\langle\mathbf u,\mathbf v\rangle}{\|\mathbf v\|^2}$ 处取得。
+\end{itemize}
+
+\begin{example}
+用判别式证明 $n$ 维柯西不等式：
+$\left(\sum a_ib_i\right)^2\leq\left(\sum a_i^2\right)\left(\sum b_i^2\right)$。
+\end{example}
+\begin{solution}
+设 $f(t)=\left(\sum a_i^2\right)t^2-2\left(\sum a_ib_i\right)t+\left(\sum b_i^2\right)$，
+则 $f(t)=\sum(a_it-b_i)^2\geq0$ 对任意 $t$ 成立。
+故
+\[
+  \Delta=4\left(\sum a_ib_i\right)^2-4\left(\sum a_i^2\right)\left(\sum b_i^2\right)\leq0,
+\]
+即得。
+\key{（回头看：种子问题 1 的函数证法）}
+\end{solution}
+
+\begin{problem}
+把 $f(t)=\sum(a_it-b_i)^2$ 配方，求其最小值，并说明它与柯西不等式的关系。
+\end{problem}
+\begin{solution}
+\[
+  f(t)=\left(\sum a_i^2\right)\left(t-\frac{\sum a_ib_i}{\sum a_i^2}\right)^2
+  +\frac{\left(\sum a_i^2\right)\left(\sum b_i^2\right)-\left(\sum a_ib_i\right)^2}{\sum a_i^2}.
+\]
+最小值非负，故 $\left(\sum a_ib_i\right)^2\leq\left(\sum a_i^2\right)\left(\sum b_i^2\right)$。
+\end{solution}
+
+\subsection{视角四：应用——构造向量}
+
+\key{要点}
+\begin{itemize}
+  \item 柯西不等式的常用形式（Engel 形式）：对 $a_i>0$，
+  \[
+    \sum_{i=1}^n\frac{x_i^2}{a_i}\geq\frac{(x_1+\cdots+x_n)^2}{a_1+\cdots+a_n}.
+  \]
+  \item 关键不是计算，而是\key{构造向量}：把目标式写成内积与长度的关系。
+  \item 先看目标式的结构（平方和？分式和？乘积和？），再决定如何拆。
+\end{itemize}
+
+\begin{example}
+证明：对 $a,b,c>0$，$(a+b+c)\left(\dfrac1a+\dfrac1b+\dfrac1c\right)\geq9$。
+\end{example}
+\begin{solution}
+取 $\mathbf u=(\sqrt a,\sqrt b,\sqrt c)$，$\mathbf v=\left(\dfrac1{\sqrt a},\dfrac1{\sqrt b},\dfrac1{\sqrt c}\right)$，
+则 $\langle\mathbf u,\mathbf v\rangle=3$，$\|\mathbf u\|^2=a+b+c$，$\|\mathbf v\|^2=\dfrac1a+\dfrac1b+\dfrac1c$。
+由柯西不等式 $3^2\leq(a+b+c)\left(\dfrac1a+\dfrac1b+\dfrac1c\right)$，即得。
+等号当且仅当 $a=b=c$。
+\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{example}
+已知 $x+y=1$，求 $F(x,y)=\dfrac{x^2}{2}+\dfrac{y^2}{3}$ 的最小值。
+\end{example}
+\begin{solution}
+取 $\mathbf u=\left(\dfrac{x}{\sqrt2},\dfrac{y}{\sqrt3}\right)$，$\mathbf v=(\sqrt2,\sqrt3)$，
+则 $\langle\mathbf u,\mathbf v\rangle=x+y=1$。
+由柯西不等式：
+\[
+  1^2\leq\left(\frac{x^2}{2}+\frac{y^2}{3}\right)(2+3),
+\]
+故 $F(x,y)\geq\dfrac15$。
+等号要求 $\dfrac{x}{2}=\dfrac{y}{3}$，结合 $x+y=1$ 得 $x=\dfrac25$，$y=\dfrac35$。
+\key{（回头看：种子问题 3）}
+\end{solution}
+
+\begin{problem}
+已知 $x+y=1$（$x,y>0$），求 $\dfrac1x+\dfrac1y$ 的最小值。
+\end{problem}
+\begin{solution}
+$(x+y)\left(\dfrac1x+\dfrac1y\right)\geq(1+1)^2=4$，故 $\dfrac1x+\dfrac1y\geq4$，等号当 $x=y=\dfrac12$。
+\end{solution}
+
+\begin{problem}
+已知 $x+y+z=1$，求 $\dfrac1x+\dfrac4y+\dfrac9z$ 的最小值。
+\end{problem}
+\begin{solution}
+$(x+y+z)\left(\dfrac1x+\dfrac4y+\dfrac9z\right)\geq(1+2+3)^2=36$，
+故最小值为 $36$，等号当 $x=\dfrac16$，$y=\dfrac13$，$z=\dfrac12$。
+\end{solution}
+
+\begin{problem}
+已知 $a^2+b^2=1$，求 $a+b$ 的最大值。
+\end{problem}
+\begin{solution}
+由柯西不等式，$(a+b)^2\leq(1^2+1^2)(a^2+b^2)=2$，故 $a+b\leq\sqrt2$。
+等号当 $a=b=\dfrac{\sqrt2}{2}$ 时成立。
+\end{solution}
+\key{（贯穿题：$a^2+b^2$ 型已在专题二、六出现）}
+
+\subsection{视角五：运算——与凸性的联系}
+
+\key{要点}
+\begin{itemize}
+  \item 平方范数是凸函数：对 $0\leq t\leq1$，
+  \[
+    \|t\mathbf x+(1-t)\mathbf y\|^2\leq t\|\mathbf x\|^2+(1-t)\|\mathbf y\|^2.
+  \]
+  \item 加权恒等式（$w_i>0$）：
+  \[
+    \left(\sum w_i\right)\left(\sum w_ix_i^2\right)-\left(\sum w_ix_i\right)^2
+    =\sum_{i<j}w_iw_j(x_i-x_j)^2\geq0.
+  \]
+  它同时解释了加权柯西、加权 Jensen 与“方差非负”。
+  \item 二次型：$Q(x,y)=ax^2+2bxy+cy^2$。当 $a>0$ 时配方得
+  $Q(x,y)=a\left(x+\dfrac ba y\right)^2+\left(c-\dfrac{b^2}{a}\right)y^2$，
+  故 $Q\geq0$ 对所有 $x,y$ 成立 $\iff ac-b^2\geq0$。
+\end{itemize}
+
+\begin{example}
+用加权恒等式证明加权柯西不等式。
+\end{example}
+\begin{solution}
+取 $w_i>0$，则
+\[
+  \left(\sum w_i\right)\left(\sum w_ix_i^2\right)-\left(\sum w_ix_i\right)^2
+  =\sum_{i<j}w_iw_j(x_i-x_j)^2\geq0,
+\]
+即 $\left(\sum w_ix_i\right)^2\leq\left(\sum w_i\right)\left(\sum w_ix_i^2\right)$。
+\end{solution}
+
+\begin{problem}
+用柯西不等式证明：对任意实数 $a,b$，$a^2+b^2\geq2ab$（提示：取 $\mathbf u=(a,b)$，$\mathbf v=(b,a)$）。
+\end{problem}
+\begin{solution}
+$(a^2+b^2)(b^2+a^2)\geq(ab+ba)^2=4a^2b^2$，故 $(a^2+b^2)^2\geq4a^2b^2$，
+即 $a^2+b^2\geq2|ab|\geq2ab$。
+\end{solution}
+\end{explore}
+
+\begin{inclasstest}
+\subsection{变式训练}
+只改一个条件，重新做一遍。
+\begin{enumerate}
+  \item 证明：$(a^2+b^2+c^2)(x^2+y^2+z^2)\geq(ax+by+cz)^2$。
+  \item 已知 $a,b,c>0$ 且 $a+b+c=1$，求 $\dfrac1a+\dfrac1b+\dfrac1c$ 的最小值。
+  \item 已知 $x+2y=1$（$x,y>0$），求 $\dfrac1x+\dfrac1y$ 的最小值。
+  \item 已知 $x+y+z=1$，求 $\dfrac1x+\dfrac4y+\dfrac9z$ 的最小值。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection{知识来源对照表}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{3.4cm}p{4.0cm}p{5.6cm}}
+\toprule
+结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
+\midrule
+平方非负 & 视角一（来源） & 视角三（函数）、视角五（运算） \\
+内积与投影 & 视角二（几何） & 视角三（函数） \\
+判别式 / 配方 & 视角三（函数） & 视角二（几何） \\
+构造向量（Engel 形式） & 视角四（应用） & 视角二（几何） \\
+加权恒等式 & 视角五（运算） & 视角四（应用） \\
+二次型非负 & 视角五（运算） & 视角一（来源） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{下一步}：三个核心支柱——函数与凸性（专题六）、内积与二次型（本专题）、集合与逻辑（专题一）——
+可以互相解释：平方范数既是凸函数，又是内积诱导的长度。
+\end{afterclass}

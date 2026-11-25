@@ -1,0 +1,36 @@
+% 高观点系列导学案 · ElegantNote（第 0 章 ~ 第 7 章）
+% 与 guide/（湘教版章节）分开成册，编号自成体系：第 0 章 ~ 第 7 章。
+%
+% 本文件已升级为「同源四版本」底座：
+%   1) 导言区加载 versions.tex（\ifteacher / \ifbasic 引擎与环境）；
+%   2) 下方「版本面板」两行开关决定导出哪一种 PDF；
+%   3) 正文全部在 main_body.tex，改内容不需要动这里。
+% 一键导出四种版本：python3 build_all.py   （可选 --demo 连示范章节一起出）
+\documentclass[cn,11pt,color=cyan,math=newtx,normal]{elegantnote}
+
+\input{../common/preamble}
+\input{../common/macros}
+\input{../common/envs}
+
+% 章节配图所需 tikz 库（decorations.pathmorphing；其余库已在 common/preamble.tex 声明）
+\usetikzlibrary{decorations.pathmorphing}
+
+% 四合一多版本引擎：\ifteacher × \ifbasic、advancedonly / basiconly、
+% \tk{}、\vchoice{}{}、corebox / methodbox / trapbox / warmupbox
+\input{versions}
+
+% ===================== 四合一版本切换面板 =====================
+% 【只改下面两行，即可一键导出对应版本；无需复制任何源文件】
+%   \teachertrue  \basicfalse   → ① 完整教师版（含全套推导、接口、双解与解析）★默认母版
+%   \teacherfalse \basicfalse   → ② 完整学生版（拔尖/荣誉班留白，隐藏解析与填空答案）
+%   \teachertrue  \basictrue    → ③ 薄弱生教师版（自动显示大白话口诀 + 脚手架 + 答案）
+%   \teacherfalse \basictrue    → ④ 薄弱生学生版（基础专属留白，保留 \tk{} 横线）
+\teachertrue
+\basicfalse
+% -----------------------------------------------------------------
+
+% 示范章节开关：改为 \demomotrue 可把 chapters/demo_multiversion 挂进正文
+\demomodefalse
+% ==================================================================
+
+\input{main_body}

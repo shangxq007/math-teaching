@@ -1,0 +1,83 @@
+% ==========================================================
+% 附录 B：大学理工科荣誉课程（Honors Bridge）先修接口对照手册
+% 说明：本文件为纯正文模块化片段（无 \documentclass），
+%       由 main.tex 在 \appendix 之后 \input 挂载。
+%       corebox / methodbox 现由 versions.tex 全局提供（四合一引擎），
+%       配色与现有 main/third 主题一致，不再局部定义。
+% ==========================================================
+
+\section{附录 B：大学理工科荣誉课程先修接口对照手册}\label{app:honors}
+
+\begin{corebox}{致准大学荣誉学院（Honors Program）学子}
+普通高中生升入数学、物理、计算机、人工智能与电子信息等理工科专业时，普遍会经历一场剧烈的\textbf{“大一数学休克”}——例如看不懂《数学分析》严密的 $\varepsilon$-$\delta$ 极限语言，无法理解《线性代数》中抽象的基底变换与特征空间。
+
+然而，如果你已经扎实地走完了本套讲义的第 0–9 章，\textbf{你实际上已经提前掌握了大学前两年硬核数学课的几何直觉与结构骨架}。本附录旨在为你完成最后一步\textbf{“学术暗号对接”}，将你熟悉的中学高观点，精准映射到大学专业课的正式定义与定理名称上。
+\end{corebox}
+
+\subsection*{一、 五大大学核心基础课“概念暗号”对接总表}
+
+\begin{fastcard}{《数学分析》（Real Analysis / Honors Calculus）}
+\textbf{你在本套讲义中学过的直觉与工具}：第 1 章有理数 $\mathbb{Q}$ 漏掉 $\sqrt{2}$ 孔洞，无理数填满实心数轴 $\mathbb{R}$；第 6 章局部切线近似（以直代曲）与切线支撑放缩。
+\par\textbf{大学专业课正式学名与定理}：\textbf{实数完备性公理}（戴德金分割 / 确界原理）；\textbf{介值定理}与\textbf{微分中值定理}；\textbf{凸函数与 Jensen 不等式}。
+\par\textbf{消除的“大一休克”痛点}：瞬间理解极限存在性证明，不再死背 $\varepsilon$-$\delta$ 符号，一眼看穿微分局部线性化本质。
+\end{fastcard}
+
+\begin{fastcard}{《线性代数》（Linear Algebra / 高等代数）}
+\textbf{你在本套讲义中学过的直觉与工具}：第 5 章换基底对齐特征方向、旋转 $45^\circ$ 消除交叉项 $Bxy$；第 1 章函数变换中的主动（动图形）与被动（动坐标系）对偶；第 5 章转移矩阵特征向量锁定分式不动点。
+\par\textbf{大学专业课正式学名与定理}：\textbf{线性空间与基底变换}（过渡矩阵 $P^{-1}AP$）；\textbf{实对称矩阵正交对角化}（谱定理）；\textbf{射影空间（Projective Space）}与齐次坐标。
+\par\textbf{消除的“大一休克”痛点}：摆脱“矩阵只是数字表格”的机械计算误区，直接建立高维几何变换与特征空间直觉。
+\end{fastcard}
+
+\begin{fastcard}{《复变函数与信号系统》（Complex Analysis \& Signals）}
+\textbf{你在本套讲义中学过的直觉与工具}：第 2 章虚数 $i$ 作为逆时针 $90^\circ$ 旋转算子；切线垂直速度演化出欧拉公式 $e^{i\theta}=\cos\theta+i\sin\theta$。
+\par\textbf{大学专业课正式学名与定理}：\textbf{复数域的几何表示与保角映射}；\textbf{傅里叶级数与傅里叶变换}（正交旋转基展开）；工科电路\textbf{相量法（Phasor）}。
+\par\textbf{消除的“大一休克”痛点}：在大学物理简谐振动、交流电路与信号处理中，直接把正弦量当成复平面旋转向量处理。
+\end{fastcard}
+
+\begin{fastcard}{《常微分方程与数值分析》（ODEs \& Numerical Methods）}
+\textbf{你在本套讲义中学过的直觉与工具}：第 5 章差分 $\Delta a_n$ 与求和互逆、Abel 分部求和；蛛网图 $|f'(x^*)|<1$ 螺旋收敛于吸引不动点；生成函数 $G(x)=\sum a_n x^n$。
+\par\textbf{大学专业课正式学名与定理}：\textbf{差分方程与常微分方程特征根法}；\textbf{巴拿赫压缩映射原理}（牛顿迭代法收敛性）；\textbf{Z 变换与拉普拉斯变换}。
+\par\textbf{消除的“大一休克”痛点}：打通离散递归与连续微分方程，理解计算机迭代算法为何收敛以及混沌分岔的临界条件。
+\end{fastcard}
+
+\begin{fastcard}{《公理化概率论与机器学习》（Probability \& Machine Learning）}
+\textbf{你在本套讲义中学过的直觉与工具}：第 7 章样本空间 $\Omega$ 归一化测度与条件子集缩放；二维散点云的竖直欧氏距离平方和最小投影线。
+\par\textbf{大学专业课正式学名与定理}：\textbf{Kolmogorov 概率测度空间} $(\Omega, \mathcal{F}, P)$；\textbf{线性回归的最小二乘正交投影}（正规方程 $A^TA\hat{x}=A^Tb$）。
+\par\textbf{消除的“大一休克”痛点}：跳过繁琐的古典计数，直接站在高维空间几何投影的高度理解统计学习与数据拟合。
+\end{fastcard}
+
+\subsection*{二、 三大核心概念的“中学直觉 $\to$ 大学严格化”跃迁示范}
+
+为了让你在翻开大学教材的第一天就能写出严密的现代数学证明，以下展示三个最核心概念如何从本讲义的“几何直觉”平滑过渡到大学“公理化语言”：
+
+\begin{methodbox}{跃迁 1：从“实心金条无漏洞”到《数学分析》的“确界原理”}
+\begin{itemize}
+    \item \textbf{中学高观点直觉}（第 1 章）：有理数轴 $\mathbb{Q}$ 像布满针眼的筛子，曲线 $y=x^2-2$ 会从 $\sqrt{2}$ 的孔洞漏过去；实数轴 $\mathbb{R}$ 填满了所有孔洞，因此有上界的递增序列必然会撞上一个确定的天花板。
+    \item \textbf{大学《数学分析》严格表述（确界公理）}：设 $S \subset \mathbb{R}$ 为非空有上界实数集，则 $S$ 在 $\mathbb{R}$ 中必有\textbf{上确界（最小上界 $\sup S$）}。由此可直接推出“单调有界数列必有极限”与“闭区间套定理”。
+\end{itemize}
+\end{methodbox}
+
+\begin{methodbox}{跃迁 2：从“旋转 $45^\circ$ 消交叉项 $xy$”到《线性代数》的“正交对角化”}
+\begin{itemize}
+    \item \textbf{中学高观点直觉}（第 5 章）：双曲线 $xy = 1$ 的主轴倾斜了 $45^\circ$，只要把坐标轴旋转 $45^\circ$ 对齐它的对称轴，交叉项就会消失，化为 $\frac{x'^2}{2} - \frac{y'^2}{2} = 1$。
+    \item \textbf{大学《线性代数》严格表述（二次型主轴定理）}：将 $xy = 1$ 写成对称矩阵二次型：
+    $$\begin{pmatrix} x & y \end{pmatrix} \begin{pmatrix} 0 & \frac{1}{2} \\ \frac{1}{2} & 0 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = 1$$
+    求实对称矩阵 $A = \begin{pmatrix} 0 & 1/2 \\ 1/2 & 0 \end{pmatrix}$ 的特征值 $\lambda_1 = \frac{1}{2}, \lambda_2 = -\frac{1}{2}$ 及其单位正交特征向量（构成旋转 $45^\circ$ 的正交矩阵 $Q$），令 $\mathbf{x} = Q\mathbf{x}'$，立刻得到标准型 $\frac{1}{2}x'^2 - \frac{1}{2}y'^2 = 1$！
+\end{itemize}
+\end{methodbox}
+
+\begin{methodbox}{跃迁 3：从“蛛网图台阶变小”到《泛函/数值分析》的“压缩映射原理”}
+\begin{itemize}
+    \item \textbf{中学高观点直觉}（第 5 章）：在蛛网图中，只要不动点处曲线斜率满足 $|f'(x^*)| < 1$，每次投影都会把误差缩短，序列最终螺旋收敛于 $x^*$。
+    \item \textbf{大学严格表述（Banach Fixed-Point Theorem）}：设 $(X, d)$ 为完备度量空间，映射 $T: X \to X$ 满足存在常数 $0 \le L < 1$，使得对任意 $x, y \in X$ 均有 $d(T(x), T(y)) \le L \cdot d(x, y)$，则 $T$ 在 $X$ 中存在\textbf{唯一不动点 $x^*$}，且对任意初值 $x_0 \in X$，迭代序列 $x_{n+1} = T(x_n)$ 均以几何级数速度收敛于 $x^*$。
+\end{itemize}
+\end{methodbox}
+
+\subsection*{三、 给荣誉学院新生的阅读进阶路线图}
+
+当你顺利进入大学理工科荣誉班级后，推荐按以下书单无缝衔接本讲义的知识结构：
+\begin{enumerate}
+    \item \textbf{数学分析方向}：陶哲轩《陶哲轩实分析》（从集合与自然数公理重新严格建构整个实数与微积分体系，与本讲义第 0、1 章风格一脉相承）；
+    \item \textbf{线性代数方向}：Sheldon Axler《Linear Algebra Done Right》（摒弃繁琐行列式，直接从向量空间与线性算子的不变子空间/特征向量切入，与本讲义换基底思想高度契合）；
+    \item \textbf{复分析与几何直觉方向}：Tristan Needham《复分析：可视化方法》（用纯几何旋转与向量场讲透复变函数，完美延续本讲义第 2 章与 Manim 动画风格）。
+\end{enumerate}

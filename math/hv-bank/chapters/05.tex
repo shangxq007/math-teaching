@@ -1,0 +1,218 @@
+% 第 5 章：数列与离散动态系统
+\chapter{数列与离散动态系统}
+
+\section{前 n 项和与一阶递推}
+
+\begin{problem}\level{易}
+设数列 $\{a_n\}$ 的前 $n$ 项和为 $S_n=n^2+1$。
+(1) 求数列 $\{a_n\}$ 的通项公式；
+(2) 求 $a_2+a_4+\cdots+a_{2n}$ 的和。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+$S_n$ 与 $a_n$ 的关系是分段函数关系：$a_n=S_n-S_{n-1}$ 只对 $n\ge2$ 成立，$n=1$ 必须单独用 $a_1=S_1$ 计算。本题 $S_n=n^2+1$ 在 $n=1$ 处恰有 $S_1=2$，而通项公式 $2n-1$ 在 $n=1$ 处给出 $1$，两者不一致，正是“注意 $n=1$”的典型陷阱。
+\paragraph{标准解题步骤}
+(1) $n=1$ 时 $a_1=S_1=2$。$n\ge2$ 时
+$a_n=S_n-S_{n-1}=(n^2+1)-\bigl((n-1)^2+1\bigr)=2n-1$。
+检验 $n=1$ 时 $2n-1=1\ne2$，故必须写分段形式：
+$$a_n=\begin{cases}2,&n=1,\\2n-1,&n\ge2.\end{cases}$$
+(2) 偶数项 $a_{2k}=4k-1$（$k\ge1$，均落在 $n\ge2$ 分支），故
+$\sum_{k=1}^n a_{2k}=\sum_{k=1}^n(4k-1)=4\cdot\dfrac{n(n+1)}2-n=2n^2+n$。
+验算：$n=1$ 时 $a_2=3$，公式给 $3$；$n=2$ 时 $a_2+a_4=3+7=10$，公式给 $10$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是直接写 $a_n=2n-1$ 而忘记检验 $n=1$（本题恰好不一致，必须分段）；二是误以为 $S_n$ 是等差数列前 $n$ 项和（$n^2+1$ 的“$+1$”使 $a_1$ 脱离通项）；三是第 (2) 问把 $a_1$ 也按 $2n-1$ 处理，导致奇数项偶数项混淆；四是求和时漏掉 $n=1$ 的边界验算。规避方法：先写 $a_1=S_1$，再写 $n\ge2$ 的差式，最后代回 $n=1$ 检验是否统一。
+\end{solution}
+
+\begin{problem}\level{中}
+设 $a_1=1$，$a_{n+1}=\dfrac12a_n+2$。
+(1) 求数列 $\{a_n\}$ 的通项公式；
+(2) 判断 $\{a_n\}$ 的单调性与有界性，并求其极限；
+(3) 说明不动点 $x^*$ 的稳定性（蛛网图意义下）。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+一阶线性递推 $a_{n+1}=pa_n+q$ 是“拉伸 $p$ 倍再平移 $q$ 单位”的复合运动。解不动点方程 $x^*=px^*+q$ 找到平衡点，两式相减即可把复合运动化为纯粹的等比缩放 $a_{n+1}-x^*=p(a_n-x^*)$；不动点处导数 $|f'(x^*)|=|p|$ 决定蛛网图是收缩还是发散。
+\paragraph{标准解题步骤}
+(1) 不动点 $x^*=\dfrac{x^*}{2}+2\Rightarrow x^*=4$。令 $b_n=a_n-4$，则
+$b_{n+1}=a_{n+1}-4=\dfrac12a_n+2-4=\dfrac12(a_n-4)=\dfrac12b_n$，
+$b_1=1-4=-3$，故 $b_n=-3\left(\dfrac12\right)^{n-1}$，即
+$$a_n=4-3\left(\frac12\right)^{n-1}.$$
+(2) $a_{n+1}-a_n=\dfrac{4-a_n}{2}=\dfrac32\left(\dfrac12\right)^{n-1}>0$，故单调递增；又 $a_n=4-\text{正数}<4$，有上界。由单调有界准则收敛，设极限为 $L$，则 $L=\dfrac L2+2$，得 $L=4$。
+(3) $f(x)=\dfrac x2+2$，$f'(x)=\dfrac12$，$|f'(x^*)|=\dfrac12<1$，故 $x^*=4$ 是吸引不动点，蛛网图台阶逐级收缩，迭代收敛于 $4$。
+验算：$a_2=\dfrac12+2=\dfrac52=4-\dfrac32$；$a_3=\dfrac54+2=\dfrac{13}4=4-\dfrac34$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把 $a_{n+1}-x^*=p(a_n-x^*)$ 误写成 $a_{n+1}=p(a_n-x^*)$（漏掉左端常数）；二是符号错（$b_1=-3$ 而非 $3$），导致通项写成 $4+3(1/2)^{n-1}$；三是误用单调性（未说明 $4-a_n>0$ 或未先证有界）；四是把“$|p|<1$ 收敛、$|p|>1$ 发散”当成结论死记，而不会用 $|f'(x^*)|=|p|$ 解释。规避方法：先解不动点，再作差，最后用导数绝对值判定稳定性。
+\end{solution}
+
+\section{线性递推与特征方程}
+
+\begin{problem}\level{中}
+设 $a_1=1$，$a_2=5$，$a_{n+2}=5a_{n+1}-6a_n$。
+(1) 求数列 $\{a_n\}$ 的通项公式；
+(2) 求 $a_6$，并用原递推逐步验证。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+二阶线性常系数递推的特征方程法，本质是把递推写成状态向量 $\begin{smallmatrix}a_{n+2}\\a_{n+1}\end{smallmatrix}=\begin{smallmatrix}5&-6\\1&0\end{smallmatrix}\begin{smallmatrix}a_{n+1}\\a_n\end{smallmatrix}$，转移矩阵的特征值 $\lambda_1,\lambda_2$ 就是特征方程的根；互异特征根对应通项基底 $\lambda_1^n,\lambda_2^n$。
+\paragraph{标准解题步骤}
+(1) 特征方程 $r^2-5r+6=0$，根 $r_1=2$，$r_2=3$。设 $a_n=A\cdot2^n+B\cdot3^n$，代入 $n=1,2$：
+$\begin{cases}2A+3B=1,\\4A+9B=5,\end{cases}$
+解得 $B=1$，$A=-1$，故
+$$a_n=3^n-2^n.$$
+(2) $a_6=3^6-2^6=729-64=665$。逐步验证：$a_3=5\cdot5-6\cdot1=19$，$a_4=5\cdot19-6\cdot5=65$，$a_5=5\cdot65-6\cdot19=211$，$a_6=5\cdot211-6\cdot65=1055-390=665$，与公式一致。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是特征方程写成 $r^2=5r+6$（符号错，应为 $r^2-5r+6=0$）；二是设通项时把 $n$ 的起始指数写错（用 $A\cdot2^{n-1}+B\cdot3^{n-1}$ 则系数方程随之改变，前后不一致）；三是解方程组时算错 $A,B$ 的符号；四是只用公式给答案而不代回原递推验证。规避方法：先写特征方程，再设 $A\lambda_1^n+B\lambda_2^n$，用前两项定系数，最后代回递推检验。
+\end{solution}
+
+\begin{problem}\level{中}
+设 $a_1=1$，$a_2=2$，$a_{n+2}=2a_{n+1}-2a_n$。
+(1) 求数列 $\{a_n\}$ 的通项公式；
+(2) 求 $a_8$，并描述 $\{a_n\}$ 的符号与绝对值的变化规律。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+特征方程有复根时，通项不再由实等比数列叠加，而由复数的模与辐角决定：$r=1\pm i=\sqrt2\,e^{\pm i\pi/4}$，模 $\sqrt2$ 使绝对值指数增长，辐角 $\pi/4$ 使符号按周期 $8$ 循环。这正是复根导致“摆动”的根源。
+\paragraph{标准解题步骤}
+(1) 特征方程 $r^2-2r+2=0$，根 $r=1\pm i=\sqrt2\,e^{\pm i\pi/4}$。设
+$$a_n=(\sqrt2)^n\left(C\cos\frac{n\pi}4+D\sin\frac{n\pi}4\right).$$
+代入 $n=1$：$\sqrt2\left(C\cdot\dfrac{\sqrt2}2+D\cdot\dfrac{\sqrt2}2\right)=C+D=1$；
+代入 $n=2$：$2(C\cos\frac\pi2+D\sin\frac\pi2)=2D=2$，得 $D=1$，$C=0$。故
+$$a_n=(\sqrt2)^n\sin\frac{n\pi}4.$$
+(2) $a_8=16\sin2\pi=0$。$\sin\frac{n\pi}4$ 周期为 $8$，$n=1,\dots,8$ 的符号依次为 $+,+,+,0,-,-,-,0$。
+又 $|a_n|=(\sqrt2)^n\left|\sin\frac{n\pi}4\right|$ 随 $n$ 指数增长，故数列“摆动且绝对值发散”，既非收敛也非等比数列。
+验算：$a_3=2\sqrt2\cdot\dfrac{\sqrt2}2=2$，递推 $2\cdot2-2\cdot1=2$；$a_4=4\sin\pi=0$，递推 $2\cdot2-2\cdot2=0$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把复根当成“无解”或舍去（复根仍对应实通项，须用三角形式）；二是把 $1\pm i$ 的模或辐角算错（模 $\sqrt2$，辐角 $\pi/4$）；三是设解时忘记 $(\sqrt2)^n$ 因子，或误用 $\sin\frac{(n-1)\pi}4$；四是只算前几项就下结论，未指出绝对值发散。规避方法：复根成对写出，统一为 $r^n(C\cos n\theta+D\sin n\theta)$，再逐项验算符号与模长。
+\end{solution}
+
+\section{Abel 变换与数列求和}
+
+\begin{problem}\level{中}
+设 $S_n=\sum\limits_{k=1}^n(2k-1)\cdot2^{k-1}$。
+(1) 用 Abel 变换（分部求和）求 $S_n$；
+(2) 求 $S_4$，并直接逐项验证。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+Abel 变换是分部积分的离散版本：$\sum_{k=1}^n a_kb_k=a_nB_n-\sum_{k=1}^{n-1}(a_{k+1}-a_k)B_k$，其中 $B_k=\sum_{i=1}^k b_i$。对“等差 $\times$ 等比”型，取等差为 $a_k$、等比为 $b_k$，则差分 $a_{k+1}-a_k$ 为常数，等比前缀和 $B_k$ 一步写出，可彻底避免错位相减的项数与符号失误。
+\paragraph{标准解题步骤}
+取 $a_k=2k-1$，$b_k=2^{k-1}$，则 $B_k=2^k-1$，$a_{k+1}-a_k=2$。由 Abel 恒等式
+$$S_n=(2n-1)(2^n-1)-2\sum_{k=1}^{n-1}(2^k-1).$$
+而 $\sum_{k=1}^{n-1}(2^k-1)=(2^n-2)-(n-1)$，代入得
+$S_n=(2n-1)(2^n-1)-2(2^n-2)+2(n-1)=(2n-3)2^n+3$。
+(2) $S_4=(8-3)\cdot16+3=83$。逐项验证：$1\cdot1+3\cdot2+5\cdot4+7\cdot8=1+6+20+56=83$。
+验算：$n=1$ 时 $(2-3)\cdot2+3=1$；$n=2$ 时 $1\cdot4+3=7=1+6$；$n=3$ 时 $3\cdot8+3=27=1+6+20$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是错位相减时项数写错（漏掉末项或首项）；二是 $B_k$ 求错（等比前缀和应为 $2^k-1$ 而非 $2^{k-1}$）；三是 Abel 公式中 $a_nB_n$ 与求和项的符号弄反；四是把 $a_k,b_k$ 取反导致差分变成 $-2$。规避方法：固定“等差作 $a_k$、等比作 $b_k$”的取法，先写 $B_k$，再套公式，最后代 $n=1,2$ 验算。
+\end{solution}
+
+\begin{problem}\level{中}
+设 $S_n=\sum\limits_{k=1}^n\dfrac{k}{2^k}$。
+(1) 用 Abel 变换求 $S_n$；
+(2) 求 $\lim\limits_{n\to\infty}S_n$。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+差比数列 $\frac{k}{2^k}$ 是“等差 $k$ 除以等比 $2^k$”，即 $a_k=k$ 与 $b_k=2^{-k}$ 的乘积。用 Abel 变换把它化为等比前缀和的组合，求和一步到位；这也说明 Abel 公式同时覆盖“等差乘等比”与“等差除以等比”两类差比求和。
+\paragraph{标准解题步骤}
+取 $a_k=k$，$b_k=2^{-k}$，则 $B_k=\sum_{i=1}^k2^{-i}=1-2^{-k}$，$a_{k+1}-a_k=1$。由 Abel 恒等式
+$$S_n=n(1-2^{-n})-\sum_{k=1}^{n-1}(1-2^{-k})
+=n-n2^{-n}-(n-1)+(1-2^{-(n-1)}).$$
+化简得
+$$S_n=2-\frac{n+2}{2^n}.$$
+(2) 因 $\dfrac{n+2}{2^n}\to0$（指数增长快于线性），故 $\lim\limits_{n\to\infty}S_n=2$。
+验算：$n=1$ 时 $2-\dfrac32=\dfrac12$；$n=2$ 时 $2-1=1=\dfrac12+\dfrac24$；$n=3$ 时 $2-\dfrac58=\dfrac{11}8=\dfrac12+\dfrac12+\dfrac38$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把 $b_k$ 取成 $2^k$（应取 $2^{-k}$，因原式是除以 $2^k$）；二是 $B_k$ 的求和区间写错（应为 $1$ 到 $k$，且 $B_0=0$）；三是化简时把 $n2^{-n}$ 与 $2^{-(n-1)}$ 合并出错（注意 $2^{-(n-1)}=2\cdot2^{-n}$，故结果为 $2-\frac{n+2}{2^n}$）；四是求极限时未说明 $\frac{n+2}{2^n}\to0$ 的理由。规避方法：先写清 $a_k,b_k$ 与 $B_k$，再逐项合并，最后用指数与多项式的增长阶说明极限。
+\end{solution}
+
+\begin{problem}\level{中}
+设 $a_1=2$，$a_{n+1}=\dfrac{2a_n+3}{a_n+4}$。
+(1) 求数列 $\{a_n\}$ 的通项公式；
+(2) 求 $\lim\limits_{n\to\infty}a_n$，并说明“令 $a_{n+1}=a_n=x^*$”这一操作的实质。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+分式递推 $a_{n+1}=\dfrac{aa_n+b}{ca_n+d}$ 的不动点方程 $x=\dfrac{ax+b}{cx+d}$ 若有两相异实根 $x_1,x_2$，则两式相减分别提取公因式 $(a_n-x_i)$，再相除消去随 $n$ 变化的分母，得到等比数列 $\dfrac{a_{n+1}-x_1}{a_{n+1}-x_2}=k\cdot\dfrac{a_n-x_1}{a_n-x_2}$。“令 $a_{n+1}=a_n=x^*$”只是解不动点方程的口诀，实质是减去平衡点消去常数项。
+\paragraph{标准解题步骤}
+(1) 不动点方程 $x=\dfrac{2x+3}{x+4}\Rightarrow x^2+2x-3=0$，得 $x_1=1$，$x_2=-3$。作比：
+$$\frac{a_{n+1}-1}{a_{n+1}+3}
+=\frac{\dfrac{2a_n+3}{a_n+4}-1}{\dfrac{2a_n+3}{a_n+4}+3}
+=\frac{a_n-1}{5a_n+15}=\frac15\cdot\frac{a_n-1}{a_n+3}.$$
+首项 $\dfrac{a_1-1}{a_1+3}=\dfrac15$，故 $\dfrac{a_n-1}{a_n+3}=\left(\dfrac15\right)^n$。解出
+$$a_n=\frac{5^n+3}{5^n-1}.$$
+(2) 当 $n\to\infty$ 时 $5^n\to\infty$，故 $a_n\to1$（即吸引不动点 $x_1=1$）。
+验算：$a_2=\dfrac{2\cdot2+3}{2+4}=\dfrac76=\dfrac{25+3}{25-1}$；$a_3=\dfrac{2\cdot\frac76+3}{\frac76+4}=\dfrac{16/3}{31/6}=\dfrac{32}{31}=\dfrac{125+3}{125-1}$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把“令 $a_{n+1}=a_n=x^*$”误当成真的假设相邻项相等（它只是解不动点方程的技巧，不是近似）；二是解不动点方程时去分母符号错（$x(x+4)=2x+3$ 得 $x^2+2x-3=0$）；三是作比时分子分母通分出错，尤其 $(2a_n+3)+3(a_n+4)=5a_n+15$；四是解出 $\frac{a_n-1}{a_n+3}=5^{-n}$ 后移项时符号错。规避方法：先写不动点方程，再写“两式相减”的因式分解，最后代回前两项验算。
+\end{solution}
+
+\section{共轭变换、单调有界与强基拓展}
+
+\begin{problem}\level{中}
+设 $a_1=2$，$a_{n+1}=\dfrac{2a_n+1}{a_n+2}$。
+(1) 求数列 $\{a_n\}$ 的通项公式；
+(2) 说明构造 $\dfrac{a_n-1}{a_n+1}$ 的共轭变换实质，并求 $\lim\limits_{n\to\infty}a_n$。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+本题与上一题同型但不动点为 $\pm1$，构造 $\dfrac{a_n-1}{a_n+1}$ 相当于把数轴原点平移到不动点 $1$、并以 $-1$ 为“无穷远基准”的共轭坐标系；在新坐标下，莫比乌斯变换退化为纯缩放 $b_{n+1}=\dfrac13b_n$，这正是共轭变换“换把尺子看运动”的思想。
+\paragraph{标准解题步骤}
+(1) 不动点方程 $x=\dfrac{2x+1}{x+2}\Rightarrow x^2=1$，得 $x_1=1$，$x_2=-1$。令 $b_n=\dfrac{a_n-1}{a_n+1}$，则
+$$b_{n+1}=\frac{a_{n+1}-1}{a_{n+1}+1}
+=\frac{\dfrac{2a_n+1}{a_n+2}-1}{\dfrac{2a_n+1}{a_n+2}+1}
+=\frac{a_n-1}{3a_n+3}=\frac13b_n.$$
+首项 $b_1=\dfrac{2-1}{2+1}=\dfrac13$，故 $b_n=\left(\dfrac13\right)^n$，即 $\dfrac{a_n-1}{a_n+1}=3^{-n}$。解出
+$$a_n=\frac{3^n+1}{3^n-1}.$$
+(2) 当 $n\to\infty$ 时 $3^n\to\infty$，故 $a_n\to1$。共轭实质：$b_{n+1}=\dfrac13b_n$ 是纯粹的等比缩放，原分式递推的“拉伸+平移”被还原为“中心收缩”。
+验算：$a_2=\dfrac{2\cdot2+1}{2+2}=\dfrac54=\dfrac{9+1}{9-1}$；$a_3=\dfrac{2\cdot\frac54+1}{\frac54+2}=\dfrac{7/2}{13/4}=\dfrac{14}{13}=\dfrac{27+1}{27-1}$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把不动点方程写成 $x^2+x=2x+1$ 后误得 $x^2=x+1$（应为 $x^2=1$）；二是构造比值时选错 $x_1,x_2$ 的顺序，导致公比写成 $3$ 而非 $\dfrac13$；三是把共轭变换与不动点法割裂，只会套公式而不理解“减去不动点”的几何意义；四是求极限时忽略 $3^n\to\infty$ 而误答 $-1$。规避方法：先解不动点，再验证 $b_{n+1}$ 与 $b_n$ 的等比关系，最后代回前两项验算。
+\end{solution}
+
+\begin{problem}\level{难}
+设 $a_1=1$，$a_{n+1}=\sqrt{2+a_n}$。
+(1) 证明 $\{a_n\}$ 单调递增且有上界；
+(2) 求 $\lim\limits_{n\to\infty}a_n$；
+(3) 说明该极限与不动点的关系。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+这是“迭代函数列”的经典模型：$a_{n+1}=f(a_n)$ 且 $f(x)=\sqrt{2+x}$ 单调递增。证明单调有界须用数学归纳法，且递增与有界互相依赖（有上界 $2$ 保证分子 $2-a_n\ge0$，从而递增；递增又保证极限存在）。极限必为不动点方程 $x=\sqrt{2+x}$ 的解。
+\paragraph{标准解题步骤}
+(1) 先归纳证 $0<a_n\le2$：$a_1=1\le2$；若 $a_n\le2$，则 $a_{n+1}=\sqrt{2+a_n}\le\sqrt4=2$。又
+$$a_{n+1}-a_n=\sqrt{2+a_n}-a_n
+=\frac{(2+a_n)-a_n^2}{\sqrt{2+a_n}+a_n}
+=\frac{(2-a_n)(1+a_n)}{\sqrt{2+a_n}+a_n}\ge0,$$
+故 $\{a_n\}$ 单调递增且有上界 $2$。
+(2) 由单调有界准则极限存在，设为 $L$，则 $L=\sqrt{2+L}$，即 $L^2-L-2=0$，$(L-2)(L+1)=0$。因 $a_n>0$，故 $L=2$。
+(3) $2$ 正是 $f(x)=\sqrt{2+x}$ 的不动点；又 $f'(x)=\dfrac{1}{2\sqrt{2+x}}$，$|f'(2)|=\dfrac14<1$，故为吸引不动点，迭代收敛于它。
+验算：$a_2=\sqrt3\approx1.732$，$a_3=\sqrt{2+\sqrt3}\approx1.932$，$a_4=\sqrt{2+a_3}\approx1.983$，逐步逼近 $2$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是只证有界不证单调（或反之），逻辑不完整；二是有理化时分子写错（应为 $(2+a_n)-a_n^2=(2-a_n)(1+a_n)$）；三是舍根时不说明 $a_n>0$（会误取 $L=-1$）；四是只求极限不验证极限满足不动点方程；五是把“单调有界”误当成充分必要条件而忽略归纳起点。规避方法：先归纳有界，再有理化证递增，最后取极限并检验不动点。
+\end{solution}
+
+\begin{problem}\level{难}
+【强基计划拓展，超出考纲】设斐波那契数列 $a_1=a_2=1$，$a_{n+2}=a_{n+1}+a_n$。
+(1) 设发生函数（生成函数）$G(x)=\sum\limits_{n\ge1}a_nx^n$，建立并解出 $G(x)$ 的方程；
+(2) 把 $G(x)$ 展开为部分分式，求通项公式（Binet 公式）；
+(3) 验证 $a_5=5$。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+发生函数把无穷数列打包成形式幂级数：递推中的“下标位移”对应“乘以 $x$”，于是递推方程化为关于 $G(x)$ 的代数方程。解出有理分式后，按等比级数展开即可读出系数，这是把离散递推转化为连续代数运算的“变换—求解—逆变换”思想。
+\paragraph{标准解题步骤}
+(1) $G(x)=a_1x+a_2x^2+\sum_{n\ge3}a_nx^n=x+x^2+\sum_{n\ge3}(a_{n-1}+a_{n-2})x^n$。
+而 $\sum_{n\ge3}a_{n-1}x^n=x(G-x)$，$\sum_{n\ge3}a_{n-2}x^n=x^2G$，故
+$$G=x+x^2+x(G-x)+x^2G\Rightarrow G(1-x-x^2)=x\Rightarrow G(x)=\frac{x}{1-x-x^2}.$$
+(2) 记 $\alpha=\dfrac{1+\sqrt5}2$，$\beta=\dfrac{1-\sqrt5}2$，则 $\alpha+\beta=1$，$\alpha\beta=-1$，且 $1-x-x^2=(1-\alpha x)(1-\beta x)$。部分分式：
+$$\frac{x}{(1-\alpha x)(1-\beta x)}
+=\frac1{\sqrt5}\left(\frac{1}{1-\beta x}-\frac{1}{1-\alpha x}\right).$$
+按 $\dfrac1{1-t}=\sum t^n$ 展开并比较 $x^n$ 系数，得 Binet 公式
+$$a_n=\frac{\alpha^n-\beta^n}{\sqrt5}.$$
+(3) 由 $\alpha^2=\alpha+1$ 递推得 $\alpha^3=2\alpha+1$，$\alpha^4=3\alpha+2$，$\alpha^5=5\alpha+3$；同理 $\beta^5=5\beta+3$。故
+$a_5=\dfrac{\alpha^5-\beta^5}{\sqrt5}=\dfrac{5(\alpha-\beta)}{\sqrt5}=\dfrac{5\sqrt5}{\sqrt5}=5$。
+验算：$a_3=a_1+a_2=2$，公式 $\dfrac{\alpha^3-\beta^3}{\sqrt5}=\dfrac{2(\alpha-\beta)}{\sqrt5}=2$；$a_4=3$，公式给 $3$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是建立方程时位移出错（$\sum_{n\ge3}a_{n-1}x^n$ 应为 $x(G-x)$，不是 $xG$）；二是忘记 $a_1x$ 与 $a_2x^2$ 的常数处理，导致 $G(1-x-x^2)=x$ 写错；三是部分分式系数符号错（分子应为 $\alpha^n-\beta^n$，分母 $\sqrt5$，而非 $\alpha-\beta$ 的倒数）；四是用错 $\alpha,\beta$ 的关系（$\alpha+\beta=1$，$\alpha\beta=-1$）；五是展开时不验证前几项。规避方法：先写清“位移即乘 $x$”，再解代数方程，最后代 $n=1,2,3$ 逐项验算。
+\end{solution}

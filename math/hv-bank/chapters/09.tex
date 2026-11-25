@@ -1,0 +1,213 @@
+% 第 9 章：不动点——迭代、方程与几何变换的交汇
+\chapter{不动点：迭代、方程与几何变换的交汇}
+
+\section{离散迭代：不动点与稳定性}
+
+\begin{problem}\level{易}
+设 $a_0=0$，$a_{n+1}=\dfrac12a_n+1$。
+(1) 计算 $a_1,a_2,a_3,a_4$，猜想 $\lim\limits_{n\to\infty}a_n$；
+(2) 解方程 $x=\dfrac12x+1$，并说明它与 (1) 的关系；
+(3) 用 (2) 的结果写出 $a_n$ 的通项公式并验证。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+递推 $a_{n+1}=F(a_n)$ 是映射 $F$ 的自迭代；不动点 $x^*=F(x^*)$ 就是
+$y=F(x)$ 与 $y=x$ 交点的横坐标，也是轨道若收敛时的极限候选。
+\paragraph{标准解题步骤}
+(1) $a_1=1,\ a_2=\dfrac32,\ a_3=\dfrac74,\ a_4=\dfrac{15}8$，趋向 $2$。
+(2) $x=\frac12x+1\Rightarrow \frac12x=1\Rightarrow x=2$；它正是 (1) 猜测的极限。
+(3) 令 $b_n=a_n-2$，则 $b_{n+1}=\frac12(a_n-2)=\frac12b_n$，$b_0=-2$，故
+\[
+  b_n=-2\left(\frac12\right)^n,\qquad a_n=2-2^{\,1-n}.
+\]
+验算：$n=0$ 时 $a_0=0$，$n=1$ 时 $a_1=1$，与 (1) 一致。
+\paragraph{学生典型易错点诊断}
+一是只凭前几项就断言极限（应先说明单调有界或压缩）；二是构造 $b_n$ 时
+忘记把常数项也算进不动点；三是通项写错为 $2-2^{-n}$。规避方法：求出通项后
+代回前两项核对。
+\end{solution}
+
+\begin{problem}\level{易}
+求 $F(x)=\dfrac x3+2$ 的不动点，判断其稳定性，并求 $a_0=5$ 时
+$\lim\limits_{n\to\infty}a_n$（$a_{n+1}=F(a_n)$）。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+一阶线性递推 $a_{n+1}=pa_n+q$（$p\neq1$）的不动点为 $x^*=\frac q{1-p}$，
+且 $|p|<1$ 时全局吸引。
+\paragraph{标准解题步骤}
+不动点 $x=\frac x3+2\Rightarrow x=3$。因为 $|F'(x)|=\frac13<1$，不动点稳定。
+由 $a_n-3=\left(\frac13\right)^n(a_0-3)$，得
+\[
+  a_n=3+2\cdot\left(\frac13\right)^n\Rightarrow\lim_{n\to\infty}a_n=3.
+\]
+验算：$a_1=\frac53+2=\frac{11}3=3+\frac23$ ✓。
+\paragraph{学生典型易错点诊断}
+把稳定性判据误记为「$F'$ 小于 $0$」；或算出不动点后直接写极限而不检验
+$|p|$。规避方法：默念「斜率绝对值与 $1$ 比大小」。
+\end{solution}
+
+\begin{problem}\level{中}
+已知 $a_{n+1}=pa_n+q$，$p\neq1$。
+(1) 推导通项公式族 $a_n=x^*+p^n(a_0-x^*)$，其中 $x^*=\frac q{1-p}$；
+(2) 当 $p=1$ 时数列有什么结构？$p=-1$ 时呢？
+(3) 设 $p=\frac13,\ q=1,\ a_0=4$，求 $a_5$ 与 $\lim a_n$。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+核心恒等式：$a_{n+1}-x^*=p(a_n-x^*)$，其中 $x^*$ 由 $x^*=px^*+q$ 定出；
+于是 $\{a_n-x^*\}$ 是公比为 $p$ 的等比数列。
+\paragraph{标准解题步骤}
+(1) 由 $x^*=px^*+q$ 得 $(1-p)x^*=q$，即 $x^*=\frac q{1-p}$；又
+\[
+  a_{n+1}-x^*=pa_n+q-(px^*+q)=p(a_n-x^*),
+\]
+迭代 $n$ 次得 $a_n-x^*=p^n(a_0-x^*)$。
+(2) $p=1$ 时退化为等差数列 $a_n=a_0+nq$（此时不动点方程无解除非 $q=0$，
+$q=0$ 时每点都是不动点）；$p=-1$ 时 $a_n$ 在 $x^*$ 两侧等幅振荡，除非
+$a_0=x^*$。
+(3) $x^*=\frac1{1-\frac13}=\frac32$，$a_n=\frac32+\left(\frac13\right)^n\cdot\frac52$，
+$a_5=\frac32+\frac{5}{2\cdot3^5}=\frac32+\frac{5}{486}=\frac{729+5}{486}
+=\frac{734}{486}=\frac{367}{243}$，$\lim a_n=\frac32$。
+验算：$a_1=\frac13\cdot4+1=\frac73=\frac32+\frac56$ ✓。
+\paragraph{学生典型易错点诊断}
+$p=1$ 与 $p=-1$ 是最常被漏掉的两个退化情形；换元后忘记 $x^*$ 的计算依赖
+$p\neq1$。规避方法：讨论参数先分区间（$|p|<1$、$=1$、$>1$），再套公式。
+\end{solution}
+
+\begin{problem}\level{中}
+设 $a_{n+1}=2a_n-1$，$a_0=1+\varepsilon$（$\varepsilon$ 很小）。
+(1) 求不动点并判断稳定性；(2) 写出 $a_n$ 的通项；
+(3) 说明为什么初值的微小误差会随迭代迅速放大。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+$|F'(x^*)|>1$ 时不动点不稳定：误差满足 $|a_n-x^*|=|p|^n|a_0-x^*|$，
+按 $|p|^n$ 指数放大。
+\paragraph{标准解题步骤}
+(1) $x=2x-1\Rightarrow x=1$，而 $|F'(1)|=2>1$，不稳定。
+(2) $a_n-1=2^n(a_0-1)$，故 $a_n=1+2^n\varepsilon$。
+(3) 误差为 $2^n\varepsilon$，每迭代一步翻一倍；例如 $\varepsilon=10^{-3}$，
+$n=10$ 时误差已达约 $1.024$。这正是混沌与数值不稳定的来源。
+验算：$a_1=2(1+\varepsilon)-1=1+2\varepsilon$ ✓。
+\paragraph{学生典型易错点诊断}
+只算不动点而不判稳定性，或把不稳定情形也当作收敛来求极限。规避方法：
+先算 $|F'(x^*)|$，再决定「极限是否存在、对初值是否敏感」。
+\end{solution}
+
+\begin{problem}\level{中}
+设 $x_0=2$，$x_{n+1}=\dfrac{2x_n+1}{x_n+2}$。
+(1) 求不动点；(2) 证明 $\left\{\dfrac{x_n-1}{x_n+1}\right\}$ 是等比数列；
+(3) 求 $\lim x_n$ 并说明理由。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+分式迭代的不动点即方程 $x=\frac{ax+b}{cx+d}$ 的根；把分子分母分别凑成
+$x-1$ 与 $x+1$ 的倍数，可得关于 $\frac{x-1}{x+1}$ 的等比关系。
+\paragraph{标准解题步骤}
+(1) $x(x+2)=2x+1\Rightarrow x^2=1$，不动点为 $1$ 与 $-1$。
+(2) 计算
+\[
+  x_{n+1}-1=\frac{x_n-1}{x_n+2},\qquad
+  x_{n+1}+1=\frac{3(x_n+1)}{x_n+2},
+\]
+两式相除得
+\[
+  \frac{x_{n+1}-1}{x_{n+1}+1}=\frac13\cdot\frac{x_n-1}{x_n+1}.
+\]
+故 $b_n=\frac{x_n-1}{x_n+1}$ 是公比 $\frac13$ 的等比数列，$b_0=\frac{2-1}{2+1}=\frac13$，
+$b_n=\left(\frac13\right)^{n+1}\to0$，即 $x_n\to1$。
+(3) 由 $b_n\to0$ 得 $x_n=\frac{1+b_n}{1-b_n}\to1$。
+验算：$x_1=\frac{5}{4}=1.25$，而 $\frac{1+1/9}{1-1/9}=\frac{10}{8}=1.25$ ✓。
+\paragraph{学生典型易错点诊断}
+试图直接对原式取极限而忽略收敛性；或凑比值时符号出错。规避方法：
+分子分母分别减／加同一不动点，先做差、再做商。
+\end{solution}
+
+\begin{problem}\level{难}
+设 $x_0=1$，$x_{n+1}=1+\dfrac1{x_n}$。
+(1) 证明 $x_n$ 的奇数子列递减、偶数子列递增，且两者都收敛于
+$\varphi=\dfrac{1+\sqrt5}{2}$；
+(2) 证明 $x_n=\dfrac{F_{n+2}}{F_{n+1}}$（$F_0=0,F_1=1$ 为斐波那契数）；
+(3) 由 (2) 估计 $|x_n-\varphi|$ 的衰减速度。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+$f(x)=1+\frac1x$ 迭代两次得 $f(f(x))=\frac{2x+1}{x+1}$；直接比较相邻项并利用
+$\varphi$ 满足 $\varphi=1+\frac1\varphi$，可建立误差的压缩关系。
+\paragraph{标准解题步骤}
+(1) 不动点满足 $x=1+\frac1x\Rightarrow x^2-x-1=0$，正根 $\varphi=\frac{1+\sqrt5}{2}$
+（负根 $-\frac1\varphi$ 被 $x_n>0$ 排除）。由
+\[
+  x_{n+1}-\varphi=\left(1+\frac1{x_n}\right)-\left(1+\frac1\varphi\right)
+  =-\frac{x_n-\varphi}{x_n\varphi},
+\]
+且 $x_n\ge1$，得 $|x_{n+1}-\varphi|\le\frac1\varphi|x_n-\varphi|$，
+故误差以 $\frac1\varphi$ 压缩；又 $x_{n+2}=\frac{2x_n+1}{x_n+1}$ 在 $[1,+\infty)$
+上递增，可得奇偶子列分别单调并有共同极限 $\varphi$。
+(2) 归纳：$x_0=\frac{F_2}{F_1}=1$；且
+\[
+  1+\frac1{x_n}=1+\frac{F_{n+1}}{F_{n+2}}
+  =\frac{F_{n+3}}{F_{n+2}},
+  \]
+故 $x_n=\frac{F_{n+2}}{F_{n+1}}$。
+(3) 由特征值之比 $\left|\frac{\lambda_2}{\lambda_1}\right|=\frac1{\varphi^2}$
+知 $|x_n-\varphi|\sim C\varphi^{-2n}$（公比 $\varphi^{-2}\approx0.382$）。
+验算：$x_1=2=\frac{F_3}{F_2}$ ✓；$x_2=\frac32=\frac{F_4}{F_3}$ ✓。
+\paragraph{学生典型易错点诊断}
+一是未证极限存在就写 $L=1+\frac1L$；二是忽略保号导致负根混入；
+三是斐波那契下标整体错位。规避方法：先压缩后取极限；通项公式代回头两项核对。
+\end{solution}
+
+\begin{problem}\level{难}
+(1) 举出一个递推，使其不动点存在但数列不收敛，并说明原因；
+(2) 证明 $x_{n+1}=\cos x_n$ 对任意实数初值都收敛，并指出极限的唯一性依据。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+不动点存在只说明「轨道可以停留」，收敛还需要压缩性（$|F'|<1$ 或单调有界）；
+$\cos$ 在 $[0,\frac\pi2]$ 上是压缩映射，可用 $|f'|=|\sin x|<1$ 判定。
+\paragraph{标准解题步骤}
+(1) 取 $a_{n+1}=-a_n,\ a_0=1$：$a_n=(-1)^n$ 振荡不收敛，而方程 $x=-x$
+有唯一解 $0$。原因：$|F'(x)|=1$ 处于临界，误差不被压缩，符号交替使轨道
+无法稳定。
+(2) 若 $x\in[0,\frac\pi2]$，$\cos$ 把该区间映入 $[0,1]\subset[0,\frac\pi2]$；
+由拉格朗日中值定理
+\[
+  |x_{n+1}-\varphi|=|\cos x_n-\cos\varphi|
+  =\sin\xi\,|x_n-\varphi|\le\sin1\cdot|x_n-\varphi|,
+\]
+其中 $\xi\in[0,1]$，而 $\sin$ 在 $[0,1]$ 上递增，故压缩常数可取
+$\sin1\approx0.841<1$，迭代几何收敛到唯一不动点 $\varphi\approx0.739$。
+验算：$x_0=0$ 时 $x_1=1,\ x_2=\cos1\approx0.540,\ x_3\approx0.858,\dots$ 逐步
+逼近 $\varphi$。
+\paragraph{学生典型易错点诊断}
+把「有不动点」当成「会收敛」；或误以为 $\cos$ 在整条实轴上都压缩
+（实际上 $|\sin x|$ 可以接近 $1$，需先把迭代限制进不变区间）。规避方法：
+先找不变区间，再在区间内估计导数上界。
+\end{solution}
+
+\begin{problem}\level{中}
+下列几何变换各有多少个不动点？说明理由。
+(1) 平面绕原点逆时针转 $60^\circ$；(2) 以原点为位似中心、相似比 $2$ 的位似；
+(3) 沿向量 $\binom12$ 的平移；(4) 仿射变换 $\binom xy\mapsto
+\begin{pmatrix}2&1\\0&1\end{pmatrix}\binom xy+\binom12$。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+不动点满足 $T(p)=p$；旋转与位似是共形变换，平移与仿射可直接列方程。
+仿射变换的不动点方程为 $(A-I)p=-\vec b$，$\det(A-I)\neq0$ 时唯一。
+\paragraph{标准解题步骤}
+(1) 只有原点一个不动点（旋转矩阵的特征值为 $e^{\pm i\pi/3}$，无实特征方向
+对应有限不动点）。
+(2) 只有位似中心（原点）一个不动点：$p=2p\Rightarrow p=0$。
+(3) 没有不动点：$p=p+\binom12$ 无解（它的「不动点」在无穷远处）。
+(4) 列方程 $\binom xy=\begin{pmatrix}2&1\\0&1\end{pmatrix}\binom xy+\binom12$，
+即 $x=2x+y+1$、$y=y+2$。第二式 $y=y+2$ 直接矛盾，故\textbf{没有不动点}
+（虽然系数行列式 $\det(A-I)=0$，但增广矩阵不相容）。
+验算：任意取 $p$ 都有 $y'=y+2\neq y$ ✓。
+\paragraph{学生典型易错点诊断}
+看到 $\det(A-I)=0$ 就断言「无穷多不动点」，忘记还要检查方程是否相容；
+本题恰好是不相容（第二行矛盾）。规避方法：解线性方程组，先看系数行列式，
+再看增广矩阵是否相容。
+\end{solution}

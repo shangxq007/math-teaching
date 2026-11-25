@@ -1,0 +1,239 @@
+% 第 6 章：导数与局部线性化引擎
+\chapter{导数与局部线性化引擎}
+
+\section{局部线性化与基本不等式的几何本质}
+
+\begin{problem}\level{易}
+设 $a,b>0$，以 $AB=a+b$ 为直径作半圆，$O$ 为圆心，$C$ 为直径 $AB$ 上一点且 $AC=a$，$CB=b$；过 $C$ 作 $AB$ 的垂线交半圆于点 $P$。
+(1) 证明 $PC=\sqrt{ab}$；
+(2) 证明 $\dfrac{a+b}{2}\ge\sqrt{ab}$，并指出等号成立的条件；
+(3) 取 $a=2$，$b=8$，验证上述结论。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+半圆模型把代数不等式 $\dfrac{a+b}{2}\ge\sqrt{ab}$ 翻译成“半径不小于斜边上的高”的几何事实。直径所对的圆周角是直角，故 $\triangle APB$ 为直角三角形；$PC$ 是斜边 $AB$ 上的高，由射影定理 $PC^2=AC\cdot CB=ab$。而 $OP$ 是半径、$PC$ 是点 $P$ 到直径的距离，两者由直角三角形 $OCP$ 的勾股关系 $OP^2=OC^2+PC^2$ 锁定。
+\paragraph{标准解题步骤}
+(1) 因为 $AB$ 是直径，所以 $\angle APB=90^\circ$。又 $PC\perp AB$，由射影定理（或 $\triangle APC\sim\triangle PCB$）得
+$PC^2=AC\cdot CB=ab$，故 $PC=\sqrt{ab}$。
+(2) $O$ 是 $AB$ 的中点，半径 $R=OP=\dfrac{a+b}{2}$。在 $\triangle OCP$ 中，
+$OP^2=OC^2+PC^2\ge PC^2$，故 $PC\le OP=R$，即 $\sqrt{ab}\le\dfrac{a+b}{2}$。
+等号成立当且仅当 $OC=0$，即 $C$ 与 $O$ 重合，也就是 $a=b$。
+(3) $a=2,b=8$ 时 $R=\dfrac{2+8}{2}=5$，$PC=\sqrt{2\cdot8}=4<5$；$a=b=4$ 时 $R=4$，$PC=4$，等号成立。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把射影定理误记为 $PC^2=AC^2+CB^2$（应为乘积 $AC\cdot CB$）；二是忽略 $P$ 在圆上这一条件，直接比较 $PC$ 与 $R$ 而不说明 $OP^2=OC^2+PC^2$；三是取等条件写错（应为 $a=b$，而非 $a=0$ 或 $b=0$）；四是把“直径所对圆周角为直角”与弦切角定理混淆。规避方法：先画图标出直径、垂足与半径，再写射影定理与勾股关系，最后回代数值检验。
+\end{solution}
+
+\begin{problem}\level{中}
+设向量 $\vec u=(a_1,a_2)$，$\vec v=(b_1,b_2)$，它们的夹角为 $\theta$。
+(1) 用数量积的定义证明 $|\vec u\cdot\vec v|\le|\vec u|\,|\vec v|$，即柯西不等式
+$(a_1^2+a_2^2)(b_1^2+b_2^2)\ge(a_1b_1+a_2b_2)^2$；
+(2) 指出等号成立的充要条件；
+(3) 若 $a,b>0$ 且 $a+2b=1$，利用上述结论求 $a^2+b^2$ 的最小值，并指出取等条件。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+柯西不等式的本质是欧氏空间中“数量积不超过模长乘积”，即 $|\cos\theta|\le1$。把平方和看成向量的模、把交叉项看成数量积，代数不等式就化为三角函数的有界性；取等条件对应 $\cos\theta=\pm1$，即两向量共线（同向或反向）。
+\paragraph{标准解题步骤}
+(1) 设 $\vec u,\vec v$ 的夹角为 $\theta$，则 $\vec u\cdot\vec v=|\vec u||\vec v|\cos\theta$。由 $|\cos\theta|\le1$ 得
+$|\vec u\cdot\vec v|\le|\vec u||\vec v|$。两边平方得
+$(\vec u\cdot\vec v)^2\le|\vec u|^2|\vec v|^2$，即
+$(a_1b_1+a_2b_2)^2\le(a_1^2+a_2^2)(b_1^2+b_2^2)$。
+(2) 等号成立 $\iff|\cos\theta|=1\iff\theta=0$ 或 $\pi\iff\vec u,\vec v$ 共线，即存在实数 $\lambda$ 使 $\vec u=\lambda\vec v$（允许其中一向量为零向量）。
+(3) 取 $(a_1,a_2)=(a,b)$，$(b_1,b_2)=(1,2)$，则
+$(a^2+b^2)(1+4)\ge(a+2b)^2=1$，故 $a^2+b^2\ge\dfrac15$。
+等号当 $(a,b)=\lambda(1,2)$，即 $a=\lambda$，$b=2\lambda$，代入 $a+2b=1$ 得 $5\lambda=1$，$\lambda=\dfrac15$，即 $a=\dfrac15$，$b=\dfrac25$。
+验算：$a^2+b^2=\dfrac1{25}+\dfrac4{25}=\dfrac15$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是只写 $|\vec u\cdot\vec v|\le|\vec u||\vec v|$ 而忘记平方还原成代数形式；二是取等条件只写“共线”而漏掉反向共线（$\theta=\pi$）与零向量情形；三是第 (3) 问配凑向量时把 $(1,2)$ 写成 $(2,1)$，导致取等条件变为 $a=2b$；四是不检验取等条件是否在约束 $a+2b=1$ 下可达。规避方法：先写 $\cos\theta$ 的有界性，再平方，最后把取等条件翻译回代数比例并回代约束。
+\end{solution}
+
+\begin{problem}\level{中}
+设 $a,b>0$。
+(1) 证明权方和不等式
+$\dfrac{a_1^2}{b_1}+\dfrac{a_2^2}{b_2}\ge\dfrac{(a_1+a_2)^2}{b_1+b_2}$（$b_1,b_2>0$）；
+(2) 若 $a+b=1$，求 $\dfrac{a^2}{b+1}+\dfrac{b^2}{a+1}$ 的最小值；
+(3) 指出取等条件并验证。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+权方和是柯西不等式的分式齐次化推论：把 $\dfrac{a_i}{\sqrt{b_i}}$ 与 $\sqrt{b_i}$ 看作两组向量，柯西给出
+$\left(\sum\dfrac{a_i^2}{b_i}\right)\left(\sum b_i\right)\ge\left(\sum a_i\right)^2$。它专门消灭“分母相加”结构，一步把二元分式和降成单变量。
+\paragraph{标准解题步骤}
+(1) 由柯西不等式
+$$\left(\frac{a_1^2}{b_1}+\frac{a_2^2}{b_2}\right)(b_1+b_2)
+\ge\left(\frac{a_1}{\sqrt{b_1}}\cdot\sqrt{b_1}+\frac{a_2}{\sqrt{b_2}}\cdot\sqrt{b_2}\right)^2=(a_1+a_2)^2,$$
+两边同除以 $b_1+b_2>0$ 即得。
+(2) 取 $a_1=a$，$a_2=b$，$b_1=b+1$，$b_2=a+1$，则
+$$\frac{a^2}{b+1}+\frac{b^2}{a+1}
+\ge\frac{(a+b)^2}{(b+1)+(a+1)}=\frac{1}{a+b+2}=\frac13.$$
+(3) 取等条件为 $\dfrac{a_1}{b_1}=\dfrac{a_2}{b_2}$，即 $\dfrac{a}{b+1}=\dfrac{b}{a+1}$，化简得 $a(a+1)=b(b+1)$，即 $(a-b)(a+b+1)=0$。因 $a+b+1=2\ne0$，故 $a=b=\dfrac12$。
+验算：$a=b=\dfrac12$ 时 $\dfrac{a^2}{b+1}+\dfrac{b^2}{a+1}=2\cdot\dfrac{1/4}{3/2}=2\cdot\dfrac16=\dfrac13$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把权方和的分母位置写错（分母是 $b_i$ 而非 $a_i$）；二是取等条件写成 $a_1=a_2$（应为 $\dfrac{a_1}{b_1}=\dfrac{a_2}{b_2}$）；三是第 (2) 问分母相加时漏掉 $+2$；四是不检验取等条件是否在 $a+b=1$ 下可达。规避方法：把权方和看成柯西的推论，取等条件回到柯西的共线条件 $\dfrac{a_i}{b_i}$ 为常数。
+\end{solution}
+
+\section{三角不等式与切线放缩}
+
+\begin{problem}\level{中}
+设 $a,b\in\mathbb R$。
+(1) 证明 $|a+b|\le|a|+|b|$，并指出等号成立的充要条件；
+(2) 证明 $\bigl||a|-|b|\bigr|\le|a+b|$，并指出等号成立的充要条件；
+(3) 若 $|a+b|=|a|+|b|$ 与 $\bigl||a|-|b|\bigr|=|a+b|$ 同时成立，求 $a,b$ 满足的关系。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+绝对值三角不等式的本质是度量空间的距离公理：$|a+b|$ 是“合位移”，$|a|+|b|$ 是“路程和”，两者之差由 $a,b$ 的符号关系决定。平方后比较，交叉项 $ab$ 与 $|ab|$ 的大小关系正好给出取等条件。
+\paragraph{标准解题步骤}
+(1) 两边均为非负，平方比较：
+$(|a+b|)^2=a^2+2ab+b^2$，$(|a|+|b|)^2=a^2+2|ab|+b^2$。
+由 $ab\le|ab|$ 得 $(|a+b|)^2\le(|a|+|b|)^2$，故 $|a+b|\le|a|+|b|$。
+等号成立 $\iff ab=|ab|\iff ab\ge0$。
+(2) 计算平方差：
+$$(|a+b|)^2-\bigl||a|-|b|\bigr|^2
+=(a^2+2ab+b^2)-(a^2-2|ab|+b^2)=2(ab+|ab|)\ge0,$$
+故 $\bigl||a|-|b|\bigr|\le|a+b|$。等号成立 $\iff ab+|ab|=0\iff ab\le0$。
+(3) 第一式要求 $ab\ge0$，第二式要求 $ab\le0$，故 $ab=0$，即 $a=0$ 或 $b=0$。
+验算：$a=0,b=5$ 时 $|a+b|=5=|a|+|b|$，且 $\bigl||a|-|b|\bigr|=5=|a+b|$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是只记结论不记取等条件，误以为 $|a+b|=|a|+|b|$ 恒成立；二是把两个方向的取等条件记反（$|a+b|\le|a|+|b|$ 要求 $ab\ge0$，$\bigl||a|-|b|\bigr|\le|a+b|$ 要求 $ab\le0$）；三是平方比较时忘记两边非负才能平方；四是第 (3) 问只写 $a=0$ 或只写 $b=0$。规避方法：一律平方比较，用 $ab$ 与 $|ab|$ 的关系读出取等条件。
+\end{solution}
+
+\begin{problem}\level{中}
+设 $f(x)=e^x-x-1$，$x\in\mathbb R$。
+(1) 求 $f(x)$ 的最小值；
+(2) 证明 $e^x\ge x+1$，并指出等号成立的条件；
+(3) 利用上述结论证明：对任意 $x\in\mathbb R$，$e^x\ge ex$。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+$e^x\ge x+1$ 是凸函数局部线性化的原型：凸函数 $y=e^x$ 的图像恒在其任意一点切线的上方，在 $x=0$ 处切线恰为 $y=x+1$。作差构造 $f(x)=e^x-x-1$，用导数研究其单调性，最小值 $f(0)=0$ 就是“切线支撑”的代数表达。
+\paragraph{标准解题步骤}
+(1) $f'(x)=e^x-1$。当 $x<0$ 时 $f'(x)<0$，当 $x>0$ 时 $f'(x)>0$，故 $f$ 在 $(-\infty,0)$ 上递减、在 $(0,+\infty)$ 上递增，最小值为 $f(0)=1-0-1=0$。
+(2) 由 (1) 知 $f(x)\ge f(0)=0$，即 $e^x\ge x+1$。等号成立当且仅当 $x=0$（唯一极小值点）。
+(3) 在 $e^t\ge t+1$ 中令 $t=x-1$，得 $e^{x-1}\ge x$，两边同乘 $e$ 得 $e^x\ge ex$。等号成立当且仅当 $x-1=0$，即 $x=1$。
+验算：$x=2$ 时 $e^2\approx7.389\ge3$；$x=-1$ 时 $e^{-1}\approx0.368\ge0$；$x=2$ 时 $e^2\approx7.389\ge2e\approx5.436$；$x=1$ 时 $e^1=e=e\cdot1$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是求导后不列表说明单调性就下结论；二是忽略 $f'(x)=0$ 的解 $x=0$ 是极小值点而非极大值点；三是第 (3) 问换元时把 $t=x-1$ 误写成 $t=x+1$，得到 $e^x\ge e(x+1)$；四是取等条件不写或写错（应为 $x=0$ 与 $x=1$）。规避方法：作差、求导、定号、求最值、写取等，五步缺一不可。
+\end{solution}
+
+\begin{problem}\level{中}
+利用切线不等式 $e^x\ge x+1$（等号当且仅当 $x=0$）。
+(1) 证明 $\ln x\le x-1$（$x>0$），并指出等号条件；
+(2) 证明 $\ln(1+x)\le x$（$x>-1$），并指出等号条件；
+(3) 证明 $\sum\limits_{k=1}^n\dfrac1k>\ln(n+1)$（$n\in\mathbb N^*$）。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+$e^x\ge x+1$ 与 $\ln x\le x-1$ 互为反函数镜像：把 $x$ 换成 $\ln t$ 即得对数形式。再用它处理 $\ln(1+x)$，把对数项放大成一次项，求和时逐项放大即得数列不等式——这是“切线放缩消超越”的标准动作。
+\paragraph{标准解题步骤}
+(1) 令 $t=\ln x$，则 $x=e^t$。由 $e^t\ge t+1$ 得 $x\ge\ln x+1$，即 $\ln x\le x-1$。等号成立当且仅当 $t=0$，即 $x=1$。
+(2) 在 (1) 中把 $x$ 换成 $1+x$（$1+x>0$），得 $\ln(1+x)\le(1+x)-1=x$。等号成立当且仅当 $1+x=1$，即 $x=0$。
+(3) 当 $k\ge1$ 时 $\dfrac1k>0$，由 (2) 得
+$\ln\!\left(1+\dfrac1k\right)<\dfrac1k$（严格，因为 $\dfrac1k\ne0$）。
+对 $k=1,2,\dots,n$ 求和：
+$$\ln(n+1)=\sum_{k=1}^n\ln\frac{k+1}{k}=\sum_{k=1}^n\ln\!\left(1+\frac1k\right)<\sum_{k=1}^n\frac1k.$$
+验算：$n=1$ 时 $1>\ln2\approx0.693$；$n=2$ 时 $1+\dfrac12=\dfrac32>\ln3\approx1.099$；$n=3$ 时 $1+\dfrac12+\dfrac13=\dfrac{11}6\approx1.833>\ln4\approx1.386$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是换元时把 $t=\ln x$ 误取为 $t=e^x$，方向颠倒；二是第 (3) 问把严格不等式写成 $\le$（因 $\dfrac1k\ne0$，等号不可取）；三是裂项求和时把 $\ln\dfrac{k+1}{k}$ 的项数或首尾写错；四是数值验算时把调和和算错（如 $\dfrac{11}6$ 误算成 $\dfrac{11}8$）。规避方法：先写换元，再逐项放大，最后用 $n=1,2,3$ 验算。
+\end{solution}
+
+\section{隐零点与放缩取等陷阱}
+
+\begin{problem}\level{难}
+设 $f(x)=e^x-\ln x-2$（$x>0$）。
+(1) 证明 $f(x)$ 在 $(0,+\infty)$ 上存在唯一极小值点 $x_0$，并写出 $x_0$ 满足的方程；
+(2) 证明 $f(x)>0$ 对一切 $x>0$ 成立；
+(3) 估计 $x_0$ 的取值范围。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+$f'(x)=e^x-\dfrac1x$ 的零点无法用初等形式解出（即 $x_0e^{x_0}=1$，$x_0$ 是朗伯 $W$ 函数在 $1$ 处的值），这正是“隐零点”。设而不求：由 $f'(x_0)=0$ 得到 $e^{x_0}=\dfrac1{x_0}$，两边取对数得 $\ln x_0=-x_0$，代入 $f(x_0)$ 即可把超越式化为代数式，再用基本不等式放缩。
+\paragraph{标准解题步骤}
+(1) $f'(x)=e^x-\dfrac1x$。$f'$ 在 $(0,+\infty)$ 上单调递增（$e^x$ 递增、$-\dfrac1x$ 递增），且 $x\to0^+$ 时 $f'\to-\infty$，$x\to+\infty$ 时 $f'\to+\infty$，故存在唯一 $x_0$ 使 $f'(x_0)=0$，即
+$$e^{x_0}=\frac1{x_0}\quad\Bigl(\text{等价于 }x_0e^{x_0}=1\Bigr).$$
+当 $0<x<x_0$ 时 $f'<0$，当 $x>x_0$ 时 $f'>0$，故 $x_0$ 是唯一极小值点。
+(2) 由 $e^{x_0}=\dfrac1{x_0}$ 取对数得 $\ln x_0=-x_0$，于是
+$$f(x_0)=e^{x_0}-\ln x_0-2=\frac1{x_0}+x_0-2.$$
+由基本不等式 $\dfrac1{x_0}+x_0\ge2$，等号当且仅当 $x_0=1$。但 $x_0e^{x_0}=1$ 且 $1\cdot e^1=e\ne1$，故 $x_0\ne1$，从而
+$f(x_0)=\dfrac1{x_0}+x_0-2>0$。故 $f(x)\ge f(x_0)>0$ 对一切 $x>0$ 成立。
+(3) 令 $g(x)=xe^x$，在 $(0,+\infty)$ 上单调递增。$g\!\left(\dfrac12\right)=\dfrac{\sqrt e}{2}\approx0.824<1$，$g(1)=e>1$，故 $\dfrac12<x_0<1$（更精确地 $x_0\approx0.5671$）。
+验算：$x_0\approx0.5671$ 时 $e^{x_0}\approx1.7632$，$\dfrac1{x_0}\approx1.7632$；$f(x_0)\approx1.7632+0.5671-2=0.3303>0$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是试图解出 $x_0$ 的显式表达式而卡住（应设而不求）；二是用 $e^{x_0}=\dfrac1{x_0}$ 后忘记取对数得到 $\ln x_0=-x_0$，导致 $f(x_0)$ 无法化简；三是基本不等式取等条件 $x_0=1$ 未检验，误以为等号可取而得到 $f(x_0)=0$；四是判断 $f'$ 单调性时忘记说明 $-\dfrac1x$ 在 $(0,+\infty)$ 上递增。规避方法：设隐零点、写关系式、代入消元、检验取等。
+\end{solution}
+
+\begin{problem}\level{中}
+已知 $a,b>0$ 且 $a+b=2$，求 $\dfrac1a+\dfrac4b$ 的最小值。
+(1) 指出下列解法的错误：
+$\dfrac1a+\dfrac4b\ge2\sqrt{\dfrac4{ab}}=\dfrac4{\sqrt{ab}}$，又 $ab\le\left(\dfrac{a+b}{2}\right)^2=1$，故 $\dfrac1a+\dfrac4b\ge4$；
+(2) 用权方和不等式求正确的最小值；
+(3) 说明两次放缩的取等条件为何冲突。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+这是“多步放缩取等条件冲突”的典型反例。第一步基本不等式取等要求 $\dfrac1a=\dfrac4b$，即 $b=4a$；第二步基本不等式取等要求 $a=b$。两个条件不能同时成立，所以 $4$ 只是放缩链的下界，而非可取到的最小值。
+\paragraph{标准解题步骤}
+(1) 该解法两次使用基本不等式。第一步 $\dfrac1a+\dfrac4b\ge2\sqrt{\dfrac4{ab}}$ 取等当且仅当 $\dfrac1a=\dfrac4b$，即 $b=4a$；第二步 $ab\le\left(\dfrac{a+b}{2}\right)^2=1$ 取等当且仅当 $a=b$。在 $a+b=2$ 下，$a=b=1$ 与 $b=4a$ 不能同时成立，故 $4$ 取不到。
+(2) 由权方和不等式
+$$\frac1a+\frac4b=\frac{1^2}{a}+\frac{2^2}{b}\ge\frac{(1+2)^2}{a+b}=\frac92.$$
+取等条件为 $\dfrac1a=\dfrac2b$，即 $b=2a$，结合 $a+b=2$ 得 $a=\dfrac23$，$b=\dfrac43$。
+(3) 两次放缩的取等条件冲突：前者要求 $b=4a$，后者要求 $a=b$，二者无公共解，故放缩链的终点 $4$ 不可达。
+验算：$a=\dfrac23$，$b=\dfrac43$ 时 $\dfrac1a+\dfrac4b=\dfrac32+3=\dfrac92=4.5$；而 $a=b=1$ 时 $\dfrac1a+\dfrac4b=5>\dfrac92$，可见放缩链给出的下界 $4$ 不可达、端点值 $5$ 也不是最小值，真正最小值是 $\dfrac92$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是连续使用两次基本不等式而不检查取等条件是否一致；二是误以为“每一步都取等”就等于“整体取等”（必须各步取等条件同时成立）；三是把放缩得到的下界直接当作答案；四是第 (2) 问把权方和的系数配错（$4=2^2$ 应对应 $\dfrac{2^2}{b}$）。规避方法：每写一次放缩就记一次取等条件，最后检查它们能否同时成立；能一步到位时优先用权方和。
+\end{solution}
+
+\section{条件最值与含参恒成立}
+
+\begin{problem}\level{中}
+已知 $a,b>0$ 且 $\dfrac1a+\dfrac2b=1$。
+(1) 用“$1$ 的代换”求 $a+b$ 的最小值；
+(2) 用消元法（把 $b$ 用 $a$ 表示）求 $a+b$ 的最小值；
+(3) 指出两种方法的取等条件是否一致。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+条件 $\dfrac1a+\dfrac2b=1$ 是“负一次齐次式”，目标 $a+b$ 是“一次齐次式”，两者相乘得零次齐次式，正好配凑基本不等式——这就是“$1$ 的代换”的齐次化思想。消元法则把二元条件最值降维成单变量对勾函数 $t+\dfrac{k}{t}$ 的最值。
+\paragraph{标准解题步骤}
+(1) 由 $\dfrac1a+\dfrac2b=1$，
+$$a+b=(a+b)\left(\frac1a+\frac2b\right)=1+\frac{2a}b+\frac ba+2=3+\frac{2a}b+\frac ba.$$
+由基本不等式 $\dfrac{2a}b+\dfrac ba\ge2\sqrt{\dfrac{2a}b\cdot\dfrac ba}=2\sqrt2$，故 $a+b\ge3+2\sqrt2$。取等当且仅当 $\dfrac{2a}b=\dfrac ba$，即 $b^2=2a^2$，$b=\sqrt2\,a$。代入条件：
+$\dfrac1a+\dfrac2{\sqrt2\,a}=\dfrac{1+\sqrt2}{a}=1$，得 $a=1+\sqrt2$，$b=\sqrt2(1+\sqrt2)=2+\sqrt2$。
+(2) 由 $\dfrac2b=1-\dfrac1a=\dfrac{a-1}{a}$，得 $b=\dfrac{2a}{a-1}$，且 $a>1$。于是
+$$a+b=a+\frac{2a}{a-1}=a-1+\frac{2}{a-1}+3\ge2\sqrt2+3.$$
+取等当且仅当 $a-1=\dfrac{2}{a-1}$，即 $(a-1)^2=2$，$a=1+\sqrt2$（舍负），此时 $b=\dfrac{2(1+\sqrt2)}{\sqrt2}=\sqrt2(1+\sqrt2)=2+\sqrt2$。
+(3) 两种方法的取等条件一致，均为 $a=1+\sqrt2$，$b=2+\sqrt2$。
+验算：$\dfrac1a+\dfrac2b=\dfrac1{1+\sqrt2}+\dfrac2{2+\sqrt2}=(\sqrt2-1)+(2-\sqrt2)=1$；$a+b=3+2\sqrt2\approx5.828$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是“$1$ 的代换”时展开漏项（$\dfrac{2a}b$ 与 $\dfrac ba$ 易漏一个）；二是消元后忘记 $a>1$ 的定义域，导致取等点 $a=1-\sqrt2$ 误取；三是把 $b=\dfrac{2a}{a-1}$ 化简时符号错；四是不检验两种方法取等条件是否一致。规避方法：先判断齐次化方向，再展开或用消元，最后统一回代检验。
+\end{solution}
+
+\begin{problem}\level{难}
+设 $f(x)=x^2-ax+1$，$x\in[1,2]$，$a\in\mathbb R$。
+(1) 若对任意 $x\in[1,2]$，都有 $f(x)\ge0$，求 $a$ 的取值范围；
+(2) 若存在 $x\in[1,2]$，使得 $f(x)\ge0$，求 $a$ 的取值范围；
+(3) 若对任意 $x\in[1,2]$，都有 $f(x)\le0$，求 $a$ 的取值范围，并说明它与 (1) 的转化差异。
+\end{problem}
+\begin{solution}
+\paragraph{结构剖析}
+量词决定最值类型：$\forall x$ 要求“最小值满足条件”，$\exists x$ 要求“最大值满足条件”。$f$ 是开口向上的抛物线，在闭区间上的最值由对称轴 $x=\dfrac a2$ 与区间端点的相对位置决定，故需按对称轴分类讨论。
+\paragraph{标准解题步骤}
+$f(x)=\left(x-\dfrac a2\right)^2+1-\dfrac{a^2}{4}$，对称轴 $x=\dfrac a2$。
+(1) 恒成立 $f(x)\ge0$ 转化为 $f(x)_{\min}\ge0$。
+若 $\dfrac a2\le1$（$a\le2$），$f$ 在 $[1,2]$ 上递增，$f_{\min}=f(1)=2-a\ge0$，得 $a\le2$；
+若 $1<\dfrac a2<2$（$2<a<4$），$f_{\min}=f\!\left(\dfrac a2\right)=1-\dfrac{a^2}4\ge0$，得 $-2\le a\le2$，与 $2<a<4$ 无交集；
+若 $\dfrac a2\ge2$（$a\ge4$），$f$ 递减，$f_{\min}=f(2)=5-2a\ge0$，得 $a\le\dfrac52$，与 $a\ge4$ 无交集。
+综上 $a\le2$。
+(2) 能成立 $f(x)\ge0$ 转化为 $f(x)_{\max}\ge0$。凸函数在端点取最大值，比较 $f(1)=2-a$ 与 $f(2)=5-2a$：
+$f(1)\ge f(2)\iff a\ge3$。
+当 $a\ge3$ 时 $f_{\max}=f(1)=2-a\ge0$ 得 $a\le2$，与 $a\ge3$ 无交集；
+当 $a<3$ 时 $f_{\max}=f(2)=5-2a\ge0$ 得 $a\le\dfrac52$。
+综上 $a\le\dfrac52$。
+(3) 恒成立 $f(x)\le0$ 转化为 $f(x)_{\max}\le0$。
+当 $a\ge3$ 时 $f_{\max}=f(1)=2-a\le0$，得 $a\ge2$，故 $a\ge3$；
+当 $a<3$ 时 $f_{\max}=f(2)=5-2a\le0$，得 $a\ge\dfrac52$，故 $\dfrac52\le a<3$。
+综上 $a\ge\dfrac52$。与 (1) 的差异在于：(1) 用最小值，(3) 用最大值；并且 (2) 的答案 $a\le\dfrac52$ 与 (3) 的答案 $a\ge\dfrac52$ 恰好互补，共同以 $a=\dfrac52$ 为分界。
+验算：$a=2$ 时 $f(1)=f(2)=1\ge0$，(1) 成立；$a=2.4$ 时 $f(1)=-0.4$，$f(2)=0.2$，(1) 不成立而 (2) 成立；$a=2.6$ 时 $f(1)=-0.6$，$f(2)=-0.2$，(2) 不成立；$a=2.5$ 时 $f(2)=0$，(3) 成立。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把 $\forall$ 与 $\exists$ 都转化为最小值（或都转化为最大值）；二是分类讨论时漏掉对称轴在区间内的情形，或把 $1<\dfrac a2<2$ 写成 $1<a<2$；三是端点比较 $f(1)$ 与 $f(2)$ 时符号错（分界是 $a=3$ 而非 $a=2$）；四是不画图、不验算端点值。规避方法：先写“$\forall$ 用最小、$\exists$ 用最大”，再按对称轴分类，最后代端点数值检验。
+\end{solution}

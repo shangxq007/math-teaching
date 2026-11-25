@@ -1,140 +1,471 @@
-% 第 3 课时：二次函数与方程、不等式
-\section{第 3 课时：二次函数与方程、不等式}
+% 第 5 章：函数、幂函数、指数函数、对数函数
+% 对应湘教版必修第一册 第 3 章（函数的概念与性质）与第 4 章（幂指对）
+% 说明：本章按内容编排，课时划分由教师把握。
+\section{函数、幂函数、指数函数、对数函数}
 
 \begin{learnobjective}
 \begin{itemize}
-  \item 会用判别式判断方程根的个数，会用求根公式解方程；
-  \item 能说出二次函数、二次方程、二次不等式三者的关系；
-  \item 会用数轴穿根法解高次不等式与分式不等式；
-  \item 会把解集正确画在数轴上（空心 / 实心）。
+  \item 理解函数的概念，会求定义域与值域，会用解析法、列表法、图象法表示函数；
+  \item 会判断函数的单调性与奇偶性，会求简单函数在给定区间上的最值；
+  \item 理解实数指数幂，掌握幂函数 $y=x^{\alpha}$ 的图象与性质；
+  \item 掌握指数函数、对数函数的概念、图象与性质，知道它们互为反函数；
+  \item 会用零点存在定理判断方程根的存在，会用二分法求近似解；
+  \item 会比较指数增长、对数增长与幂增长，能建立简单的函数模型。
 \end{itemize}
 \end{learnobjective}
 
 \begin{preview}
-\subsection{知识回顾}
-用上一课的配方法，把 $y=2x^2-4x+1$ 写成顶点式，并说出顶点坐标：\blank。
+\subsection*{知识回顾}
+\begin{itemize}
+  \item 一次函数 $y=kx+b$ 的图象是一条直线，$k$ 决定 \blank；
+  \item 二次函数 $y=ax^2+bx+c$ 的图象是 \blank；
+  \item 反比例函数 $y=\dfrac{k}{x}$ 的定义域是 \blank。
+\end{itemize}
 
-\subsection{教材速读}
-% TODO(待核对教材)：原写「阅读教材第 $56\sim64$ 页」，页码为占位，暂隐去
-阅读本节内容，完成下列问题：
+\subsection*{教材速读}
+阅读本章内容，完成下列问题：
 \begin{enumerate}
-  \item 判别式 $\Delta=$ \blank；
-  \item 求根公式为 \blank；
-  \item 解不等式时，最高次项系数为负要先 \blank。
+  \item 函数的三要素是 \blank、\blank、\blank；
+  \item 幂函数的一般形式是 \blank；
+  \item 指数函数与对数函数中，底数 $a$ 的取值范围都是 \blank。
 \end{enumerate}
 \end{preview}
 
 \begin{explore}
-\subsection{探究一：判别式与求根公式}
-对于方程 $ax^2+bx+c=0$（$a\neq0$），记 $\Delta=b^2-4ac$。
-\begin{center}
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{p{2.4cm}p{4.2cm}p{5.2cm}}
-\toprule
-$\Delta$ 的符号 & 方程的根 & 函数图象与 $x$ 轴的交点个数 \\
-\midrule
-$\Delta>0$ & 两个不相等的实数根 & 两个交点 \\
-$\Delta=0$ & 两个相等的实数根 & 一个交点（相切） \\
-$\Delta<0$ & 没有实数根 & 没有交点 \\
-\bottomrule
-\end{tabular}
-\end{center}
 
-当 $\Delta\geq0$ 时，求根公式：
-\[
-  x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}.
-\]
+\subsection{函数的概念与表示}
 
-\subsection{探究二：三个二次的关系}
+\key{探究一：函数的概念}
+初中我们说“$y$ 随 $x$ 的变化而变化”。现在用集合与对应把它说准确：
 \begin{itemize}
-  \item 令 $y=0$，得到一元二次方程，它的解就是函数图象与 $x$ 轴交点的横坐标；
-  \item 令 $y>0$（或 $y<0$），得到一元二次不等式，它的解集就是函数图象在 $x$ 轴上方（或下方）部分所对应的 $x$ 的取值范围。
+  \item 设 $A$、$B$ 是\key{非空数集}，如果按某个确定的对应关系 $f$，
+        使对于集合 $A$ 中的\key{任意}一个数 $x$，在集合 $B$ 中都有\key{唯一}确定的数 $f(x)$ 和它对应，
+        就称 $f:A\to B$ 为从集合 $A$ 到集合 $B$ 的一个\key{函数}，记作 $y=f(x)$，$x\in A$。
+  \item \key{三要素}：定义域、对应关系、值域。
+        \key{定义域}是自变量 $x$ 的取值范围；\key{值域}是 $\{f(x)\mid x\in A\}$。
+  \item 判断“是不是函数”，只看两条：$A$ 中每个 $x$ 都有对应；每个 $x$ 只对应一个 $y$。
 \end{itemize}
 
-\subsection{探究三：一元二次不等式}
 \begin{example}
-解不等式 $x^2-2x-3<0$。
+下列对应中，哪些是函数？
+\begin{enumerate}
+  \item $x\mapsto x^2$，$x\in\mathbb{R}$；
+  \item $x\mapsto\pm\sqrt{x}$，$x\geq0$；
+  \item 中国的直辖市 $\to$ 其简称。
+\end{enumerate}
 \end{example}
 \begin{solution}
-方程 $x^2-2x-3=0$ 的两根为 $x_1=-1$，$x_2=3$。
-因为 $a=1>0$，抛物线开口向上，在 $x$ 轴下方的部分是两根之间，
-故解集为 $(-1,3)$。
+(1) 是。任意实数 $x$ 都有唯一的 $x^2$ 与之对应。
+(2) 不是。$x=4$ 时 $y=\pm2$，一个 $x$ 对应了两个 $y$。
+(3) 是对应，但 $A$、$B$ 不是数集，所以不是函数（函数要求非空\key{数集}）。
 \end{solution}
 
-\key{口诀}：大于取两边，小于取中间（适用于 $a>0$ 的情形）。
+\begin{problem}
+设 $f(x)$ 对任意实数 $x,y$ 都有 $f(x+y)=f(x)+f(y)$。求 $f(0)$，并判断 $f$ 的奇偶性。
+\end{problem}
+\begin{solution}
+令 $x=y=0$，得 $f(0)=2f(0)$，故 $f(0)=0$。
+令 $y=-x$，得 $f(0)=f(x)+f(-x)$，即 $f(-x)=-f(x)$，故 $f$ 是奇函数。
+\key{（抽象函数没有解析式，靠赋值法与定义本身）}
+\end{solution}
 
-\subsection{探究四：数轴穿根法}
-对高次不等式，用数轴穿根法更快。它的关键是\key{先看最高次项系数的符号}：
-系数为正从右上方起笔；系数为负就先两边同乘 $-1$（不等号方向改变），化为正。
-\key{一律先化为正}，规则只有一条。
+\key{探究二：定义域、值域与表示法}
+\begin{itemize}
+  \item 求定义域的三条常见限制：分母不为 $0$；偶次根号下的式子 $\geq0$；
+        对数的真数 $>0$。
+  \item 表示函数有三种方法：\key{解析法}（写式子）、\key{列表法}（列表格）、\key{图象法}（画曲线）。
+  \item \key{分段函数}：在定义域的不同部分用不同的解析式。它仍是一个函数，
+        只是要分段看、分段用。
+\end{itemize}
 
 \begin{example}
-解不等式 $(x+1)(x-2)(x-4)<0$。
+求函数 $y=\sqrt{x-1}+\dfrac{1}{x-2}$ 的定义域。
 \end{example}
 \begin{solution}
-最高次项系数为正。根为 $-1$、$2$、$4$。在数轴上标出后，从右上方起笔依次穿根，
-得到各段符号依次为 $+$、$-$、$+$、$-$。
-取小于 $0$ 的部分，解集为 $(-\infty,-1)\cup(2,4)$。
+需同时满足 $x-1\geq0$ 与 $x-2\neq0$，即 $x\geq1$ 且 $x\neq2$。
+定义域为 $[1,2)\cup(2,+\infty)$。
 \end{solution}
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.70\textwidth]{ineq-on-axis.pdf}
-  \caption{穿根折线与解集（空心点表示端点不取）}
-\end{figure}
+\begin{problem}
+设 $f(x)=\begin{cases}x+1,&x\leq0,\\ x^2,&x>0.\end{cases}$
+求 $f(-2)$、$f(0)$、$f(1)$，并说明 $f$ 在 $x=0$ 处该用哪一段。
+\end{problem}
+\begin{solution}
+$f(-2)=-2+1=-1$；$f(0)=0+1=1$（$x=0$ 落在 $x\leq0$ 一段）；$f(1)=1^2=1$。
+\end{solution}
 
-\key{步骤}：化标准形 $\to$ 求根标轴 $\to$ 右上起笔 $\to$ 奇穿偶不穿 $\to$ 取上下方 $\to$ 查端点。
+\subsection{函数的基本性质}
 
-\subsection{探究五：分式不等式}
-分式不等式也用这条思路：先判断分子、分母的正负，再转化为整式不等式画图求解。
+\key{探究三：单调性}
+\begin{itemize}
+  \item 设函数 $f(x)$ 的定义域为 $I$，区间 $D\subseteq I$。
+        若对任意 $x_1,x_2\in D$，当 $x_1<x_2$ 时都有 $f(x_1)<f(x_2)$，
+        则 $f$ 在 $D$ 上\key{单调递增}；若都有 $f(x_1)>f(x_2)$，则 $f$ 在 $D$ 上\key{单调递减}。
+  \item \key{单调性是“区间”上的性质}：说单调性必须指明区间。
+  \item 用定义证明的步骤：取值 $\to$ 作差 $\to$ 变形 $\to$ 定号 $\to$ 结论。
+\end{itemize}
+
+\begin{example}
+用定义证明 $f(x)=2x+1$ 在 $\mathbb{R}$ 上单调递增。
+\end{example}
+\begin{solution}
+任取 $x_1,x_2\in\mathbb{R}$，设 $x_1<x_2$。
 \[
-  \frac{f(x)}{g(x)}>0 \iff f(x)g(x)>0 \quad (g(x)\neq0).
+  f(x_1)-f(x_2)=(2x_1+1)-(2x_2+1)=2(x_1-x_2).
 \]
-\key{注意}：分母的零点取不到，必须画空心点。
-
-\begin{example}
-解不等式 $\dfrac{x+1}{x-2}\geq0$。
-\end{example}
-\begin{solution}
-等价于 $(x+1)(x-2)\geq0$ 且 $x\neq2$。
-根为 $-1$、$2$，从右上方起笔依次穿根，取大于等于 $0$ 的部分并去掉 $2$，
-解集为 $(-\infty,-1]\cup(2,+\infty)$。
+由 $x_1<x_2$ 得 $x_1-x_2<0$，故 $f(x_1)-f(x_2)<0$，即 $f(x_1)<f(x_2)$。
+所以 $f$ 在 $\mathbb{R}$ 上单调递增。
 \end{solution}
 
+\begin{problem}
+求 $f(x)=x^2$ 的单调区间，并说明为什么不能只说“$f(x)=x^2$ 是增函数”。
+\end{problem}
+\begin{solution}
+在 $(-\infty,0]$ 上单调递减，在 $[0,+\infty)$ 上单调递增。
+因为它在 $(-\infty,0]$ 与 $[0,+\infty)$ 上方向相反，离开区间谈单调性没有意义。
+\end{solution}
+
+\key{探究四：奇偶性}
+\begin{itemize}
+  \item 前提：定义域必须\key{关于原点对称}（若 $x$ 在定义域内，$-x$ 也在）。
+  \item \key{偶函数}：$f(-x)=f(x)$，图象关于 $y$ 轴对称；
+  \item \key{奇函数}：$f(-x)=-f(x)$，图象关于原点对称。
+\end{itemize}
+
+\begin{example}
+判断下列函数的奇偶性：$f(x)=x^3$，$g(x)=x^2+1$，$h(x)=x^2+x$。
+\end{example}
+\begin{solution}
+$f(-x)=(-x)^3=-x^3=-f(x)$，故 $f$ 是奇函数；
+$g(-x)=(-x)^2+1=x^2+1=g(x)$，故 $g$ 是偶函数；
+$h(-x)=x^2-x$，既不等于 $h(x)$ 也不等于 $-h(x)$，故 $h$ 既不是奇函数也不是偶函数。
+\end{solution}
+
+\begin{problem}
+已知 $f(x)$ 是奇函数，且当 $x>0$ 时 $f(x)=x^2-2x$。求 $x<0$ 时 $f(x)$ 的解析式。
+\end{problem}
+\begin{solution}
+设 $x<0$，则 $-x>0$，可代入已知式：$f(-x)=(-x)^2-2(-x)=x^2+2x$。
+由奇函数 $f(-x)=-f(x)$，得 $f(x)=-f(-x)=-x^2-2x$。
+\end{solution}
+
+\key{探究五：函数的最值}
+\begin{itemize}
+  \item 最大值：存在 $x_0\in D$，使对任意 $x\in D$ 都有 $f(x)\leq f(x_0)$；最小值同理。
+  \item 求最值的两条路：看单调性；看二次函数的顶点与区间端点。
+\end{itemize}
+
+\begin{problem}
+求 $f(x)=x^2-2x+3$ 在 $[0,3]$ 上的最大值与最小值。
+\end{problem}
+\begin{solution}
+配方得 $f(x)=(x-1)^2+2$，对称轴 $x=1\in[0,3]$，故最小值为 $f(1)=2$。
+端点值 $f(0)=3$，$f(3)=6$，故最大值为 $f(3)=6$。
+\end{solution}
+
+\subsection{实数指数幂与幂函数}
+
+\key{探究六：根式与分数指数幂}
+\begin{itemize}
+  \item $n$ 次方根：若 $x^n=a$，则 $x$ 叫做 $a$ 的 $n$ 次方根，记 $x=\sqrt[n]{a}$。
+        $\sqrt[n]{a^n}=a$（$n$ 为奇数），$\sqrt[n]{a^n}=|a|$（$n$ 为偶数）。
+  \item 分数指数幂：$a^{m/n}=\sqrt[n]{a^m}$（$a>0$，$m,n$ 为正整数，$n>1$）。
+  \item \key{实数指数幂}：把指数从有理数推广到无理数，思想是“用有理数逼近”。
+  \item 例如 $2^{\sqrt2}$ 可看作 $2^{1.4}$、$2^{1.41}$、$2^{1.414}$、$\dots$ 的极限。
+  \item 运算律（$a,b>0$，$r,s$ 为实数）：
+        $a^r a^s=a^{r+s}$，$\ (a^r)^s=a^{rs}$，$\ (ab)^r=a^r b^r$。
+\end{itemize}
+
+\begin{example}
+计算 $\dfrac{2^{1/2}\cdot2^{3/2}}{2^{-1}}$，并化简 $\sqrt[3]{\dfrac{a^6}{b^3}}$（$a,b>0$）。
+\end{example}
+\begin{solution}
+$\dfrac{2^{1/2}\cdot2^{3/2}}{2^{-1}}=2^{1/2+3/2-(-1)}=2^{3}=8$。
+$\sqrt[3]{\dfrac{a^6}{b^3}}=\dfrac{\sqrt[3]{a^6}}{\sqrt[3]{b^3}}=\dfrac{a^2}{b}$。
+\end{solution}
+
+\key{探究七：幂函数 $y=x^{\alpha}$ 的图象与性质}
+\begin{itemize}
+  \item 形如 $y=x^{\alpha}$（$\alpha$ 为常数）的函数叫\key{幂函数}。
+        注意：系数必须是 $1$，如 $y=2x^2$ 不是幂函数。
+  \item 常见的幂函数：$y=x$，$y=x^2$，$y=x^3$，$y=x^{1/2}$，$y=x^{-1}$。
+  \item 共同性质：都过点 $(1,1)$；
+        $\alpha>0$ 时图象过原点，且在 $[0,+\infty)$ 上单调递增；
+        $\alpha<0$ 时图象不过原点，且在 $(0,+\infty)$ 上单调递减。
+\end{itemize}
+
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.70\textwidth]{rational-ineq.pdf}
-  \caption{$\dfrac{x+1}{x-2}\geq0$：$-1$ 实心（可取），$2$ 空心（分母零点）}
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=0.72\textwidth, height=7cm,
+      xmin=0, xmax=1.6, ymin=0, ymax=3.2,
+      xlabel=$x$, ylabel=$y$,
+      grid=major, grid style={dashed,gray!35},
+      legend pos=north west, legend style={font=\footnotesize},
+      tick label style={font=\footnotesize},
+      title={\small 幂函数族 $y=x^{\alpha}$ 在第一象限的图象},
+      title style={font=\small},
+    ]
+      \addplot[domain=0:1.6, samples=120, thick, main!80!black] {x};
+        \addlegendentry{$y=x$}
+      \addplot[domain=0:1.6, samples=120, thick, second] {x^2};
+        \addlegendentry{$y=x^2$}
+      \addplot[domain=0:1.6, samples=160, thick, third] {x^3};
+        \addlegendentry{$y=x^3$}
+      \addplot[domain=0:1.6, samples=160, thick, blue] {sqrt(x)};
+        \addlegendentry{$y=x^{1/2}$}
+      \addplot[domain=0.25:1.6, samples=120, thick, red!70!black] {1/x};
+        \addlegendentry{$y=x^{-1}$}
+      \addplot[only marks, mark=*, mark size=1.6pt, black] coordinates {(1,1)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{幂函数族：都过 $(1,1)$；$\alpha>0$ 过原点且递增，$\alpha<0$ 递减}
 \end{figure}
 
-\subsection{探究六：解集在数轴上的表示}
-穿根法是\key{求}解集的方法；本节是把已经求出的解集\key{画}出来。
+\begin{problem}
+比较大小：$1.5^{1/2}$ 与 $1.4^{1/2}$；$1.5^{-1}$ 与 $1.4^{-1}$。
+\end{problem}
+\begin{solution}
+$y=x^{1/2}$ 在 $[0,+\infty)$ 上递增，$1.5>1.4$，故 $1.5^{1/2}>1.4^{1/2}$；
+$y=x^{-1}$ 在 $(0,+\infty)$ 上递减，故 $1.5^{-1}<1.4^{-1}$。
+\end{solution}
+
+\subsection{指数函数}
+
+\key{探究八：指数函数的图象与性质}
+\begin{itemize}
+  \item 形如 $y=a^x$（$a>0$ 且 $a\neq1$）的函数叫\key{指数函数}，定义域为 $\mathbb{R}$。
+  \item 恒过点 $(0,1)$；值域 $(0,+\infty)$；图象都在 $x$ 轴上方。
+  \item $a>1$ 时单调递增；$0<a<1$ 时单调递减。
+\end{itemize}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.56\textwidth]{interval-notation.pdf}
-  \caption{区间在数轴上的三种端点情形}
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=0.72\textwidth, height=7cm,
+      xmin=-2.5, xmax=2.5, ymin=0, ymax=8,
+      xlabel=$x$, ylabel=$y$,
+      grid=major, grid style={dashed,gray!35},
+      legend pos=north west, legend style={font=\footnotesize},
+      tick label style={font=\footnotesize},
+      title={\small 指数函数族 $y=a^x$：都过 $(0,1)$},
+      title style={font=\small},
+    ]
+      \addplot[domain=-2.5:2.5, samples=120, thick, main!80!black] {2^x};
+        \addlegendentry{$y=2^x$}
+      \addplot[domain=-2.5:2.5, samples=160, thick, second] {3^x};
+        \addlegendentry{$y=3^x$}
+      \addplot[domain=-2.5:2.5, samples=120, thick, blue] {(1/2)^x};
+        \addlegendentry{$y=\left(\frac12\right)^x$}
+      \addplot[only marks, mark=*, mark size=1.6pt, black] coordinates {(0,1)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{指数函数：底数大于 1 递增，底数在 $(0,1)$ 内递减}
 \end{figure}
 
-\key{约定}：空心圈表示不含该端点，实心点表示含有该端点。
+\begin{example}
+求函数 $y=2^{x-1}$ 所过的定点，并比较 $2^{1.5}$ 与 $2^{1.6}$、$0.5^{1.5}$ 与 $0.5^{1.6}$。
+\end{example}
+\begin{solution}
+令指数 $x-1=0$，得 $x=1$，此时 $y=1$，故过定点 $(1,1)$。
+$y=2^x$ 递增，$1.5<1.6$，故 $2^{1.5}<2^{1.6}$；
+$y=0.5^x$ 递减，故 $0.5^{1.5}>0.5^{1.6}$。
+\end{solution}
+
+\begin{problem}
+某细菌每 20 分钟分裂一次，数量翻倍。开始时 1 个，写出 $t$ 分钟后的数量 $N(t)$，并求 2 小时后的数量。
+\end{problem}
+\begin{solution}
+分裂次数为 $t/20$，故 $N(t)=2^{t/20}$。2 小时 $=120$ 分钟，$N(120)=2^6=64$。
+\end{solution}
+
+\subsection{对数与对数函数}
+
+\key{探究九：对数的概念与运算}
+\begin{itemize}
+  \item 若 $a^x=N$（$a>0$ 且 $a\neq1$），则 $x$ 叫做以 $a$ 为底 $N$ 的\key{对数}，
+        记作 $x=\log_a N$。
+  \item 常用对数：底为 $10$，记 $\lg N$；自然对数：底为 $e$，记 $\ln N$。
+  \item 运算律（$M,N>0$）：
+        \[
+          \log_a(MN)=\log_a M+\log_a N,\qquad
+          \log_a\frac{M}{N}=\log_a M-\log_a N,\qquad
+          \log_a M^n=n\log_a M.
+        \]
+  \item \key{换底公式}：$\log_a b=\dfrac{\log_c b}{\log_c a}$。
+\end{itemize}
+
+\begin{example}
+计算 $\log_2 24-\log_2 3$，并用换底公式求 $\log_8 32$。
+\end{example}
+\begin{solution}
+$\log_2 24-\log_2 3=\log_2\dfrac{24}{3}=\log_2 8=3$。
+$\log_8 32=\dfrac{\log_2 32}{\log_2 8}=\dfrac{5}{3}$。
+\end{solution}
+
+\key{探究十：对数函数的图象、性质与反函数}
+\begin{itemize}
+  \item 形如 $y=\log_a x$（$a>0$ 且 $a\neq1$）的函数叫\key{对数函数}，定义域 $(0,+\infty)$。
+  \item 恒过点 $(1,0)$；$a>1$ 时递增，$0<a<1$ 时递减；图象都在 $y$ 轴右侧。
+  \item \key{互为反函数}：$y=a^x$ 与 $y=\log_a x$ 互为反函数，
+        它们的图象关于直线 $y=x$ 对称。
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=0.72\textwidth, height=7cm,
+      xmin=-3, xmax=4, ymin=-3, ymax=4,
+      xlabel=$x$, ylabel=$y$,
+      grid=major, grid style={dashed,gray!35},
+      legend pos=north west, legend style={font=\footnotesize},
+      tick label style={font=\footnotesize},
+      title={\small $y=2^x$ 与 $y=\log_2 x$ 关于 $y=x$ 对称},
+      title style={font=\small},
+    ]
+      \addplot[domain=-3:1.6, samples=120, thick, main!80!black] {2^x};
+        \addlegendentry{$y=2^x$}
+      \addplot[domain=0.05:4, samples=160, thick, second] {ln(x)/ln(2)};
+        \addlegendentry{$y=\log_2 x$}
+      \addplot[domain=-3:4, samples=2, dashed, gray] {x};
+        \addlegendentry{$y=x$}
+      \addplot[only marks, mark=*, mark size=1.6pt, black] coordinates {(0,1) (1,0)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{指数函数与对数函数互为反函数，图象关于直线 $y=x$ 对称}
+\end{figure}
+
+\begin{example}
+求 $y=\log_2(x-1)$ 所过的定点，并求 $y=\log_2 x$ 与 $y=\log_{1/2} x$ 的大小关系（$x>1$）。
+\end{example}
+\begin{solution}
+令 $x-1=1$，得 $x=2$，此时 $y=0$，故过定点 $(2,0)$。
+当 $x>1$ 时，$y=\log_2 x>0$，$y=\log_{1/2} x<0$，故 $\log_2 x>\log_{1/2} x$。
+\end{solution}
+
+\key{数学文化}
+对数的发明（17 世纪初，纳皮尔）是为了把\key{乘除变成加减}：天文学家要做大量乘方、
+开方，用对数表可以把乘法化成加法。计算器出现之前，对数表是科学家和工程师的“计算工具”。
+今天对数仍用来描述“倍数变化”：声音的强弱用\key{分贝}、地震的强弱用\key{里氏震级}、
+溶液的酸碱度用 \key{pH}，它们的共同点都是“取对数后线性化”。
+
+\subsection{函数与方程}
+
+\key{探究十一：零点与零点存在定理}
+\begin{itemize}
+  \item 使 $f(x)=0$ 的实数 $x$ 叫做函数 $y=f(x)$ 的\key{零点}。
+        零点不是点，是一个数；它等于图象与 $x$ 轴交点的横坐标。
+  \item \key{零点存在定理}：若函数 $f$ 在 $[a,b]$ 上连续，且 $f(a)f(b)<0$，
+        则在 $(a,b)$ 内至少有一个零点。
+  \item 定理只保证\key{存在}，不保证唯一。若 $f$ 在 $[a,b]$ 上还单调，则零点唯一。
+\end{itemize}
+
+\begin{example}
+判断 $f(x)=x^3-x-1$ 在区间 $(1,2)$ 内是否有零点。
+\end{example}
+\begin{solution}
+$f(1)=1-1-1=-1<0$，$f(2)=8-2-1=5>0$，且 $f$ 是多项式（连续），
+由零点存在定理，$f$ 在 $(1,2)$ 内至少有一个零点。
+\end{solution}
+
+\begin{problem}
+若 $f(x)=x^3+2x-1$ 在 $(0,1)$ 上有零点，能否断定它只有一个？说明理由。
+\end{problem}
+\begin{solution}
+$f'(x)=3x^2+2>0$，故 $f$ 在 $\mathbb{R}$ 上单调递增，零点唯一。
+（若不用导数，可用 $f(x)=x(x^2+2)-1$ 说明 $x>0$ 时随 $x$ 增大而增大。）
+\end{solution}
+
+\key{探究十二：二分法}
+\begin{itemize}
+  \item 思路：把含零点的区间不断对半分，根据端点符号去掉一半，重复下去。
+  \item 步骤：定区间 $[a,b]$（$f(a)f(b)<0$）$\to$ 取中点 $c=\dfrac{a+b}{2}$
+        $\to$ 算 $f(c)$ $\to$ 按符号缩为 $[a,c]$ 或 $[c,b]$ $\to$ 直到区间长度小于精确度。
+\end{itemize}
+
+\begin{example}
+用二分法求 $x^3-x-1=0$ 在 $(1,2)$ 内的近似解（精确到 $0.1$）。
+\end{example}
+\begin{solution}
+$f(1)=-1$，$f(2)=5$，中点 $1.5$，$f(1.5)=0.875>0$，零点在 $(1,1.5)$；
+中点 $1.25$，$f(1.25)=-0.297<0$，零点在 $(1.25,1.5)$；
+中点 $1.375$，$f(1.375)=0.225>0$，零点在 $(1.25,1.375)$。
+区间长度 $0.125>0.1$，再取中点 $1.3125$，$f(1.3125)=-0.052<0$，
+零点在 $(1.3125,1.375)$，长度 $0.0625<0.1$。
+故近似解可取 $1.3$。
+\end{solution}
+
+\key{数学实验}
+用计算器或电子表格实现上面的二分法：输入 $f(x)$、初始区间和精确度，
+让程序自动输出每一步的区间。改变精确度（如 $0.01$、$0.001$），观察步数怎么变。
+
+\subsection{函数模型及其应用}
+
+\key{探究十三：三类增长模型的比较}
+\begin{itemize}
+  \item 指数增长 $y=a^x$（$a>1$）：先慢后快，“越涨越快”；
+  \item 对数增长 $y=\log_a x$（$a>1$）：先快后慢，“越涨越慢”；
+  \item 幂增长 $y=x^{\alpha}$（$\alpha>0$）：介于两者之间。
+  \item 当 $x$ 充分大时，指数增长最快，幂增长次之，对数增长最慢。
+\end{itemize}
+
+\begin{example}
+比较 $2^x$、$x^2$、$\log_2 x$ 在 $x$ 很大时的增长快慢。
+\end{example}
+\begin{solution}
+取 $x=10$：$2^{10}=1024$，$x^2=100$，$\log_2 10\approx3.3$；
+取 $x=32$：$2^{32}\approx4.3\times10^9$，$x^2=1024$，$\log_2 32=5$。
+可见 $x$ 大时指数增长远远超过幂增长，幂增长又超过对数增长。
+\end{solution}
+
+\begin{problem}
+某地区人口年增长率为 $1\%$，问大约多少年翻一番？
+\end{problem}
+\begin{solution}
+设 $n$ 年翻番，则 $1.01^n=2$，$n=\log_{1.01}2=\dfrac{\ln2}{\ln1.01}\approx\dfrac{0.693}{0.00995}\approx70$。
+故大约 $70$ 年翻一番（“70 法则”：翻番年数 $\approx\dfrac{70}{\text{年增长率百分数}}$）。
+\end{solution}
+
+\key{建模举例}
+\begin{itemize}
+  \item 复利：本金 $P$、年利率 $r$、$t$ 年后 $A=P(1+r)^t$（指数增长）；
+  \item 放射性衰变：剩余质量 $m=m_0\left(\dfrac12\right)^{t/T}$，$T$ 为半衰期；
+  \item 声音强度：$L=10\lg\dfrac{I}{I_0}$（分贝）；
+  \item 里氏震级：$M=\lg\dfrac{A}{A_0}$，震级每增加 $1$，振幅约增大 $10$ 倍；
+  \item 溶液酸碱度：$\mathrm{pH}=-\lg c(\mathrm{H}^+)$。
+\end{itemize}
+
 \end{explore}
 
 \begin{inclasstest}
 \begin{enumerate}
-  \item 解不等式 $x^2-5x+6>0$；
-  \item 解不等式 $x^2-4x+4\leq0$；
-  \item 用数轴穿根法解不等式 $(x-1)(x-2)(x-3)\geq0$；
-  \item 解不等式 $\dfrac{x-1}{x+2}<0$，并把解集画在数轴上。
+  \item 求函数 $y=\dfrac{\sqrt{x+2}}{x-3}$ 的定义域；
+  \item 判断 $f(x)=x^3+x$ 的奇偶性，并求它在 $[-1,1]$ 上的最值；
+  \item 用定义证明 $f(x)=-3x+2$ 在 $\mathbb{R}$ 上单调递减；
+  \item 计算 $\dfrac{3^{1/2}\cdot3^{-2}}{3^{-1/2}}$；
+  \item 比较 $0.8^{1.2}$ 与 $0.8^{1.3}$、$1.2^{1.2}$ 与 $1.2^{1.3}$；
+  \item 求 $y=\log_3(x+2)$ 所过的定点；
+  \item 判断 $f(x)=x^3-3x+1$ 在 $(0,1)$ 内是否有零点；
+  \item 用二分法求 $x^3-3x+1=0$ 在 $(0,1)$ 内的近似解（精确到 $0.1$）；
+  \item 设 $f(x)$ 是 $\mathbb{R}$ 上的增函数，$f(2)=1$，$f(5)=4$，解不等式 $f(2x-1)<4$。
 \end{enumerate}
 \end{inclasstest}
 
 \begin{afterclass}
 \begin{enumerate}
-  \item 解不等式 $x^2-3x-4\geq0$；
-  \item 解不等式 $-2x^2+4x-3>0$；
-  \item 用数轴穿根法解不等式 $(x+2)(x-1)(x-3)<0$；
-  \item 解不等式 $\dfrac{2x-1}{x-3}\geq1$。
+  \item 求 $y=\sqrt{4-x^2}+\dfrac{1}{x-1}$ 的定义域；
+  \item 已知 $f(x)$ 是偶函数，且 $x<0$ 时 $f(x)=x^2-3x$，求 $x>0$ 时的解析式；
+  \item 求 $f(x)=-x^2+4x-1$ 在 $[0,3]$ 上的最大值与最小值；
+  \item 化简 $\sqrt[4]{a^8}\cdot\sqrt[3]{a^{-3}}$（$a>0$）；
+  \item 求 $y=\left(\dfrac13\right)^{x-2}$ 过的定点，并比较 $\left(\dfrac13\right)^{1.5}$ 与 $\left(\dfrac13\right)^{1.8}$；
+  \item 计算 $\log_3 18-\log_3 2+\log_3\dfrac{1}{3}$；
+  \item 若 $f(x)=\ln x+x-2$，判断它在 $(1,2)$ 内是否有零点，并说明是否唯一；
+  \item 用二分法求 $\ln x+x-2=0$ 在 $(1,2)$ 内的近似解（精确到 $0.1$）；
+  \item 阅读“数学文化”：对数的发明，写一段 100 字左右的说明，解释“为什么对数能把乘除变成加减”；
+  \item 设 $f(x)$ 对任意 $x,y$ 有 $f(x+y)=f(x)+f(y)$，且 $f(1)=2$，求 $f(3)$。
 \end{enumerate}
+\reading{拓展阅读 05}{函数与模型}
 \end{afterclass}

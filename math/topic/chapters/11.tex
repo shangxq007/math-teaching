@@ -1,0 +1,214 @@
+% 专题十一：整体代换（换元）
+\section{专题十一：整体代换（换元）}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 理解换元就是等价转化：把没见过的式子变回熟悉的式子；
+  \item 会对高次式、分式、根式、指对式、三角式换元；
+  \item 会求换元后新变量的取值范围（这是最容易漏的一步）；
+  \item 能把换元与图象的平移、对称对应起来。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{导语：把新问题变回旧问题}
+遇到没见过的式子，最常用的办法就是换元——把它变成一个熟悉的式子。
+换元不是技巧，而是\key{等价转化}：新旧两个问题是同一个问题，只是字母换了。
+本专题用五个视角把三个“种子问题”各做一遍，并专门讨论最容易漏的“新变量的范围”。
+
+\subsection{种子问题}
+先自己做，再看后面的五个视角。
+\begin{enumerate}
+  \item 求 $y=4^x-3\cdot2^x+1$ 的最小值。
+  \item 求 $y=x^4-3x^2+1$ 的最小值。
+  \item 求函数 $y=\sqrt{x+1}+x$ 的值域。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{视角一：来源——把新问题变回旧问题}
+
+\key{要点}
+\begin{itemize}
+  \item 换元 $t=g(x)$ 后，原问题变成关于 $t$ 的问题；解出 $t$ 再代回 $g(x)$。
+  \item 前提：$g(x)$ 的值域就是新变量 $t$ 的取值范围，两者必须一致。
+  \item 判断换元是否成功，看新问题是不是比原问题更熟悉。
+\end{itemize}
+
+\begin{example}
+求 $y=4^x-3\cdot2^x+1$ 的最小值。
+\end{example}
+\begin{solution}
+令 $t=2^x$，则 $t>0$，且 $4^x=t^2$。于是
+\[
+  y=t^2-3t+1=\left(t-\frac32\right)^2-\frac54.
+\]
+当 $t=\dfrac32$ 时取最小值 $-\dfrac54$（此时 $x=\log_2\dfrac32$）。
+\key{（回头看：种子问题 1）}
+\end{solution}
+
+\begin{problem}
+解方程 $2^{2x}-5\cdot2^x+6=0$。
+\end{problem}
+\begin{solution}
+令 $t=2^x>0$，得 $t^2-5t+6=0$，$t=2$ 或 $t=3$，
+故 $x=1$ 或 $x=\log_2 3$。
+\end{solution}
+
+\subsection{视角二：代数——高次、分式与根式}
+
+\key{要点}
+\begin{itemize}
+  \item 高次式：出现 $x^4$、$x^2$ 时，令 $t=x^2$。
+  \item 根式：出现 $\sqrt{ax+b}$ 时，令 $t=\sqrt{ax+b}$，则 $x$ 用 $t$ 表示。
+  \item 分式：出现 $x+\dfrac1x$ 这类结构时，令 $t=x+\dfrac1x$。
+\end{itemize}
+
+\begin{example}
+求 $y=x^4-3x^2+1$ 的最小值。
+\end{example}
+\begin{solution}
+令 $t=x^2$，则 $t\geq0$，$y=t^2-3t+1=\left(t-\dfrac32\right)^2-\dfrac54$。
+当 $t=\dfrac32$ 时取最小值 $-\dfrac54$（此时 $x=\pm\sqrt{\dfrac32}$）。
+\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{example}
+求函数 $y=\sqrt{x+1}+x$ 的值域。
+\end{example}
+\begin{solution}
+令 $t=\sqrt{x+1}$，则 $t\geq0$，$x=t^2-1$，故
+\[
+  y=t+t^2-1=\left(t+\frac12\right)^2-\frac54.
+\]
+因为 $t\geq0$，当 $t=0$ 时取最小值 $-1$；$t\to+\infty$ 时 $y\to+\infty$。
+故值域为 $[-1,+\infty)$。
+\key{（回头看：种子问题 3）}
+\end{solution}
+
+\begin{problem}
+求 $y=x+\dfrac{1}{x}$ 在 $x>0$ 时的最小值。
+\end{problem}
+\begin{solution}
+令 $t=x>0$ 已足够：由基本不等式 $x+\dfrac1x\geq2$，当 $x=1$ 时取等号。
+（也可令 $t=x+\frac1x$，但那样反而更绕。）
+\end{solution}
+
+\subsection{视角三：指对——指数与对数的换元}
+
+\key{要点}
+\begin{itemize}
+  \item 指数式：出现 $a^{2x}$、$a^x$ 时，令 $t=a^x$（注意 $t>0$）。
+  \item 对数式：出现 $\log_a^2 x$、$\log_a x$ 时，令 $t=\log_a x$。
+  \item 新变量的范围：$a^x>0$ 恒成立；$\log_a x$ 可取任意实数。
+\end{itemize}
+
+\begin{example}
+求 $y=\log_2^2 x-\log_2 x$ 的最小值。
+\end{example}
+\begin{solution}
+令 $t=\log_2 x$，则 $t\in\mathbb{R}$，$y=t^2-t=\left(t-\dfrac12\right)^2-\dfrac14$。
+当 $t=\dfrac12$ 时取最小值 $-\dfrac14$（此时 $x=\sqrt2$）。
+\end{solution}
+
+\begin{problem}
+求 $y=2^x+2^{-x}$ 的最小值。
+\end{problem}
+\begin{solution}
+令 $t=2^x>0$，则 $y=t+\dfrac1t\geq2$，当 $t=1$（即 $x=0$）时取等号。
+\end{solution}
+
+\subsection{视角四：三角——把 $\omega x+\varphi$ 看成一个整体}
+
+\key{要点}
+\begin{itemize}
+  \item 三角换元有两种：令 $t=\sin x$（或 $\cos x$），把三角式变成二次式；
+  \item 更常用的是把 $\omega x+\varphi$ 看成一个整体角，代入 $y=\sin x$ 的性质。
+  \item 注意 $\sin x$、$\cos x$ 的范围都是 $[-1,1]$。
+\end{itemize}
+
+\begin{example}
+求 $y=2\sin^2 x-4\sin x+1$ 在 $x\in\left[\dfrac{\pi}{6},\dfrac{5\pi}{6}\right]$ 上的最大值与最小值。
+\end{example}
+\begin{solution}
+令 $t=\sin x$。由 $x\in\left[\dfrac{\pi}{6},\dfrac{5\pi}{6}\right]$ 得 $t\in\left[\dfrac12,1\right]$。
+$y=2t^2-4t+1=2(t-1)^2-1$ 在 $\left[\dfrac12,1\right]$ 上递减，
+最大值 $y\left(\dfrac12\right)=-\dfrac12$，最小值 $y(1)=-1$。
+\key{（回头看：专题九的同一个问题，这里用换元重做一遍）}
+\end{solution}
+
+\begin{problem}
+求 $y=\sin x+\cos x$ 在 $\left[0,\dfrac{\pi}{2}\right]$ 上的最大值。
+\end{problem}
+\begin{solution}
+令 $t=\sin x+\cos x=\sqrt2\sin\left(x+\dfrac{\pi}{4}\right)$，
+由 $x\in\left[0,\dfrac{\pi}{2}\right]$ 得 $t\in[1,\sqrt2]$，故最大值为 $\sqrt2$。
+\end{solution}
+
+\subsection{视角五：易错与几何——新变量的范围与图象}
+
+\key{要点}
+\begin{itemize}
+  \item \key{最常见的错误}：换元后忘记新变量的范围。
+        例如令 $t=2^x$ 时漏掉 $t>0$，令 $t=\sqrt{x+1}$ 时漏掉 $t\geq0$。
+  \item 范围错了，最值就会错（可能取到实际取不到的值）。
+  \item 几何上，换元 $t=x+1$ 相当于把图象向左平移；$t=2^x$ 相当于换了一组坐标。
+\end{itemize}
+
+\begin{example}
+令 $t=2^x$，求 $y=t^2-3t$ 的最小值。如果忽略 $t>0$，结果会怎样？
+\end{example}
+\begin{solution}
+$t>0$ 时，$y=\left(t-\dfrac32\right)^2-\dfrac94$，最小值 $-\dfrac94$（在 $t=\dfrac32$ 处取得，可以取到）。
+若忽略 $t>0$，仍得到 $-\dfrac94$——因为顶点 $t=\dfrac32>0$ 本来就在范围内。
+但若把题改成 $y=t^2+t$（顶点 $t=-\dfrac12$），忽略 $t>0$ 会错得最小值 $-\dfrac14$，
+正确结果应是 $t\to0^+$ 时 $y\to0$（无最小值，只有下确界 $0$）。
+\key{（回头看：范围决定最值，先写范围再配方）}
+\end{solution}
+
+\begin{problem}
+说明 $y=\sqrt{x+1}$ 的图象与 $y=\sqrt x$ 的图象的关系。
+\end{problem}
+\begin{solution}
+把 $y=\sqrt x$ 的图象向左平移 $1$ 个单位即得 $y=\sqrt{x+1}$；
+用换元的说法，令 $t=x+1$，则 $y=\sqrt t$，两图形状相同、位置不同。
+\end{solution}
+\end{explore}
+
+\begin{inclasstest}
+\subsection{变式训练}
+只改一个条件，重新做一遍。
+\begin{enumerate}
+  \item 求 $y=9^x-4\cdot3^x+1$ 的最小值；
+  \item 解方程 $4^x+2^x-2=0$；
+  \item 求 $y=x^4-5x^2+4$ 的最小值；
+  \item 求函数 $y=\sqrt{x-2}+x$ 的值域；
+  \item 求 $y=\log_3^2 x-2\log_3 x$ 的最小值；
+  \item 求 $y=\sin^2 x+\sin x$ 在 $\left[0,\dfrac{\pi}{2}\right]$ 上的最大值。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection{知识来源对照表}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{3.4cm}p{4.0cm}p{5.6cm}}
+\toprule
+结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
+\midrule
+换元即等价转化 & 视角一（来源） & 视角二（代数）、视角五（易错） \\
+高次、分式、根式换元 & 视角二（代数） & 视角一（来源） \\
+指对换元 & 视角三（指对） & 视角二（代数） \\
+三角整体代换 & 视角四（三角） & 视角二（代数） \\
+新变量的范围 & 视角五（易错） & 视角一（来源） \\
+换元与图象 & 视角五（几何） & 视角四（三角） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{下一步}：换元的本质是“把新问题化归为旧问题”，这与专题四（极值）、专题八（指对）
+反复用的思路是同一条；不同章节只是换元的对象不同（$x^2$、$2^x$、$\sin x$、$\omega x+\varphi$）。
+\end{afterclass}

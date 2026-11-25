@@ -1,0 +1,207 @@
+% 专题八：指数与对数——增长、指对不等式与反函数
+\section{专题八：指数与对数}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 会在指数式与对数式之间互化，会用运算律与换底公式；
+  \item 会用单调性解指数、对数不等式，并记得先写定义域；
+  \item 知道指数函数与对数函数互为反函数；
+  \item 会用基本不等式求指对条件下的最值；
+  \item 会比较指数、幂、对数三种增长，能建立简单模型。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{导语：同一个对应，两种写法}
+指数式 $a^x=N$ 与对数式 $x=\log_a N$ 说的是同一件事：已知底数 $a$ 和结果 $N$，
+求指数。把这句话用熟，指对问题就有一半变成了代数运算。
+本专题用五个视角把三个“种子问题”各做一遍。
+
+\subsection{种子问题}
+先自己做，再看后面的五个视角。
+\begin{enumerate}
+  \item 比较 $2^{10}$、$10^3$、$\log_2 1000$ 的大小。
+  \item 解不等式 $\log_2(x-1)<3$。
+  \item 已知 $a,b>0$ 且 $\log_2 a+\log_2 b=3$，求 $\dfrac1a+\dfrac1b$ 的最小值。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{视角一：来源——指数式与对数式的互化}
+
+\key{要点}
+\begin{itemize}
+  \item 互化关系：$a^x=N\iff x=\log_a N$（$a>0$ 且 $a\neq1$，$N>0$）。
+  \item 指数式回答“$a$ 的几次方等于 $N$”；对数式回答“等于 $N$ 时指数是多少”。
+  \item 互化是解指数、对数方程与不等式的第一步。
+\end{itemize}
+
+\begin{example}
+把 $2^x=8$ 与 $x=\log_2 8$ 互相转化，并求 $x$。
+\end{example}
+\begin{solution}
+$2^x=8=2^3\implies x=3$；写成对数式即 $x=\log_2 8=3$。
+\key{（回头看：种子问题 1 中 $2^{10}$ 与 $\log_2 1000$ 就是一对）}
+\end{solution}
+
+\begin{problem}
+把 $\log_3 81=4$ 写成指数式，并验证。
+\end{problem}
+\begin{solution}
+$3^4=81$，成立。
+\end{solution}
+
+\subsection{视角二：图象——单调性由底数决定}
+
+\key{要点}
+\begin{itemize}
+  \item $y=a^x$ 与 $y=\log_a x$ 的单调性只看底数：$a>1$ 递增，$0<a<1$ 递减。
+  \item 解对数不等式先写定义域（真数 $>0$），再按单调性去掉对数。
+  \item 解指数不等式先化成同底，再按单调性去掉指数（底数小于 $1$ 时不等号反向）。
+\end{itemize}
+
+\begin{example}
+解不等式 $\log_2(x-1)<3$。
+\end{example}
+\begin{solution}
+先写定义域 $x-1>0$，即 $x>1$。
+又 $3=\log_2 8$，故 $\log_2(x-1)<\log_2 8$。
+底数 $2>1$，递增，故 $x-1<8$，即 $x<9$。
+综上 $1<x<9$。
+\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{problem}
+解不等式 $2^{x^2-3x}<8$。
+\end{problem}
+\begin{solution}
+$8=2^3$，底数 $2>1$，故 $x^2-3x<3$，即 $x^2-3x-3<0$。
+解得 $\dfrac{3-\sqrt{21}}{2}<x<\dfrac{3+\sqrt{21}}{2}$。
+\end{solution}
+
+\subsection{视角三：函数——互为反函数}
+
+\key{要点}
+\begin{itemize}
+  \item $y=a^x$ 与 $y=\log_a x$（同底）互为反函数，图象关于直线 $y=x$ 对称。
+  \item 指数函数恒过 $(0,1)$；对数函数恒过 $(1,0)$。这两个点关于 $y=x$ 对称。
+  \item 反函数的定义域、值域互换。
+\end{itemize}
+
+\begin{example}
+求 $y=\log_2(x-1)$ 所过的定点。
+\end{example}
+\begin{solution}
+令真数 $x-1=1$，得 $x=2$，此时 $y=0$，故过定点 $(2,0)$。
+\key{（回头看：它正是 $y=2^x$ 的定点 $(0,1)$ 关于 $y=x$ 的对称点）}
+\end{solution}
+
+\begin{problem}
+当 $x>1$ 时，比较 $\log_2 x$ 与 $\log_{1/2} x$ 的大小。
+\end{problem}
+\begin{solution}
+$x>1$ 时 $\log_2 x>0$，而 $\log_{1/2} x<0$，故 $\log_2 x>\log_{1/2} x$。
+\end{solution}
+
+\subsection{视角四：运算——运算律与换底公式}
+
+\key{要点}
+\begin{itemize}
+  \item 运算律：$\log_a(MN)=\log_a M+\log_a N$，$\log_a\dfrac{M}{N}=\log_a M-\log_a N$，
+        $\log_a M^n=n\log_a M$（$M,N>0$）。
+  \item 换底公式：$\log_a b=\dfrac{\log_c b}{\log_c a}$。
+  \item 用运算律把和差化成乘除，用换底把不同底化成同底。
+\end{itemize}
+
+\begin{example}
+计算 $\log_2 24-\log_2 3$，并用换底公式求 $\log_8 32$。
+\end{example}
+\begin{solution}
+$\log_2 24-\log_2 3=\log_2\dfrac{24}{3}=\log_2 8=3$；
+$\log_8 32=\dfrac{\log_2 32}{\log_2 8}=\dfrac53$。
+\end{solution}
+
+\begin{problem}
+计算 $\log_3 18-\log_3 2+\log_3\dfrac13$。
+\end{problem}
+\begin{solution}
+$\log_3\dfrac{18}{2}+\log_3\dfrac13=\log_3 9-1=2-1=1$。
+\end{solution}
+
+\subsection{视角五：极值与模型——基本不等式与增长}
+
+\key{要点}
+  \begin{itemize}
+  \item 条件最值：把条件化成乘积或乘积的和，再用基本不等式。
+  \item 增长快慢：$x$ 充分大时，指数增长 $>$ 幂增长 $>$ 对数增长。
+  \item 常见模型：复利 $A=P(1+r)^t$、衰变 $m=m_0\left(\frac12\right)^{t/T}$。
+\end{itemize}
+
+\begin{example}
+已知 $a,b>0$ 且 $\log_2 a+\log_2 b=3$，求 $\dfrac1a+\dfrac1b$ 的最小值。
+\end{example}
+\begin{solution}
+由条件得 $\log_2(ab)=3$，即 $ab=8$。
+\[
+  \frac1a+\frac1b=\frac{a+b}{ab}\geq\frac{2\sqrt{ab}}{ab}
+  =\frac{2\sqrt8}{8}=\frac{\sqrt2}{2},
+\]
+当 $a=b=2\sqrt2$ 时取等号。
+\key{（回头看：种子问题 3）}
+\end{solution}
+
+\begin{example}
+比较 $2^{10}$、$10^3$、$\log_2 1000$ 的大小。
+\end{example}
+\begin{solution}
+$2^{10}=1024$，$10^3=1000$，$\log_2 1000\approx10$（因为 $2^{10}=1024$）。
+故 $\log_2 1000<10^3<2^{10}$。
+一般地，$x$ 充分大时指数增长最快、对数增长最慢。
+\key{（回头看：种子问题 1）}
+\end{solution}
+
+\begin{problem}
+某地区人口年增长率为 $1\%$，大约多少年翻一番？
+\end{problem}
+\begin{solution}
+$1.01^n=2\implies n=\log_{1.01}2=\dfrac{\ln2}{\ln1.01}\approx70$。
+\end{solution}
+\end{explore}
+
+\begin{inclasstest}
+\subsection{变式训练}
+只改一个条件，重新做一遍。
+\begin{enumerate}
+  \item 比较 $3^5$、$5^3$、$\log_3 243$ 的大小；
+  \item 解不等式 $\log_{\frac12}(x+1)>-2$；
+  \item 解不等式 $\left(\dfrac13\right)^{x^2-2x}\geq27$；
+  \item 求 $y=\log_3(x+2)$ 所过的定点；
+  \item 已知 $a,b>0$ 且 $\log_3 a+\log_3 b=2$，求 $\dfrac1a+\dfrac4b$ 的最小值；
+  \item 某商品价格每年上涨 $5\%$，问多少年后价格超过现在的 $2$ 倍。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection{知识来源对照表}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{3.4cm}p{4.0cm}p{5.6cm}}
+\toprule
+结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
+\midrule
+指数式与对数式互化 & 视角一（来源） & 视角二（图象）、视角四（运算） \\
+单调性由底数决定 & 视角二（图象） & 视角一（来源） \\
+互为反函数 & 视角三（函数） & 视角二（图象） \\
+运算律与换底公式 & 视角四（运算） & 视角三（函数） \\
+基本不等式求最值 & 视角五（极值） & 视角四（运算） \\
+三种增长模型 & 视角五（极值） & 视角二（图象） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{下一步}：指对是“新的函数类型”，但它们仍满足函数的一般定义（专题十）；
+把 $y=a^x$ 与 $y=\log_a x$ 画在一起，可以看出反函数就是“关于 $y=x$ 对折”。
+\end{afterclass}

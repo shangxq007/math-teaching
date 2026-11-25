@@ -1,0 +1,36 @@
+% 速查表 · 一页纸/多页高密度公式表
+% 定位：考前最后 10 分钟看的东西。密度优先，解释从略。
+%   与理论概要的分工：概要有推导，速查表只给结果；
+%   与结论卡片的分工：卡片讲「什么时候用、容易错在哪」，速查表只罗列「是什么」。
+\documentclass[10pt]{extarticle}
+
+\usepackage{fontspec}          % preamble.tex 里的 \setmonofont 需要它
+\usepackage{geometry}          % preamble.tex 里的 \geometry 需要它
+\usepackage{enumitem}          % preamble.tex 里的 \setlist 需要它
+\usepackage{multicol}          % 多栏版式
+\usepackage{ctex}              % 中文字体（extarticle 不像 ElegantLaTeX 自带）
+\input{../common/preamble}
+\input{../common/macros}
+\input{../common/envs}
+
+% 覆盖共享导言区的 A4 竖版设置：改横版、窄边距、多栏
+\geometry{a4paper, landscape, margin=0.8cm, headheight=14pt}
+\setlength{\columnsep}{1.2em}
+\setlength{\columnseprule}{0.4pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4ex}
+\pagestyle{empty}
+
+\title{数学速查表}
+\author{Shawn Shang}
+
+\begin{document}
+
+\begin{center}{\Large\bfseries 高中数学速查表}\qquad{\small 必修}\end{center}
+\vspace{0.5ex}
+
+\input{chapters/01}
+
+\input{chapters/02}
+
+\end{document}

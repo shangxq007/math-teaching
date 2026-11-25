@@ -1,0 +1,36 @@
+% 教学反思 · ElegantNote
+% 定位：教师课后写。一课时一条，三段固定：达成情况 → 意外之处 → 下次调整。
+%   与教案的分工：教案是「打算怎么教」；反思是「实际发生了什么」。
+\documentclass[cn,11pt,color=cyan,math=newtx,normal]{elegantnote}
+
+\input{../common/preamble}
+\input{../common/macros}
+\input{../common/envs}
+
+\title{教学反思}
+\author{Shawn Shang}
+\date{2026 年 11 月}
+
+\graphicspath{{../figures/}}
+
+\begin{document}
+
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  \makebox[\textwidth]{%
+    \includegraphics[width=\paperwidth]{../figures/cover_cyan.png}}\par
+  \vfill
+  {\Huge\bfseries\color{ecolor!70!black} 教学反思\par}
+  \vskip 1.2em
+  {\large 高中数学\par}
+  \vskip 2.5em
+  {\large Shawn Shang\par}
+  \vfill
+  {\normalsize 2026 年 11 月\par}
+\end{titlepage}
+\tableofcontents
+
+\input{chapters/01}
+
+\end{document}

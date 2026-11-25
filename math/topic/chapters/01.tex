@@ -1,0 +1,292 @@
+% 专题一：集合与命题
+\section{专题一：集合与命题}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 说出集合运算与命题联结词的对应关系；
+  \item 会用元素法、真值表、Venn 图三种方式说明德摩根定律；
+  \item 会用蕴含与集合包含、量词否定、反例法处理条件问题；
+  \item 会用特征函数把集合等式转化为 $0/1$ 等式；
+  \item 会用对偶律由一条定律写出另一条，并用数轴处理数集的交并补。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{导语：同一个问题，多个看法}
+“$x$ 既不在 $A$ 里，也不在 $B$ 里”——这句话用集合说、用命题说、用函数说、用图说，
+写法完全不同，说的却是同一件事。
+德摩根定律就是把这几种说法互相翻译的法则；对偶律更进一步，
+只要把 $\cap$ 与 $\cup$、$\land$ 与 $\lor$ 同时互换，一条成立的等式仍然成立。
+本专题用六个视角把四个“种子问题”各做一遍，
+重点是学会在集合、命题、函数、图之间切换，用别的领域的工具推进眼前的题。
+
+\key{学习内容分三层}
+\begin{itemize}
+  \item \key{基础层}（必须掌握）：交、并、补与且、或、非的对应；德摩根定律。
+  \item \key{应用层}（强烈推荐）：蕴含与集合包含、充分必要条件、量词否定、反例法。
+  \item \key{理论层}（不作要求）：完整命题演算、公理系统、主析取范式等形式推导。
+\end{itemize}
+前两层是对高中已有知识的系统整理，不需要额外引入大量概念；第三层对一般解题帮助有限，本专题不涉及。
+
+\subsection{种子问题}
+先自己做，再看后面的六个视角。
+\begin{enumerate}
+  \item 设 $U=\{1,2,3,4,5,6\}$，$A=\{1,2,3\}$，$B=\{2,3,4\}$。
+        分别求 $\complement_U(A\cap B)$ 与 $(\complement_U A)\cup(\complement_U B)$，你发现了什么？
+  \item 证明：对任意集合 $A,B\subseteq U$，$\complement_U(A\cap B)=(\complement_U A)\cup(\complement_U B)$。
+  \item 化简：$\complement_U\big(A\cup(\complement_U B)\big)$。
+  \item 设 $A=\{x\mid x^2-2x-3<0\}$，$B=\{x\mid x>a\}$。当 $p:x\in A$ 是 $q:x\in B$ 的充分条件时，求 $a$ 的取值范围。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+\subsection{视角一：来源——集合与命题从哪来}
+
+\key{要点}
+\begin{itemize}
+  \item 集合：具有某种性质的对象的全体；元素与集合的关系（$\in$、$\notin$）；集合之间的关系（$\subseteq$、$=$）。
+  \item 命题：可以判断真假的语句；用“且”“或”“非”组成复合命题。
+  \item \key{对应}：集合运算 $\cap$、$\cup$、补 分别对应命题联结词 $\land$（且）、$\lor$（或）、$\neg$（非）；
+        Venn 图是两者共同的几何语言。
+\end{itemize}
+
+\begin{example}
+设 $U=\{1,2,3,4,5,6\}$，$A=\{1,2,3\}$，$B=\{2,3,4\}$。
+求 $\complement_U(A\cap B)$ 与 $(\complement_U A)\cup(\complement_U B)$。
+\end{example}
+\begin{solution}
+$A\cap B=\{2,3\}$，故 $\complement_U(A\cap B)=\{1,4,5,6\}$。
+$\complement_U A=\{4,5,6\}$，$\complement_U B=\{1,5,6\}$，
+故 $(\complement_U A)\cup(\complement_U B)=\{1,4,5,6\}$。
+两者相等。\key{（回头看：种子问题 1）}
+\end{solution}
+
+\begin{problem}
+用 Venn 图表示上面的 $A$、$B$，并涂出 $\complement_U(A\cap B)$。
+\end{problem}
+\begin{solution}
+画出全集矩形与两个相交的圆 $A$、$B$；$\complement_U(A\cap B)$ 是“两个圆的公共部分之外”的所有区域，
+即两个圆的公共部分（透镜形）以外的全部。
+\end{solution}
+
+\subsection{视角二：证明——德摩根定律怎么证}
+
+\key{要点}
+\begin{itemize}
+  \item \key{元素法}：要证两个集合相等，只需证它们互相包含；而“互相包含”就是对任意元素 $x$ 做双向推导。
+  \item \key{真值表法}：命题版本把 $\land$、$\lor$、$\neg$ 的所有取值列出来比较。
+  \item \key{Venn 图法}：集合版本画图看区域，直观但不构成严格证明。
+\end{itemize}
+
+\begin{example}
+证明：对任意集合 $A,B\subseteq U$，$\complement_U(A\cap B)=(\complement_U A)\cup(\complement_U B)$。
+\end{example}
+\begin{solution}
+先证 $\complement_U(A\cap B)\subseteq(\complement_U A)\cup(\complement_U B)$：
+设 $x\in\complement_U(A\cap B)$，则 $x\notin A\cap B$，即 $x\notin A$ 或 $x\notin B$，
+即 $x\in\complement_U A$ 或 $x\in\complement_U B$，故 $x\in(\complement_U A)\cup(\complement_U B)$。
+
+再证反向：设 $x\in(\complement_U A)\cup(\complement_U B)$，则 $x\notin A$ 或 $x\notin B$，
+即 $x\notin A\cap B$，故 $x\in\complement_U(A\cap B)$。
+
+两侧互相包含，等式成立。\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{problem}
+用真值表验证命题形式的德摩根定律：$\neg(p\land q)\iff\neg p\lor\neg q$。
+\end{problem}
+\begin{solution}
+\[
+\begin{array}{c|c|c|c|c}
+p & q & p\land q & \neg(p\land q) & \neg p\lor\neg q \\ \hline
+\text{真} & \text{真} & \text{真} & \text{假} & \text{假} \\
+\text{真} & \text{假} & \text{假} & \text{真} & \text{真} \\
+\text{假} & \text{真} & \text{假} & \text{真} & \text{真} \\
+\text{假} & \text{假} & \text{假} & \text{真} & \text{真}
+\end{array}
+\]
+两列完全相同，故等式成立。
+\end{solution}
+
+\subsection{视角三：应用——蕴含、量词与反例}
+
+\key{要点}
+\begin{itemize}
+  \item \key{蕴含 $\leftrightarrow$ 集合包含}：设 $p:x\in A$，$q:x\in B$，则 $p\Rightarrow q\iff A\subseteq B$。
+  \item \key{量词}：$\forall x\in A,\ p(x)\Rightarrow q(x)\iff A\subseteq B$；
+        $\exists x\in A,\ p(x)\land q(x)\iff A\cap B\neq\varnothing$。
+  \item \key{否定}：$\neg(p\Rightarrow q)\equiv p\land\neg q$；
+        $\neg\big(\forall x\,P(x)\big)\iff\exists x\,\neg P(x)$；
+        $\neg\big(\exists x\,P(x)\big)\iff\forall x\,\neg P(x)$。
+  \item \key{反例}：要说明一个“恒成立”不成立，只需找一个反例（满足 $p$ 但不满足 $q$）。
+\end{itemize}
+
+\begin{example}
+已知 $p:x>1$，$q:x<4$。求使“$p$ 是真命题且 $q$ 是假命题”成立的实数范围。
+\end{example}
+\begin{solution}
+“$p$ 真且 $q$ 假”即 $p\land\neg q$，也就是 $x>1$ 且 $x\geq4$，得 $x\geq4$。
+\end{solution}
+
+\begin{example}
+设 $A=\{x\mid x^2-2x-3<0\}$，$B=\{x\mid x>a\}$。
+若 $p:x\in A$ 是 $q:x\in B$ 的充分条件，求 $a$ 的取值范围。
+\end{example}
+\begin{solution}
+充分条件即 $p\Rightarrow q$，等价于 $A\subseteq B$。
+解 $x^2-2x-3<0$ 得 $A=(-1,3)$。
+要 $(-1,3)\subseteq(a,+\infty)$，需 $a\leq-1$。
+\key{（回头看：种子问题 4）}
+\end{solution}
+
+\begin{problem}
+设 $A=\{x\mid x^2-4x+3<0\}$，$B=\{x\mid a<x<3\}$。
+若 $p:x\in A$ 是 $q:x\in B$ 的必要条件，求 $a$ 的取值范围。
+\end{problem}
+\begin{solution}
+必要条件即 $q\Rightarrow p$，等价于 $B\subseteq A$。
+解 $x^2-4x+3<0$ 得 $A=(1,3)$。
+要 $(a,3)\subseteq(1,3)$，需 $a\geq1$。
+\end{solution}
+
+\key{双向转换}：熟练完成
+\[
+  \text{题目条件}\to\text{逻辑表达式}\to\text{集合关系}\to\text{代数求解},
+\]
+并训练反方向——把计算结果解释成原命题的真值条件。
+
+\subsection{视角四：函数——特征函数}
+
+\key{要点}
+\begin{itemize}
+  \item 集合 $A\subseteq U$ 对应\key{特征函数} $\chi_A:U\to\{0,1\}$：$x\in A$ 时 $\chi_A(x)=1$，否则为 $0$。
+  \item 集合运算对应函数运算：
+  $\chi_{A\cap B}=\chi_A\chi_B$，$\chi_{A\cup B}=\chi_A+\chi_B-\chi_A\chi_B$，$\chi_{\complement_U A}=1-\chi_A$。
+  \item 于是任何集合等式都能翻译成 $0/1$ 等式——这是“换一个领域”的典型做法。
+\end{itemize}
+
+\begin{example}
+用特征函数验证 $\complement_U(A\cap B)=(\complement_U A)\cup(\complement_U B)$。
+\end{example}
+\begin{solution}
+左边：$\chi_{\complement_U(A\cap B)}=1-\chi_A\chi_B$。
+
+右边：
+\[
+  \chi_{(\complement_U A)\cup(\complement_U B)}
+  =(1-\chi_A)+(1-\chi_B)-(1-\chi_A)(1-\chi_B)
+  =1-\chi_A\chi_B.
+\]
+与左边相等，故等式成立。\key{（回头看：种子问题 2 的函数证法）}
+\end{solution}
+
+\begin{problem}
+用特征函数验证 $\complement_U(A\cup B)=(\complement_U A)\cap(\complement_U B)$。
+\end{problem}
+\begin{solution}
+左边：$\chi_{\complement_U(A\cup B)}=1-(\chi_A+\chi_B-\chi_A\chi_B)$。
+右边：$\chi_{(\complement_U A)\cap(\complement_U B)}=(1-\chi_A)(1-\chi_B)=1-\chi_A-\chi_B+\chi_A\chi_B$。
+两侧相等。
+\end{solution}
+
+\subsection{视角五：运算——对偶律}
+
+\key{要点}
+\begin{itemize}
+  \item \key{对偶律}：把一个集合等式中的 $\cap$ 与 $\cup$ 互换、$U$ 与 $\varnothing$ 互换，等式仍然成立。
+  \item 德摩根定律的两条互为对偶：
+  $\complement_U(A\cap B)=\complement_U A\cup\complement_U B$ 与 $\complement_U(A\cup B)=\complement_U A\cap\complement_U B$。
+  \item 命题里的对偶：$\land\leftrightarrow\lor$、真$\leftrightarrow$假。
+  \item 用途：记住一条，另一条“免费”得到；化简时把括号“翻进去”。
+\end{itemize}
+
+\begin{example}
+由 $\complement_U(A\cap B)=\complement_U A\cup\complement_U B$，用对偶律直接写出另一条德摩根定律，并验证。
+\end{example}
+\begin{solution}
+把 $\cap$ 换成 $\cup$、$\cup$ 换成 $\cap$，得
+$\complement_U(A\cup B)=\complement_U A\cap\complement_U B$。
+验证：设 $x\in\complement_U(A\cup B)$，则 $x\notin A$ 且 $x\notin B$，
+即 $x\in\complement_U A$ 且 $x\in\complement_U B$，故 $x\in\complement_U A\cap\complement_U B$；反向同理。
+\key{（回头看：种子问题 2 的对偶形式）}
+\end{solution}
+
+\begin{problem}
+化简 $\complement_U\big(A\cup(\complement_U B)\big)$。
+\end{problem}
+\begin{solution}
+由德摩根定律，$\complement_U(X\cup Y)=\complement_U X\cap\complement_U Y$，取 $X=A$，$Y=\complement_U B$：
+\[
+  \complement_U\big(A\cup(\complement_U B)\big)
+  =\complement_U A\cap\complement_U(\complement_U B)
+  =\complement_U A\cap B.
+\]
+\key{（回头看：种子问题 3）}
+\end{solution}
+
+\subsection{视角六：几何——Venn 图与数轴}
+
+\key{要点}
+\begin{itemize}
+  \item Venn 图：把集合画成平面区域，交、并、补对应区域的重叠、合并、取反。
+  \item 数轴：把数集画成区间，交、并、补对应区间的重叠、拼接、取反。
+  \item \key{正难则反}：直接求困难时，改求补集——这是补集思想在解题中的主要用途。
+\end{itemize}
+
+\begin{example}
+设 $U=\mathbb{R}$，$A=\{x\mid x<1\}$，$B=\{x\mid x>-1\}$。
+在数轴上表示 $A$、$B$，并求 $A\cap B$ 与 $\complement_{\mathbb{R}}(A\cap B)$。
+\end{example}
+\begin{solution}
+$A\cap B=(-1,1)$；$\complement_{\mathbb{R}}(A\cap B)=(-\infty,-1]\cup[1,+\infty)$。
+（数轴上，$A\cap B$ 是 $-1$ 到 $1$ 之间的部分；它的补集是两端。）
+\end{solution}
+
+\begin{problem}
+解不等式组 $\begin{cases}x^2-2x-3<0\\ x\geq0\end{cases}$，并在数轴上表示解集。
+\end{problem}
+\begin{solution}
+$x^2-2x-3<0\iff -1<x<3$；与 $x\geq0$ 取交得 $0\leq x<3$，即 $[0,3)$。
+\end{solution}
+
+\key{（回头看：种子问题 1 的集合 $\{1,2,3\}$、$\{2,3,4\}$ 也可以画在数轴上，交、并、补对应区间的重叠与取反）}
+\end{explore}
+
+\begin{inclasstest}
+\subsection{变式训练}
+只改一个条件，重新做一遍。
+\begin{enumerate}
+  \item 设 $U=\{1,2,3,4,5\}$，$A=\{1,3,5\}$，$B=\{2,3,4\}$，验证 $\complement_U(A\cup B)=\complement_U A\cap\complement_U B$。
+  \item 用真值表验证 $\neg(p\lor q)\iff\neg p\land\neg q$。
+  \item 化简：$\complement_U\big((\complement_U A)\cap B\big)$。
+  \item 设 $A=\{x\mid x\leq2\}$，$B=\{x\mid x>-1\}$（$U=\mathbb{R}$），求 $\complement_{\mathbb{R}}A\cup B$。
+  \item \key{正向}：把“不是所有满足 $P$ 的数都满足 $Q$”写成存在量词命题，并表达为集合关系。
+  \item \key{反向}：把 $A\cap\complement_U B=\varnothing$ 解释成充分必要条件或全称命题。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection{知识来源对照表}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{3.6cm}p{3.8cm}p{5.6cm}}
+\toprule
+结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
+\midrule
+集合与命题的对应 & 视角一（来源） & 视角三（应用）、视角五（运算） \\
+德摩根定律 & 视角二（证明） & 视角三（应用）、视角四（函数） \\
+蕴含 $\leftrightarrow$ 集合包含 & 视角三（应用） & 视角一（来源）、视角六（几何） \\
+量词与否定 & 视角三（应用） & 视角二（证明） \\
+特征函数 & 视角四（函数） & 视角二（证明） \\
+对偶律 & 视角五（运算） & 视角二（证明）、视角四（函数） \\
+Venn 图 / 数轴 & 视角六（几何） & 视角一（来源） \\
+正难则反（补集思想） & 视角六（几何） & 视角五（运算） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{下一步}：本专题的“换领域”思路可以迁移到任何主题——
+比如把函数问题翻译成图象问题，把不等式问题翻译成区间问题。
+\end{afterclass}

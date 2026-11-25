@@ -1,0 +1,713 @@
+% 高观点导学案：导数与局部线性化引擎（第 6 章·高观点版）
+% 主线：局部线性化（以直代曲）→ 导数即变化率（差分的连续版）→ 五大不等式的结构本质（支撑边界）
+%       → 切线放缩与隐零点 → 条件最值四大标准动作 → 含参恒成立/能成立的集合边界
+% 核心思想：把「导数」与「不等式」统一在「以直代曲」这一个引擎下——曲线在一点附近用切线代替，
+%           不等式是为点集划定不可逾越的边界；解题四步：识别结构 → 局部线性化 → 求最值 → 验取等。
+
+\section{导数与局部线性化引擎（高观点版）}
+
+\begin{methodbox}{多框架对读}
+\small
+\begin{center}
+\begin{tabular}{c|p{2.9cm}|p{5.0cm}|p{3.1cm}}
+\toprule
+视角 & 本章看点 & 别的视角怎么说 & 哪侧最省力 \\
+\midrule
+代数 & 求导法则、恒等变形 & 符号对象的机械运算 & 硬算单调区间 \\
+几何 & 切线、增减、凹凸的形状 & 曲线在放大镜下变直线 & 看图猜极值 \\
+集合 & 零点集、符号区间 & 定义域值域的边界 & 界参数范围 \\
+映射 & 局部线性化：曲线 $\to$ 直线 & 换到切线坐标系再比大小 & 五不等式一源 \\
+\bottomrule
+\end{tabular}
+\end{center}
+卡的使用：证不等式先想「是不是某个函数的单调性」，再把切线当替代函数（总图见第 0 章图~\ref{fig:four-view-map}）。
+\end{methodbox}
+
+第 1 章确立了函数与单调性，第 5 章把差分 $\Delta$ 确立为离散意义下的变化率；
+本章把「导数」与「不等式」统一在同一个引擎下——\key{局部线性化（以直代曲）}：
+任何光滑曲线在一点的无穷小邻域内都可以用它的切线近似代替，而这条切线的斜率就是导数。
+于是「求导数、判符号」成为判定单调性／极值／最值的统一操作；
+五大核心不等式分别是射影定理、内积公理、齐次化（完整展开见第 8 章）、度量三角公理与凸凹函数切线支撑这五种结构下的「支撑边界」；
+条件最值与含参成立性问题，则归结为「边界值能否取到」。
+六个模块层层展开：
+\key{局部线性化}（放大镜下曲成直）$\to$
+\key{导数即变化率}（差分的连续版，统一判定单调性／极值／最值）$\to$
+\key{五大不等式的结构本质}（一张对比表：射影、内积、齐次、度量、凸支撑）$\to$
+\key{切线放缩与隐零点}（$e^x\ge x+1$、$\ln x\le x-1$ 的严格证明与多步取等检验）$\to$
+\key{条件最值四大标准动作}（1 的代换、消元主元、拆项分离、切线放缩）$\to$
+\key{含参恒成立／能成立}（点集位置、集合包含与量词的值域边界）。
+核心思想：\key{导数与不等式是同一个引擎的两面——以直代曲给出局部逼近，支撑边界给出整体控制；解题的本质是「识别结构 $\to$ 局部线性化 $\to$ 求最值 $\to$ 验取等」。}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 理解局部线性化公式 $f(x)\approx f(x_0)+f'(x_0)(x-x_0)$ 与「以直代曲」的几何含义，会用切线作近似计算；同一个一阶逼近在第 5 章的离散递推中就是线性化乘子 $f'(x^*)$；
+  \item 掌握导数的极限定义与导函数，理解它是差分的连续版本（$\Delta a_n$ 是 $a_{n+1}-a_n$，$f'(x)$ 是 $\frac{\Delta y}{\Delta x}$ 的极限）；
+  \item 会用导数符号统一判定单调性、极值与最值，理解驻点与极值点的区别；
+  \item 从射影定理、内积公理、齐次化、度量公理、凸凹性五个结构本质理解五大不等式，并记住各自的取等条件（齐次化专论见第 8 章）；
+  \item 会用作差求导严格证明 $e^x\ge x+1$、$\ln x\le x-1$，能在多步放缩中检验各步取等条件是否同时成立；
+  \item 掌握隐零点「设而不求、整体代换」的基本操作；
+  \item 掌握条件最值的四大标准动作（1 的代换、消元主元、拆项分离常数、切线放缩），会检验取等的可行性；
+  \item 会用点集上下位置与集合包含关系统一解释恒成立／能成立问题，掌握量词到最值的四类转化与含参二次不等式的分类讨论树。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection*{知识回顾}
+\begin{itemize}
+  \item 函数 $y=f(x)$ 在区间 $[x_0,x_0+\Delta x]$ 上的平均变化率是 \blank；
+  \item 导数的定义：$f'(x_0)=$ \blank（写成 $\Delta x\to0$ 时的极限）；
+  \item 若 $f'(x)>0$ 在区间 $I$ 上恒成立，则 $f$ 在 $I$ 上 \blank；
+  \item 基本不等式：$a,b>0$ 时 \blank $\ge$ \blank，当且仅当 \blank 时取等；
+  \item 一元二次方程 $ax^2+bx+c=0$ 的判别式 $\Delta=$ \blank，$\Delta>0$ 时有两个 \blank 实根。
+\end{itemize}
+
+\subsection*{教材速读}
+阅读「导数」一章教材，完成下列问题：
+\begin{enumerate}
+  \item 可导与连续的关系是：可导 \blank 连续，连续 \blank 可导（填「一定」或「不一定」）；
+  \item 写出三个基本求导公式：$(x^n)'=$ \blank，$(e^x)'=$ \blank，$(\ln x)'=$ \blank；
+  \item 函数极值的第一充分条件：在 $x_0$ 两侧 $f'(x)$ 异号，则 $x_0$ 是 \blank；
+  \item 闭区间上连续函数的最值只可能在 \blank 与 \blank 处取得。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{局部线性化：放大镜下曲成直}
+
+\key{探究一：切线是曲线在一点处的「最佳直线近似」}
+
+\key{（1）从平均变化率到瞬时变化率。}
+函数在 $x_0$ 附近的平均变化率是 $\dfrac{\Delta y}{\Delta x}=\dfrac{f(x_0+\Delta x)-f(x_0)}{\Delta x}$。
+让 $\Delta x\to0$，若极限存在，就得到导数
+\[
+  f'(x_0)=\lim_{\Delta x\to0}\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}.
+\]
+这正是第 5 章差分 $\Delta a_n=a_{n+1}-a_n$ 的连续版：把「步长为 1 的差分」换成「步长趋于 0 的差商极限」。
+
+\key{（2）局部线性化公式：以直代曲。}
+过点 $P(x_0,f(x_0))$ 的切线方程为
+\[
+  y=f(x_0)+f'(x_0)(x-x_0),
+\]
+而在 $x_0$ 附近，曲线与切线的误差是关于 $(x-x_0)$ 的高阶无穷小：
+\[
+  f(x)=f(x_0)+f'(x_0)(x-x_0)+o(x-x_0).
+\]
+也就是说，\key{在 $x_0$ 的无穷小邻域内，曲线可以用切线代替——这就是「以直代曲」}。
+几何显微镜放得越大，曲线看起来越像一条直线（图 \ref{fig:local-linear}）。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    % ---------- 左：全局视角 ----------
+    \begin{scope}
+      \draw[->, gray] (-1.3,0)--(3.0,0) node[below right] {$x$};
+      \draw[->, gray] (0,-2.3)--(0,4.4) node[above left] {$y$};
+      \draw[main!70!black, very thick, domain=-1:2, smooth, samples=60] plot (\x, {\x*\x});
+      \node[main!70!black] at (1.72,3.15) {$y=x^2$};
+      \draw[second, thick, domain=-0.4:2.5] plot (\x, {2*\x-1});
+      \node[second] at (2.64,3.9) {$y=2x-1$};
+      \fill (1,1) circle (1.6pt) node[above right] {$P(1,1)$};
+      \draw[dashed, gray] (0.85,0.7) rectangle (1.15,1.3);
+      % 说明文字整体右移，避开左图的 $y$ 轴
+      \node[gray!70!black, align=left] at (0.2,-2.15) {虚线框为右图的放大区域};
+    \end{scope}
+    % ---------- 右：放大视角 ----------
+    \begin{scope}[xshift=5.8cm]
+      \draw[->, gray] (0.78,0.55)--(1.26,0.55) node[above right] {$x$};
+      \draw[->, gray] (0.75,0.58)--(0.75,1.46) node[above left] {$y$};
+      \draw[second, thick, dashed, domain=0.84:1.16] plot (\x, {2*\x-1});
+      \draw[main!70!black, very thick, domain=0.84:1.16, smooth, samples=60] plot (\x, {\x*\x});
+      \fill (1,1) circle (1.6pt) node[above right] {$P(1,1)$};
+      \node[gray!70!black, align=center] at (1.01,-0.1) {放大约 $25$ 倍后，曲线（实线）\\与切线（虚线）几乎重合};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{以直代曲：抛物线 $y=x^2$ 在 $P(1,1)$ 处的切线为 $y=2x-1$。左图全局视角下曲线明显弯曲；右图把视野放大到 $P$ 附近，曲线与切线在视觉上无法区分——$f(x)\approx f(x_0)+f'(x_0)(x-x_0)$}
+  \label{fig:local-linear}
+\end{figure}
+
+\begin{example}
+用切线近似求 $\sqrt{4.1}$ 与 $\sin31^\circ$（精确到 $0.001$）。
+\end{example}
+\begin{solution}
+取 $f(x)=\sqrt x$，在 $x_0=4$ 处：$f(4)=2$，$f'(x)=\frac1{2\sqrt x}$，$f'(4)=\frac14$，故
+\[
+  \sqrt{4.1}\approx 2+\frac14\cdot0.1=2.025 .
+\]
+（真值 $\sqrt{4.1}\approx2.0248$，误差约 $1.5\times10^{-4}$。）
+
+取 $g(x)=\sin x$，在 $x_0=\frac\pi6$ 处：$g'(x)=\cos x$，$g'\!\left(\frac\pi6\right)=\frac{\sqrt3}{2}$，自变量增量
+$\Delta x=\frac\pi{180}$，故
+\[
+  \sin31^\circ\approx \frac12+\frac{\sqrt3}{2}\cdot\frac{\pi}{180}
+  \approx0.5+0.01511=0.515 .
+\]
+（真值 $\sin31^\circ\approx0.51504$。）
+\end{solution}
+
+\begin{conccard}[一级]{局部线性化：以直代曲}{光滑曲线的近似计算、误差估计、理解导数的几何意义}{把「近似」当成「相等」；放大倍数不够时强行替代；忘记公式只在 $x_0$ 附近有效}
+$f'(x_0)=\lim\limits_{\Delta x\to0}\dfrac{f(x_0+\Delta x)-f(x_0)}{\Delta x}$；
+切线 $y=f(x_0)+f'(x_0)(x-x_0)$；
+$f(x)=f(x_0)+f'(x_0)(x-x_0)+o(x-x_0)$，即以直代曲；
+导数是差分 $\Delta a_n$ 的连续版本。
+\end{conccard}
+
+\subsection{导数即变化率：统一判定单调性、极值、最值}
+
+\key{探究二：$f'(x)$ 的正负号就是曲线的「上下坡」}
+
+\key{（1）导函数与符号判定。}
+把每一点的导数收集起来得到导函数 $f'(x)$。在区间 $I$ 上：
+\begin{itemize}
+  \item $f'(x)>0$ 恒成立 $\iff$ $f$ 在 $I$ 上单调递增；
+  \item $f'(x)<0$ 恒成立 $\iff$ $f$ 在 $I$ 上单调递减。
+\end{itemize}
+这与第 5 章用差分判数列单调性完全同构：$\Delta a_n>0\iff a_{n+1}>a_n$（递增数列）。
+
+\key{（2）极值：$f'$ 变号的点。}
+费马引理：可导函数在极值点处必有 $f'(x_0)=0$（驻点）。
+第一充分条件：$f'$ 在 $x_0$ 两侧异号 $\iff$ $x_0$ 是极值点。汇总如下：
+
+\begin{center}\footnotesize\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|c|c}
+$f'(x)$ 在 $x_0$ 附近的符号 & $f(x)$ 的形态 & 极值 \\\hline
+$+$，然后 $-$ & 先增后减 & 极大值 \\
+$-$，然后 $+$ & 先减后增 & 极小值 \\
+不变号（如 $y=x^3$ 在 $0$ 处） & 单调 & 无极值 \\
+\end{tabular}
+\end{center}
+
+\key{（3）最值：端点 $+$ 极值点。}
+闭区间 $[a,b]$ 上的连续函数，最值只可能在端点 $a,b$ 与极值点处取得，比较这些点的函数值即可。
+
+\begin{example}
+求 $f(x)=x^3-3x$ 的单调区间与极值；若在 $[-2,2]$ 上求最值。
+\end{example}
+\begin{solution}
+$f'(x)=3x^2-3=3(x+1)(x-1)$。
+\begin{itemize}
+  \item $x<-1$ 或 $x>1$ 时 $f'(x)>0$；$-1<x<1$ 时 $f'(x)<0$。
+  \item 故 $f$ 在 $(-\infty,-1)$、$(1,+\infty)$ 上递增，在 $(-1,1)$ 上递减。
+  \item 极大值 $f(-1)=-1+3=2$；极小值 $f(1)=1-3=-2$。
+\end{itemize}
+在 $[-2,2]$ 上额外比较端点：$f(-2)=-8+6=-2$，$f(2)=8-6=2$。
+故最小值为 $-2$（在 $x=-2$ 与 $x=1$ 处），最大值为 $2$（在 $x=-1$ 与 $x=2$ 处）。
+$\surd$
+\end{solution}
+
+\begin{commonerror}{驻点、极值点与最值的三个高频失误}
+\paragraph{失误一：以为 $f'(x_0)=0$ 就一定是极值点。}
+$f'(x_0)=0$ 只是必要条件。反例：$f(x)=x^3$ 在 $x=0$ 处 $f'(0)=0$，但两侧 $f'>0$ 不变号，不是极值点。
+必须检验两侧符号是否改变。
+\paragraph{失误二：忽略定义域。}
+例如 $f(x)=x\ln x$ 的定义域是 $(0,+\infty)$，讨论单调性时不能把 $x\le0$ 也算进去；
+求闭区间最值时也不能漏掉端点。
+\paragraph{失误三：把「单点处 $f'(x_0)>0$」当成「区间上递增」。}
+导数符号必须在整个区间上保持，才能推出单调性；个别点的符号说明不了整体趋势。
+\end{commonerror}
+
+\begin{conccard}[一级]{导数符号法：单调性、极值、最值一条龙}{含参数的函数性质讨论、恒成立问题中求最值}{驻点当成极值点；漏定义域；漏端点；把 $f'(x)\ge0$ 中的孤立零点误判为单调性破坏}
+$f'(x)>0\Rightarrow$ 递增，$f'(x)<0\Rightarrow$ 递减；
+极值点处 $f'(x_0)=0$ 且两侧异号；
+闭区间最值 $=$ 端点值与极值值中的最大／最小者。
+\end{conccard}
+
+\subsection{五大不等式的结构本质}
+
+\key{探究三：五条不等式，五个「支撑边界」}
+
+同一个「$\ge$」在不同结构下有不同来历。看懂它们的结构本质，取等条件就会自己跳出来。
+
+\begin{center}\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{1.9cm}p{3.5cm}p{5.2cm}p{2.6cm}}
+\toprule
+不等式 & 核心形式 & 结构本质 & 取等条件 \\
+\midrule
+基本不等式 & $\dfrac{a+b}{2}\ge\sqrt{ab}\ (a,b>0)$ & 半圆射影定理：直径 $a+b$ 的半径 $\ge$ 斜边上的高 $\sqrt{ab}$ & $a=b$ \\[2pt]
+柯西不等式 & $(a_1^2+a_2^2)(b_1^2+b_2^2)\ge(a_1b_1+a_2b_2)^2$ & 向量内积公理 $|\vec u|^2|\vec v|^2\ge(\vec u\cdot\vec v)^2$（即 $|\cos\theta|\le1$） & $\vec u\parallel\vec v$（共线） \\[2pt]
+权方和不等式 & $\dfrac{a_1^2}{b_1}+\dfrac{a_2^2}{b_2}\ge\dfrac{(a_1+a_2)^2}{b_1+b_2}\ (b_i>0)$ & 柯西在 $\left(\dfrac{a_i}{\sqrt{b_i}}\right)$ 与 $(\sqrt{b_i})$ 下的齐次化特例 & $\dfrac{a_1}{b_1}=\dfrac{a_2}{b_2}$ \\[2pt]
+绝对值三角不等式 & $\bigl||a|-|b|\bigr|\le|a\pm b|\le|a|+|b|$ & 度量空间的距离三角不等式（三角形两边之和 $\ge$ 第三边） & 共线同向（右端）／反向（左端） \\[2pt]
+切线放缩 & $e^x\ge x+1$，$\ln x\le x-1$ & 凸／凹函数的切线支撑边界（Jensen 不等式的一阶情形） & $x=0$／$x=1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+注：齐次化作为第一性原理的完整方法链见第 8 章；本章只把它用作
+条件最值的一个入口，权方和则是柯西（内积公理）的齐次化特例。
+
+\key{（1）基本不等式 $=$ 半圆射影定理。}
+作直径 $AB=a+b$ 的半圆，圆心 $O$，则半径 $R=\dfrac{a+b}{2}$。
+设分界点 $C$ 满足 $AC=a$、$CB=b$，过 $C$ 作 $CP\perp AB$ 交半圆于 $P$。
+因为直径所对圆周角为直角，$\triangle APB$ 是直角三角形，由射影定理
+\[
+  PC^2=AC\cdot CB=ab\ \Rightarrow\ PC=\sqrt{ab}.
+\]
+又在直角三角形 $OPC$ 中 $OP$ 是斜边，故 $PC\le OP=R$，即
+\[
+  \sqrt{ab}\le\frac{a+b}{2},
+\]
+当且仅当 $C$ 与 $O$ 重合（即 $a=b$）时取等（图 \ref{fig:amgm-semicircle}）。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, scale=1.05]
+    % 直径 AB=a+b，取 a=2.4,b=1.2 => R=1.8，C 位于 x=0.6，PC=sqrt(2.88)≈1.697
+    \draw[->, gray] (-2.35,0)--(2.35,0);
+    \draw[thick] (-1.8,0)--(1.8,0);
+    \draw[thick] (1.8,0) arc (0:180:1.8);
+    \fill (-1.8,0) circle (1.5pt) node[below left] {$A$};
+    \fill (1.8,0) circle (1.5pt) node[below right] {$B$};
+    \fill (0,0) circle (1.5pt) node[below] {$O$};
+    \fill (0.6,0) circle (1.5pt) node[below] {$C$};
+    \fill (0.6,1.697) circle (1.5pt) node[above right] {$P$};
+    \draw[main!70!black, thick] (0.6,0)--(0.6,1.697);
+    % 标签放在 $PC$ 右侧、斜边 $PB$ 下方的空档处
+    \node[main!70!black] at (0.95,0.55) {$\sqrt{ab}$};
+    \draw[second, thick, dashed] (0,0)--(0,1.8);
+    % 半径标签锚定在虚线右侧起排，避免压线
+    \node[second, anchor=west] at (0.72,1.25) {$\dfrac{a+b}{2}$};
+    \draw[third!70!black, thick] (-1.8,0)--(0.6,1.697)--(1.8,0);
+    \node at (-0.6,-0.4) {$a$};
+    \node at (1.2,-0.4) {$b$};
+    \node[gray!70!black, align=center] at (0,-2.15) {$PC^2=AC\cdot CB=ab\Rightarrow PC=\sqrt{ab}\le OP=\dfrac{a+b}{2}$\\（当且仅当 $C$ 与 $O$ 重合即 $a=b$ 时取等）};
+  \end{tikzpicture}
+  \caption{半圆射影定理：直径 $AB=a+b$，半径 $R=\frac{a+b}{2}$ 永远是斜边上的高 $PC=\sqrt{ab}$ 的上界——这就是基本不等式的几何模型}
+  \label{fig:amgm-semicircle}
+\end{figure}
+
+\key{（2）柯西 $=$ 向量内积公理；权方和 $=$ 柯西的齐次化。}
+$|\vec u\cdot\vec v|=|\vec u|\,|\vec v|\,|\cos\theta|\le|\vec u|\,|\vec v|$，平方即得二维柯西，
+取等当且仅当两向量共线。代数证法（判别式法）：
+\begin{derivation}
+令 $\varphi(x)=(a_1x+b_1)^2+(a_2x+b_2)^2\ge0$ 对一切实数 $x$ 成立，展开得
+\[
+  (a_1^2+a_2^2)x^2+2(a_1b_1+a_2b_2)x+(b_1^2+b_2^2)\ge0 .
+\]
+二次函数恒非负，故判别式 $\Delta\le0$：
+\[
+  4(a_1b_1+a_2b_2)^2-4(a_1^2+a_2^2)(b_1^2+b_2^2)\le0,
+\]
+即 $(a_1^2+a_2^2)(b_1^2+b_2^2)\ge(a_1b_1+a_2b_2)^2$。
+取等当且仅当存在 $x$ 使 $a_1x+b_1=a_2x+b_2=0$，即 $(a_1,a_2)\parallel(b_1,b_2)$。
+\end{derivation}
+权方和只是把 $\vec u=\left(\dfrac{a_1}{\sqrt{b_1}},\dfrac{a_2}{\sqrt{b_2}}\right)$、
+$\vec v=(\sqrt{b_1},\sqrt{b_2})$ 代入柯西：
+\[
+  \left(\frac{a_1^2}{b_1}+\frac{a_2^2}{b_2}\right)(b_1+b_2)
+  \ge\left(\frac{a_1}{\sqrt{b_1}}\cdot\sqrt{b_1}+\frac{a_2}{\sqrt{b_2}}\cdot\sqrt{b_2}\right)^2
+  =(a_1+a_2)^2 .
+\]
+
+\begin{conccard}[二级]{五大不等式的结构本质与取等条件}{证明不等式、选择放缩工具、检验取等}{只背公式不看结构；张冠李戴（该用柯西时硬凑基本不等式）；忽视取等条件导致「最值取不到」}
+基本不等式＝半圆射影定理（$a=b$ 取等）；
+柯西＝内积公理（共线取等）；
+权方和＝柯西的齐次化（$\frac{a_1}{b_1}=\frac{a_2}{b_2}$ 取等）；
+绝对值三角＝度量三角公理（共线取等）；
+切线放缩＝凸凹函数的切线支撑（切点取等）。
+\end{conccard}
+
+\subsection{切线放缩与隐零点}
+
+\key{探究四：切线是全局支撑边界；隐零点靠「设而不求」}
+
+\key{（1）$e^x\ge x+1$ 与 $\ln x\le x-1$ 的严格证明。}
+\begin{derivation}
+设 $g(x)=e^x-x-1$，则 $g'(x)=e^x-1$。
+$x<0$ 时 $g'<0$，$x>0$ 时 $g'>0$，故 $g$ 在 $x=0$ 处取最小值 $g(0)=0$。
+所以
+\[
+  e^x\ge x+1\quad(\text{当且仅当 }x=0\text{ 取等}).
+\]
+设 $h(x)=x-1-\ln x\ (x>0)$，则 $h'(x)=1-\frac1x$。
+$0<x<1$ 时 $h'<0$，$x>1$ 时 $h'>0$，故 $h$ 在 $x=1$ 处取最小值 $h(1)=0$。
+所以
+\[
+  \ln x\le x-1\quad(\text{当且仅当 }x=1\text{ 取等}).
+\]
+几何含义：$y=e^x$ 是凸函数，恒在切线 $y=x+1$ 上方；$y=\ln x$ 是凹函数，恒在切线 $y=x-1$ 下方（图 \ref{fig:tangent-exp}）。
+\end{derivation}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \draw[->, gray] (-2.2,0)--(1.95,0) node[below right] {$x$};
+    \draw[->, gray] (0,-1.2)--(0,5.1) node[above left] {$y$};
+    \fill[main!10] plot[domain=-2:1.6, samples=60] (\x, {exp(\x)})
+      -- plot[domain=1.6:-2, samples=60] (\x, {\x+1}) -- cycle;
+    \draw[main!70!black, very thick, domain=-2:1.6, smooth, samples=80] plot (\x, {exp(\x)});
+    \draw[second, thick, domain=-2:1.6] plot (\x, {\x+1});
+    \fill (0,1) circle (1.6pt) node[above right] {$(0,1)$};
+    \node[main!70!black] at (0.45,3.25) {$y=e^x$};
+    \node[second] at (-1.85,-0.55) {$y=x+1$};
+    % 结论文字移到左上空白区，避免被 $e^x$ 曲线或切线穿过
+    \node[gray!70!black] at (-0.35,4.35) {$e^x\ge x+1$};
+    \node[gray!70!black] at (-0.35,3.95) {仅在 $x=0$ 取等};
+  \end{tikzpicture}
+  \caption{$y=e^x$ 恒在切线 $y=x+1$ 上方（凸函数的切线支撑）：阴影为差值区域 $e^x-(x+1)\ge0$，两者仅在切点 $(0,1)$ 接触}
+  \label{fig:tangent-exp}
+\end{figure}
+
+\key{（2）多步放缩：各步取等条件必须同时成立。}
+\begin{example}
+证明：对 $x>0$，$e^x-\ln x>2$。
+\end{example}
+\begin{solution}
+由 $e^x\ge x+1$（取等 $x=0$）与 $-\ln x\ge1-x$（取等 $x=1$）相加得
+\[
+  e^x-\ln x\ge (x+1)+(1-x)=2 .
+\]
+但两式取等条件分别是 $x=0$ 与 $x=1$，不可能同时成立，故等号永远取不到：
+\[
+  e^x-\ln x>2 .
+\]
+\key{多步放缩时，每一步的取等条件必须相容，否则最后的「$\ge$」其实是严格的「$>$」。}
+\end{solution}
+
+\key{（3）隐零点：设而不求，整体代换。}
+当 $f'(x)=0$ 的解 $x_0$ 无法用初等形式写出时，不必硬解：设 $x_0$ 为零点，
+利用 $f'(x_0)=0$ 提供的等量关系做整体代换，把超越结构化为代数结构。
+
+\begin{example}
+证明：对一切 $x>-2$，$e^x>\ln(x+2)$。
+\end{example}
+\begin{solution}
+设 $f(x)=e^x-\ln(x+2)$，$f'(x)=e^x-\dfrac1{x+2}$，$f''(x)=e^x+\dfrac1{(x+2)^2}>0$，
+故 $f'$ 在 $(-2,+\infty)$ 上严格递增。
+又
+\[
+  f'\!\left(-\tfrac12\right)=e^{-1/2}-\frac23<0,\qquad f'(0)=1-\frac12>0,
+\]
+所以存在唯一的 $x_0\in\left(-\dfrac12,0\right)$ 使 $f'(x_0)=0$，即
+\[
+  e^{x_0}=\frac1{x_0+2}\quad\Longrightarrow\quad \ln(x_0+2)=-x_0 .
+\]
+$f$ 在 $(-2,x_0)$ 上递减、在 $(x_0,+\infty)$ 上递增，最小值为
+\[
+  f(x_0)=e^{x_0}-\ln(x_0+2)=\frac1{x_0+2}+x_0 .
+\]
+由 $x_0\in\left(-\dfrac12,0\right)$ 得 $\dfrac1{x_0+2}>\dfrac12$ 且 $x_0>-\dfrac12$，故
+\[
+  f(x_0)>\frac12-\frac12=0 .
+\]
+因此 $f(x)\ge f(x_0)>0$，即 $e^x>\ln(x+2)$ 对一切 $x>-2$ 成立。$\surd$
+\end{solution}
+
+\begin{conccard}[一级]{切线放缩与隐零点}{证明含 $e^x$、$\ln x$ 的不等式；求不可解方程的极值}{忘记检验各步取等条件；不敢把「$\ge$」收紧为「$>$」；找到 $x_0$ 后不会用 $f'(x_0)=0$ 代换；忽略 $x_0$ 的取值范围}
+$e^x\ge x+1$（取等 $x=0$），$\ln x\le x-1$（取等 $x=1$）；
+多步放缩取等条件不相容 $\Rightarrow$ 严格不等；
+隐零点：设 $f'(x_0)=0$，用该等式整体代换，并确定 $x_0$ 的范围。
+\end{conccard}
+
+\subsection{条件最值：四大标准动作}
+
+\key{探究五：把多元、超越的结构，逐个「降维」成对勾函数}
+
+\key{动作一：齐次化与「1」的代换（入口；完整方法链见第 8 章）。}
+已知 $ma+nb=k$ 求 $\dfrac pa+\dfrac qb$ 的最值：乘以 $\dfrac{ma+nb}k=1$，展开后用基本不等式。
+
+\begin{example}
+$a,b>0$，$a+b=1$，求 $\dfrac1a+\dfrac4b$ 的最小值。
+\end{example}
+\begin{solution}
+「1 的代换」：
+\[
+  \frac1a+\frac4b=\left(\frac1a+\frac4b\right)(a+b)
+  =5+\frac ba+\frac{4a}b\ge5+2\sqrt4=9,
+\]
+当且仅当 $\dfrac ba=\dfrac{4a}b$ 即 $b=2a$ 时取等，结合 $a+b=1$ 得 $a=\dfrac13,b=\dfrac23$。
+「权方和秒杀」：
+\[
+  \frac1a+\frac4b=\frac{1^2}{a}+\frac{2^2}{b}\ge\frac{(1+2)^2}{a+b}=9,
+\]
+取等条件同为 $a:b=1:2$。
+\end{solution}
+
+\key{动作二：消元与主元转化（双变量 $\to$ 对勾函数 $t+\dfrac kt$）。}
+
+\begin{example}
+$x,y>0$ 满足 $x+2y+xy=30$，求 $x+2y$ 的最小值。
+\end{example}
+\begin{solution}
+由等式解出 $y=\dfrac{30-x}{x+2}$。令 $t=x+2$，则 $t>2$，且 $y>0\Rightarrow t<32$，故 $t\in(2,32)$。
+\[
+  x+2y=t-2+\frac{2(32-t)}t=t+\frac{64}t-4\ge2\sqrt{64}-4=12,
+\]
+当且仅当 $t=\dfrac{64}t$ 即 $t=8\in(2,32)$ 时取等，此时 $x=6,y=3$（检验：$6+6+18=30$）。
+\end{solution}
+
+\key{动作三：拆项分离常数。}
+
+\begin{example}
+求 $f(x)=\dfrac{x^2+3x+5}{x+1}$ 在 $x>-1$ 时的最小值。
+\end{example}
+\begin{solution}
+令 $t=x+1>0$，则 $x=t-1$，分子
+\[
+  x^2+3x+5=(t-1)^2+3(t-1)+5=t^2+t+3,
+\]
+故
+\[
+  f(x)=t+1+\frac3t\ge1+2\sqrt3,
+\]
+当且仅当 $t=\dfrac3t$ 即 $t=\sqrt3$（$x=\sqrt3-1$）时取等。
+\end{solution}
+
+\key{动作四：切线放缩放去超越函数。}
+
+\begin{example}
+证明：$x>0$ 时 $\ln(x+1)+\dfrac1{x+1}>1$。
+\end{example}
+\begin{solution}
+在 $\ln u\le u-1$ 中取 $u=\dfrac1t\ (t>0)$，得 $\ln t\ge1-\dfrac1t$（取等 $t=1$）。
+令 $t=x+1>1$，则
+\[
+  \ln(x+1)\ge1-\frac1{x+1}\quad\Longrightarrow\quad
+  \ln(x+1)+\frac1{x+1}\ge1 .
+\]
+取等需要 $t=1$ 即 $x=0$，但 $x>0$，故严格成立：
+\[
+  \ln(x+1)+\frac1{x+1}>1 .
+\]
+\key{用切线（一阶 Taylor）把 $\ln$、$e^x$ 替换为整式，是消去超越函数的标准动作。}
+\end{solution}
+
+\begin{commonerror}{易错诊断室：连续放缩的取等冲突与换元定义域}
+\paragraph{反例一：连续两次用基本不等式，取等条件互相打架。}
+已知 $x,y>0$，$x+2y=1$，某同学求 $\dfrac1{x^2}+\dfrac1{y^2}$ 的「最小值」：
+\[
+  \frac1{x^2}+\frac1{y^2}\ge\frac{2}{xy},\qquad
+  xy=\frac{x\cdot2y}{2}\le\frac12\left(\frac{x+2y}{2}\right)^2=\frac18,
+\]
+于是 $\dfrac1{x^2}+\dfrac1{y^2}\ge\dfrac{2}{1/8}=16$。
+问题：第一步取等要求 $x=y$，第二步取等要求 $x=2y$，二者不能同时成立，
+所以 $16$ 根本取不到（真实最小值大于 $16$）。
+\key{每写一次放缩，就把取等条件记下来；所有条件必须相容，最值才可能取到。}
+
+\paragraph{反例二：换元后忽略新元的取值范围。}
+求 $f(x)=\dfrac{x^2+5}{\sqrt{x^2+4}}$ 的最小值。令 $t=\sqrt{x^2+4}$，则 $t\ge2$，且
+\[
+  f(x)=t+\frac1t .
+\]
+若直接写 $t+\dfrac1t\ge2$，取等要求 $t=1$，但 $t\ge2$，取不到！
+正确做法：$\varphi(t)=t+\dfrac1t$ 在 $[2,+\infty)$ 上递增，故最小值为
+\[
+  \varphi(2)=2+\frac12=\frac52 .
+\]
+\key{换元必先写出新元的定义域；取等点若不在定义域内，必须改用单调性求最值。}
+\end{commonerror}
+
+\begin{conccard}[一级]{条件最值四大标准动作}{二元条件最值、分式函数最值、含超越函数的不等式}{取等条件冲突未检验；换元后忘定义域；该用权方和时硬展开；切线放缩用于非切点附近却当作等式}
+（1）1 的代换：乘 $\frac{ma+nb}k=1$ 展开（或直接用权方和）；齐次化的完整展开见第 8 章，本节只作条件最值的入口；
+（2）消元主元：解出一元，换 $t$ 凑 $t+\frac kt$；
+（3）拆项分离常数：$t=x+1$ 类换元降幂；
+（4）切线放缩：用 $e^x\ge x+1$ 等消去超越项。
+每步都要检验：取等条件相容吗？在定义域内吗？
+\end{conccard}
+
+\subsection{含参恒成立与能成立：点集位置与集合包含}
+
+\key{探究六：把「成立性」翻译成「边界值的大小关系」}
+
+\key{（1）点集上下位置 $\to$ 恒成立。}
+$f(x)\ge a$ 在 $D$ 上恒成立，几何上是直线 $y=a$ 始终位于曲线 $y=f(x)$ 的下方（允许相切），
+等价于
+\[
+  a\le f(x)_{\min}\quad(x\in D).
+\]
+类比地，$f(x)>a$ 恒成立需 $a\le f_{\min}$ 且验证最小值点处是否严格（最小值能取到时需 $a<f_{\min}$）。
+
+\key{（2）一元二次含参不等式：分类讨论树。}
+以 $ax^2+px+q>0$ 为例，固定顺序：先看二次项系数 $a$（零／正／负），
+再看判别式 $\Delta$（正／零／负），最后比较两根大小（图 \ref{fig:quad-tree}）。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize,
+    box/.style={draw, rounded corners, align=center, inner sep=3pt, text width=2.2cm}]
+    \node[box, text width=3.8cm] (root) at (0,0) {解关于 $x$ 的含参不等式\\$ax^{2}+px+q>0$\\($a,p,q$ 为参数)};
+    \node[box] (l) at (-4.6,-1.6) {$a=0$\\退化为一次};
+    \node[box] (m) at (0,-1.6) {$a>0$\\开口向上};
+    \node[box] (r) at (4.6,-1.6) {$a<0$\\开口向下};
+    \node[box] (ll) at (-5.2,-3.3) {$px+q>0$\\按 $p$ 符号定向};
+    \node[box] (m1) at (-2.6,-3.3) {$\Delta>0$\\两根之外};
+    \node[box] (m2) at (0,-3.3) {$\Delta=0$\\$x\ne -\frac{p}{2a}$};
+    \node[box] (m3) at (2.6,-3.3) {$\Delta<0$\\解集为 $\mathbb R$};
+    \node[box] (rr) at (5.2,-3.3) {乘 $-1$ 变号\\化为 $a>0$};
+    \draw (root)--(l) (root)--(m) (root)--(r);
+    \draw (l)--(ll) (m)--(m1) (m)--(m2) (m)--(m3) (r)--(rr);
+    \node[gray!70!black, align=center, text width=13cm] at (0,-4.9)
+      {注：$\Delta>0$ 时两根为 $x_{1,2}=\dfrac{-p\pm\sqrt{\Delta}}{2a}$，\\还必须比较两根大小，然后才能写下解集区间。};
+  \end{tikzpicture}
+  \caption{含参一元二次不等式的分类讨论树：二次项系数（零／正／负）$\to$ 判别式 $\Delta$（正／零／负）$\to$ 两根大小}
+  \label{fig:quad-tree}
+\end{figure}
+
+\begin{example}
+解关于 $x$ 的不等式 $ax^2-(a+1)x+1>0$。
+\end{example}
+\begin{solution}
+因式分解：$ax^2-(a+1)x+1=(x-1)(ax-1)>0$。
+\begin{itemize}
+  \item $a=0$：化为 $-(x-1)>0$，解集 $(-\infty,1)$；
+  \item $a>0$：两根为 $1$ 与 $\dfrac1a$。
+    $a>1$ 时 $\dfrac1a<1$，解集 $\left(-\infty,\dfrac1a\right)\cup(1,+\infty)$；
+    $a=1$ 时为 $(x-1)^2>0$，解集 $\{x\mid x\ne1\}$；
+    $0<a<1$ 时 $\dfrac1a>1$，解集 $(-\infty,1)\cup\left(\dfrac1a,+\infty\right)$；
+  \item $a<0$：开口向下，两根 $\dfrac1a<0<1$，解集 $\left(\dfrac1a,1\right)$。
+\end{itemize}
+\end{solution}
+
+\key{（3）量词问题：值域边界的对偶。}
+「任意」「存在」混合时，统一翻译为两个函数值域的边界关系（设最值都能取到）：
+
+\begin{center}\footnotesize\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|c}
+量词结构 & 等价条件 \\\hline
+$\forall x_1\in D_1,\ \forall x_2\in D_2:\ f(x_1)\ge g(x_2)$ & $f_{\min}\ge g_{\max}$ \\[2pt]
+$\forall x_1\in D_1,\ \exists x_2\in D_2:\ f(x_1)\ge g(x_2)$ & $f_{\min}\ge g_{\min}$ \\[2pt]
+$\exists x_1\in D_1,\ \forall x_2\in D_2:\ f(x_1)\ge g(x_2)$ & $f_{\max}\ge g_{\max}$ \\[2pt]
+$\exists x_1\in D_1,\ \exists x_2\in D_2:\ f(x_1)\ge g(x_2)$ & $f_{\max}\ge g_{\min}$ \\
+\end{tabular}
+\end{center}
+
+\begin{example}
+设 $f(x)=e^x-x$，$g(x)=x^2-2x+a$，$x\in[0,2]$。若对任意 $x_1\in[0,2]$，都存在 $x_2\in[0,2]$ 使 $f(x_1)\ge g(x_2)$，求 $a$ 的取值范围。
+\end{example}
+\begin{solution}
+条件等价于 $f_{\min}\ge g_{\min}$。
+$f'(x)=e^x-1\ge0$ 在 $[0,2]$ 上成立，$f$ 递增，$f_{\min}=f(0)=1$。
+$g(x)=(x-1)^2+a-1$，$g_{\min}=g(1)=a-1$。
+故
+\[
+  1\ge a-1\ \Rightarrow\ a\le2 .
+\]
+\end{solution}
+
+\begin{conccard}[二级]{恒成立／能成立：点集位置与值域边界}{含参不等式恒成立、双变量量词问题、参数范围求解}{把 $\forall$ 与 $\exists$ 的最值方向搞反；忽略最值是否能取到；严格不等式端点处理错误；二次不等式分类讨论顺序混乱}
+第 0 章的集合版（值域子集包含）在这里换成最值语言：$f(x)\ge a$ 恒成立 $\iff a\le f_{\min}$；
+$\forall x_1,\exists x_2:\ f(x_1)\ge g(x_2)\iff f_{\min}\ge g_{\min}$（其余三种对偶见表）；
+含参二次不等式按「$a$ 的符号 $\to\Delta\to$ 两根大小」三步分类。
+\end{conccard}
+
+\begin{method}[局部线性化引擎的使用流程]
+\begin{enumerate}
+  \item \key{识别结构}：见 $e^x$、$\ln x$ 想切线放缩；见双变量等式想 1 的代换／消元；见含参成立性想最值与值域边界；
+  \item \key{局部线性化}：在关键点求导、写切线，用 $f(x)\approx f(x_0)+f'(x_0)(x-x_0)$ 把非线性问题线性化；
+  \item \key{求最值}：导数符号法找单调区间与极值，再比较端点；
+  \item \key{验取等}：记录每一步的取等条件，检查是否相容、是否在定义域内——不相容则「$\ge$」改「$>$」，不在定义域内则改用单调性；
+  \item \key{回代检验}：用特殊值（如 $x=0,1$）或量纲、符号快速验证结论。
+\end{enumerate}
+\end{method}
+
+\begin{summary}
+本章把「导数」与「不等式」统一在\key{局部线性化（以直代曲）}这一个引擎之下：
+曲线在一点附近由切线 $f(x_0)+f'(x_0)(x-x_0)$ 近似代替，导数是差分的连续版本；
+由 $f'(x)$ 的符号统一判定单调性、极值与最值；
+五大核心不等式分别起源于射影定理、内积公理、齐次化、度量三角公理与凸凹函数的切线支撑，取等条件各不相同；
+$e^x\ge x+1$、$\ln x\le x-1$ 的严格证明与多步取等的相容性检验，构成切线放缩的完整操作规程；
+隐零点靠「设而不求、整体代换」；条件最值有四大标准动作（1 的代换、消元主元、拆项分离、切线放缩）；
+含参恒成立／能成立问题则归结为点集的上下位置与值域的边界大小。
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{2.3cm}p{4.6cm}p{4.6cm}p{1.9cm}}
+\toprule
+引擎部件 & 核心操作 & 把什么变成什么 & 对应探究 \\
+\midrule
+局部线性化 & $f(x)\approx f(x_0)+f'(x_0)(x-x_0)$ & 非线性 $\to$ 线性；变化率 $\to$ 切线斜率 & 探究一 \\
+导数符号法 & $f'(x)>0$ 增、$f'(x)<0$ 减 & 单调性／极值／最值 $\to$ 符号判定 & 探究二 \\
+结构本质表 & 射影／内积／齐次／度量／凸支撑 & 不等式 $\to$ 几何与代数边界 & 探究三 \\
+切线放缩 & $e^x\ge x+1$，$\ln x\le x-1$ & 超越 $\to$ 整式（须验取等） & 探究四 \\
+隐零点代换 & 设 $x_0$，用 $f'(x_0)=0$ 整体代换 & 不可解方程 $\to$ 代数关系 & 探究四 \\
+条件最值四动作 & 1 的代换／消元主元／拆项／放缩 & 多变量、超越 $\to$ 一元低次 & 探究五 \\
+成立性量词化 & $\forall\exists$ 四类转化 & 参数成立性 $\to$ 值域边界 & 探究六 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{导数与不等式是同一个引擎的两面：以直代曲给出局部逼近，支撑边界给出整体控制；解题的本质是「识别结构 $\to$ 局部线性化 $\to$ 求最值 $\to$ 验取等」。}
+\end{summary}
+
+\end{explore}
+
+\begin{inclasstest}
+\begin{enumerate}
+  \item 用切线近似求 $\sqrt{4.02}$ 的近似值（精确到 $0.001$）；\level{易}
+  \item 求 $f(x)=x^3-3x^2-9x+5$ 的单调区间与极值；\level{中}
+  \item 证明：对任意 $x>0$，$e^x-\ln x>2$；\level{中}
+  \item 解关于 $x$ 的不等式 $ax^2-(a+1)x+1>0$。\level{难}
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection*{基础巩固}
+\begin{enumerate}
+  \item 求函数 $f(x)=x\ln x\ (x>0)$ 的最小值；
+  \item 证明：对任意实数 $x$，$e^x\ge ex$（提示：求 $f(x)=e^x-ex$ 的最小值）。
+\end{enumerate}
+
+\subsection*{进阶提升}
+\begin{enumerate}
+  \item 已知 $a,b>0$ 且 $a+2b=1$，求 $\dfrac1a+\dfrac1b$ 的最小值；
+  \item 设 $f(x)=e^x-ax\ (a>0)$，讨论其单调性；若 $f(x)\ge0$ 对一切 $x\in\mathbb R$ 恒成立，求 $a$ 的取值范围。
+\end{enumerate}
+
+\subsection*{拓展探究}
+\begin{enumerate}
+  \item （强基／竞赛）把权方和不等式推广到三元：证明
+  $\dfrac{a_1^2}{b_1}+\dfrac{a_2^2}{b_2}+\dfrac{a_3^2}{b_3}\ge\dfrac{(a_1+a_2+a_3)^2}{b_1+b_2+b_3}\ (b_i>0)$，
+  并用它求 $a,b,c>0$、$a+b+c=3$ 时 $\dfrac1a+\dfrac4b+\dfrac9c$ 的最小值。
+\end{enumerate}
+
+\subsection*{教师版答案}
+\begin{solution}
+\textbf{基础 1：}$f'(x)=\ln x+1$。令 $f'(x)=0$ 得 $x=\dfrac1e$。
+$0<x<\dfrac1e$ 时 $f'<0$，$x>\dfrac1e$ 时 $f'>0$，故最小值为
+\[
+  f\!\left(\frac1e\right)=\frac1e\ln\frac1e=-\frac1e .
+\]
+\end{solution}
+\begin{solution}
+\textbf{基础 2：}设 $f(x)=e^x-ex$，$f'(x)=e^x-e$。
+$x<1$ 时 $f'<0$，$x>1$ 时 $f'>0$，故 $f$ 在 $x=1$ 处取最小值 $f(1)=0$，
+即 $e^x\ge ex$，当且仅当 $x=1$ 取等（这正是 $y=e^x$ 在 $(1,e)$ 处的切线 $y=ex$）。
+\end{solution}
+\begin{solution}
+\textbf{进阶 1：}「1 的代换」：
+\[
+  \frac1a+\frac1b=\left(\frac1a+\frac1b\right)(a+2b)
+  =3+\frac{2b}{a}+\frac ab\ge3+2\sqrt2,
+\]
+当且仅当 $\dfrac{2b}{a}=\dfrac ab$ 即 $a=\sqrt2\,b$ 时取等，结合 $a+2b=1$ 得
+$b=\dfrac1{2+\sqrt2}$，$a=\dfrac{\sqrt2}{2+\sqrt2}$。最小值 $3+2\sqrt2$。
+\end{solution}
+\begin{solution}
+\textbf{进阶 2：}$f'(x)=e^x-a$。$x<\ln a$ 时 $f'<0$，$x>\ln a$ 时 $f'>0$，
+故 $f$ 在 $(-\infty,\ln a)$ 递减、在 $(\ln a,+\infty)$ 递增，最小值为
+\[
+  f(\ln a)=a-a\ln a=a(1-\ln a).
+\]
+$f(x)\ge0$ 恒成立 $\iff a(1-\ln a)\ge0\iff\ln a\le1\iff a\le e$。
+故 $a$ 的取值范围是 $(0,e]$。
+\end{solution}
+\begin{solution}
+\textbf{拓展：}由柯西不等式，取
+$\vec u=\left(\dfrac{a_1}{\sqrt{b_1}},\dfrac{a_2}{\sqrt{b_2}},\dfrac{a_3}{\sqrt{b_3}}\right)$，
+$\vec v=(\sqrt{b_1},\sqrt{b_2},\sqrt{b_3})$，得
+\[
+  \left(\frac{a_1^2}{b_1}+\frac{a_2^2}{b_2}+\frac{a_3^2}{b_3}\right)(b_1+b_2+b_3)
+  \ge(a_1+a_2+a_3)^2,
+\]
+即所要的不等式，取等当且仅当 $\dfrac{a_1}{b_1}=\dfrac{a_2}{b_2}=\dfrac{a_3}{b_3}$。
+应用：
+\[
+  \frac1a+\frac4b+\frac9c=\frac{1^2}{a}+\frac{2^2}{b}+\frac{3^2}{c}
+  \ge\frac{(1+2+3)^2}{a+b+c}=\frac{36}{3}=12,
+\]
+当且仅当 $a:b:c=1:2:3$ 且 $a+b+c=3$，即 $a=\dfrac12,b=1,c=\dfrac32$ 时取等。最小值为 $12$。
+\end{solution}
+\reading{拓展阅读 12}{导数：以直代曲的局部线性化}
+\end{afterclass}

@@ -1,0 +1,150 @@
+% 第 3 章：平面向量与空间向量
+\chapter{平面向量与空间向量}
+
+\section{基底分解与数量积}
+
+\begin{problem}\level{中}
+在 $\triangle ABC$ 中，记 $\overrightarrow{AB}=\bm a$，$\overrightarrow{AC}=\bm b$。$D$ 为 $BC$ 上一点，满足 $\overrightarrow{BD}=\dfrac13\overrightarrow{BC}$；$E$ 为 $AD$ 的中点。试用 $\bm a,\bm b$ 表示 $\overrightarrow{BE}$，并写出点 $E$ 在基底 $\{\bm a,\bm b\}$ 下的坐标。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+平面向量基本定理：平面内任一向量都可唯一地分解到一组不共线基底上。把 $\overrightarrow{BE}$ 沿“$B\to A\to E$”与“$A\to D$”两条路径拆解，实质是反复使用三角形法则；中点条件 $\overrightarrow{AE}=\dfrac12\overrightarrow{AD}$ 则是仿射（重心）结构的体现。
+\paragraph{标准解题步骤}
+$\overrightarrow{AD}=\overrightarrow{AB}+\overrightarrow{BD}=\bm a+\dfrac13(\bm b-\bm a)=\dfrac23\bm a+\dfrac13\bm b$。因 $E$ 为 $AD$ 的中点，$\overrightarrow{AE}=\dfrac12\overrightarrow{AD}=\dfrac13\bm a+\dfrac16\bm b$。故 $\overrightarrow{BE}=\overrightarrow{AE}-\overrightarrow{AB}=-\dfrac23\bm a+\dfrac16\bm b$，即 $E$ 在基底 $\{\bm a,\bm b\}$ 下的坐标为 $\left(-\dfrac23,\dfrac16\right)$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把 $\overrightarrow{BD}=\dfrac13\overrightarrow{BC}$ 误作 $\overrightarrow{BD}=\dfrac13\overrightarrow{CB}$（方向反）；二是中点关系用错，把 $\overrightarrow{AE}=\dfrac12\overrightarrow{AD}$ 写成 $\dfrac12\overrightarrow{DA}$；三是 $\overrightarrow{BE}=\overrightarrow{AE}-\overrightarrow{AB}$ 中“终点减起点”的顺序颠倒；四是混淆“在基底下的坐标”与直角坐标系中的坐标。规避方法：统一写成 $\text{终点}-\text{起点}$，逐步代入，最后用特殊位置（如 $D$ 与 $B$ 重合的情形）校验。
+\end{solution}
+
+\begin{problem}\level{易}
+设平面向量 $\bm a,\bm b$ 满足 $|\bm a|=2$，$|\bm b|=3$，$\bm a$ 与 $\bm b$ 的夹角为 $120^\circ$。令 $\bm c=\bm a-2\bm b$。(1) 求 $\bm a\cdot\bm b$；(2) 求 $|\bm c|$；(3) 求 $\bm b$ 在 $\bm a$ 方向上的投影与投影向量。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+数量积 $\bm a\cdot\bm b=|\bm a||\bm b|\cos\theta$ 同时编码“模”与“夹角”；其分配律使我们能把 $|\bm c|^2=\bm c\cdot\bm c$ 整体展开，而不必知道 $\bm c$ 的坐标。投影的数量 $\dfrac{\bm a\cdot\bm b}{|\bm a|}$ 与投影向量 $\dfrac{\bm a\cdot\bm b}{|\bm a|^2}\bm a$ 是同一数量积的两种几何包装。
+\paragraph{标准解题步骤}
+(1) $\bm a\cdot\bm b=|\bm a||\bm b|\cos120^\circ=2\times3\times\left(-\dfrac12\right)=-3$。
+(2) $|\bm c|^2=(\bm a-2\bm b)\cdot(\bm a-2\bm b)=|\bm a|^2-4\bm a\cdot\bm b+4|\bm b|^2=4-4\times(-3)+4\times9=52$，故 $|\bm c|=2\sqrt{13}$。
+(3) 投影（数量）$=\dfrac{\bm a\cdot\bm b}{|\bm a|}=\dfrac{-3}{2}=-\dfrac32$；投影向量 $=\dfrac{\bm a\cdot\bm b}{|\bm a|^2}\bm a=-\dfrac34\bm a$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是 $\cos120^\circ$ 的符号错写成 $\dfrac12$；二是展开 $|\bm a-2\bm b|^2$ 时漏掉交叉项或系数错（应为 $-4\bm a\cdot\bm b=+12$）；三是把“投影”与“投影向量”混为一谈；四是误以为投影非负，忘记夹角为钝角时投影是负数。规避方法：凡见模先平方，用分配律展开；投影先写数量 $\dfrac{\bm a\cdot\bm b}{|\bm a|}$，再乘单位向量 $\dfrac{\bm a}{|\bm a|}$ 得投影向量。
+\end{solution}
+
+\section{投影最值与极化恒等式}
+
+\begin{problem}\level{中}
+设 $\bm a,\bm b$ 为平面向量，$|\bm a|=3$，$|\bm b|=4$。(1) 求 $\bm b$ 在 $\bm a$ 方向上的投影的取值范围；(2) 求 $|\bm a+\bm b|$ 的最大值与最小值；(3) 当投影取最大值时，求 $\bm a$ 与 $\bm b$ 的夹角。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+投影的最值只依赖“模 + 夹角”两个自由度：投影 $=|\bm b|\cos\theta$，由 $\theta\in[0,\pi]$ 立得范围；而 $|\bm a+\bm b|^2=|\bm a|^2+|\bm b|^2+2|\bm a||\bm b|\cos\theta$ 把同一个 $\cos\theta$ 线性放大，故两者最值同步。“知二求一”的本质是：知道 $|\bm a|,|\bm b|,\cos\theta$ 中任意两个，第三个量及其函数值即被确定。
+\paragraph{标准解题步骤}
+(1) 投影 $p=|\bm b|\cos\theta=4\cos\theta$，因 $\cos\theta\in[-1,1]$，故 $p\in[-4,4]$。
+(2) $|\bm a+\bm b|^2=9+16+24\cos\theta=25+24\cos\theta\in[1,49]$，故 $|\bm a+\bm b|\in[1,7]$；最大值 $7$ 在 $\cos\theta=1$ 时取得，最小值 $1$ 在 $\cos\theta=-1$ 时取得。
+(3) 投影取最大值 $\iff\cos\theta=1\iff\theta=0$，即 $\bm a$ 与 $\bm b$ 同向。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是忽略 $\theta\in[0,\pi]$ 时 $\cos\theta\in[-1,1]$，把投影范围误写成 $[0,4]$；二是求 $|\bm a+\bm b|$ 的最值时忘记开平方，直接把 $25+24\cos\theta$ 的最值 $49$ 与 $1$ 当作答案；三是误以为“投影最大时夹角最大”；四是不验证取等条件（$\cos\theta=\pm1$ 对应两向量平行，可以取到）。规避方法：把所有量统一写成 $\cos\theta$ 的一次函数，先定 $\cos\theta$ 范围，再回代求最值并注明取等条件。
+\end{solution}
+
+\begin{problem}\level{难}
+已知 $A(-2,0)$，$B(2,0)$，点 $P$ 在圆 $(x-3)^2+y^2=1$ 上运动。求 $\overrightarrow{PA}\cdot\overrightarrow{PB}$ 的最大值与最小值。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+$\overrightarrow{PA},\overrightarrow{PB}$ 共起点 $P$。取 $AB$ 的中点 $M$，由极化恒等式
+$\overrightarrow{PA}\cdot\overrightarrow{PB}=|\overrightarrow{PM}|^2-|\overrightarrow{MB}|^2$
+（由 $\overrightarrow{PA}=\overrightarrow{PM}+\overrightarrow{MA}$、$\overrightarrow{PB}=\overrightarrow{PM}+\overrightarrow{MB}$ 且 $\overrightarrow{MB}=-\overrightarrow{MA}$ 即得）。于是数量积的最值化归为 $|PM|$ 的最值——而 $P$ 在圆上，$|PM|$ 的最值即“圆心到 $M$ 的距离与半径的和差”。
+\paragraph{标准解题步骤}
+这里 $M=(0,0)$，$|MB|=2$；圆心 $C=(3,0)$，半径 $r=1$，$|MC|=3$。故 $|PM|\in[|MC|-r,|MC|+r]=[2,4]$。于是
+$\overrightarrow{PA}\cdot\overrightarrow{PB}=|PM|^2-4\in[2^2-4,4^2-4]=[0,12]$。
+最大值为 $12$（$P=(4,0)$），最小值为 $0$（$P=(2,0)$）。检验：$P=(2,0)$ 时 $\overrightarrow{PA}=(-4,0)$，$\overrightarrow{PB}=(0,0)$，数量积为 $0$，符合。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是记错极化恒等式的符号，写成 $|PM|^2+|MB|^2$；二是求 $|PM|$ 范围时忽略 $P$ 被限制在圆上，误把下界当成 $0$；三是把 $|PM|$ 的最值直接当成答案，忘记平方后再减去 $|MB|^2=4$；四是求出最值不指明取等点，无法验证。规避方法：固定流程——取中点、写极化式、转化为“圆心距 $\pm$ 半径”，最后代回原式。
+\end{solution}
+
+\section{向量与三角形、函数综合}
+
+\begin{problem}\level{中}
+在 $\triangle ABC$ 中，记 $|\overrightarrow{AB}|=c=3$，$|\overrightarrow{AC}|=b=4$，且 $\overrightarrow{AB}\cdot\overrightarrow{AC}=6$。(1) 求角 $A$ 的大小；(2) 求边 $a=BC$ 的长与 $\triangle ABC$ 的面积。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+数量积定义 $\overrightarrow{AB}\cdot\overrightarrow{AC}=bc\cos A$ 正是余弦定理的“半边”：余弦定理 $a^2=b^2+c^2-2bc\cos A$ 可改写为 $2\overrightarrow{AB}\cdot\overrightarrow{AC}=b^2+c^2-a^2$。于是向量条件与解三角形条件可以互译：给数量积等价于给 $b^2+c^2-a^2$；面积则由 $\sin A$ 读出，且 $A\in(0,\pi)$ 保证 $\sin A>0$。
+\paragraph{标准解题步骤}
+(1) $\cos A=\dfrac{\overrightarrow{AB}\cdot\overrightarrow{AC}}{bc}=\dfrac{6}{3\times4}=\dfrac12$，又 $A\in(0,\pi)$，故 $A=\dfrac{\pi}{3}$。
+(2) 由余弦定理 $a^2=b^2+c^2-2bc\cos A=16+9-2\times6=13$，故 $a=\sqrt{13}$；面积 $S=\dfrac12bc\sin A=\dfrac12\times12\times\dfrac{\sqrt3}{2}=3\sqrt3$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把数量积公式颠倒为 $\dfrac{bc}{\overrightarrow{AB}\cdot\overrightarrow{AC}}$；二是写出 $\cos A=\dfrac12$ 后不说明 $A\in(0,\pi)$ 的依据；三是余弦定理中 $-2bc\cos A$ 的符号处理错（已知数量积时等价于 $a^2=b^2+c^2-2\overrightarrow{AB}\cdot\overrightarrow{AC}$）；四是面积公式漏掉 $\dfrac12$ 或用错角。规避方法：把向量等式与正、余弦定理并排书写，做“翻译”而非硬算。
+\end{solution}
+
+\begin{problem}\level{中}
+对平面向量 $\bm a=(x_1,y_1)$，$\bm b=(x_2,y_2)$，定义叉积（外积）$\bm a\times\bm b=x_1y_2-x_2y_1$（即相应的行列式）。(1) 说明 $|\bm a\times\bm b|$ 等于以 $\bm a,\bm b$ 为邻边的平行四边形的面积，并解释 $\bm a\times\bm b$ 的符号的几何意义；(2) 已知 $\bm a=(3,-2)$，$\bm b=(1,4)$，求以 $\bm a,\bm b$ 为邻边的平行四边形的面积与三角形的面积；(3) 已知 $O(0,0)$，$P(2,1)$，$Q(1,3)$，求 $\triangle OPQ$ 的面积，并由 $\overrightarrow{OP}\times\overrightarrow{OQ}$ 的符号判断 $Q$ 在直线 $OP$ 的哪一侧。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+叉积的行列式定义正是“底 $\times$ 高”的坐标化：由拉格朗日恒等式 $|\bm a|^2|\bm b|^2=(\bm a\cdot\bm b)^2+(\bm a\times\bm b)^2$ 与 $\bm a\cdot\bm b=|\bm a||\bm b|\cos\theta$，得 $|\bm a\times\bm b|=|\bm a||\bm b|\,|\sin\theta|$，恰为平行四边形面积。符号由旋转方向决定：为正表示从 $\bm a$ 转向 $\bm b$ 是逆时针（$\bm b$ 在 $\bm a$ 左侧），为负则相反。三角形面积 $S=\dfrac12|\bm a\times\bm b|$。
+\paragraph{标准解题步骤}
+(1) 设夹角为 $\theta$，则 $|\bm a||\bm b|\,|\sin\theta|$ 即平行四边形面积；代入恒等式即得 $|\bm a\times\bm b|=|\bm a||\bm b|\,|\sin\theta|$，符号意义如上。
+(2) $\bm a\times\bm b=3\times4-(-2)\times1=14$，平行四边形面积为 $14$，三角形面积为 $7$。
+(3) $\overrightarrow{OP}\times\overrightarrow{OQ}=2\times3-1\times1=5>0$，故 $S_{\triangle OPQ}=\dfrac52$；符号为正说明 $Q$ 在直线 $OP$ 的左侧（从 $\overrightarrow{OP}$ 逆时针转向 $\overrightarrow{OQ}$）。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把叉积与数量积混淆，写成 $x_1x_2+y_1y_2$；二是忘记三角形面积要取 $\dfrac12|\bm a\times\bm b|$ 的绝对值；三是左右侧判断颠倒，可用特例校准：$\bm a=(1,0)$ 时 $\bm a\times\bm b=y_2$，$\bm b$ 在上方应为正；四是误以为叉积超纲——用坐标行列式求面积在解三角形中完全可用。规避方法：记住“叉积管面积与方向，数量积管投影与夹角”，符号用 $\bm a=(1,0)$ 的特例验证。
+\end{solution}
+
+\begin{problem}\level{中}
+设 $\bm a=(\cos x,\sin x)$，$\bm b=(\sqrt3,-1)$。(1) 求 $\bm a\cdot\bm b$ 的最大值与最小值；(2) 若点 $P(X,Y)$ 满足 $\overrightarrow{OP}=\bm a+\bm b$，求点 $P$ 的轨迹方程；(3) 求 $|\overrightarrow{OP}|$ 的取值范围。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+$\bm a$ 是旋转的单位向量，$\bm a\cdot\bm b$ 等于 $|\bm b|$ 乘以 $\bm b$ 在 $\bm a$ 方向上的投影，随 $x$ 周期变化，用辅助角公式可化为单个余弦。$\overrightarrow{OP}=\bm a+\bm b$ 表示“单位圆的圆心平移到点 $\bm b$”，故 $P$ 的轨迹仍是半径 $1$ 的圆；$|\overrightarrow{OP}|$ 的最值由“圆心距 $\pm$ 半径”一步得到。向量、三角与圆在此是同一对象的三种语言。
+\paragraph{标准解题步骤}
+(1) $\bm a\cdot\bm b=\sqrt3\cos x-\sin x=2\cos\left(x+\dfrac{\pi}{6}\right)$，故最大值为 $2$（$x=-\dfrac{\pi}{6}+2k\pi$），最小值为 $-2$（$x=\dfrac{5\pi}{6}+2k\pi$）。
+(2) $\overrightarrow{OP}=(\cos x+\sqrt3,\ \sin x-1)$，即 $X=\cos x+\sqrt3$，$Y=\sin x-1$，消去 $x$ 得 $(X-\sqrt3)^2+(Y+1)^2=1$。
+(3) $|\overrightarrow{OP}|^2=|\bm a|^2+|\bm b|^2+2\,\bm a\cdot\bm b=1+4+4\cos\left(x+\dfrac{\pi}{6}\right)=5+4\cos\left(x+\dfrac{\pi}{6}\right)\in[1,9]$，故 $|\overrightarrow{OP}|\in[1,3]$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是辅助角公式写错（应为 $2\cos\left(x+\dfrac{\pi}{6}\right)$，有人误作 $2\cos\left(x-\dfrac{\pi}{6}\right)$）；二是轨迹平移方向写反（应为向右 $\sqrt3$、向下 $1$）；三是求模的范围时忽略 $\bm a$ 方向可变，直接对 $|\bm a|,|\bm b|$ 做算术加减；四是 $|\bm b|^2=4$ 与 $2\,\bm a\cdot\bm b$ 的振幅 $4$ 混淆，导致范围算错。规避方法：识别“定向量 $+$ 旋转单位向量 $=$ 平移圆”，最值用圆心距与半径的和差。
+\end{solution}
+
+\section{空间向量与立体几何}
+
+\begin{problem}\level{易}
+在棱长为 $1$ 的正方体 $ABCD-A_1B_1C_1D_1$ 中，以 $D$ 为原点，$\overrightarrow{DA},\overrightarrow{DC},\overrightarrow{DD_1}$ 的方向分别为 $x,y,z$ 轴的正方向建立空间直角坐标系。(1) 求 $\overrightarrow{AC_1}$ 的坐标与模；(2) 判断直线 $AC_1$ 与 $BD$ 的位置关系并说明理由；(3) 设 $E$ 为 $CC_1$ 的中点，求 $|\overrightarrow{AE}|$。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+空间向量坐标化的实质是把几何对象全部翻译成 $\mathbb R^3$ 中的数组与运算：点对应坐标，向量对应坐标之差，模对应坐标平方和开方，垂直对应数量积为零。取两两垂直的三条棱作坐标轴，是最常用的“自然坐标系”。
+\paragraph{标准解题步骤}
+各点坐标：$A(1,0,0)$，$B(1,1,0)$，$C(0,1,0)$，$D(0,0,0)$，$C_1(0,1,1)$。
+(1) $\overrightarrow{AC_1}=(-1,1,1)$，$|\overrightarrow{AC_1}|=\sqrt{1+1+1}=\sqrt3$。
+(2) $\overrightarrow{BD}=(-1,-1,0)$，$\overrightarrow{AC_1}\cdot\overrightarrow{BD}=(-1)\times(-1)+1\times(-1)+1\times0=0$，故 $AC_1\perp BD$。
+(3) $E\left(0,1,\dfrac12\right)$，$\overrightarrow{AE}=\left(-1,1,\dfrac12\right)$，$|\overrightarrow{AE}|=\sqrt{1+1+\dfrac14}=\dfrac32$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是坐标写错，尤其混淆 $C_1$ 与 $B_1$（$C_1$ 在 $C$ 的正上方）；二是向量坐标“终点减起点”时顺序颠倒；三是判断垂直时仅凭直觉，不用数量积为零验证；四是求模时算术出错（$\sqrt{\dfrac94}=\dfrac32$）。规避方法：先写出全部用到的点的坐标，再逐一作差；每个几何结论都用坐标运算验证。
+\end{solution}
+
+\begin{problem}\level{中}
+在棱长为 $1$ 的正方体 $ABCD-A_1B_1C_1D_1$ 中，求直线 $AB_1$ 与对角面 $A_1B_1CD$ 所成角的大小。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+线面角的向量公式：设直线方向向量为 $\bm s$，平面法向量为 $\bm n$，线面角为 $\theta$，则 $\sin\theta=\dfrac{|\bm s\cdot\bm n|}{|\bm s||\bm n|}$（线面角与“方向向量—法向量”的夹角互余，故正弦化余弦）。关键步骤是“找法向量”：平面内两条相交直线的方向向量作叉积即得。
+\paragraph{标准解题步骤}
+建系同第 7 题：$A(1,0,0)$，$B_1(1,1,1)$，$A_1(1,0,1)$，$C(0,1,0)$，$D(0,0,0)$。平面 $A_1B_1CD$ 过点 $D$，且含 $\overrightarrow{DA_1}=(1,0,1)$ 与 $\overrightarrow{DC}=(0,1,0)$，法向量 $\bm n=\overrightarrow{DA_1}\times\overrightarrow{DC}=(-1,0,1)$。直线方向向量 $\bm s=\overrightarrow{AB_1}=(0,1,1)$。故
+$\sin\theta=\dfrac{|\bm s\cdot\bm n|}{|\bm s||\bm n|}=\dfrac{|0+0+1|}{\sqrt2\cdot\sqrt2}=\dfrac12$。
+又 $\theta\in\left[0,\dfrac{\pi}{2}\right]$，故 $\theta=30^\circ$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是误用 $\cos\theta$ 代替 $\sin\theta$（线面角与“方向向量—法向量”夹角互余）；二是法向量算错，叉积分量漏项；三是忘记 $\theta$ 的范围是 $\left[0,\dfrac{\pi}{2}\right]$，把角写成补角；四是法向量取反后不取绝对值，得到负的正弦。规避方法：记口诀“线面角正弦连法向量，二面角余弦连法向量”，再由角的范围取舍。
+\end{solution}
+
+\begin{problem}\level{难}
+在四棱锥 $P-ABCD$ 中，底面 $ABCD$ 是边长为 $1$ 的正方形，$PA\perp$ 底面 $ABCD$，且 $PA=1$。求二面角 $B-PC-D$ 的大小，并说明如何判断其锐、钝。
+\end{problem}
+\begin{solution}
+\paragraph{向量结构剖析}
+二面角可由两个半平面的法向量夹角给出，但两者“相等或互补”——这正是本题的陷阱。可靠判据：令两个法向量同时指向几何体外部（或同时指向内部），则二面角 $=\pi-$ 两法向量的夹角；若方向取得一内一外，则相等。也可放弃法向量，直接在棱 $PC$ 上取点，于两个半平面内分别作 $PC$ 的垂线，作出二面角的平面角。
+\paragraph{标准解题步骤}
+建系：$A(0,0,0)$，$B(1,0,0)$，$C(1,1,0)$，$D(0,1,0)$，$P(0,0,1)$。平面 $PBC$ 中，$\overrightarrow{PB}=(1,0,-1)$，$\overrightarrow{PC}=(1,1,-1)$，法向量 $\bm n_1=\overrightarrow{PB}\times\overrightarrow{PC}=(1,0,1)$，指向四棱锥外部。平面 $PCD$ 中，$\overrightarrow{PC}=(1,1,-1)$，$\overrightarrow{PD}=(0,1,-1)$，法向量 $\bm n_2=\overrightarrow{PC}\times\overrightarrow{PD}=(0,1,1)$，亦指向外部。于是
+$\cos\langle\bm n_1,\bm n_2\rangle=\dfrac{\bm n_1\cdot\bm n_2}{|\bm n_1||\bm n_2|}=\dfrac{1}{\sqrt2\cdot\sqrt2}=\dfrac12$。
+因两法向量同指外部，二面角 $B-PC-D=\pi-60^\circ=120^\circ$（钝角，从图形看两个面沿 $PC$ 张得较开，也可用作平面角的方法复核）。
+\paragraph{学生典型易错点诊断}
+最常见错误是直接写 $\arccos\dfrac12=60^\circ$，把法向量夹角当成二面角；二是不判断锐钝，盲目取锐角；三是两个法向量一个指内一个指外，得出互补的错误答案而不自知；四是建系原点选取不当，平添计算量。规避方法：法向量同取“指向体外”（或同取指向体内），套公式“二面角 $=\pi-$ 法向量夹角”，并用作平面角的方法或几何直观复核。
+\end{solution}

@@ -1,0 +1,30 @@
+digraph flow_exp_log {
+  rankdir = TB;
+  fontname = "Noto Sans CJK SC";
+  node [fontname="Noto Sans CJK SC", fontsize=11, shape=box,
+        style="rounded,filled", margin="0.14,0.09"];
+  edge [fontname="Noto Sans CJK SC", fontsize=10, color="#757575",
+        fontcolor="#616161", arrowsize=0.8];
+
+  start [label="开始", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+  type [label="判断类型\n指数还是对数？", shape=diamond, fillcolor="#FFF3E0", color="#EF6C00"];
+  samebase [label="化成同底\na^x 与 a^t 比较", fillcolor="#E3F2FD", color="#1565C0"];
+  domain [label="先写定义域\n真数 > 0，分母 ≠ 0", fillcolor="#E3F2FD", color="#1565C0"];
+  base [label="底数 a 与 1 比较", shape=diamond, fillcolor="#FFF3E0", color="#EF6C00"];
+  up [label="a > 1：单调递增\n不等号方向不变", fillcolor="#E8F5E9", color="#2E7D32"];
+  down [label="0 < a < 1：单调递减\n不等号方向反向", fillcolor="#FFEBEE", color="#C62828"];
+  solve [label="解出 x 的范围", fillcolor="#E3F2FD", color="#1565C0"];
+  inter [label="与定义域取交集", fillcolor="#E3F2FD", color="#1565C0"];
+  out [label="写出解集", shape=ellipse, fillcolor="#FFF9C4", color="#F9A825"];
+
+  start -> type;
+  type -> samebase [label="指数"];
+  type -> domain [label="对数"];
+  samebase -> base;
+  domain -> base;
+  base -> up [label="a > 1"];
+  base -> down [label="0 < a < 1"];
+  up -> solve;
+  down -> solve;
+  solve -> inter -> out;
+}

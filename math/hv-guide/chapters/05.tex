@@ -1,0 +1,836 @@
+% 高观点导学案：数列与离散动态系统（第 5 章·高观点版）
+% 主线：差分与求和互逆（离散微积分）→ 递推即离散动力系统（不动点与蛛网图）→ 线性递推与特征值（矩阵同构）
+%       → Abel 变换（错位相减的机械化）→ 共轭变换（不动点为何生效）→ 生成函数（强基拓展，超出考纲）
+% 核心思想：数列不是公式的仓库，而是离散动力系统在时间轴上的轨迹；解题的本质是换坐标系，
+%           把陌生递推化为等比／等差／代数方程。
+
+\section{数列与离散动态系统（高观点版）}
+
+\begin{methodbox}{多框架对读}
+\small
+\begin{center}
+\begin{tabular}{c|p{2.9cm}|p{5.0cm}|p{3.1cm}}
+\toprule
+视角 & 本章看点 & 别的视角怎么说 & 哪侧最省力 \\
+\midrule
+代数 & 通项公式、求和与差分 & 符号对象的恒等变形 & 硬算、裂项、Abel \\
+几何 & 蛛网图与特征螺线 & 轨迹在坐标平面上的形状 & 看收敛、猜极限 \\
+集合 & $\mathbb{N}\to\mathbb{R}$ 的离散函数 & 轨道是值的集合 & 审定义域与边界 \\
+映射 & $x_{n+1}=F(x_n)$、共轭变换 & 换坐标系＝换表示 & 非线性 $\to$ 等比／等差 \\
+\bottomrule
+\end{tabular}
+\end{center}
+卡的使用：递推题先问「这是哪个映射的自迭代」，再决定搬去几何还是代数（总图见第 0 章图~\ref{fig:four-view-map}）。
+\end{methodbox}
+
+第 3 章把向量确立为「几何空间代数化」的通用语言，第 4 章用仿射变换打通了圆锥曲线的维度壁垒；
+本章回到最朴素的对象——数列，把它从「套公式」升级为「离散动力系统 $+$ 降维变换」：
+数列是定义域为 $\mathbb{N}^*$ 的离散函数，递推是离散时间的状态演化，求和与差分是离散的微积分，
+而不动点、特征值、共轭、Abel、生成函数则是把复杂递推「降维」成等比／等差／代数方程的变换。
+六个模块层层展开：
+\key{差分与求和互逆}（离散版微积分基本定理，由 $S_n$ 反求通项、差分降次）$\to$
+\key{递推即离散动力系统}（不动点、蛛网图、$|f'(x^*)|$ 稳定性判据）$\to$
+\key{线性递推与特征值}（转移矩阵 $\begin{pmatrix}0&1\\q&p\end{pmatrix}$、特征方向即不动点方向）$\to$
+\key{Abel 变换}（错位相减的机械化，与分部积分互译）$\to$
+\key{共轭变换}（不动点为何生效：换坐标系、莫比乌斯分式）$\to$
+\key{生成函数}（强基拓展，\key{超出高考考纲}）。
+核心思想：\key{数列不是公式的仓库，而是离散动力系统在时间轴上的轨迹；解题的本质是换坐标系，把陌生递推化为等比／等差。}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 理解前向差分 $\Delta a_n=a_{n+1}-a_n$ 与求和 $\sum$ 互为逆运算，掌握离散版微积分基本定理 $\sum_{k=1}^n\Delta a_k=a_{n+1}-a_1$，会由和式 $S_n$ 反求通项；
+  \item 理解「差分降次」与导数降次的类比，会看差分表判断通项的次数；
+  \item 会把一阶递推 $a_{n+1}=f(a_n)$ 看作离散动力系统，会解不动点 $x^*=f(x^*)$、画蛛网图，并用 $|f'(x^*)|$ 判稳定性（$<1$ 吸引、$>1$ 排斥）；
+  \item 掌握二阶线性递推的特征方程 $\lambda^2-p\lambda-q=0$，理解它与转移矩阵 $\begin{pmatrix}0&1\\q&p\end{pmatrix}$ 的特征值同构，特征方向即分式递推的不动点方向；
+  \item 会用 Abel 变换 $\sum_{k=1}^na_kb_k=a_nB_n-\sum_{k=1}^{n-1}(a_{k+1}-a_k)B_k$ 机械化求「等差 $\times$ 等比」型求和；
+  \item 理解共轭变换（换坐标系）是不动点法生效的底层原因，会作 $b_n=a_n-x^*$ 的等比化与 $\dfrac{a_n-p}{a_n-q}$ 的分式化；
+  \item 了解生成函数 $G(x)=\sum a_nx^n$（\key{超出高考考纲，仅竞赛／强基}）。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection*{知识回顾}
+\begin{itemize}
+  \item 等差数列的通项公式是 \blank，前 $n$ 项和公式是 \blank；
+  \item 等比数列的通项公式是 \blank，前 $n$ 项和公式是 \blank；
+  \item 设 $S_n$ 是数列 $\{a_n\}$ 的前 $n$ 项和，则 $n\ge2$ 时 $a_n=$ \blank，且必须单独验证 \blank；
+  \item 函数 $y=f(x)$ 的图像与直线 $y=x$ 的交点横坐标满足方程 \blank。
+\end{itemize}
+
+\subsection*{教材速读}
+阅读「数列」一章教材，完成下列问题：
+\begin{enumerate}
+  \item 由 $S_n$ 求 $a_n$ 的「分解式」$a_n=\begin{cases}S_1,&n=1\\ S_n-S_{n-1},&n\ge2\end{cases}$ 中，$n=1$ 时 \blank（填「需要」或「不需要」）单独检验；
+  \item 一阶线性递推 $a_{n+1}=pa_n+q\ (p\ne1)$ 的不动点 $x^*$ 满足 $x^*=$ \blank；
+  \item 斐波那契数列 $F_1=F_2=1,\ F_{n+2}=F_{n+1}+F_n$ 的特征方程是 \blank；
+  \item 「错位相减法」主要适用于 \blank 数列与 \blank 数列相乘型求和。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{差分与求和互逆：离散版微积分基本定理}
+
+\key{探究一：$\Delta$ 与 $\sum$ 是同一个东西的两面}
+
+\key{（1）前向差分：数列的「离散导数」。}
+定义
+\[
+  \Delta a_n=a_{n+1}-a_n .
+\]
+$\Delta$ 把数列 $\{a_n\}$ 映成新数列 $\{\Delta a_n\}$；二阶差分 $\Delta^2a_n=\Delta(\Delta a_n)=a_{n+2}-2a_{n+1}+a_n$，以此类推。
+以 $a_n=n^2$ 为例，列表如下：
+\[
+\begin{array}{c|ccccc}
+  n & 1 & 2 & 3 & 4 & 5 \\ \hline
+  a_n=n^2 & 1 & 4 & 9 & 16 & 25 \\
+  \Delta a_n & 3 & 5 & 7 & 9 & \\
+  \Delta^2a_n & 2 & 2 & 2 & &
+\end{array}
+\]
+一阶差分 $\Delta a_n=2n+1$ 是一次等差数列，二阶差分 $\Delta^2a_n=2$ 是常数——每差一次，次数降一次。
+
+\key{（2）差分与求和互逆：离散版微积分基本定理。}
+因为求和时中间项全部抵消（telescoping）：
+\[
+  \sum_{k=1}^{n}\Delta a_k=\sum_{k=1}^{n}(a_{k+1}-a_k)=a_{n+1}-a_1 .
+\]
+这就是离散版的「牛顿—莱布尼茨公式」：$\sum$ 与 $\Delta$ 互为逆运算。
+反过来，若已知前 $n$ 项和 $S_n=\sum_{k=1}^na_k$，则
+\[
+  a_n=S_n-S_{n-1}\quad(n\ge2),\qquad a_1=S_1 .
+\]
+所以「由和式反求通项」不是技巧，而是差分的逆运算；注意 $n=1$ 要单独检验。
+
+\key{（3）差分降次：类比导数。}
+若 $a_n$ 是 $k$ 次多项式，则 $\Delta a_n$ 是 $k-1$ 次多项式（类比 $(x^k)'=kx^{k-1}$）。由此得到判据：
+\key{若 $\Delta^2a_n$ 恒为常数，则 $a_n$ 是二次式；若 $\Delta a_n$ 是等差数列，则 $a_n$ 是二次数列}。
+差分表因此可以「降次」，把高次结构一层层剥成常数。
+
+\begin{example}
+已知 $S_n=n^2+2n$，求 $\{a_n\}$ 的通项公式。
+\end{example}
+\begin{solution}
+$a_1=S_1=1+2=3$；当 $n\ge2$ 时
+\[
+  a_n=S_n-S_{n-1}=(n^2+2n)-\bigl((n-1)^2+2(n-1)\bigr)=2n+1 .
+\]
+$n=1$ 时 $2n+1=3=S_1$，可并入，故
+\[
+  a_n=2n+1 .
+\]
+差分表视角：$\Delta a_n=2$ 为常数，故 $a_n$ 是一次等差数列，首项 $3$、公差 $2$。
+\end{solution}
+
+\begin{example}
+用「差分求和」求 $\sum_{k=1}^nk^2$。
+\end{example}
+\begin{solution}
+利用恒等式
+\[
+  (k+1)^3-k^3=3k^2+3k+1 ,
+\]
+左边正是 $k^3$ 的差分结构。对 $k=1,2,\dots,n$ 求和，左边 telescoping：
+\[
+  \sum_{k=1}^n\bigl((k+1)^3-k^3\bigr)=(n+1)^3-1 ,
+\]
+右边为
+\[
+  \sum_{k=1}^n(3k^2+3k+1)=3\sum_{k=1}^nk^2+\frac{3n(n+1)}2+n .
+\]
+联立解得
+\[
+  \sum_{k=1}^nk^2=\frac{n(n+1)(2n+1)}6 .
+\]
+关键：把 $k^2$ 写成「差分的展开」，求和就自动相消。
+\end{solution}
+
+\begin{conccard}[一级]{差分与求和互逆：$\Delta\leftrightarrow\sum$}{由 $S_n$ 反求通项、裂项相消、判断通项次数}{忘记 $n=1$ 单独检验；把 $\Delta a_n$ 的符号与 $a_n$ 的符号混同；误以为 $\Delta$ 保持多项式次数}
+$\Delta a_n=a_{n+1}-a_n$；$\sum_{k=1}^n\Delta a_k=a_{n+1}-a_1$（离散牛顿—莱布尼茨）；
+$a_n=S_n-S_{n-1}\ (n\ge2)$，$a_1=S_1$；
+$k$ 次多项式差分一次降一次，$\Delta^2a_n$ 为常数 $\iff a_n$ 为二次式。
+\end{conccard}
+
+\subsection{递推即离散动力系统：不动点与蛛网图}
+
+（不动点的统一理论——连续情形、几何变换与射影看法——见第 9 章；
+本节只取数列递推这一路应用。）
+
+\key{探究二：把 $a_{n+1}=f(a_n)$ 看成状态演化}
+
+\key{（1）离散动力系统。}
+数列 $\{a_n\}$ 是定义域为 $\mathbb{N}^*$ 的函数；一阶递推
+\[
+  a_{n+1}=f(a_n)
+\]
+表示：已知当前状态 $a_n$，下一步状态由同一个规则 $f$ 给出。重复作用 $f$ 就得到轨迹 $a_1,a_2,a_3,\dots$。
+这正是「离散时间、离散状态」的动力系统。
+
+\key{（2）不动点：系统的平衡态。}
+若
+\[
+  x^*=f(x^*),
+\]
+则从 $x^*$ 出发永远停在 $x^*$：$f(x^*)=x^*,f(f(x^*))=x^*,\dots$。
+几何上，$x^*$ 是曲线 $y=f(x)$ 与直线 $y=x$ 的交点横坐标。
+对 $a_{n+1}=pa_n+q\ (p\ne1)$，不动点为 $x^*=\dfrac{q}{1-p}$。
+
+\key{（3）蛛网图：把迭代画成阶梯。}
+画法：从 $x$ 轴上的 $a_1$ 出发，竖直画到曲线 $y=f(x)$ 得 $(a_1,a_2)$；水平画到直线 $y=x$ 得 $(a_2,a_2)$；
+再竖直画到曲线得 $(a_2,a_3)$；如此反复。折线像「蜘蛛网」一样阶梯式逼近或远离不动点。
+
+\key{（4）稳定性判据：$|f'(x^*)|$ 决定吸引还是排斥。}
+在不动点附近写 $a_n=x^*+\varepsilon_n$，则
+\[
+  \varepsilon_{n+1}=f(x^*+\varepsilon_n)-x^*\approx f'(x^*)\,\varepsilon_n .
+\]
+于是偏差按因子 $\lambda=f'(x^*)$ 缩放：
+\begin{itemize}
+  \item $|f'(x^*)|<1$：\key{吸引（稳定）}，偏差逐次缩小，轨迹收敛到 $x^*$；
+  \item $|f'(x^*)|>1$：\key{排斥（不稳定）}，偏差逐次放大，轨迹逃离 $x^*$；
+  \item $f'(x^*)<0$ 时偏差每步变号，轨迹\key{摆动}收敛；$0<f'(x^*)<1$ 时偏差不变号，轨迹\key{单调}收敛。
+\end{itemize}
+对线性 $f(x)=px+q$，近似就是精确：$b_{n+1}=pb_n$，即等比数列。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    % ---------- 左：吸引不动点 ----------
+    \begin{scope}[xshift=0cm]
+      \draw[->, gray] (-0.2,0)--(5.6,0) node[below right] {$x$};
+      \draw[->, gray] (0,-0.2)--(0,5.2) node[above left] {$y$};
+      \draw[gray!60, dashed] (-0.2,-0.2)--(5.2,5.2) node[right] {$y=x$};
+      \draw[main!70!black, very thick] (-0.1,1.95)--(5.4,4.7) node[right] {$y=\frac12x+2$};
+      \fill[second] (4,4) circle (1.8pt) node[above left] {$x^*=4$};
+      \draw[third!70!black, thick] (0.5,0)--(0.5,2.25)--(2.25,2.25)--(2.25,3.125)
+        --(3.125,3.125)--(3.125,3.5625)--(3.5625,3.5625);
+      \fill[third] (0.5,0) circle (1.2pt) node[below] {$a_1$};
+      \fill[third] (2.25,2.25) circle (1.2pt) node[below right] {$a_2$};
+      \fill[third] (3.125,3.125) circle (1.2pt) node[below right] {$a_3$};
+      \node[main!70!black] at (2.6,-1.0) {$|f'(4)|=\frac12<1$：阶梯收缩，收敛};
+    \end{scope}
+    % ---------- 右：排斥不动点 ----------
+    \begin{scope}[xshift=7.4cm]
+      \draw[->, gray] (-0.2,0)--(5.6,0) node[below right] {$x$};
+      \draw[->, gray] (0,-0.2)--(0,5.2) node[above left] {$y$};
+      \draw[gray!60, dashed] (-0.2,-0.2)--(5.2,5.2) node[right] {$y=x$};
+      \draw[main!70!black, very thick] (0.75,0)--(3.6,4.56) node[right] {$y=1.6x-1.2$};
+      \fill[second] (2,2) circle (1.8pt) node[above left] {$x^*=2$};
+      \draw[third!70!black, thick] (2.25,0)--(2.25,2.4)--(2.4,2.4)--(2.4,2.64)
+        --(2.64,2.64)--(2.64,3.024)--(3.024,3.024);
+      \fill[third] (2.25,0) circle (1.2pt) node[below] {$a_1$};
+      \fill[third] (2.64,2.64) circle (1.2pt) node[below right] {$a_3$};
+      \fill[third] (3.024,3.024) circle (1.2pt) node[below right] {$a_4$};
+      \node[main!70!black] at (2.6,-1.0) {$|g'(2)|=1.6>1$：阶梯放大，发散};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{蛛网图：从 $a_1$ 出发，竖直打到 $y=f(x)$、水平反射到 $y=x$，如此阶梯迭代。左图 $|f'(x^*)|<1$，阶梯收缩到不动点；右图 $|g'(x^*)|>1$，阶梯放大逃离不动点}
+  \label{fig:cobweb}
+\end{figure}
+
+\begin{example}
+设 $a_1=0,\ a_{n+1}=\dfrac12a_n+2$，求通项并判断数列的收敛性。
+\end{example}
+\begin{solution}
+不动点满足 $x^*=\frac12x^*+2$，解得 $x^*=4$。两式相减：
+\[
+  a_{n+1}-4=\frac12(a_n-4) .
+\]
+故 $\{a_n-4\}$ 是首项 $a_1-4=-4$、公比 $\frac12$ 的等比数列：
+\[
+  a_n-4=-4\left(\frac12\right)^{n-1}=-2^{3-n},
+  \qquad
+  a_n=4-2^{3-n} .
+\]
+因 $|f'(4)|=\frac12<1$，不动点 $4$ 吸引，$a_n\to4$（单调递增）。
+\end{solution}
+
+\begin{conccard}[二级]{不动点与稳定性：$|f'(x^*)|$ 判据}{一阶递推 $a_{n+1}=f(a_n)$ 的收敛性预判、蛛网图定性、线性化降维}{把「令 $a_{n+1}=a_n=x^*$」当成假设相邻项相等；解出 $x^*$ 不检验；对 $f'(x^*)$ 不存在或 $|f'(x^*)|=1$ 的临界情形乱下结论}
+不动点 $x^*=f(x^*)$ 是曲线 $y=f(x)$ 与 $y=x$ 的交点；
+$b_n=a_n-x^*$ 满足 $b_{n+1}\approx f'(x^*)b_n$；
+$|f'(x^*)|<1$ 吸引（稳定），$|f'(x^*)|>1$ 排斥（不稳定）；$f'(x^*)<0$ 摆动收敛。
+\end{conccard}
+
+\begin{commonerror}{不动点与稳定性判据的三个高频失误}
+\paragraph{失误一：以为「令 $a_{n+1}=a_n=x^*$」是假设相邻两项相等。}
+不动点 $x^*$ 是\key{解方程 $x^*=f(x^*)$ 得到的平衡点}，不是把相邻两项强行看成相等。
+它的真实作用是「作差消去常数项」（见探究五）。
+\paragraph{失误二：不验证 $x^*$ 是否真是不动点。}
+解出 $x^*$ 后必须回代 $f(x^*)=x^*$；尤其是分式递推，使分母为零的「解」要舍去。
+\paragraph{失误三：乱用 $|f'(x^*)|$ 判据。}
+该判据要求 $f$ 在 $x^*$ 附近可导且 $x^*$ 是不动点；对 $f'(x^*)$ 不存在（如 $f(x)=\sqrt x$ 在 $0$ 处）
+或 $|f'(x^*)|=1$ 的临界情形，结论要另行分析。
+\end{commonerror}
+
+\subsection{线性递推与特征值：状态向量与矩阵同构}
+
+\key{探究三：把递推升维成矩阵乘法}
+
+\key{（1）状态向量：二阶递推 $=$ 二维线性系统。}
+二阶线性递推
+\[
+  a_{n+2}=pa_{n+1}+qa_n
+\]
+等价于状态向量 $\mathbf v_n=\dbinom{a_n}{a_{n+1}}$ 的演化：
+\[
+  \binom{a_{n+1}}{a_{n+2}}
+  =\begin{pmatrix}0&1\\ q&p\end{pmatrix}\binom{a_n}{a_{n+1}}
+  =A\,\mathbf v_n .
+\]
+于是 $\mathbf v_n=A^{n-1}\mathbf v_1$：\key{递推的每一小步，都是矩阵 $A$ 的一次乘法}。
+矩阵 $A$ 的特征方程为
+\[
+  \det(\lambda I-A)=\begin{vmatrix}\lambda&-1\\-q&\lambda-p\end{vmatrix}
+  =\lambda^2-p\lambda-q=0 ,
+\]
+与递推的特征方程完全一致——这正是「递推特征方程」的矩阵来源。
+
+\key{（2）特征值决定通项结构。}
+设特征根为 $\lambda_1,\lambda_2$。
+\begin{itemize}
+  \item $\lambda_1\ne\lambda_2$：$a_n=c_1\lambda_1^{\,n-1}+c_2\lambda_2^{\,n-1}$；
+  \item $\lambda_1=\lambda_2=\lambda$（重根）：$a_n=(c_1+c_2n)\lambda^{\,n-1}$。
+\end{itemize}
+原理：特征向量方向在 $A$ 作用下只伸缩不变，故沿特征方向的「坐标」按 $\lambda^n$ 增长；
+两个特征方向张成状态空间，通项就是它们的线性组合。重根时出现 $n\lambda^{n-1}$ 项（类比 Jordan 块）。
+
+\key{（3）特征方向即不动点方向（射影视角）。}
+对分式递推（莫比乌斯变换）
+\[
+  x_{n+1}=\frac{ax_n+b}{cx_n+d}\quad(ad-bc\ne0),
+\]
+引入齐次坐标 $x_n=\dfrac{u_n}{v_n}$，则
+\[
+  \binom{u_{n+1}}{v_{n+1}}=\begin{pmatrix}a&b\\c&d\end{pmatrix}\binom{u_n}{v_n} .
+\]
+$x_n$ 不变（$x_{n+1}=x_n=x^*$）当且仅当 $\dbinom{x^*}{1}$ 是矩阵的特征向量：
+\[
+  \begin{pmatrix}a&b\\c&d\end{pmatrix}\binom{x^*}{1}=\lambda\binom{x^*}{1}
+  \iff ax^*+b=\lambda x^*,\ \ cx^*+d=\lambda .
+\]
+消去 $\lambda$ 即得分式不动点方程 $x^*=\dfrac{ax^*+b}{cx^*+d}$，且 $\lambda=cx^*+d$。
+若有两个相异特征值 $\lambda_1=cx_1+d,\lambda_2=cx_2+d$，则双不动点构造的公比正是 $\dfrac{\lambda_2}{\lambda_1}$（见探究五）。
+\key{结论：矩阵的特征方向（射影点）就是分式递推的不动点；特征值之比就是等比构造的公比。}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \draw[->, gray] (-4.6,0)--(4.6,0) node[below right] {$u$};
+    \draw[->, gray] (0,-1.5)--(0,3.3) node[above left] {$v$};
+    \draw[third, very thick] (-4.4,1)--(4.4,1) node[right] {$v=1$（投影数轴）};
+    % 两条特征方向直线都收在 $|y|\le 2.3$ 内，避免穿进底部说明
+    \draw[main!70!black, thick, dashed] (-2.0,-2.0)--(3.6,3.6) node[above right] {$v=u\ (\lambda_1=5)$};
+    \draw[second!70!black, thick, dashed] (3.9,-1.3)--(-3.9,1.3) node[above left] {$v=-\frac u3\ (\lambda_2=1)$};
+    \fill[main] (1,1) circle (1.8pt) node[above right] {$x_1=1$};
+    \fill[second] (-3,1) circle (1.8pt) node[below left] {$x_2=-3$};
+    \fill (0,0) circle (1pt) node[below left] {$O$};
+    \node[gray!70!black] at (0,-2.75) {$M=\begin{pmatrix}2&3\\1&4\end{pmatrix}$ 的两条特征方向直线与投影线 $v=1$ 的交点};
+  \end{tikzpicture}
+  \caption{射影同构：矩阵 $M=\begin{pmatrix}2&3\\1&4\end{pmatrix}$ 的特征方向 $v=u$、$v=-\frac u3$ 与投影线 $v=1$ 的交点，正是分式递推 $x_{n+1}=\frac{2x_n+3}{x_n+4}$ 的两个不动点 $x_1=1,\ x_2=-3$；公比 $=\lambda_2/\lambda_1=1/5$}
+  \label{fig:eigen-fixed}
+\end{figure}
+
+\begin{example}
+求递推 $a_{n+2}=3a_{n+1}-2a_n$ 在 $a_1=1,\ a_2=3$ 下的通项。
+\end{example}
+\begin{solution}
+这里 $p=3,\ q=-2$，转移矩阵
+\[
+  A=\begin{pmatrix}0&1\\-2&3\end{pmatrix},\qquad
+  \det(\lambda I-A)=\lambda^2-3\lambda+2=0
+  \Rightarrow \lambda_1=1,\ \lambda_2=2 .
+\]
+故设 $a_n=c_1\cdot1^{n-1}+c_2\cdot2^{n-1}$。由初值：
+\[
+  c_1+c_2=1,\qquad c_1+2c_2=3
+  \ \Rightarrow\ c_2=2,\ c_1=-1 .
+\]
+所以
+\[
+  a_n=2^n-1 .
+\]
+检验：$a_3=3a_2-2a_1=9-2=7=2^3-1$。$\surd$
+\end{solution}
+
+\begin{conccard}[二级]{特征值法：通项的终极统一模型}{二阶（及高阶）线性常系数递推、斐波那契类递推、重根情形}{特征方程写错符号（应为 $\lambda^2-p\lambda-q=0$）；重根时仍套用两个相异根的公式；初值代入时指数起点 $n-1$ 与 $n$ 混用}
+状态向量 $\mathbf v_n=\binom{a_n}{a_{n+1}}$，$\mathbf v_{n+1}=A\mathbf v_n$，$A=\begin{pmatrix}0&1\\q&p\end{pmatrix}$；
+特征方程 $\lambda^2-p\lambda-q=0$；
+$\lambda_1\ne\lambda_2$ 时 $a_n=c_1\lambda_1^{n-1}+c_2\lambda_2^{n-1}$；
+$\lambda_1=\lambda_2=\lambda$ 时 $a_n=(c_1+c_2n)\lambda^{n-1}$。
+\end{conccard}
+
+\subsection{Abel 变换：错位相减的机械化}
+
+\key{探究四：离散版分部积分}
+
+\key{（1）Abel 恒等式。}
+设 $B_k=\sum_{i=1}^kb_i$，$B_0=0$。则
+\[
+  \sum_{k=1}^na_kb_k=a_nB_n-\sum_{k=1}^{n-1}(a_{k+1}-a_k)B_k .
+\]
+推导如下：
+\[
+\begin{aligned}
+  \sum_{k=1}^na_kb_k
+  &=\sum_{k=1}^na_k(B_k-B_{k-1})
+  =\sum_{k=1}^na_kB_k-\sum_{k=1}^na_kB_{k-1}\\
+  &=a_nB_n+\sum_{k=1}^{n-1}a_kB_k-\sum_{k=2}^{n}a_kB_{k-1}
+  =a_nB_n-\sum_{k=1}^{n-1}(a_{k+1}-a_k)B_k .
+\end{aligned}
+\]
+
+\key{（2）与分部积分互译。}
+连续版 $\int u\,dv=uv-\int v\,du$；离散版把 $u\to a_k,\ dv\to b_k,\ v\to B_k,\ du\to \Delta a_k$：
+\[
+\begin{array}{c|c}
+  \text{分部积分} & \text{Abel 变换} \\ \hline
+  uv & a_nB_n \\
+  \displaystyle\int v\,du & \displaystyle\sum_{k=1}^{n-1}(a_{k+1}-a_k)B_k
+\end{array}
+\]
+记忆：\key{「乘积求和 $=$ 末端乘积 $-$ 差分乘部分和的求和」}。
+
+\key{（3）一次秒求「等差 $\times$ 等比」。}
+当 $a_k$ 等差时，$\Delta a_k=a_{k+1}-a_k=d$ 是常数；当 $b_k$ 等比时，$B_k$ 有现成公式。代入即得，无需「错位」。
+
+\begin{example}
+求 $S_n=\sum_{k=1}^n(2k-1)\cdot2^k$。
+\end{example}
+\begin{solution}
+取 $a_k=2k-1$（等差，$\Delta a_k=2$），$b_k=2^k$（等比，$B_k=2^{k+1}-2$）。由 Abel：
+\[
+\begin{aligned}
+  S_n&=a_nB_n-\sum_{k=1}^{n-1}2\cdot B_k\\
+  &=(2n-1)(2^{n+1}-2)-2\sum_{k=1}^{n-1}(2^{k+1}-2)\\
+  &=(2n-1)(2^{n+1}-2)-2\bigl(2^{n+1}-4-2(n-1)\bigr)\\
+  &=(2n-3)2^{n+1}+6 .
+\end{aligned}
+\]
+检验：$n=1$ 时 $S_1=1\cdot2=2$，公式 $(2-3)\cdot4+6=2$ $\surd$；
+$n=2$ 时 $S_2=2+12=14$，公式 $1\cdot8+6=14$ $\surd$。
+\end{solution}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, xscale=0.55, yscale=0.75]
+    % 坐标轴
+    \draw[->, gray] (-0.3,0)--(16.2,0) node[below right] {$B_k$};
+    \draw[->, gray] (0,-0.3)--(0,5.8) node[above left] {$a_k$};
+    % 阶梯柱：$\sum a_k b_k$
+    \fill[main!10] (0,0) rectangle (1,5);
+    \fill[main!10] (1,0) rectangle (3,4);
+    \fill[main!10] (3,0) rectangle (6,3);
+    \fill[main!10] (6,0) rectangle (10,2);
+    \fill[main!10] (10,0) rectangle (15,1);
+    \draw[main!60!black, thick] (0,0) rectangle (1,5);
+    \draw[main!60!black, thick] (1,0) rectangle (3,4);
+    \draw[main!60!black, thick] (3,0) rectangle (6,3);
+    \draw[main!60!black, thick] (6,0) rectangle (10,2);
+    \draw[main!60!black, thick] (10,0) rectangle (15,1);
+    % 大矩形 $a_nB_n$
+    \draw[second!70!black, thick, dashed] (0,0) rectangle (15,1);
+    \node[second!70!black] at (7.5,0.5) {$a_nB_n$};
+    % 橙色差值区域
+    \fill[second!14] (0,1) rectangle (1,5);
+    \fill[second!14] (1,1) rectangle (3,4);
+    \fill[second!14] (3,1) rectangle (6,3);
+    \fill[second!14] (6,1) rectangle (10,2);
+    % 标注
+    \foreach \x/\lab in {0/$B_0$,1/$B_1$,3/$B_2$,6/$B_3$,10/$B_4$,15/$B_5$}
+      \draw (\x,0.08)--(\x,-0.08) node[below] {\lab};
+    \node[main!70!black] at (0.5,2.5) {$a_1b_1$};
+    \node[main!70!black] at (2,2.5) {$a_2b_2$};
+    \node[main!70!black] at (4.5,2.5) {$a_3b_3$};
+    \node[main!70!black] at (8,2.5) {$a_4b_4$};
+    \node[main!70!black] at (12.5,2.5) {$a_5b_5$};
+    % 差值区域标注放在全图上方的空白带（阶梯最高点为 $y=5$）
+    \node[second!70!black] at (7.5,5.45) {差值区域：面积 $=\sum\limits_{k=1}^{4}(a_k-a_5)b_k=\sum\limits_{k=1}^{4}B_k=20$};
+  \end{tikzpicture}
+  \caption{Abel 变换面积示意（取 $a_k=6-k$，$b_k=k$，则 $B_k=\frac{k(k+1)}2$）：蓝色阶梯面积为 $\sum_{k=1}^5a_kb_k=35$；虚线大矩形面积为 $a_5B_5=15$；橙色差值区域面积为 $\sum_{k=1}^{4}B_k=1+3+6+10=20$。三者关系即 $\sum a_kb_k=a_nB_n+\sum_{k=1}^{n-1}(a_k-a_{k+1})B_k$}
+  \label{fig:abel-area}
+\end{figure}
+
+\begin{conccard}[一级]{Abel 变换：离散分部求和}{等差 $\times$ 等比求和、乘积型数列求和、数列不等式放缩}{把 $a_k$ 与 $b_k$ 角色用反；忘记 $B_0=0$；$n=1$ 时不检验公式退化}
+设 $B_k=\sum_{i=1}^kb_i$，则
+$\sum_{k=1}^na_kb_k=a_nB_n-\sum_{k=1}^{n-1}(a_{k+1}-a_k)B_k$；
+它是 $\int u\,dv=uv-\int v\,du$ 的离散版本；
+取 $a_k$ 为等差、$b_k$ 为等比，可三行写出求和。
+\end{conccard}
+
+\begin{commonerror}{错位相减与 Abel 变换的高频失误}
+\paragraph{失误一：错位相减时项数对不齐。}
+「$S_n$ 与 $qS_n$」相减时，错位后首尾会各多出一项，必须明确写出剩余的首项与末项再合并。
+\paragraph{失误二：忘记 $B_0=0$ 与 $n=1$ 的检验。}
+Abel 公式中 $B_0=0$；当 $n=1$ 时 $\sum_{k=1}^{n-1}$ 为空，公式退化为 $a_1B_1$，要单独验证。
+\paragraph{失误三：把 $a_k$ 与 $b_k$ 的角色用反。}
+公式中 $a_k$ 是被差分的那个（应选等差／简单数列），$b_k$ 是被求和的那个（应选等比／可求和的数列）。
+若反过来，$\Delta a_k$ 不再简单，公式失效。
+\end{commonerror}
+
+\subsection{共轭变换：不动点为何生效}
+
+\key{探究五：换坐标系，把复杂运动还原为缩放}
+
+\key{（1）不是「假设相邻两项相等」，而是「换原点」。}
+「令 $a_{n+1}=a_n=x^*$」只是记忆口诀。真实动作是：先解出平衡点 $x^*$，再令
+\[
+  b_n=a_n-x^* .
+\]
+则
+\[
+  b_{n+1}=a_{n+1}-x^*=f(a_n)-f(x^*)\approx f'(x^*)(a_n-x^*)=f'(x^*)b_n .
+\]
+对线性 $f(x)=px+q$，这是精确的：$b_{n+1}=pb_n$。
+几何上相当于把数轴原点从 $0$ 平移到 $x^*$：原来的「拉伸 $p$ 倍 $+$ 平移 $q$」复合运动，
+在新坐标系下变成纯粹的「以 $x^*$ 为中心的缩放」。这就是\key{共轭变换} $g=h^{-1}\circ f\circ h$（其中 $h(x)=x-x^*$）。
+
+\key{（2）一般情形：$\lambda=f'(x^*)$ 是线性化乘子。}
+即使 $f$ 非线性，在不动点附近也有
+\[
+  b_{n+1}=f(x^*+b_n)-x^*=f'(x^*)b_n+O(b_n^2),
+\]
+所以 $\lambda=f'(x^*)$ 控制偏差的衰减／放大——这正是探究二稳定性判据的来源。
+\key{不动点法生效的底层原因，就是「减去不动点」把非线性递推线性化为等比。}
+
+\key{（3）莫比乌斯分式：配 $\dfrac{a_n-p}{a_n-q}$。}
+对 $a_{n+1}=\dfrac{aa_n+b}{ca_n+d}$，设两个相异不动点 $x_1,x_2$。计算偏差：
+\[
+  a_{n+1}-x_1=\frac{(ad-bc)(a_n-x_1)}{(ca_n+d)(cx_1+d)},\qquad
+  a_{n+1}-x_2=\frac{(ad-bc)(a_n-x_2)}{(ca_n+d)(cx_2+d)} .
+\]
+两式相除，随 $n$ 变化的分母 $(ca_n+d)$ 恰好约去：
+\[
+  \frac{a_{n+1}-x_1}{a_{n+1}-x_2}
+  =\frac{cx_2+d}{cx_1+d}\cdot\frac{a_n-x_1}{a_n-x_2} .
+\]
+于是 $\left\{\dfrac{a_n-x_1}{a_n-x_2}\right\}$ 是等比数列，公比为 $\dfrac{cx_2+d}{cx_1+d}$。
+若只有一个重不动点 $x_0$，则取倒数：
+\[
+  \frac1{a_{n+1}-x_0}-\frac1{a_n-x_0}=\text{常数},
+\]
+化为等差数列。
+
+\begin{example}
+设 $a_1=2,\ a_{n+1}=\dfrac{2a_n+3}{a_n+4}$，求通项公式。
+\end{example}
+\begin{solution}
+不动点方程 $x=\dfrac{2x+3}{x+4}\Rightarrow x^2+2x-3=0\Rightarrow x_1=1,\ x_2=-3$。
+\[
+  \frac{a_{n+1}-1}{a_{n+1}+3}
+  =\frac{\dfrac{2a_n+3}{a_n+4}-1}{\dfrac{2a_n+3}{a_n+4}+3}
+  =\frac{a_n-1}{5a_n+15}
+  =\frac15\cdot\frac{a_n-1}{a_n+3} .
+\]
+故 $\left\{\dfrac{a_n-1}{a_n+3}\right\}$ 是首项 $\dfrac{2-1}{2+3}=\dfrac15$、公比 $\dfrac15$ 的等比数列：
+\[
+  \frac{a_n-1}{a_n+3}=\left(\frac15\right)^n
+  \ \Rightarrow\
+  a_n=\frac{5^n+3}{5^n-1} .
+\]
+检验：$n=1$ 时 $\dfrac{5+3}{5-1}=2$ $\surd$。
+\end{solution}
+
+\begin{conccard}[二级]{共轭变换：不动点为何生效}{一阶线性递推、分式（莫比乌斯）递推、嵌套迭代 $f^{(n)}(x^*)$}{把口诀「令 $a_{n+1}=a_n=x^*$」当成真的假设相邻项相等；双不动点时忘记检验 $x_1\ne x_2$；重不动点时仍强行作比}
+一阶线性：$b_n=a_n-x^*$，$b_{n+1}=f'(x^*)b_n$（精确）；
+一般情形：$b_{n+1}=f'(x^*)b_n+O(b_n^2)$，$\lambda=f'(x^*)$ 是线性化乘子；
+莫比乌斯双不动点：$\dfrac{a_n-x_1}{a_n-x_2}$ 等比，公比 $\dfrac{cx_2+d}{cx_1+d}$；
+重不动点：$\dfrac1{a_n-x_0}$ 等差。
+\end{conccard}
+
+\subsection{强基拓展：生成函数（超出高考考纲）}
+
+\key{探究六：把整个数列打包成一个函数}
+
+\key{温馨提示：本模块涉及形式幂级数，超出高考考纲，仅面向竞赛／强基与学有余力者。}
+
+\key{（1）生成函数：序列 $\to$ 幂级数。}
+定义
+\[
+  G(x)=\sum_{n\ge0}a_nx^n .
+\]
+它把无穷数列 $\{a_n\}$ 打包成一个形式幂级数：
+\begin{itemize}
+  \item 下标平移 $a_{n+1}$ 对应「除以 $x$ 并减去首项」：$\sum_{n\ge0}a_{n+1}x^n=\dfrac{G(x)-a_0}{x}$；
+  \item 递推关系对应 $G(x)$ 的代数方程；
+  \item 解出 $G(x)$ 再展开，$x^n$ 的系数就是 $a_n$。
+\end{itemize}
+
+\key{（2）例：斐波那契数列。}
+设 $F_0=0,\ F_1=1,\ F_{n+2}=F_{n+1}+F_n$，$G(x)=\sum_{n\ge0}F_nx^n$。则
+\[
+\begin{aligned}
+  G(x)&=x+\sum_{n\ge2}F_nx^n
+  =x+\sum_{n\ge2}(F_{n-1}+F_{n-2})x^n\\
+  &=x+x\sum_{n\ge2}F_{n-1}x^{n-1}+x^2\sum_{n\ge2}F_{n-2}x^{n-2}
+  =x+xG(x)+x^2G(x) .
+\end{aligned}
+\]
+故
+\[
+  G(x)=\frac{x}{1-x-x^2}
+  =\frac{x}{(1-\varphi x)(1-\psi x)},\qquad
+  \varphi=\frac{1+\sqrt5}{2},\ \psi=\frac{1-\sqrt5}{2} .
+\]
+部分分式分解：
+\[
+  G(x)=\frac1{\sqrt5}\left(\frac1{1-\varphi x}-\frac1{1-\psi x}\right)
+  =\frac1{\sqrt5}\sum_{n\ge0}(\varphi^n-\psi^n)x^n ,
+\]
+比较系数即得比内公式
+\[
+  F_n=\frac{\varphi^n-\psi^n}{\sqrt5} .
+\]
+同一个 $G(x)$ 还能给出组合意义（第 7 章）：$\dfrac1{1-x-x^2}$ 的系数是「用 $1\times1$ 与 $1\times2$ 骨牌铺满 $1\times n$ 棋盘」的方法数。
+
+\key{（3）适用边界。}
+生成函数擅长：线性递推（齐次／非齐次）、卷积型求和、组合计数（卡特兰数等）。
+它把「解递推」变成「解代数方程 $+$ 展开」，是强基与竞赛的核武器；
+但解答题若用此法，需补写合法的代数推导。
+
+\begin{conccard}[三级]{生成函数：递推 $\to$ 代数方程}{斐波那契等线性递推、非齐次递推、卷积与组合计数}{超出高考考纲，解答题不能直接套用；忘记首项 $a_0$ 导致平移错误；展开时忽略收敛域（形式幂级数只需形式运算）}
+$G(x)=\sum_{n\ge0}a_nx^n$；$\sum_{n\ge0}a_{n+1}x^n=\dfrac{G(x)-a_0}{x}$；
+由递推导出 $G(x)$ 的封闭形式，再展开读系数；
+斐波那契：$G(x)=\dfrac{x}{1-x-x^2}$，$F_n=\dfrac{\varphi^n-\psi^n}{\sqrt5}$。
+\end{conccard}
+
+\begin{method}[变换—求解—逆变换：本章五件降维武器]
+\begin{enumerate}
+  \item \key{换坐标系}：看到 $a_{n+1}=f(a_n)$，先解不动点 $x^*=f(x^*)$，作 $b_n=a_n-x^*$；
+  \item \key{升维}：看到高阶线性递推，写成状态向量 $\mathbf v_{n+1}=A\mathbf v_n$，求特征值；
+  \item \key{互逆}：看到求和，想差分 $\Delta$ 与裂项；看到乘积求和，想 Abel 变换；
+  \item \key{打包}：递推复杂时，用生成函数 $G(x)$ 把它变成代数方程（强基）；
+  \item \key{还原}：在新坐标系算完后，用逆变换 $h^{-1}$ 把答案翻回原数列，并检验首项与边界。
+\end{enumerate}
+\end{method}
+
+\begin{summary}
+本章把数列从「套公式」升级为「离散动力系统 $+$ 降维变换」：
+差分 $\Delta$ 与求和 $\sum$ 互为逆运算（离散版微积分基本定理），由 $S_n$ 反求 $a_n$、差分降次判断次数；
+一阶递推 $a_{n+1}=f(a_n)$ 是不动点迭代，$x^*=f(x^*)$ 是平衡态，蛛网图把迭代画成阶梯，$|f'(x^*)|<1$ 吸引、$>1$ 排斥；
+二阶线性递推对应转移矩阵 $\begin{pmatrix}0&1\\q&p\end{pmatrix}$，特征方程 $\lambda^2-p\lambda-q=0$ 决定通项结构，特征方向即分式递推的不动点方向；
+Abel 变换是离散分部积分，把「等差 $\times$ 等比」求和机械化；
+共轭变换（换坐标系）解释了不动点法为何生效：$b_n=a_n-x^*$ 把非线性递推线性化为等比；
+生成函数（强基拓展）把递推打包成代数方程。
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{2.1cm}p{4.9cm}p{4.2cm}p{1.9cm}}
+\toprule
+降维变换 & 核心操作 & 把什么变成什么 & 对应探究 \\
+\midrule
+差分 $\Delta$ & $\Delta a_n=a_{n+1}-a_n$ & 求和 $\to$ 相消；高次 $\to$ 低次 & 探究一 \\
+共轭（平移／分式） & $b_n=a_n-x^*$；$\dfrac{a_n-x_1}{a_n-x_2}$ & 拉伸$+$平移／非线性分式 $\to$ 等比／等差 & 探究二、五 \\
+特征值对角化 & $\mathbf v_{n+1}=A\mathbf v_n$ & 递推 $\to$ 特征值幂 & 探究三 \\
+Abel 变换 & $\sum a_kb_k=a_nB_n-\sum\Delta a_kB_k$ & 乘积求和 $\to$ 差分 $\times$ 部分和 & 探究四 \\
+生成函数 & $G(x)=\sum a_nx^n$ & 递推 $\to$ 代数方程 & 探究六 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{数列不是公式的仓库，而是离散动力系统的轨迹；解题的本质是换坐标系，把陌生递推化为等比／等差／代数方程。}
+\end{summary}
+
+\end{explore}
+
+% ---------- 跨章联动：降维双引擎（正文收尾；原在答案区之后，已前移） ----------
+\subsection{跨章方法论大一统：平移消常数，旋转消交叉项}
+
+前面第 4 章用\key{仿射}压缩椭圆回圆、第 8 章用\key{齐次化}处理条件最值，
+本章用\key{不动点}处理递推。它们看似分属三个板块，底层却是同一个动作：
+\key{当前的坐标原点没选好，方程里才拖着讨厌的常数尾巴}。把原点精准搬到
+锚点上，非齐次项会瞬间蒸发。
+
+\begin{conccard}[二级]{换坐标系的两步走}{适用于所有「带常数项」「带一次项」「带交叉项」的结构}{只背结论，不问原点该搬去哪}
+第一步\key{平移}（$x'=x-x_0,\ y'=y-y_0$）：把原点搬到不动点、对称中心或定点 $P$，利用「锚点自身满足方程」这一性质抵消常数项与一次项（第 8 章「手术刀之二」）；第二步\key{旋转}（乘以 $e^{i\theta}$）：把坐标轴对齐到主轴／特征方向，消灭二次交叉项 $Bxy$，并把复特征根的螺旋迭代还原为实数周期震荡。
+\end{conccard}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|p{2.8cm}|p{5.0cm}|p{5.4cm}|}
+\hline
+\textbf{对比维度} & \textbf{数列：不动点法} & \textbf{条件最值／圆锥曲线：齐次化（第 8 章）} \\
+\hline
+非齐次障碍 & 递推拖着常数尾巴：$a_{n+1}=pa_n+q$ & 平移到定点后仍剩一次项与常数项 \\
+\hline
+锚点满足的方程 & $x^*=px^*+q$ & $\dfrac{x_0^2}{a^2}+\dfrac{y_0^2}{b^2}=1$ \\
+\hline
+平移后发生了什么 & 令 $b_n=a_n-x^*$，得 $b_{n+1}=pb_n$，$q$ 归零 & 常数项化为 $\dfrac{x_0^2}{a^2}+\dfrac{y_0^2}{b^2}-1=0$，自动抵消 \\
+\hline
+剩下的纯粹结构 & 只含公比 $p$ 的等比缩放 & 只含斜率 $k=\dfrac{y'}{x'}$ 的一元二次方程 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{problem}[旋转 $45^\circ$：把 $xy=1$ 还原成标准双曲线]
+证明反比例函数 $xy=1$ 的图象是等轴双曲线，并写出其焦点位置。
+\end{problem}
+\begin{solution}
+将坐标轴逆时针旋转 $45^\circ$，即
+\[
+  x=\frac{\sqrt2}{2}(x'-y'),\qquad y=\frac{\sqrt2}{2}(x'+y') .
+\]
+代入 $xy=1$：
+\[
+  \frac{\sqrt2}{2}(x'-y')\cdot\frac{\sqrt2}{2}(x'+y')=1
+  \ \Longrightarrow\
+  \frac{x'^2}{2}-\frac{y'^2}{2}=1 .
+\]
+交叉项 $xy$ 变成了平方差：这正是以 $x'$ 轴为实轴的等轴双曲线，半实轴 $a=b=\sqrt2$，故 $c=\sqrt{a^2+b^2}=2$，焦点在新坐标系的 $(\pm2,0)$，也就是原坐标系的 $(\sqrt2,\sqrt2)$ 与 $(-\sqrt2,-\sqrt2)$。
+\end{solution}
+
+\begin{center}
+  \begin{tikzpicture}[x=1.05cm,y=1.05cm,>=stealth,font=\small]
+    \draw[->,white!55] (-3,0)--(3,0) node[right,white!70] {$x$};
+    \draw[->,white!55] (0,-3)--(0,3) node[above,white!70] {$y$};
+    % 旋转后的主轴
+    \draw[->,second,dashed,very thick] (-2.3,-2.3)--(2.5,2.5) node[above right,second] {\small $x'$（新实轴）};
+    \draw[->,second,dashed,very thick] (2.3,-2.3)--(-2.5,2.5) node[above left,second] {\small $y'$（新虚轴）};
+    \draw[->,second,thick] (1.1,0) arc (0:45:1.1);
+    \node[second] at (1.15,0.38) {\small $45^\circ$};
+    % 双曲线 xy=1 的两支
+    \draw[main,very thick,domain=0.42:2.6,samples=80,smooth] plot(\x,{1/\x});
+    \draw[main,very thick,domain=-2.6:-0.42,samples=80,smooth] plot(\x,{1/\x});
+    \node[main] at (1.9,1.15) {\small $xy=1$};
+    \node[white!70] at (0,-3.4) {\small 交叉项 $xy$ 与旋转 $45^\circ$ 后的新主轴 $x',y'$};
+  \end{tikzpicture}\\[0.3em]
+  {\small\itshape 同一曲线的两种读法：原坐标系下是交叉项方程 $xy=1$；把轴转 $45^\circ$ 后成为标准等轴双曲线 $\frac{x'^2}{2}-\frac{y'^2}{2}=1$}
+\end{center}
+
+\paragraph{第二步：旋转也管数列。} 当二阶递推 $a_{n+2}=pa_{n+1}+qa_n$ 的特征方程判别式 $\Delta<0$ 时，两根为共轭复数 $\lambda_{1,2}=r(\cos\theta\pm i\sin\theta)$。此时几何图像不再是沿直线趋近不动点，而是每步\key{缩放 $r$ 倍并旋转 $\theta$ 角}的对数螺线；通项写成
+\[
+  a_n=r^{\,n-1}\bigl(c_1\cos n\theta+c_2\sin n\theta\bigr) .
+\]
+$r=1$ 且 $\theta=\frac{2\pi}{T}$ 时数列退化为纯周期，例如 $a_{n+2}=a_{n+1}-a_n$ 的 $\lambda=e^{\pm i\frac{\pi}{3}}$，周期为 $6$。这与「把轴旋转到主轴方向」是同一件事：都是把耦合项转没。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, x=1.15cm, y=1.15cm]
+    \draw[->, gray] (-1.9,0)--(1.95,0);
+    \draw[->, gray] (0,-1.35)--(0,1.55);
+    % 迭代点 v0..v5（M = r R(40°)，r=0.8），相邻两点长度比 0.8、辐角差 40°
+    \coordinate (v0) at (1.5,0.2);
+    \coordinate (v1) at (0.8163,0.8942);
+    \coordinate (v2) at (0.0402,0.9679);
+    \coordinate (v3) at (-0.4733,0.6138);
+    \coordinate (v4) at (-0.6058,0.1327);
+    \coordinate (v5) at (-0.4394,-0.2302);
+    \fill (0,0) circle (1.2pt) node[below right] {$O$};
+    \draw[main, very thick] (v0)--(v1)--(v2)--(v3)--(v4)--(v5);
+    \foreach \i/\p/\pos in {0/v0/above right,1/v1/right,2/v2/above left,3/v3/left,4/v4/below left,5/v5/below}
+      \fill[second] (\p) circle (1.5pt) node[\pos] {$\mathbf v_{\i}$};
+    \node[gray!70!black, align=center] at (0,-1.15) {$M=rR(\theta)$，$r=0.8,\ \theta=40^\circ$：每步长度乘 $r$、方向加 $\theta$；\\$r<1$ 螺线收拢到唯一不动点 $O$，$r>1$ 远离，$r=1$ 且 $\theta=2\pi/T$ 时为周期 $T$};
+  \end{tikzpicture}
+  \caption{复特征值的迭代图像：$v_{n+1}=Mv_n$ 且 $M=rR(\theta)$ 时，每一步都把向量缩放 $r$ 倍并旋转 $\theta$ 角，点列沿螺线运动——这就是「实部控伸缩、虚部控旋转」的离散版本}
+  \label{fig:spiral-complex}
+\end{figure}
+
+\begin{commonerror}{卷面上禁止出现「由仿射变换知」「由极点极线知」}
+高观点只用于草稿纸预判答案与取等位置，答题卡上必须写考纲认可的初等推导（联立、韦达定理、作差构造等比）。详见附录~\ref{app:legal}。
+\end{commonerror}
+
+\begin{inclasstest}
+\begin{enumerate}
+  \item 设 $S_n=2n^2-n$，求数列 $\{a_n\}$ 的通项公式；\level{易}
+  \item 设 $a_1=1,\ a_{n+1}=2a_n+3$，求通项并判断 $\{a_n\}$ 是否收敛；\level{中}
+  \item 用 Abel 变换求 $\sum_{k=1}^nk\cdot2^k$；\level{中}
+  \item 求 $a_{n+2}=4a_{n+1}-4a_n$ 在 $a_1=1,\ a_2=4$ 下的通项（重根情形）。\level{中}
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection*{基础巩固}
+\begin{enumerate}
+  \item 已知 $\Delta a_n=2n+1$，且 $a_1=1$，求 $a_n$；
+  \item 证明 $\sum_{k=1}^n\Delta a_k=a_{n+1}-a_1$，并用它求 $\sum_{k=1}^n\dfrac1{k(k+1)}$。
+\end{enumerate}
+
+\subsection*{进阶提升}
+\begin{enumerate}
+  \item 用特征值法求 $a_{n+2}=2a_{n+1}+3a_n$ 在 $a_1=1,\ a_2=5$ 下的通项；
+  \item 设 $a_1=0,\ a_{n+1}=\dfrac{3a_n+1}{a_n+3}$，求通项公式。
+\end{enumerate}
+
+\subsection*{拓展探究}
+\begin{enumerate}
+  \item （强基／竞赛，超出高考考纲）设 $a_0=1,\ a_{n+1}=2a_n+1$，用生成函数求通项公式。
+\end{enumerate}
+
+\subsection*{教师版答案}
+\begin{solution}
+\textbf{基础 1：}由离散版微积分基本定理，
+\[
+  a_n=a_1+\sum_{k=1}^{n-1}\Delta a_k
+  =1+\sum_{k=1}^{n-1}(2k+1)
+  =1+2\cdot\frac{(n-1)n}2+(n-1)=n^2 .
+\]
+（检验：$n=1$ 时 $a_1=1$。）
+\end{solution}
+\begin{solution}
+\textbf{基础 2：}求和时中间项全部抵消：
+\[
+  \sum_{k=1}^n\Delta a_k=\sum_{k=1}^n(a_{k+1}-a_k)=a_{n+1}-a_1 .
+\]
+又 $\dfrac1{k(k+1)}=\dfrac1k-\dfrac1{k+1}=\Delta\!\left(-\dfrac1k\right)$，故
+\[
+  \sum_{k=1}^n\frac1{k(k+1)}
+  =\sum_{k=1}^n\Delta\!\left(-\frac1k\right)
+  =\left(-\frac1{n+1}\right)-(-1)=\frac n{n+1} .
+\]
+\end{solution}
+\begin{solution}
+\textbf{进阶 1：}$A=\begin{pmatrix}0&1\\3&2\end{pmatrix}$，特征方程
+\[
+  \lambda^2-2\lambda-3=0\Rightarrow\lambda_1=3,\ \lambda_2=-1 .
+\]
+设 $a_n=c_1\cdot3^{n-1}+c_2\cdot(-1)^{n-1}$，由 $a_1=1,\ a_2=5$：
+\[
+  c_1+c_2=1,\quad 3c_1-c_2=5
+  \ \Rightarrow\ c_1=\frac32,\ c_2=-\frac12 .
+\]
+故
+\[
+  a_n=\frac{3^n+(-1)^n}2 .
+\]
+（检验：$a_3=2\cdot5+3\cdot1=13=\frac{27-1}2$。）
+\end{solution}
+\begin{solution}
+\textbf{进阶 2：}不动点方程 $x=\dfrac{3x+1}{x+3}\Rightarrow x^2=1\Rightarrow x_1=1,\ x_2=-1$。
+\[
+  \frac{a_{n+1}-1}{a_{n+1}+1}
+  =\frac{(3a_n+1)-(a_n+3)}{(3a_n+1)+(a_n+3)}
+  =\frac{2a_n-2}{4a_n+4}
+  =\frac12\cdot\frac{a_n-1}{a_n+1} .
+\]
+首项 $\dfrac{0-1}{0+1}=-1$，故 $\dfrac{a_n-1}{a_n+1}=-\left(\dfrac12\right)^{n-1}$，解得
+\[
+  a_n=\frac{1-\left(\frac12\right)^{n-1}}{1+\left(\frac12\right)^{n-1}}
+  =\frac{2^{n-1}-1}{2^{n-1}+1} .
+\]
+（检验：$n=1$ 时 $a_1=0$；$n=2$ 时 $a_2=\frac13=\frac{3\cdot0+1}{0+3}$。）
+\end{solution}
+\begin{solution}
+\textbf{拓展：}设 $G(x)=\sum_{n\ge0}a_nx^n$。由 $a_{n+1}=2a_n+1$：
+\[
+  \frac{G(x)-a_0}{x}=2G(x)+\sum_{n\ge0}x^n=2G(x)+\frac1{1-x} .
+\]
+代入 $a_0=1$：
+\[
+  G(x)-1=2xG(x)+\frac{x}{1-x}
+  \ \Rightarrow\
+  G(x)(1-2x)=\frac1{1-x}
+  \ \Rightarrow\
+  G(x)=\frac1{(1-x)(1-2x)} .
+\]
+部分分式：
+\[
+  G(x)=\frac2{1-2x}-\frac1{1-x}
+  =\sum_{n\ge0}(2\cdot2^n-1)x^n
+  =\sum_{n\ge0}(2^{n+1}-1)x^n ,
+\]
+故 $a_n=2^{n+1}-1$。（检验：$a_0=1,\ a_1=3$。）
+\end{solution}
+
+\reading{拓展阅读 11}{数列：离散动力系统的轨迹}
+\end{afterclass}

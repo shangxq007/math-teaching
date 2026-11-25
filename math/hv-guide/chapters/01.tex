@@ -1,0 +1,862 @@
+% 高观点导学案：函数的概念与基本初等函数
+% 主线：有限离散关系 (A×B) → 连续二维区域 (R^2/不等式) → 函数曲线 y=f(x) → 基本初等函数
+% 全程三视角互译：代数有序数对集合 ↔ 几何坐标系点集 ↔ 映射箭头图
+
+\section{函数的概念与基本初等函数（高观点结构版）}
+
+\begin{methodbox}{多框架对读}
+\small
+\begin{center}
+\begin{tabular}{c|p{2.9cm}|p{5.0cm}|p{3.1cm}}
+\toprule
+视角 & 本章看点 & 别的视角怎么说 & 哪侧最省力 \\
+\midrule
+代数 & 解析式、复合与解方程 & 有序数对集合的坐标运算 & 变形与恒等式 \\
+几何 & 图象的平移／对称变换 & 坐标系中点集的移动 & 猜性质、定范围 \\
+集合 & 定义域、值域、$f:A\to B$ & 取值范围即约束集合 & 审边界、找反例 \\
+映射 & $y=f(x)$ 即对应法则 & 变换＝作用在图象上的映射 & 统一语言、整体搬迁 \\
+\bottomrule
+\end{tabular}
+\end{center}
+卡的使用：卡住时先判断自己站在哪一栏，再沿箭头换栏（总图见第 0 章图~\ref{fig:four-view-map}）。
+\end{methodbox}
+
+% ---------- 前置引入：舞台的诞生 ----------
+\subsection{前置引入：舞台的诞生——集合自身的四级进化}
+
+研究任何数学对象，现代数学靠两根支柱：\key{舞台}（集合自身的结构）与 \key{规则}（集合之间的映射）。本导学案主线一直在讲\key{规则}：$A\times B$ 中怎样挑点、怎样过滤出单值对应。但高中函数之所以拥有单调性、奇偶性、零点存在定理与导数，原因不在规则里，而在\key{舞台}上——定义域与值域选中的是哪种集合。
+
+\begin{conccard}[一级]{集合装了多少「装备」，函数就有多少性质}{适用于所有「新定义」与概念辨析题}{只背性质条款，不问性质从何而来}
+一般集合（例如 $\{\text{张三},\text{李四}\}$）只是一堆孤立元素：不能比大小，不能做加减，也没有「挨得很近」的概念。一旦把定义域与值域锁定在实数集 $\mathbb{R}$ 上，$\mathbb{R}$ 自带的三层结构便一次性注入函数。
+\end{conccard}
+
+\begin{itemize}
+  \item \level{Lv.1} \key{原始集合}——一袋散装弹珠。只有「属于」与「元素个数」，无法比大小、不能运算：既谈不上单调性，也画不出坐标系中的图象。
+  \item \level{Lv.2} \key{有序与代数集合}（$\mathbb{Z},\mathbb{Q}$）——排好队且能算账的刻度尺。\key{全序结构}（$x_1<x_2$ 可比大小）解锁\key{单调性与最值}；\key{代数运算与相反数}（$+,-,\times,\div$ 与 $-x$）解锁\key{奇偶性与周期性}。复数域 $\mathbb{C}$ 不能比大小，所以复变函数根本没有「单调递增」可言。
+  \item \level{Lv.3} \key{稠密但有孔的集合}（$\mathbb{Q}$）——布满微观针眼的筛子。任意两点之间仍有无穷多个点，却漏掉了 $\sqrt{2},\pi,e$ 等无数无理数。致命后果见图~\ref{fig:qline}：$f(x)=x^2-2$ 从负值升到正值时，正好从 $\sqrt{2}$ 的孔洞中漏过去，\key{根本没有零点}。
+  \item \level{Lv.4} \key{完备连续集合}（$\mathbb{R}$）——无缝焊接的实心金条。无理数填满全部孔洞，曲线无处可漏，\key{零点存在定理}（介值性）、极限以及「以直代曲」的导数才真正成为可能。
+\end{itemize}
+
+Lv.1 与 Lv.2 的差别不在元素本身，而在元素之间被装上了什么关系：前者只有「属于」与计数（图 \ref{fig:bag2axis} 左），后者多出了「谁大谁小」的全序与「怎么算账」的代数运算（图 \ref{fig:bag2axis} 右）。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=stealth,font=\small]
+    % ---------- 左：Lv.1 一袋散装弹珠（无序点集） ----------
+    \begin{scope}
+      \draw[gray!60,very thick,fill=main!8] (0,0) ellipse (2.25cm and 1.6cm);
+      \foreach \px/\py/\lab in {
+        -1.45/0.62/-2, -0.95/-0.88/-1, -0.42/0.28/-\tfrac12,
+        0.02/-0.55/0, 0.42/0.78/\tfrac12, 0.88/-0.18/1,
+        1.35/0.5/\tfrac32, 1.12/-1.0/2, -1.78/-0.32/\tfrac52}
+      {
+        \fill[second] (\px,\py) circle (0.075);
+        \node[gray!80,font=\scriptsize] at (\px+0.16,\py+0.16) {$\lab$};
+      }
+      \node at (0,-1.95) {\small 只有「属于」与元素个数};
+      \node[second] at (0,-2.42) {\small 不能比大小，也不能加减};
+    \end{scope}
+    % ---------- 右：Lv.2 带刻度的数轴（有序集合 Q） ----------
+    \begin{scope}[xshift=7.2cm]
+      \draw[->,gray,very thick] (-2.7,0)--(3.1,0) node[right,gray] {$x$};
+      \foreach \t in {-2,-1,0,1,2}
+        \draw[gray,thick] (\t,0.09)--(\t,-0.09);
+      \foreach \t in {-2,-1,0,1,2}
+        \node[gray,font=\scriptsize] at (\t,-0.34) {$\t$};
+      \foreach \t in {-2,-1,-0.5,0,0.5,1,1.5,2,2.5}
+        \fill[main] (\t,0) circle (0.05);
+      \node[third] at (0,1.15) {$(<)\quad +,\,-,\,\times,\,\div$};
+      \node at (0,-1.35) {\small 排好队且能算账的刻度尺};
+      \node[main] at (0,-1.82) {\small 全序解锁单调最值，运算解锁奇偶周期};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{从「属于」到「可比大小」：左为 Lv.1 原始集合——一袋散装弹珠，只有属于关系与元素个数，无法比大小、不能运算；右为 Lv.2 有序与代数集合——同一批元素排上带刻度的数轴 $\mathbb{Q}$，全序 $(<)$ 解锁单调性与最值，$+,-,\times,\div$ 与相反数解锁奇偶性与周期性}
+  \label{fig:bag2axis}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=0.92cm,y=0.92cm,>=stealth,font=\small]
+    % ---------- 左：有理数轴（穿孔） ----------
+    \begin{scope}
+      \draw[->,white!55] (-0.7,0)--(2.9,0) node[right,white!70] {$x$};
+      \foreach \x in {0.1,0.35,0.62,0.9,1.15,1.62,1.85,2.1,2.4,2.65}
+        \draw[second,fill=white] (\x,0) circle (0.042);
+      \draw[second,very thick,fill=white] (1.414,0) circle (0.075);
+      \node[second] at (1.414,-0.42) {\small $\sqrt{2}$（洞）};
+      \draw[main,thick,domain=0.55:2.0,samples=70,smooth] plot(\x,{\x*\x-2});
+      \node[main] at (1.45,2.30) {$y=x^2-2$};
+      \node[white!70] at (1.05,-2.02) {\small $\mathbb{Q}$：看似连续，实则满布针眼};
+      \node[second] at (1.05,-2.56) {\small 穿过空洞：无交点};
+    \end{scope}
+    % ---------- 右：实数轴（实心） ----------
+    \begin{scope}[xshift=7.6cm]
+      \draw[->,third,very thick] (-0.7,0)--(2.9,0) node[right,third] {$x$};
+      \foreach \x in {0.1,0.35,0.62,0.9,1.15,1.62,1.85,2.1,2.4,2.65}
+        \fill[third!70] (\x,0) circle (0.032);
+      \draw[main,thick,domain=0.55:2.0,samples=70,smooth] plot(\x,{\x*\x-2});
+      \fill[second] (1.414,0) circle (0.075);
+      \node[second] at (1.414,-0.42) {$(\sqrt{2},0)$};
+      \node[third] at (1.05,-2.02) {\small $\mathbb{R}$：无缝连续};
+      \node[second] at (1.05,-2.56) {\small 洞被填满：零点被迫现身};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{同一函数 $f(x)=x^2-2$ 在两种「舞台」上的命运：左，定义域取有理数集 $\mathbb{Q}$，曲线从 $\sqrt{2}$ 的空心孔洞中漏过，变号却无零点；右，定义域取实数集 $\mathbb{R}$，孔洞被无理数填满，零点 $(\sqrt{2},0)$ 必然出现}
+  \label{fig:qline}
+\end{figure}
+
+\subsubsection*{开场三问}
+\begin{enumerate}
+  \item 复数域 $\mathbb{C}$ 上能否定义「单调递增」？为什么？（提示：$\mathbb{C}$ 上有没有「小于」关系）\blank
+  \item 在有理数集 $\mathbb{Q}$ 上考察 $f(x)=x^2-3$：它满足 $f(1)<0<f(2)$，却没有零点。请用「孔洞」的语言解释。\blank
+  \item 狄利克雷函数 $D(x)=\begin{cases}1,&x\in\mathbb{Q}\\0,&x\in\mathbb{R}\setminus\mathbb{Q}\end{cases}$ 以任一非零有理数为周期，却没有最小正周期。它击穿了「周期函数一定有最小正周期」这句直觉——你能再举一句被它击穿的说法吗？\blank
+\end{enumerate}
+
+\begin{method}
+「看集合选武器」的反射：拿到一道涉及函数的题，先扫一眼定义域是哪类集合，再决定调用哪套工具——
+$\mathbb{N}^{*}$（离散有序）$\Rightarrow$ 差分、数学归纳法、不动点；
+$[a,b]\subseteq\mathbb{R}$（连续完备）$\Rightarrow$ 单调性、零点定理、导数局部线性化；
+$\mathbb{Q}$ 与 $\mathbb{R}\setminus\mathbb{Q}$ 混用 $\Rightarrow$ 立刻警觉稠密性与孔洞性，准备构造反例。
+\end{method}
+
+\begin{commonerror}{把「有界」当成「能取到最值」}
+$f(x)>a$ 在 $(0,1)$ 上恒成立，即使 $f$ 在该区间单调递增且 $\lim\limits_{x\to0^{+}}f(x)=2$，也只能推出 $a\le 2$ 而不是 $a<2$：端点取不到时，边界值扮演的是\key{下确界}而非最小值。这类「端点开合」丢分，考的正是实数的完备性。
+\end{commonerror}
+
+四级进化完成后，$\mathbb{R}$ 与自身作笛卡尔积，舞台张成连续平面（图 \ref{fig:r2plane}）——后续的二维区域与函数图象都落在这块舞台上。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=stealth,font=\small,scale=1.02]
+    \draw[third!35,dashed,thin] (-2.5,-2) grid (2.5,2);
+    \draw[->,gray,very thick] (-2.75,0)--(2.75,0) node[right,gray] {$x$};
+    \draw[->,gray,very thick] (0,-2.25)--(0,2.25) node[above,gray] {$y$};
+    \foreach \t in {-2,-1,1,2}{
+      \node[gray,font=\scriptsize] at (\t,-0.18) {$\t$};
+      \node[gray,font=\scriptsize] at (-0.2,\t) {$\t$};
+    }
+    \fill[main!12] plot[smooth cycle] coordinates {(0.1,-1.1) (1.5,-0.7) (2.05,0.35) (1.25,1.35) (-0.15,1.55) (-1.35,0.65) (-1.55,-0.6)};
+    \draw[main!70!black,very thick] plot[smooth cycle] coordinates {(0.1,-1.1) (1.5,-0.7) (2.05,0.35) (1.25,1.35) (-0.15,1.55) (-1.35,0.65) (-1.55,-0.6)};
+    \node[main!80!black] at (0.45,0.35) {二维区域（「面」）};
+    \fill[second] (1.414,0) circle (0.06);
+    \node[second,below right,font=\footnotesize] at (1.414,0) {$(\sqrt2,0)$};
+    \node[third,font=\large] at (2.05,1.95) {$\mathbb{R}^2$};
+  \end{tikzpicture}
+  \caption{舞台就绪：完备的 $\mathbb{R}$ 与自身作笛卡尔积张成连续平面 $\mathbb{R}^2$（坐标轴、网格与一块二维区域的定场）。零维的点已被连成无缝的线，线再铺成二维的面——不等式解集、函数图象等后续对象都以这块平面为舞台}
+  \label{fig:r2plane}
+\end{figure}
+
+% ---------- 以上为背景铺垫，以下进入主线 ----------
+
+初中我们说"$y$ 随 $x$ 的变化而变化"，高中要说得更精确：函数是一种特殊的对应，它的图象是平面上的点集。本导学案用一条主线重新组织"函数"概念——
+\key{有限离散关系}（$A\times B$）$\to$ \key{连续二维区域}（$\mathbb{R}^2$ 与不等式）$\to$ \key{函数曲线}（$y=f(x)$）$\to$ \key{基本初等函数}，并在每一步用"\key{代数有序数对集合 $\leftrightarrow$ 几何坐标系点集 $\leftrightarrow$ 映射箭头图}"三种语言互相翻译。
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 从\key{点集视角}理解二元关系与函数：把对应看成 $\mathbb{R}^2$ 平面上的点集，说清"哪些点被选中"；
+  \item 理解\key{单值性}（垂线检验）如何把任意点集过滤成函数图象：每条竖直线 $x=a$ 与点集至多一个交点；
+  \item 掌握\key{三视角互译}：代数有序数对集合 $\leftrightarrow$ 几何坐标系点集 $\leftrightarrow$ 映射箭头图；
+  \item 理解\key{结构特化}思想：连续区域 $\to$ 曲线 $\to$ 基本初等函数，每一步加了什么限制、获得了什么结构；
+  \item 能在大一统框架下说明二元方程、函数、一元方程（不等式）的解分别是几维对象。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection*{知识回顾}
+\begin{itemize}
+  \item 笛卡尔积：$A\times B=\{(a,b)\mid a\in A,\ b\in B\}$。若 $A=\{1,2\}$，$B=\{3\}$，则 $A\times B=$ \blank；
+  \item 二元关系：$A\times B$ 的\key{任意子集} $R$ 都叫 $A$ 到 $B$ 的二元关系。若 $R=\{(1,3),(2,3)\}$，则 $R$ 中元素个数是 \blank；
+  \item 不等式解集：$x^2-1\leq0$ 的解集是 \blank，它表示数轴上的 \blank；
+  \item 平面直角坐标系中，点 $(x,y)$ 与有序数对 $(x,y)$ 是 \blank（一一对应／没有关系）。
+\end{itemize}
+
+\subsection*{教材速读}
+阅读教材"函数的概念"一节，完成下列问题：
+\begin{enumerate}
+  \item 函数定义中的两个关键词是"\key{任意}"和"\key{唯一}"；
+  \item 函数的三要素是 \blank、\blank、\blank；
+  \item 下列对象中哪些是函数：(1) 圆的面积 $S$ 与半径 $r$；(2) 一个人的年龄与身高；(3) 平方对应 $x\mapsto x^2$。（答：\blank）
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{有限离散关系：从 $A\times B$ 出发}
+
+\key{探究一：把所有可能的配对都列出来}
+设 $A=\{1,2,3\}$，$B=\{2,4,6\}$。
+\begin{itemize}
+  \item $A\times B$ 共有 $3\times3=9$ 个有序数对：
+        $(1,2),(1,4),(1,6),(2,2),(2,4),(2,6),(3,2),(3,4),(3,6)$。
+  \item 把它看成\key{网格点集}：在平面直角坐标系中描出这 $9$ 个点（图 \ref{fig:grid9}）。
+  \item $A\times B$ 的任意子集 $R$ 都叫 $A$ 到 $B$ 的一个\key{二元关系}。例如 $R=\{(1,2),(2,4),(3,6)\}$ 只是"挑出其中几个配对"。
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=0.55\textwidth, height=6cm,
+      xmin=0.5, xmax=3.5, ymin=1, ymax=7,
+      xtick={1,2,3}, ytick={2,4,6},
+      xlabel=$x$, ylabel=$y$,
+      grid=major, grid style={dashed,gray!35},
+      tick label style={font=\footnotesize},
+      title={\small $A\times B$ 的 9 个有序数对（网格点）},
+      title style={font=\small},
+    ]
+      \addplot[only marks, mark=*, mark size=2pt, main!70!black]
+        coordinates {(1,2)(1,4)(1,6)(2,2)(2,4)(2,6)(3,2)(3,4)(3,6)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{$A\times B$ 的点集视角：平面直角坐标系中的 $3\times3$ 网格点集。竖直方向看，每一列对应同一个 $x\in A$，各含 $3$ 个点（一对多，尚未通过垂线检验）；代数清单见正文，映射箭头图视角见图 \ref{fig:arrow}}
+  \label{fig:grid9}
+\end{figure}
+
+\key{追问：}现在这个点集（整个 $A\times B$）作为"对应关系"还有什么缺陷，迫使我们继续加限制条件？
+（提示：取 $x=1$，$y$ 可以是 $2,4,6$ 中任意一个——对应不唯一；而且它只是离散的点，没有"连续变化"的资格。）
+
+\begin{example}
+写出 $A=\{1,2,3\}$、$B=\{2,4,6\}$ 时 $A\times B$ 的全部 $9$ 个有序数对并在网格中描点；再任取两个不同的二元关系 $R_1,R_2\subseteq A\times B$（各含 $2$ 个元素）。
+\end{example}
+\begin{solution}
+$9$ 个有序数对为 $(1,2),(1,4),(1,6),(2,2),(2,4),(2,6),(3,2),(3,4),(3,6)$，描点见图 \ref{fig:grid9}。
+任取 $R_1=\{(1,2),(2,6)\}$，$R_2=\{(1,4),(3,2)\}$ 即可（答案不唯一）。它们都是 $A\times B$ 的子集，所以都是二元关系。
+\end{solution}
+
+\key{探究二：单值性——每列至多一个点}
+对比两个关系：
+\[
+  R_1=\{(1,2),(1,4),(2,6)\},\qquad R_2=\{(1,2),(2,4),(3,6)\}.
+\]
+用三视角分别表示：
+\begin{itemize}
+  \item \key{代数}（有序数对集合）：如上，$R_1$ 中 $x=1$ 出现了两次；
+  \item \key{几何}（点集）：在网格中描点（图 \ref{fig:r1r2}）。$R_1$ 在竖直线 $x=1$ 上有两个点 $(1,2),(1,4)$；$R_2$ 在每条竖直线 $x=1,2,3$ 上各有一个点；
+  \item \key{映射}（箭头图）：图 \ref{fig:arrow}。$R_1$ 中 $1\to2$ 与 $1\to4$ 同时出现（\key{一对多}）；$R_2$ 中 $1\to2$、$2\to4$、$3\to6$（一对一）。
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=\textwidth, height=5cm,
+        xmin=0.5, xmax=3.5, ymin=1, ymax=7,
+        xtick={1,2,3}, ytick={2,4,6},
+        grid=major, grid style={dashed,gray!35},
+        tick label style={font=\footnotesize},
+        title={\small $R_1$：$x=1$ 处有两个点（一对多）},
+        title style={font=\small},
+      ]
+        \addplot[only marks, mark=*, mark size=2pt, second]
+          coordinates {(1,2)(1,4)(2,6)};
+      \end{axis}
+    \end{tikzpicture}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        width=\textwidth, height=5cm,
+        xmin=0.5, xmax=3.5, ymin=1, ymax=7,
+        xtick={1,2,3}, ytick={2,4,6},
+        grid=major, grid style={dashed,gray!35},
+        tick label style={font=\footnotesize},
+        title={\small $R_2$：每列恰有一个点（一对一）},
+        title style={font=\small},
+      ]
+        \addplot[only marks, mark=*, mark size=2pt, main]
+          coordinates {(1,2)(2,4)(3,6)};
+      \end{axis}
+    \end{tikzpicture}
+  \end{minipage}
+  \caption{$R_1$ 与 $R_2$ 的点集对比：竖直线 $x=1$ 与 $R_1$ 有两个交点，与 $R_2$ 只有一个交点}
+  \label{fig:r1r2}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[>=Stealth, semithick]
+      \node (a1) at (0,2.2) {$1$}; \node (a2) at (0,1.1) {$2$}; \node (a3) at (0,0) {$3$};
+      \node (b2) at (3,2.2) {$2$}; \node (b4) at (3,1.1) {$4$}; \node (b6) at (3,0) {$6$};
+      \draw[->] (a1)--(b2); \draw[->] (a1)--(b4); \draw[->] (a2)--(b6);
+      \node[font=\footnotesize] at (0,2.8) {$A$}; \node[font=\footnotesize] at (3,2.8) {$B$};
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize $R_1$：$1$ 同时指向 $2$ 和 $4$}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[>=Stealth, semithick]
+      \node (a1) at (0,2.2) {$1$}; \node (a2) at (0,1.1) {$2$}; \node (a3) at (0,0) {$3$};
+      \node (b2) at (3,2.2) {$2$}; \node (b4) at (3,1.1) {$4$}; \node (b6) at (3,0) {$6$};
+      \draw[->] (a1)--(b2); \draw[->] (a2)--(b4); \draw[->] (a3)--(b6);
+      \node[font=\footnotesize] at (0,2.8) {$A$}; \node[font=\footnotesize] at (3,2.8) {$B$};
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize $R_2$：每个 $x$ 只指向一个 $y$}
+  \end{minipage}
+  \caption{映射箭头图：$R_1$ 一对多（不是函数），$R_2$ 一对一（是函数）}
+  \label{fig:arrow}
+\end{figure}
+
+\key{判断规则（垂线检验雏形）：}点集 $P\subseteq\mathbb{R}^2$ 能作为某个函数的图象，当且仅当\key{每条竖直线 $x=a$ 与 $P$ 至多有一个交点}（"每列至多 $1$ 个点"）。据此 $R_2$ 是函数，$R_1$ 不是函数。
+
+为什么 $R_2$ 是函数：对 $A$ 中每个 $x$，都有唯一 $y$ 与之对应；而 $R_1$ 中 $x=1$ 同时对应 $2$ 和 $4$，违反唯一性。
+
+\key{追问：}如果允许"一对多"，还能叫函数吗？"一对多"的对象在数学里是什么？
+（提示：它仍是\key{关系}。例如二元方程 $x^2+y^2=4$ 的解集就是一对多的点集——这为探究三埋下伏笔。）
+
+\begin{example}
+用三视角（代数、几何、箭头图）表示关系 $R=\{(1,2),(2,4),(3,6)\}$，并判断它是否为函数。
+\end{example}
+\begin{solution}
+代数：$R=\{(1,2),(2,4),(3,6)\}$。
+几何：描点 $(1,2),(2,4),(3,6)$，三点在同一直线 $y=2x$ 上，且每条竖直线 $x=1,2,3$ 上各有一个点。
+箭头图：$1\to2$，$2\to4$，$3\to6$。
+是函数：每个 $x\in A$ 都有唯一 $y$ 与之对应（事实上 $y=2x$）。
+\end{solution}
+
+\begin{problem}
+在 $A=\{1,2,3\}$、$B=\{2,4,6\}$ 的网格中，任取一个二元关系 $R$，使它不是函数，并说明理由；再任取一个函数关系，写出它的对应法则。
+\end{problem}
+\begin{solution}
+例：$R=\{(1,2),(1,6),(2,4)\}$。$x=1$ 同时对应 $2$ 和 $6$，违反单值性，不是函数（竖直线 $x=1$ 与点集有两个交点）。
+例：$R=\{(1,4),(2,2),(3,6)\}$ 是函数（每列至多一个点），对应法则可写为 $f(1)=4$，$f(2)=2$，$f(3)=6$。
+\end{solution}
+
+\subsection{连续二维区域：不等式解集的几何本质}
+
+\key{探究三：把 $9$ 个点换成无穷多个点}
+把取值范围从离散集合推广到连续区间，考察两个平面点集：
+\[
+  R_3=\{(x,y)\mid x^2+y^2\leq4\},\qquad
+  R_4=\{(x,y)\mid x+y\leq3,\ x\geq0,\ y\geq0\}.
+\]
+\begin{itemize}
+  \item $R_3$ 是圆心在原点、半径为 $2$ 的\key{闭圆盘}（一块二维区域）；
+  \item $R_4$ 是由 $x$ 轴、$y$ 轴与直线 $x+y=3$ 围成的\key{三角形区域}（图 \ref{fig:region}）。
+  \item 它们都是 $\mathbb{R}^2$ 中"一块黑乎乎的区域"，而不是孤立的点。
+\end{itemize}
+
+关键观察：取 $x=1$，在 $R_3$ 中 $y\in[-\sqrt3,\sqrt3]$，有无穷多个取值；在 $R_4$ 中 $y\in[0,2]$，也有无穷多个取值。一个 $x$ 对应无穷多个 $y$——\key{失控}，无法由 $x$ 唯一预测 $y$。
+
+\key{追问：}二元不等式（组）的解集在几何上是什么？（答：$\mathbb{R}^2$ 中的二维区域。）这正是未来\key{线性规划可行域}的伏笔：满足一组约束的 $(x,y)$ 全体就是平面区域，而最优解往往出现在区域的顶点或边界上。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.1]
+      \draw[->] (-2.4,0)--(2.4,0) node[right]{$x$};
+      \draw[->] (0,-2.4)--(0,2.4) node[above]{$y$};
+      \fill[main!15] (0,0) circle (2cm);
+      \draw[main!70!black, thick] (0,0) circle (2cm);
+      \draw[dashed, second, thick] (1,-1.732)--(1,1.732)
+        node[above right, font=\footnotesize]{$x=1:y\in[-\sqrt3,\sqrt3]$};
+      \fill[second] (1,1.732) circle (1.5pt);
+      \fill[second] (1,-1.732) circle (1.5pt);
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize $R_3$：闭圆盘，竖直线 $x=1$ 与它交于无穷多点}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.1]
+      \draw[->] (-0.5,0)--(3.6,0) node[right]{$x$};
+      \draw[->] (0,-0.5)--(0,3.6) node[above]{$y$};
+      \fill[main!15] (0,0)--(3,0)--(0,3)--cycle;
+      \draw[main!70!black, thick] (0,0)--(3,0)--(0,3)--cycle;
+      \draw[dashed, second, thick] (1,0)--(1,2)
+        node[right, font=\footnotesize]{$x=1:y\in[0,2]$};
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize $R_4$：三角形区域，竖直线 $x=1$ 与它交于无穷多点}
+  \end{minipage}
+  \caption{连续二维区域：二元不等式（组）的解集是 $\mathbb{R}^2$ 中的"面"，不是曲线}
+  \label{fig:region}
+\end{figure}
+
+\begin{example}
+在坐标系中画出 $R_4=\{(x,y)\mid x+y\leq3,\ x\geq0,\ y\geq0\}$，并求当 $x=1$ 时 $y$ 的取值范围。
+\end{example}
+\begin{solution}
+画出直线 $x+y=3$ 与两条坐标轴，取左下方的三角形内部（含边界），见图 \ref{fig:region} 右图。
+当 $x=1$ 时，条件化为 $1+y\leq3$ 且 $y\geq0$，即 $0\leq y\leq2$。$y$ 有无穷多个取值，无法由 $x=1$ 唯一确定——所以 $R_4$ 不是函数。
+\end{solution}
+
+\begin{problem}
+设 $R=\{(x,y)\mid x^2+y^2\leq4\}$。判断 $R$ 是否为函数，并用垂线检验说明理由。
+\end{problem}
+\begin{solution}
+不是函数。取 $x=0$，则 $y\in[-2,2]$，一个 $x$ 对应无穷多个 $y$；几何上看，竖直线 $x=0$ 与圆盘相交于无穷多个点，违反"每列至多一个点"。
+\end{solution}
+
+\subsection{三次特化：从区域到基本初等函数}
+
+\key{探究四：三次加限制，三次升级}
+\begin{itemize}
+  \item \key{第一次特化：加单值性。}对平面点集做"\key{垂线扫描}"：凡与竖直线 $x=a$ 有两个及以上交点的，只保留一个（或删去多余的点），使每列至多一个点。得到的点集就是\key{一般函数}的图象 $y=f(x)$。此时"确定了"（每个 $x$ 唯一对应一个 $y$），但仍\key{无规律}：图象可以是任意弯曲的曲线（图 \ref{fig:orderline}）。
+  \item \key{第二次特化：加代数关联。}要求点集满足代数方程 $F(x,y)=0$，得到\key{平面曲线}；若同时满足单值性，就是\key{函数曲线} $y=f(x)$。
+  \begin{itemize}
+    \item 二元方程 $F(x,y)=0$ 的解集 = 平面上的一维曲线点集（可以一对多，如圆 $x^2+y^2=4$）；
+    \item 一元方程 $f(x)=g(x)$ 的解 = 两条曲线 $y=f(x)$ 与 $y=g(x)$ \key{交点的横坐标}；
+    \item 一元不等式 $f(x)>g(x)$ 的解 = "使 $f$ 的点集位于 $g$ 的点集\key{上方}"的 $x$ 的集合。
+  \end{itemize}
+  \item \key{第三次特化：加最优代数结构。}要求函数满足某类"运算封闭／结构保持"的等式，得到\key{基本初等函数}：
+  \begin{itemize}
+    \item 指数函数 $y=a^x$：把定义域的加法变成值域的乘法，$f(x_1+x_2)=f(x_1)f(x_2)$；
+    \item 对数函数 $y=\log_a x$：把指数函数的数对 $(x,y)$ 调换为 $(y,x)$ 的逆关系，图象关于直线 $y=x$ 对称；
+    \item 幂函数 $y=x^{\alpha}$：刻画幂次结构（面积、体积、增长阶）；
+    \item 三角函数：刻画周期结构（旋转、振动、波动）。
+  \end{itemize}
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.235\textwidth}
+    \centering
+    \begin{tikzpicture}[x=0.6cm,y=0.6cm]
+      \draw[main!60!black,thick,fill=main!4] (-2.2,-2) rectangle (2.2,2);
+      \pgfmathsetseed{11}
+      \foreach \i in {1,...,140}{
+        \pgfmathsetmacro{\px}{-2.05+4.1*rnd}
+        \pgfmathsetmacro{\py}{-1.85+3.7*rnd}
+        \fill[main!45] (\px,\py) circle (0.8pt);
+      }
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize (1) 无序：随手撒点——一个 $x$ 拖着一大段 $y$}
+  \end{minipage}\hfill
+  \begin{minipage}{0.235\textwidth}
+    \centering
+    \begin{tikzpicture}[x=0.6cm,y=0.6cm]
+      \draw[main!60!black,thick,fill=main!4] (-2.2,-2) rectangle (2.2,2);
+      \pgfmathsetseed{11}
+      \foreach \i in {1,...,140}{
+        \pgfmathsetmacro{\px}{-2.05+4.1*rnd}
+        \pgfmathsetmacro{\py}{-1.85+3.7*rnd}
+        \fill[main!22] (\px,\py) circle (0.8pt);
+      }
+      \draw[second,very thick] (-0.6,-2)--(-0.6,2);
+      \foreach \yy in {-1.75,-1.3,-0.85,-0.4,0.05,0.5,0.95,1.4,1.8}
+        \fill[second] (-0.6,\yy) circle (1.5pt);
+      \node[second,font=\scriptsize,right] at (-0.52,1.82) {$x=a$};
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize (2) 竖截：竖线 $x=a$ 只截一段，仍是一整列点}
+  \end{minipage}\hfill
+  \begin{minipage}{0.235\textwidth}
+    \centering
+    \begin{tikzpicture}[x=0.6cm,y=0.6cm]
+      \draw[main!60!black,thick,fill=main!4] (-2.2,-2) rectangle (2.2,2);
+      \draw[third!55,thin] plot coordinates {(-2.05,1.82)(-1.89,1.54)(-1.72,1.15)(-1.56,-0.49)(-1.39,0.13)(-1.23,-0.37)(-1.07,-0.38)(-0.9,-1.22)(-0.74,-1.25)(-0.57,-0.93)(-0.41,-1.39)(-0.25,-1.05)(-0.08,-1.8)(0.08,-1.7)(0.25,-0.61)(0.41,-1.05)(0.57,-0.81)(0.74,-0.33)(0.9,-0.83)(1.07,-1.18)(1.23,0.24)(1.39,0.12)(1.56,0.48)(1.72,0.69)(1.89,1.58)(2.05,0.87)};
+      \foreach \p in {(-2.05,1.82),(-1.89,1.54),(-1.72,1.15),(-1.56,-0.49),(-1.39,0.13),(-1.23,-0.37),(-1.07,-0.38),(-0.9,-1.22),(-0.74,-1.25),(-0.57,-0.93),(-0.41,-1.39),(-0.25,-1.05),(-0.08,-1.8),(0.08,-1.7),(0.25,-0.61),(0.41,-1.05),(0.57,-0.81),(0.74,-0.33),(0.9,-0.83),(1.07,-1.18),(1.23,0.24),(1.39,0.12),(1.56,0.48),(1.72,0.69),(1.89,1.58),(2.05,0.87)}
+        \fill[third] \p circle (1.5pt);
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize (3) 每列一点：被钉住了，但点列仍在乱跳}
+  \end{minipage}\hfill
+  \begin{minipage}{0.235\textwidth}
+    \centering
+    \begin{tikzpicture}[x=0.6cm,y=0.6cm]
+      \draw[main!60!black,thick,fill=main!4] (-2.2,-2) rectangle (2.2,2);
+      \pgfmathsetseed{37}
+      \foreach \i in {1,...,90}{
+        \pgfmathsetmacro{\bx}{-2.05+4.1*(\i-1)/89}
+        \pgfmathsetmacro{\by}{0.5*\bx*\bx-1+0.55*(2*rnd-1)}
+        \fill[main!40] (\bx,\by) circle (0.7pt);
+      }
+      \draw[second,very thick,domain=-2.05:2.05,samples=60,smooth] plot(\x,{0.5*\x*\x-1});
+      \node[second,font=\scriptsize] at (0,-1.78) {$y=\tfrac12x^2-1$};
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize (4) 收束：粗带压扁成唯一的曲线}
+  \end{minipage}
+  \caption{图像线是怎样从点集里长出来的：同一块平面区域上的四次特化。(1) 无序——随手撒点，一个 $x$ 的正上方压着一大段 $y$，一对多；(2) 竖截——用竖直线 $x=a$ 去截点云，截出的仍是一整列（一段）点，一个 $x$ 对应多个 $y$；(3) 立规矩——每条竖线只留一个点，得到一般函数的图象，但点列仍无规律地上下跳动；(4) 收束——点越密，跳动的点列糊成一条有厚度的粗带，厚度趋于 $0$ 时只剩唯一的曲线 $y=\tfrac12x^2-1$。图象就是「按 $x$ 排好队、且每个 $x$ 只剩唯一 $y$」的点列极限}
+  \label{fig:orderline}
+\end{figure}
+
+\begin{conccard}[一级]{单值性与垂线检验}{任意平面点集（或图象）}{把"每列至多一个点"误写成"每行至多一个点"；忽略定义域}
+点集 $P\subseteq\mathbb{R}^2$ 是某函数 $y=f(x)$ 的图象，当且仅当每条竖直线 $x=a$ 与 $P$ 至多有一个交点。代数表述：对每个 $x$，满足 $(x,y)\in P$ 的 $y$ 至多一个。这条判据把"任意点集"过滤成"函数图象"，是探究二、探究三共用的核心工具。
+\end{conccard}
+
+\begin{conccard}[二级]{三视角互译}{二元关系、函数、方程的解集}{只在一个视角里思考；把"数对集合"与"点集"割裂}
+同一对象有三种等价表示：代数（有序数对集合）$\leftrightarrow$ 几何（坐标系点集）$\leftrightarrow$ 映射（箭头图）。代数精确、几何直观、箭头图体现对应方向。解题时按需要在三种语言间切换：例如解 $f(x)>g(x)$，就是看 $f$ 的点集在 $g$ 的点集上方时 $x$ 的范围。
+\end{conccard}
+
+\begin{method}
+三视角互译法：遇到函数、方程、不等式问题时，先写出集合（代数），再画图（几何），必要时画箭头图（映射），最后回到代数表达。例如判断 $f(x)>g(x)$ 的解：画两条曲线，看 $f$ 在 $g$ 上方的 $x$ 区间，再写出集合 $\{x\mid f(x)>g(x)\}$。
+\end{method}
+
+\begin{commonerror}{把二维区域误当函数}
+误以为"式子中有 $x,y$ 就是函数"或"给出 $x$ 就能算出 $y$"。反例：$x^2+y^2=4$ 中 $x=0$ 对应 $y=\pm2$，是一对多，不是函数；$\{(x,y)\mid x+y\leq3\}$ 中 $x=1$ 对应无穷多个 $y$。判别时必须回到单值性：每个 $x$ 是否唯一确定 $y$。
+\end{commonerror}
+
+\begin{example}
+说明方程 $x^2=4$ 的解可以看成两个函数图象交点的横坐标，并求出解。
+\end{example}
+\begin{solution}
+$x^2=4$ 即 $x^2-4=0$。令 $f(x)=x^2-4$，$g(x)=0$，交点横坐标即 $f(x)=g(x)$ 的解：$x=\pm2$。
+也可看作曲线 $y=x^2$ 与直线 $y=4$ 交点的横坐标，结果同样是 $x=\pm2$。
+\end{solution}
+
+\begin{problem}
+设 $f(x)=x^2$，$g(x)=2x+3$。求不等式 $f(x)>g(x)$ 的解集，并指出它对应"哪段 $x$ 上 $f$ 的图象在 $g$ 上方"。
+\end{problem}
+\begin{solution}
+$x^2>2x+3\iff x^2-2x-3>0\iff(x-3)(x+1)>0$，解集为 $(-\infty,-1)\cup(3,+\infty)$。
+几何意义：在 $(-\infty,-1)$ 与 $(3,+\infty)$ 上，抛物线 $y=x^2$ 位于直线 $y=2x+3$ 的上方；在 $[-1,3]$ 上则位于下方（或相交）。
+\end{solution}
+
+\subsection{大一统结构对照}
+
+把本节对象放进同一张表：五种数学对象都是"集合"，差别只在元素的形状与几何维度。
+
+\begin{center}
+\begin{tabular}{|c|p{3.0cm}|p{5.2cm}|p{4.2cm}|}
+\hline
+\textbf{数学对象} & \textbf{集合与点集本质} & \textbf{几何维度直观理解} \\
+\hline
+二元不等式（组） & $\{(x,y)\mid \text{约束条件}\}$ & $\mathbb{R}^2$ 中的二维区域（"面"） \\
+\hline
+二元方程 $F(x,y)=0$ & $\{(x,y)\mid F(x,y)=0\}$ & 平面上的一维曲线（可一对多） \\
+\hline
+函数 $y=f(x)$ & $\{(x,f(x))\mid x\in A\}$ & 一维曲线，且每列至多一个点 \\
+\hline
+一元方程的解 & $\{x\mid f(x)=g(x)\}$ & 数轴上的零维点（交点横坐标） \\
+\hline
+一元不等式的解 & $\{x\mid f(x)>g(x)\}$ & 数轴上的一维区间（上下位置） \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{summary}
+本节主线：$A\times B$（$9$ 个离散点）$\xrightarrow{\text{加单值性}}$ 函数 $y=f(x)$（一维曲线）$\xrightarrow{\text{加代数关联}}$ 方程与不等式（曲线、交点、上下位置）$\xrightarrow{\text{加最优代数结构}}$ 基本初等函数（指数、对数、幂、三角）。中间还经过 $\mathbb{R}^2$ 中的二维区域（不等式解集）。判别函数的唯一标准是单值性（垂线检验），三种语言（代数、几何、箭头图）可互相翻译。
+\end{summary}
+
+\subsection{函数与图形变换完全图谱}
+
+\begin{conccard}[一级]{第一性原理：一切图像变换都是有序数对 $(x,y)$ 的映射}{抽象函数图像辨析、变换类压轴题}{只背“左加右减”口诀，不追踪每个点的去向}
+函数图像是 $\mathbb{R}^2$ 中的点集 $\{(x,y)\mid y=f(x)\}$。所谓“图像变换”，本质是对集合中每个点的坐标施加映射。
+掌握下面三级体系与对称周期生成律，就能把“看图识函数”变成可推导的代数操作。
+\end{conccard}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|p{3.2cm}|p{4.0cm}|p{4.8cm}|}
+\hline
+\textbf{变换} & \textbf{点集规则} & \textbf{表达式与几何效应} \\
+\hline
+\multicolumn{3}{|l|}{\textbf{一级：刚体等距（形状大小不变）}} \\
+\hline
+平移 & $(x,y)\mapsto(x+h,\,y+k)$ & $y-k=f(x-h)$（逆向代换） \\
+\cline{2-3}
+轴对称（$x=a$） & $(x,y)\mapsto(2a-x,\,y)$ & $y=f(2a-x)$ \\
+\cline{2-3}
+中心对称（$(a,b)$） & $(x,y)\mapsto(2a-x,\,2b-y)$ & $y=2b-f(2a-x)$（$a=b=0$ 即奇函数） \\
+\hline
+\multicolumn{3}{|l|}{\textbf{二级：伸缩与翻折}} \\
+\hline
+轴向伸缩 & $(x,y)\mapsto(\frac1\omega x,\,Ay)$ & $y=Af(\omega x)$ \\
+\cline{2-3}
+绝对值翻折 & $(x,y)\mapsto(x,\,|y|)$；$x\mapsto|x|$ & $y=|f(x)|$（下方翻上）；$y=f(|x|)$（右侧复制到左侧，强制偶化） \\
+\hline
+\multicolumn{3}{|l|}{\textbf{三级：非线性算子（图像拓扑突变）}} \\
+\hline
+自变量平方／倒数 & $u=g(x)$ 作为内层 & $y=f(x^2)$ 必为偶函数且在 $x=0$ 处切线水平 \\
+\cline{2-3}
+函数值平方／倒数 & $(x,y)\mapsto(x,\,y^2)$；$(x,y)\mapsto(x,\,\frac1y)$ & 零点变极小值点／垂直渐近线（详见下文铁律） \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{method}
+\textbf{双对称推周期：连续两次平行镜像反射 = 平移}。看到“两个对称条件”或“半周期反对称”，直接锁定最小周期，不必画图：
+\begin{enumerate}
+\item \textbf{双轴对称}：$f(a+x)=f(a-x)$ 且 $f(b+x)=f(b-x)$ $\Rightarrow$ $T=2|b-a|$；
+\item \textbf{双中心对称}：$f(a+x)+f(a-x)=2c$ 且 $f(b+x)+f(b-x)=2c$ $\Rightarrow$ $T=2|b-a|$；
+\item \textbf{一轴一中心}（最高频）：$f(a+x)=f(a-x)$ 且 $f(b+x)+f(b-x)=2c$ $\Rightarrow$ $T=4|b-a|$；
+\item \textbf{滑移反对称}：$f(x+a)=-f(x)$、$f(x+a)=\pm\frac1{f(x)}$ 或 $f(x+a)=\frac{1-f(x)}{1+f(x)}$，迭代两次即复原 $\Rightarrow$ $T=2a$。
+\end{enumerate}
+几何直观：点 $P(x)$ 先关于 $x=a$ 反射到 $P_1(2a-x)$，再关于 $x=b$ 反射到 $P_2\bigl(2b-(2a-x)\bigr)=P(x+2(b-a))$——两次翻转方向复原，合成一次纯平移。
+\end{method}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+\draw[->, gray, thick] (-1.2,0) -- (7.2,0) node[right] {$x$};
+\draw[main, dashed, very thick] (1.5,-0.6) -- (1.5,2.4) node[above] {$x=a$};
+\draw[second, dashed, very thick] (4.0,-0.6) -- (4.0,2.4) node[above] {$x=b$};
+\fill[black] (0.5,1.5) circle (2pt) node[above] {$P(x)$};
+\fill[main] (2.5,1.5) circle (2pt) node[below] {$P_1(2a-x)$};
+\fill[second] (5.5,1.5) circle (2pt) node[below] {$P_2\bigl(x+2(b-a)\bigr)$};
+\draw[<->, gray, thick] (0.5,-0.35) -- (5.5,-0.35) node[midway, below, font=\small\bfseries] {合成平移 $T=2(b-a)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{conccard}[二级]{导数对称遗传律：周期全遗传，对称奇偶互换}{含参导数压轴、切线分析}{把 $f$ 与 $f'$ 的对称性混为一谈}
+对 $f$ 的恒等式两边求导（链式法则）即得：
+\begin{itemize}
+\item $f$ 周期为 $T$ $\iff$ $f'$ 周期仍为 $T$；
+\item $f$ 关于直线 $x=a$ 轴对称 $\Rightarrow$ $f'$ 关于点 $(a,0)$ 中心对称，且 $f'(a)=0$；
+\item $f$ 关于点 $(a,b)$ 中心对称 $\Rightarrow$ $f'$ 关于直线 $x=a$ 轴对称。
+\end{itemize}
+\end{conccard}
+
+\begin{method}
+\textbf{非线性算子的五条铁律}（以 $g(x)=\dfrac1{f(x)}$ 为例，$y=[f(x)]^2$ 见表中）：
+\begin{enumerate}
+\item \key{符号不变}：$f>0$ 处 $g>0$，$f<0$ 处 $g<0$，上下位置不动；
+\item \key{零点撕裂}：$f(x_0)=0$ 变成垂直渐近线 $x=x_0$；
+\item \key{无穷变零}：$f\to\infty$ 处 $g\to0$（趋近 $x$ 轴）；
+\item \key{单调反转}：同一同号区间内 $g$ 与 $f$ 单调性相反（不能跨渐近线谈单调）；
+\item \key{极值互换}：正的极大值 $M$ 变成极小值 $\frac1M$；而 $y=\pm1$ 的点是\key{不动点}，位置纹丝不动。
+\end{enumerate}
+$y=f(x^2)$ 与 $y=f\!\left(\frac1x\right)$ 则作用在自变量上：$f(x^2)$ 是偶函数，
+左半支与右半支互为镜像（同一 $|x|$ 处函数值相同）；在 $x\ge0$ 上它等于把
+$y=f(u)\,(u\ge0)$ 的横坐标按 $u=x^2$ 重标得到的曲线——靠近原点被压缩、
+远离原点被拉伸；$f\!\left(\frac1x\right)$ 则把 $x\to0$ 的行为与
+$x\to\pm\infty$ 的行为\key{对调}。
+
+\textbf{平方算子 $y=[f(x)]^2$ 的五条铁律}（与倒数算子对照记忆）：
+\begin{itemize}
+  \item \key{非负化}：整个图像被压进 $y\ge0$，负部沿 $x$ 轴\key{翻折}上来；
+  \item \key{零点不变}：$f(x_0)=0\iff f^2(x_0)=0$，只是零点的「重数」加倍；
+  \item \key{无穷仍无穷}：$f\to\infty$ 时 $f^2\to+\infty$ 增长更快；
+  \item \key{单调分区}：由 $(f^2)'=2ff'$，$f>0$ 处 $f^2$ 与 $f'$ 同号、
+        $f<0$ 处反号，故在 $f$ 的正区间保持单调方向、负区间反转；
+  \item \key{极值缩放}：$|f|$ 的极大值 $M$ 变成 $f^2$ 的极大值 $M^2$
+        （$M\ge1$ 时变大、$0<M<1$ 时变小），$|f|$ 的小极小值则被压得更小；
+        $y=1$ 上的点是\key{不动点}。
+\end{itemize}
+\end{method}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15]
+\draw[->, gray, thick] (-1.8,0) -- (3.8,0) node[right] {$x$};
+\draw[->, gray, thick] (0,-2.2) -- (0,3.0) node[above] {$y$};
+\draw[gray, dashed, thick] (2,-2.2) -- (2,3.0) node[above] {$x=2$};
+\draw[main, thick, domain=-1.4:3.4, samples=60] plot(\x, {(\x)*(\x-2)});
+\node[main] at (3.1,1.6) {$f(x)=x^2-2x$};
+\draw[second, thick, domain=-1.5:-0.12, samples=60] plot(\x, {1/((\x)*(\x-2))});
+\draw[second, thick, domain=0.12:1.9, samples=80] plot(\x, {1/((\x)*(\x-2))});
+\draw[second, thick, domain=2.12:3.5, samples=60] plot(\x, {1/((\x)*(\x-2))});
+\fill[second] (1,-1) circle (2pt) node[below left] {$(1,-1)$};
+\end{tikzpicture}
+{\small\itshape 抛物线与其倒数：零点 $0,2$ 变为竖直渐近线，极小值 $-1$ 变为极大值 $-1$。}
+\end{center}
+
+\begin{example}[双对称推周期与导数遗传]
+已知 $f(x)$ 在 $\mathbb{R}$ 上可导，$f(x+1)$ 为偶函数，$f(x+2)$ 为奇函数，且 $f(1)=2$，求 $f(2027)+f'(2025)$。
+\begin{solution}
+$f(x+1)$ 偶 $\Rightarrow f(1-x)=f(1+x)$，故 $f$ 关于 $x=1$ 轴对称；
+$f(x+2)$ 奇 $\Rightarrow f(2-x)=-f(2+x)$，故 $f$ 关于 $(2,0)$ 中心对称。
+一轴一中心 $\Rightarrow T=4|2-1|=4$。
+由中心对称取 $t=1$：$f(3)=-f(1)=-2$，于是 $f(2027)=f(4\times506+3)=f(3)=-2$。
+$f$ 关于 $x=1$ 轴对称 $\Rightarrow f'$ 关于 $(1,0)$ 中心对称，故 $f'(1)=0$；又 $f'$ 周期仍为 $4$，
+$f'(2025)=f'(4\times506+1)=f'(1)=0$。合计 $\key{-2}$。
+\end{solution}
+\end{example}
+
+\begin{example}[用奇偶性速判函数图像]
+函数 $g(x)=\dfrac{x}{e^x-1}$ 的大致图像如何？
+\begin{solution}
+先看定义域 $x\neq0$。由切线不等式 $e^x>x+1\ (x\neq0)$ 知 $e^x-1$ 与 $x$ 同号，故 $g(x)>0$ 恒成立（全在 $x$ 轴上方）；且 $\lim\limits_{x\to0}g(x)=1$。
+当 $x\to+\infty$ 时指数增长远快于一次项，$g(x)\to0^+$；当 $x\to-\infty$ 时 $e^x\to0$，$g(x)\approx\dfrac{x}{-1}=-x\to+\infty$，即左端贴着斜率 $-1$ 的直线向上。无需二阶求导即可锁定图像。
+\end{solution}
+\end{example}
+
+\begin{commonerror}{把“对称”当“周期”直接用}
+$f(a+x)=f(a-x)$ 只说明关于 $x=a$ 对称，一个对称条件\key{产生不了周期}；必须有两个对称条件，
+或用滑移反对称结构。此外 $y=f(x^2)$ 是偶函数，而 $y=[f(x)]^2$ 只保证非负——两者都“偶化”方向不同，不可互推。
+\end{commonerror}
+
+图形变换还有一种对偶记法，能把「左加右减」的口诀风险降到最低：动曲线与动坐标系是同一事实的两种记账方式（图 \ref{fig:activepassive}）。
+
+\begin{methodbox}{主被动对偶律：曲线平移，等价于坐标系反向平移}
+设曲线 $C:y=f(x)$ 主动向右平移 $h$ 个单位，得到新曲线 $y=f(x-h)$；若改为让坐标轴向左平移 $h$ 个单位、曲线在空间中保持不动，则新读数满足 $x'=x+h$、$y'=y$，同一物理状态在新系下的方程仍写作 $y'=f(x'-h)$。
+两式描述的是同一幅终态图：顶点的读数相同，只是「谁在动」的归属不同。若条件按曲线平移给出（如「图象右移 $2$」），用主动记法；若条件按新原点、新读数给出，用被动记法。两者方向相反是必然，切勿把坐标轴的移动方向也套用「左加右减」。
+\end{methodbox}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=stealth,font=\small]
+    % ---------- 左：主动变换（坐标系不动，曲线右移） ----------
+    \begin{scope}
+      \draw[->,gray,thick] (-1.4,0)--(3.6,0) node[right,gray,font=\footnotesize] {$x$};
+      \draw[->,gray,thick] (0,-0.7)--(0,3.0) node[above,gray,font=\footnotesize] {$y$};
+      \draw[gray!70,dashed,thick,domain=-1.15:1.15,samples=50,smooth] plot(\x,{\x*\x});
+      \draw[main,very thick,domain=0.85:3.15,samples=60,smooth] plot(\x,{(\x-2)*(\x-2)});
+      \fill[gray!70] (0,0) circle (0.05);
+      \node[gray!70,below left,font=\footnotesize] at (0,0) {$(0,0)$};
+      \fill[main] (2,0) circle (0.05);
+      \node[main,below right,font=\footnotesize] at (2,0) {$(2,0)$};
+      % 平移箭头画在 x 轴下方空白处，避免压曲线
+      \draw[<->,second,thick] (0.15,-0.35)--(1.85,-0.35)
+        node[midway,above,font=\footnotesize] {右移 $2$};
+      \node[main,font=\footnotesize] at (2.55,2.5) {$y=(x-2)^2$};
+      \node[font=\footnotesize] at (1.1,-1.45) {主动：坐标系不动，曲线右移 $2$};
+    \end{scope}
+    % ---------- 右：被动变换（曲线不动，坐标轴左移） ----------
+    \begin{scope}[xshift=7.7cm]
+      \draw[gray!55,dashed,thick] (-1.4,0)--(2.2,0);
+      \draw[gray!55,dashed,thick] (0,-0.7)--(0,3.0);
+      \node[gray!55,font=\scriptsize,right] at (-1.35,2.55) {旧系（虚线）};
+      \draw[->,second,thick] (-3.5,0)--(1.7,0) node[right,second,font=\footnotesize] {$x'$};
+      \draw[->,second,thick] (-2,-0.7)--(-2,3.0) node[above,second,font=\footnotesize] {$y'$};
+      \draw[main,very thick,domain=-1.15:1.15,samples=50,smooth] plot(\x,{\x*\x});
+      \fill[main] (0,0) circle (0.05);
+      \node[gray!60,font=\scriptsize,left] at (-0.06,0.28) {旧 $O$};
+      \node[second,below left,font=\footnotesize] at (-2,0) {$O'$};
+      \node[main,font=\footnotesize,right] at (0.12,-0.32) {顶点 $(2,0)$};
+      \draw[<->,third,thick] (-2,-0.85)--(0,-0.85)
+        node[midway,below,font=\footnotesize] {轴左移 $2$};
+      \draw[third!70!black,->,shorten <=1pt,shorten >=1pt] (0.2,-0.68)--(0.06,-0.12);
+      \node[third!70!black,font=\scriptsize,right] at (0.25,-0.72) {读数 $x'=2$};
+      \node[main,font=\footnotesize] at (0.95,2.25) {$y'=(x'-2)^2$};
+      \node[font=\footnotesize] at (-0.85,-1.45) {被动：曲线不动，坐标轴左移 $2$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{主被动对偶：左图坐标系不动，抛物线 $y=x^2$ 主动右移 $2$ 得 $y=(x-2)^2$；右图抛物线原地不动，坐标轴被动左移 $2$（虚线为旧系），新读数 $x'=x+2$，顶点在新系下仍读作 $(2,0)$。两幅终态图完全相同——「动曲线」与「动坐标系」是同一平移的两种归属，不要混用方向}
+  \label{fig:activepassive}
+\end{figure}
+
+% ---------- 收官微专题：$45^\circ$ 镜面反射定律 ----------
+
+\begin{conccard}[二级]{唯有 $k=\pm1$ 的镜面，能保住「函数」的资格}{反函数对称、指对同构压轴选填、解析几何对称速算}{把斜线对称当成左右平移；漏掉 $b$ 的补偿项}
+把对称轴从竖直线 $x=a$ 推广到一般直线 $y=kx+b$ 时，反射会让横、纵坐标\textbf{互相耦合}，反射后的曲线往往不再通过垂线检验，\key{跌出函数集合}，退回一般二元方程 $F(x,y)=0$。只有 $k=\pm1$（倾角 $45^\circ$ 或 $135^\circ$）时，耦合系数全部约尽，退化为干净的坐标互换——这正是反函数与指对同构压轴题的共同底座。
+\end{conccard}
+
+先把最典型的镜面 $l:y=x$ 看清楚（图 \ref{fig:expinvlog}）：反射把指数函数的点集 $\{(x,y)\}$ 整体翻成 $\{(y,x)\}$，对数曲线由此生成——这就是「反函数＝逆关系点集」的几何来源。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=0.9cm,y=0.9cm,>=stealth,font=\small]
+    \draw[->,gray,thick] (-1.7,-1.7)--(3.6,-1.7) node[right] {$x$};
+    \draw[->,gray,thick] (-1.7,-1.7)--(-1.7,3.8) node[above] {$y$};
+    \draw[gray,dashed,thick,domain=-1.4:3.4,samples=40] plot(\x,\x) node[above right] {$y=x$};
+    \draw[main,very thick,domain=-1.3:1.35,samples=80,smooth] plot(\x,{exp(\x)}) node[right] {$y=e^x$};
+    \draw[second,very thick,domain=0.28:3.4,samples=90,smooth] plot(\x,{ln(\x)}) node[right] {$y=\ln x$};
+    \fill[main] (0,1) circle (0.07);       \node[main,left] at (0,1) {$(0,1)$};
+    \fill[main] (1,2.718) circle (0.07);   \node[main,above right] at (1,2.718) {$(1,e)$};
+    \fill[main] (-1,0.368) circle (0.07);  \node[main,below left] at (-1,0.368) {$(-1,e^{-1})$};
+    \fill[second] (1,0) circle (0.07);      \node[second,below] at (1,0) {$(1,0)$};
+    \fill[second] (2.718,1) circle (0.07);  \node[second,right] at (2.718,1) {$(e,1)$};
+    \fill[second] (0.368,-1) circle (0.07); \node[second,below left] at (0.368,-1) {$(e^{-1},-1)$};
+    \draw[->,third,thick] (0,1) to[bend left=12] (1,0);
+    \draw[->,third,thick] (1,2.718) to[bend left=18] (2.718,1);
+    \draw[->,third,thick] (-1,0.368) to[bend right=12] (0.368,-1);
+  \end{tikzpicture}
+  \caption{同一坐标系中的互逆反射：$y=e^x$ 与 $y=\ln x$ 关于 $y=x$ 对称，每个点 $(a,b)$ 与它的像 $(b,a)$ 用跨越镜面的箭头一一相连，例如 $(0,1)\leftrightarrow(1,0)$、$(1,e)\leftrightarrow(e,1)$、$(-1,e^{-1})\leftrightarrow(e^{-1},-1)$。对数曲线就是指数曲线点集 $\{(x,y)\}$ 经 $y=x$ 翻转后的 $\{(y,x)\}$}
+  \label{fig:expinvlog}
+\end{figure}
+
+\begin{method}
+\textbf{$45^\circ$ 镜面反射替换速查表}（镜面记为 $l$，点 $P(x,y)$ 的像为 $P'(x',y')$）：
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\small
+\begin{tabular}{|p{2.0cm}|p{3.6cm}|p{3.9cm}|p{4.2cm}|}
+\hline
+\textbf{镜面} & \textbf{点集映射} & \textbf{曲线替换口径} & \textbf{典型用途} \\
+\hline
+$l:y=x$ & $(x,y)\mapsto(y,\,x)$ & $F(y,\,x)=0$ & 反函数：$y=a^x$ 与 $y=\log_a x$ \\
+\hline
+$l:y=-x$ & $(x,y)\mapsto(-y,\,-x)$ & $F(-y,\,-x)=0$ & 双轴对称联动：$y=\dfrac1x$ \\
+\hline
+$l:y=x+b$ & $(x,y)\mapsto(y-b,\,x+b)$ & $F(y-b,\,x+b)=0$ & 平移型反函数、指对同构压轴 \\
+\hline
+$l:y=-x+b$ & $(x,y)\mapsto(b-y,\,b-x)$ & $F(b-y,\,b-x)=0$ & 斜率 $-1$ 直线族（$y=x$ 的垂线） \\
+\hline
+\end{tabular}
+\end{center}
+\vspace{0.3em}
+\key{秒杀推论}：若两条曲线关于 $y=x$ 对称（如互为反函数），且被斜率为 $-1$ 的直线 $x+y=m$ 所截，则两交点 $A,B$ 必关于 $y=x$ 对称，中点 $\bigl(\tfrac m2,\tfrac m2\bigr)$ 落在 $y=x$ 上，于是
+$$x_A+x_B=m,\qquad y_A+y_B=m .$$
+\end{method}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=0.95cm,y=0.95cm,>=stealth,font=\small]
+    \draw[->,gray,thick] (-1.2,-1.2)--(5.2,-1.2) node[right] {$x$};
+    \draw[->,gray,thick] (-1.2,-1.2)--(-1.2,5.2) node[above] {$y$};
+    \draw[main,dashed,very thick,domain=-1.1:3.9,samples=40] plot(\x,\x) node[above right] {$y=x$};
+    \draw[second,very thick,domain=0.09:4.8,samples=90] plot(\x,{ln(\x)}) node[right] {$y=\ln x$};
+    \draw[third,very thick,domain=-1:1.2,samples=70] plot(\x,{exp(\x)}) node[above] {$y=e^x$};
+    \draw[red,very thick] (-1,5)--(5,-1) node[below right] {$x+y=4$};
+    \fill[main] (2,2) circle (2.4pt) node[above left] {$M(2,2)$};
+    \fill[red] (1.07,2.93) circle (2.4pt) node[above left] {$A(x_1,y_1)$};
+    \fill[red] (2.93,1.07) circle (2.4pt) node[below right] {$B(y_1,x_1)$};
+  \end{tikzpicture}
+  \caption{反函数 $y=e^x$ 与 $y=\ln x$ 关于 $y=x$ 对称；斜率为 $-1$ 的直线 $x+y=4$ 与二者各交于 $A,B$，两点关于 $y=x$ 对称，中点 $M(2,2)$ 落在 $y=x$ 上，故 $x_1+x_2=4$}
+  \label{fig:mirror45}
+\end{figure}
+
+\begin{example}[指对同构：不解方程，三步出答案]
+设 $x_1$ 满足 $e^{x_1}+x_1=4$，$x_2$ 满足 $\ln x_2+x_2=4$，求 $x_1+x_2$。
+\begin{solution}
+两式分别改写为 $e^{x_1}=4-x_1$、$\ln x_2=4-x_2$。
+于是 $A(x_1,e^{x_1})$ 是曲线 $y=e^x$ 与直线 $y=4-x$ 的交点，$B(x_2,\ln x_2)$ 是曲线 $y=\ln x$ 与同一直线的交点（图 \ref{fig:mirror45}）。
+$y=e^x$ 与 $y=\ln x$ 互为反函数，关于 $y=x$ 对称；直线 $y=4-x$ 的斜率为 $-1$，与 $y=x$ 垂直，故 $A,B$ 关于 $y=x$ 对称，即 $x_2=e^{x_1}$。
+所以 $x_1+x_2=x_1+e^{x_1}=\key{4}$。全程无需解超越方程。
+\end{solution}
+\end{example}
+
+\begin{example}[平移型镜面：对称轴不是 $y=x$ 时]
+求曲线 $C_1:y=e^x$ 关于直线 $l:y=x+1$ 对称的曲线 $C_2$ 的方程，并验证点 $P(1,e)$ 与其对称点 $P'$ 分别落在 $C_1,C_2$ 上。
+\begin{solution}
+用 $l:y=x+b$（$b=1$）的替换口径 $F(y-b,\,x+b)=0$，把 $C_1$ 的方程 $y=e^x$ 中的 $x$ 换成 $y-1$、$y$ 换成 $x+1$：
+$$x+1=e^{\,y-1}\implies y=\ln(x+1)+1,$$
+即 $C_2:y=\ln(x+1)+1$。
+点 $P(1,e)$ 的对称点为 $P'=(y-b,\,x+b)=(e-1,\,2)$；代入 $C_2$：$\ln\bigl((e-1)+1\bigr)+1=\ln e+1=2$，恰好落在 $C_2$ 上。
+（顺带一提：$x=0$ 时 $e^0=1=0+1$，两条曲线在镜面上的点 $(0,1)$ 处相遇。）
+\end{solution}
+\end{example}
+
+\begin{commonerror}{把「$y=x+b$ 对称」误当成「左移 $b$」}
+关于 $y=x+b$ 的对称\emph{不是}平移：它同时交换了横纵坐标的角色。若把 $C_1:y=e^x$ 关于 $y=x+1$ 的对称曲线误写成 $y=e^{x-1}$（左移思路），代入点 $P(1,e)$ 的对称点 $(e-1,2)$ 立即矛盾——正确的替换永远是 $x\leftrightarrow y-b$ 的\emph{互换}，而不是同向加减。
+\end{commonerror}
+
+\end{explore}
+
+\begin{inclasstest}
+\begin{enumerate}
+  \item 用三视角（代数、几何、箭头图）表示关系 $R=\{(1,1),(2,4),(3,9)\}$，判断它是否为函数，并写出对应法则；\level{易}
+  \item 判断点集 $P=\{(x,y)\mid x^2+y^2=1\}$ 是否为函数，用垂线检验说明理由；\level{易}
+  \item 点集 $\{(x,y)\mid x^2+y^2\leq4\}$ 与 $\{(x,y)\mid x+y\leq3\}$ 的交集表示什么几何图形？它是否可能为某个函数的图象？说明理由；\level{中}
+  \item 方程 $x^3=x$ 的解可看成哪两个函数图象交点的横坐标？求出所有解。\level{中}
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection*{基础巩固}
+\begin{enumerate}
+  \item 写出 $A=\{1,2\}$、$B=\{3,4\}$ 的笛卡尔积 $A\times B$，并任取一个二元关系；
+  \item 判断 $R=\{(1,2),(2,2),(3,2)\}$ 是否为函数，并说明理由。
+\end{enumerate}
+
+\subsection*{进阶提升}
+\begin{enumerate}
+  \item 画出 $R=\{(x,y)\mid y\geq x^2,\ x^2+y^2\leq4\}$ 表示的平面区域，并判断它是否为函数；
+  \item 求不等式 $x^2<2x+3$ 的解集，并说明它对应两曲线怎样的位置关系。
+\end{enumerate}
+
+\subsection*{拓展探究}
+\begin{enumerate}
+  \item 查资料说明：为什么"对数能把乘除变成加减"？用 $y=a^x$ 与 $y=\log_a x$ 的互逆关系（$(x,y)\leftrightarrow(y,x)$）加以解释。
+\end{enumerate}
+
+\subsection*{教师版答案}
+\begin{solution}
+\textbf{基础 1：}$A\times B=\{(1,3),(1,4),(2,3),(2,4)\}$；任取一个子集即可，如 $R=\{(1,4),(2,3)\}$。
+\end{solution}
+\begin{solution}
+\textbf{基础 2：}是函数。虽然三个 $x$ 都对应同一个 $y=2$，但每个 $x$ 对应的 $y$ 唯一（多对一是允许的），竖直线 $x=1,2,3$ 与点集各只有一个交点。
+\end{solution}
+\begin{solution}
+\textbf{进阶 1：}区域是抛物线 $y=x^2$ 上方、圆盘 $x^2+y^2\leq4$ 内部（含边界）的公共部分，即圆盘被抛物线截出的"弓形"部分。它不是函数：取 $x=0$，$y\in[0,2]$，一个 $x$ 对应无穷多个 $y$（竖直线 $x=0$ 与区域有无穷多交点）。
+\end{solution}
+\begin{solution}
+\textbf{进阶 2：}$x^2<2x+3\iff(x-3)(x+1)<0$，解集 $(-1,3)$。几何上，在 $(-1,3)$ 上抛物线 $y=x^2$ 位于直线 $y=2x+3$ 的下方。
+\end{solution}
+\begin{solution}
+\textbf{拓展：}设 $x=a^{m}$，$y=a^{n}$，则 $m=\log_a x$，$n=\log_a y$。乘法 $xy=a^{m+n}$ 取对数得 $\log_a(xy)=m+n=\log_a x+\log_a y$，即乘法化为加法；除法 $x/y=a^{m-n}$ 同理化为减法。反函数关系体现在：指数函数把指数 $m$ 映为幂 $a^m$，对数函数把幂还原为指数，数对 $(x,y)$ 与 $(y,x)$ 关于 $y=x$ 对称。
+\end{solution}
+\end{afterclass}
+\reading{拓展阅读 07}{函数的结构特化}

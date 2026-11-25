@@ -1,0 +1,134 @@
+% 第 2 章：三角函数、解三角形与复平面旋转
+\chapter{三角函数、解三角形与复平面旋转}
+
+\section{复平面旋转与两角和公式}
+
+\begin{problem}\level{易}
+设 $\theta$ 为任意角，$z=\cos\theta+i\sin\theta$。利用“乘以 $i$ 即把向量逆时针旋转 $90^\circ$”，直接写出 $\cos\left(\theta+\dfrac{\pi}{2}\right)$、$\sin\left(\theta+\dfrac{\pi}{2}\right)$、$\cos\left(\theta+\dfrac{3\pi}{2}\right)$、$\sin\left(\theta-\dfrac{\pi}{2}\right)$ 的表达式，并说明符号如何由旋转后的坐标直接读出。
+\end{problem}
+\begin{solution}
+\paragraph{复平面结构剖析}
+$i=e^{i\frac{\pi}{2}}=\cos\dfrac{\pi}{2}+i\sin\dfrac{\pi}{2}$，故乘以 $i$ 相当于把单位向量 $z$ 绕原点逆时针旋转 $\dfrac{\pi}{2}$，模长保持为 $1$；$i^2=-1$ 对应旋转 $\pi$，$i^3=-i$ 对应旋转 $\dfrac{3\pi}{2}$。旋转后向量的实部、虚部分别是新辐角的余弦、正弦，符号由端点落在哪个半轴直接读出，无需口诀。
+\paragraph{标准解题步骤}
+$i(\cos\theta+i\sin\theta)=i\cos\theta+i^2\sin\theta=-\sin\theta+i\cos\theta=\cos\left(\theta+\dfrac{\pi}{2}\right)+i\sin\left(\theta+\dfrac{\pi}{2}\right)$，比较实部、虚部得 $\cos\left(\theta+\dfrac{\pi}{2}\right)=-\sin\theta$，$\sin\left(\theta+\dfrac{\pi}{2}\right)=\cos\theta$。又 $i^3=-i$，$-i(\cos\theta+i\sin\theta)=\sin\theta-i\cos\theta$，故 $\cos\left(\theta+\dfrac{3\pi}{2}\right)=\sin\theta$，$\sin\left(\theta+\dfrac{3\pi}{2}\right)=-\cos\theta$；而 $-i$ 即顺时针旋转 $\dfrac{\pi}{2}$，同上式得 $\cos\left(\theta-\dfrac{\pi}{2}\right)=\sin\theta$，$\sin\left(\theta-\dfrac{\pi}{2}\right)=-\cos\theta$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是死记“奇变偶不变、符号看象限”而记混符号；二是把旋转方向搞反，误以为乘以 $i$ 是顺时针；三是只对 $\dfrac{\pi}{2}$ 熟，遇到 $\dfrac{3\pi}{2}$、$-\dfrac{\pi}{2}$ 不会拆成 $i$ 的幂；四是忽略“实部对应余弦、虚部对应正弦”的对应关系，把两个式子写反。规避方法：把任意诱导公式拆成“乘 $i$ 的几次幂”，画单位圆看旋转后横纵坐标的符号。
+\end{solution}
+
+\begin{problem}\level{中}
+利用等式 $e^{i(\alpha+\beta)}=e^{i\alpha}\cdot e^{i\beta}$ 与欧拉公式 $e^{i\theta}=\cos\theta+i\sin\theta$，推导两角和的余弦、正弦公式；再把 $\beta$ 换成 $-\beta$ 写出差角公式，并说明“对比实部与虚部”的依据。
+\end{problem}
+\begin{solution}
+\paragraph{复平面结构剖析}
+复数相乘的几何意义是模相乘、辐角相加，故 $e^{i\alpha}\cdot e^{i\beta}$ 的辐角恰为 $\alpha+\beta$、模为 $1$，即 $e^{i(\alpha+\beta)}$。等式两边都是 $a+bi$ 形式，由复数相等（实部相等、虚部相等）可一次“拆出”两个实数公式——这正是“一条指数律生成两个三角公式”的结构根源。
+\paragraph{标准解题步骤}
+$e^{i(\alpha+\beta)}=(\cos\alpha+i\sin\alpha)(\cos\beta+i\sin\beta)=(\cos\alpha\cos\beta-\sin\alpha\sin\beta)+i(\sin\alpha\cos\beta+\cos\alpha\sin\beta)$。左边又等于 $\cos(\alpha+\beta)+i\sin(\alpha+\beta)$，比较实部、虚部得 $\cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta$，$\sin(\alpha+\beta)=\sin\alpha\cos\beta+\cos\alpha\sin\beta$。以 $-\beta$ 代 $\beta$，用 $\cos(-\beta)=\cos\beta$、$\sin(-\beta)=-\sin\beta$，得 $\cos(\alpha-\beta)=\cos\alpha\cos\beta+\sin\alpha\sin\beta$，$\sin(\alpha-\beta)=\sin\alpha\cos\beta-\cos\alpha\sin\beta$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是展开时 $i^2=-1$ 的符号出错；二是只对比实部漏掉虚部（或反之），浪费一半信息；三是误以为必须死记四个公式，不知道它们只是同一条等式在实轴、虚轴上的投影；四是代换 $-\beta$ 时忘记正弦是奇函数。规避方法：把 $e^{i(\alpha+\beta)}$ 展开成标准 $a+bi$ 形式，实部虚部各得一个公式，差角公式由奇偶性代换即得。
+\end{solution}
+
+\section{棣莫弗定理与恒等变换}
+
+\begin{problem}\level{中}
+用棣莫弗定理 $(\cos\theta+i\sin\theta)^n=\cos n\theta+i\sin n\theta$，分别取 $n=2,3$，推导二倍角公式与三倍角公式（要求把 $\cos3\theta$ 化为关于 $\cos\theta$ 的多项式，把 $\sin3\theta$ 化为关于 $\sin\theta$ 的多项式）。
+\end{problem}
+\begin{solution}
+\paragraph{复平面结构剖析}
+棣莫弗定理是指数律 $(e^{i\theta})^n=e^{in\theta}$ 的另一种写法：左边 $n$ 个相同复数相乘，辐角累加 $n$ 次得 $n\theta$。左边用二项式定理展开后，实部即 $\cos n\theta$、虚部即 $\sin n\theta$，因此“多次方展开”与“倍角公式”是同一件事的两种读法。
+\paragraph{标准解题步骤}
+$n=2$：$(\cos\theta+i\sin\theta)^2=\cos^2\theta-\sin^2\theta+2i\sin\theta\cos\theta$，故 $\cos2\theta=\cos^2\theta-\sin^2\theta$，$\sin2\theta=2\sin\theta\cos\theta$。$n=3$：$(\cos\theta+i\sin\theta)^3=\cos^3\theta+3i\cos^2\theta\sin\theta-3\cos\theta\sin^2\theta-i\sin^3\theta=(\cos^3\theta-3\cos\theta\sin^2\theta)+i(3\cos^2\theta\sin\theta-\sin^3\theta)$，故 $\cos3\theta=\cos^3\theta-3\cos\theta\sin^2\theta$，$\sin3\theta=3\cos^2\theta\sin\theta-\sin^3\theta$。再用 $\sin^2\theta=1-\cos^2\theta$ 得 $\cos3\theta=4\cos^3\theta-3\cos\theta$；用 $\cos^2\theta=1-\sin^2\theta$ 得 $\sin3\theta=3\sin\theta-4\sin^3\theta$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是二项式展开系数记错（应为 $1,3,3,1$ 且 $i$ 的幂交替变号）；二是把 $i^2,i^3$ 的符号算错，导致虚部错进实部；三是 $\cos3\theta$ 的两种等价形式互相混淆；四是只写结果不写“比较实虚部”的依据。规避方法：固定流程——二项式展开、按 $i$ 的幂归并实虚部、再用 $\sin^2\theta+\cos^2\theta=1$ 统一变量。
+\end{solution}
+
+\begin{problem}\level{中}
+利用 $\cos\theta=\dfrac{e^{i\theta}+e^{-i\theta}}{2}$ 与 $\sin\theta=\dfrac{e^{i\theta}-e^{-i\theta}}{2i}$，推导：(1) 积化和差 $\cos\alpha\cos\beta=\dfrac12[\cos(\alpha+\beta)+\cos(\alpha-\beta)]$；(2) 和差化积 $\cos\alpha+\cos\beta=2\cos\dfrac{\alpha+\beta}{2}\cos\dfrac{\alpha-\beta}{2}$，并说明两组公式为何互为“逆运算”。
+\end{problem}
+\begin{solution}
+\paragraph{复平面结构剖析}
+三角函数是指数函数与其共轭的线性组合：$\cos\theta$ 是 $e^{i\theta}$ 与 $e^{-i\theta}$ 的“平均”，$\sin\theta$ 是二者之差除以 $2i$。乘积 $\cos\alpha\cos\beta$ 展开后出现 $e^{\pm i(\alpha+\beta)}$、$e^{\pm i(\alpha-\beta)}$ 四项，恰好重组为两个余弦；和差 $\cos\alpha+\cos\beta$ 提取公因子 $e^{\pm i\frac{\alpha+\beta}{2}}$ 后剩下 $e^{\pm i\frac{\alpha-\beta}{2}}$，重组为两个余弦的乘积。指数的加减在三角层面表现为和差与乘积的互换。
+\paragraph{标准解题步骤}
+(1) $\cos\alpha\cos\beta=\dfrac14(e^{i\alpha}+e^{-i\alpha})(e^{i\beta}+e^{-i\beta})=\dfrac14\left[e^{i(\alpha+\beta)}+e^{-i(\alpha+\beta)}+e^{i(\alpha-\beta)}+e^{-i(\alpha-\beta)}\right]=\dfrac12[\cos(\alpha+\beta)+\cos(\alpha-\beta)]$。
+(2) 把 $\alpha,\beta$ 写成 $\dfrac{\alpha+\beta}{2}\pm\dfrac{\alpha-\beta}{2}$，则 $e^{i\alpha}+e^{i\beta}=e^{i\frac{\alpha+\beta}{2}}\left(e^{i\frac{\alpha-\beta}{2}}+e^{-i\frac{\alpha-\beta}{2}}\right)$，同理 $e^{-i\alpha}+e^{-i\beta}=e^{-i\frac{\alpha+\beta}{2}}\left(e^{i\frac{\alpha-\beta}{2}}+e^{-i\frac{\alpha-\beta}{2}}\right)$，故 $\cos\alpha+\cos\beta=\dfrac12\cdot 2\cos\dfrac{\alpha-\beta}{2}\cdot 2\cos\dfrac{\alpha+\beta}{2}=2\cos\dfrac{\alpha+\beta}{2}\cos\dfrac{\alpha-\beta}{2}$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是记不住系数：积化和差得和差时系数为 $\dfrac12$，和差化积得乘积时系数为 $2$；二是和差化积时把 $\dfrac{\alpha+\beta}{2}$ 与 $\dfrac{\alpha-\beta}{2}$ 写反；三是只会背公式不会互推，题目换成 $\sin\alpha+\sin\beta$ 就卡住；四是 $\sin\alpha\sin\beta$ 的积化和差带负号容易丢。规避方法：用指数定义现场推导，或记住“和差化积系数 $2$、积化和差系数 $\dfrac12$”，再用特例（如 $\beta=0$）验证。
+\end{solution}
+
+\section{三角求和与解三角形}
+
+\begin{problem}\level{中}
+设 $\theta\neq 2k\pi\ (k\in\mathbb{Z})$，求 $S_n=\cos\theta+\cos2\theta+\cdots+\cos n\theta$ 的封闭表达式，并说明复数等比数列求和为何能省去实数域的裂项技巧。
+\end{problem}
+\begin{solution}
+\paragraph{复平面结构剖析}
+$\cos k\theta$ 是 $e^{ik\theta}$ 的实部，故 $S_n=\operatorname{Re}\sum_{k=1}^n (e^{i\theta})^k$，即公比 $q=e^{i\theta}$ 的等比数列求和后取实部。实数域做法要乘 $\sin\dfrac{\theta}{2}$ 裂项相消，本质是在实数域里人工构造“等比求和”；复数域直接套用等比公式再化回实数形式，过程完全机械化。
+\paragraph{标准解题步骤}
+$\sum_{k=1}^n e^{ik\theta}=\dfrac{e^{i\theta}(1-e^{in\theta})}{1-e^{i\theta}}$。由 $1-e^{i\theta}=-2i e^{i\frac{\theta}{2}}\sin\dfrac{\theta}{2}$，$1-e^{in\theta}=-2i e^{i\frac{n\theta}{2}}\sin\dfrac{n\theta}{2}$，得 $\sum_{k=1}^n e^{ik\theta}=\dfrac{e^{i\frac{(n+1)\theta}{2}}\sin\frac{n\theta}{2}}{\sin\frac{\theta}{2}}$。取实部得 $S_n=\dfrac{\sin\frac{n\theta}{2}\cos\frac{(n+1)\theta}{2}}{\sin\frac{\theta}{2}}$。检验：$n=1$ 时 $S_1=\dfrac{\sin\frac{\theta}{2}\cos\theta}{\sin\frac{\theta}{2}}=\cos\theta$，正确。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是忽略 $\theta\neq 2k\pi$ 的条件，使分母 $\sin\dfrac{\theta}{2}$ 为零；二是取实部时把整个表达式当成实数，忘记 $e^{i\frac{(n+1)\theta}{2}}$ 还要展开为 $\cos+i\sin$；三是半角化简 $1-e^{i\theta}=-2i e^{i\frac{\theta}{2}}\sin\dfrac{\theta}{2}$ 中符号出错；四是求出后不检验特殊值。规避方法：固定流程——写成 $\operatorname{Re}\sum q^k$、等比求和、半角化简、取实部，最后用 $n=1$ 检验。
+\end{solution}
+
+\begin{problem}\level{中}
+在 $\triangle ABC$ 中，$\sin A=\dfrac35$，$\cos B=\dfrac{5}{13}$，求 $\cos C$。
+\end{problem}
+\begin{solution}
+\paragraph{集合与结构剖析}
+已知两个三角函数值，角的候选集合各自可能有两个（$A$ 可锐可钝），但三角形内角和 $A+B+C=\pi$ 是隐藏定义域，会把多解筛成单解。正确顺序是：先写出所有候选，再用 $A+B<\pi$ 逐一排除，最后才计算。
+\paragraph{标准解题步骤}
+由 $\sin A=\dfrac35$ 得 $\cos A=\pm\dfrac45$；由 $\cos B=\dfrac{5}{13}>0$ 知 $B$ 为锐角，$\sin B=\dfrac{12}{13}$。若 $\cos A=-\dfrac45$，则 $\cos A=-\dfrac{52}{65}<-\dfrac{25}{65}=-\dfrac{5}{13}=-\cos B=\cos(\pi-B)$；因 $y=\cos x$ 在 $(0,\pi)$ 上单调递减，且 $A,\pi-B\in(0,\pi)$，故 $A>\pi-B$，即 $A+B>\pi$，与三角形内角和矛盾。故只能 $\cos A=\dfrac45$。于是 $\cos C=-\cos(A+B)=-(\cos A\cos B-\sin A\sin B)=-\left(\dfrac45\cdot\dfrac{5}{13}-\dfrac35\cdot\dfrac{12}{13}\right)=\dfrac{16}{65}$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是只取 $\cos A=\dfrac45$ 而不说明理由（或误取 $-\dfrac45$）；二是忽略“三角形内角和为 $\pi$”这一隐藏定义域，把增解留在答案里；三是比较 $A$ 与 $\pi-B$ 时不会用余弦的单调性；四是算 $\cos C$ 时错用公式，应为 $\cos C=-\cos(A+B)=\sin A\sin B-\cos A\cos B$。规避方法：先列出所有候选（$\cos A=\pm\dfrac45$），再逐一用 $0<A+B<\pi$ 检验。
+\end{solution}
+
+\begin{problem}\level{中}
+在 $\triangle ABC$ 中，$a=4$，$b=6$，$A=30^\circ$，求角 $B$、角 $C$ 与边 $c$，并说明为什么本题有两解。
+\end{problem}
+\begin{solution}
+\paragraph{集合与结构剖析}
+已知“边边角”（$a,b,A$），由正弦定理只能确定 $\sin B$，而 $\sin B=\dfrac34$ 对应 $B$ 与 $\pi-B$ 两个候选；是否都成立取决于隐藏条件 $A+B<\pi$ 与大边对大角（$b>a\Rightarrow B>A$）。边角互化的方向：已知边的比求角用正弦定理（可能两解），已知两边夹角求第三边用余弦定理（二次方程）。
+\paragraph{标准解题步骤}
+由正弦定理 $\dfrac{a}{\sin A}=\dfrac{b}{\sin B}$，得 $\sin B=\dfrac{b\sin A}{a}=\dfrac{6\cdot\frac12}{4}=\dfrac34$。因 $b>a$，故 $B>A=30^\circ$，$B$ 可锐可钝：$B_1=\arcsin\dfrac34$，$B_2=\pi-\arcsin\dfrac34$，且 $A+B_2\approx30^\circ+131.4^\circ<180^\circ$，两解均成立。由余弦定理 $a^2=b^2+c^2-2bc\cos A$，即 $16=36+c^2-6\sqrt3\,c$，整理得 $c^2-6\sqrt3\,c+20=0$，解得 $c=3\sqrt3\pm\sqrt7$（均为正）。对应两组解：$\left(B_1,\,c_1=3\sqrt3+\sqrt7\right)$ 与 $\left(B_2,\,c_2=3\sqrt3-\sqrt7\right)$，其中 $C=\pi-A-B$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是由 $\sin B=\dfrac34$ 只写锐角解，漏掉钝角解；二是保留两解却不检验 $A+B<\pi$（或本题恰好两解却误删一解）；三是余弦定理列式时符号错，应为 $a^2=b^2+c^2-2bc\cos A$；四是解出 $c$ 后不判断正负，把负根当解。规避方法：SSA 问题先由 $b$ 与 $a$ 的大小判断 $B$ 与 $A$ 的大小关系，再检验两候选是否都满足 $A+B<\pi$。
+\end{solution}
+
+\section{解三角形最值、向量综合与考纲边界}
+
+\begin{problem}\level{难}
+在 $\triangle ABC$ 中，$A=60^\circ$，$a=\sqrt3$，求周长 $l=a+b+c$ 的最大值。
+\end{problem}
+\begin{solution}
+\paragraph{集合与结构剖析}
+已知一边及其对角，三角形由 $B$（或 $C$）唯一决定，而 $B\in\left(0,\dfrac{2\pi}{3}\right)$ 是隐藏定义域。用正弦定理把 $b,c$ 都写成 $B$ 的函数，周长化为单角三角函数，再用和差化积求最值；等号条件 $B=C=60^\circ$ 即等边三角形。
+\paragraph{标准解题步骤}
+由正弦定理 $2R=\dfrac{a}{\sin A}=\dfrac{\sqrt3}{\frac{\sqrt3}{2}}=2$，故 $b=2\sin B$，$c=2\sin C$，且 $C=\dfrac{2\pi}{3}-B$。于是 $l=\sqrt3+2\left[\sin B+\sin\left(\dfrac{2\pi}{3}-B\right)\right]$。由和差化积 $\sin B+\sin\left(\dfrac{2\pi}{3}-B\right)=2\sin\dfrac{\pi}{3}\cos\left(B-\dfrac{\pi}{3}\right)=\sqrt3\cos\left(B-\dfrac{\pi}{3}\right)\leq\sqrt3$，当 $B=\dfrac{\pi}{3}$ 时取等号（在定义域内）。故 $l\leq\sqrt3+2\sqrt3=3\sqrt3$，最大值为 $3\sqrt3$，此时 $B=C=60^\circ$，三角形为等边三角形。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是忘记 $B\in\left(0,\dfrac{2\pi}{3}\right)$，误以为 $\cos\left(B-\dfrac{\pi}{3}\right)$ 可取任意值；二是和差化积系数记错（此处应为 $2\sin\dfrac{\pi}{3}=\sqrt3$）；三是求出最值不验证取等条件 $B=\dfrac{\pi}{3}$ 是否在定义域内；四是把“周长最大”误当“面积最大”另起炉灶。规避方法：先用正弦定理统一变量，化为单角三角函数，再求最值并验证取等条件。
+\end{solution}
+
+\begin{problem}\level{中}
+已知平面向量 $\bm a,\bm b$ 满足 $|\bm a|=2$，$|\bm b|=1$，$\bm a\cdot\bm b=1$。(1) 求 $\bm a$ 与 $\bm b$ 的夹角 $\theta$；(2) 求 $|\bm a-2\bm b|$；(3) 求 $\bm b$ 在 $\bm a$ 方向上的投影。
+\end{problem}
+\begin{solution}
+\paragraph{集合与结构剖析}
+数量积同时编码“模”与“夹角”：$\bm a\cdot\bm b=|\bm a||\bm b|\cos\theta$ 是夹角公式；$|\bm a-2\bm b|^2$ 用数量积展开为 $|\bm a|^2-4\bm a\cdot\bm b+4|\bm b|^2$，是整体代入；投影 $\dfrac{\bm a\cdot\bm b}{|\bm a|}$ 是数量积的几何读法。三者都归结为数量积的分配律。
+\paragraph{标准解题步骤}
+(1) $\cos\theta=\dfrac{\bm a\cdot\bm b}{|\bm a||\bm b|}=\dfrac{1}{2\cdot1}=\dfrac12$，又 $\theta\in[0,\pi]$，故 $\theta=60^\circ$。
+(2) $|\bm a-2\bm b|^2=|\bm a|^2-4\bm a\cdot\bm b+4|\bm b|^2=4-4+4=4$，故 $|\bm a-2\bm b|=2$。
+(3) $\bm b$ 在 $\bm a$ 方向上的投影为 $|\bm b|\cos\theta=1\cdot\dfrac12=\dfrac12$（即 $\dfrac{\bm a\cdot\bm b}{|\bm a|}=\dfrac12$）。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是把夹角公式写成 $\cos\theta=\dfrac{|\bm a||\bm b|}{\bm a\cdot\bm b}$；二是 $|\bm a-2\bm b|$ 展开时漏掉交叉项系数 $4$ 或符号错（应为 $-4\bm a\cdot\bm b$）；三是混淆“投影”与“投影向量”：投影是数量 $\dfrac{\bm a\cdot\bm b}{|\bm a|}=\dfrac12$，投影向量是 $\dfrac{\bm a\cdot\bm b}{|\bm a|^2}\bm a=\dfrac{\bm a}{4}$；四是忘记 $\theta\in[0,\pi]$ 而写出两个角。规避方法：凡见 $|\cdot|$ 就先平方用数量积展开；投影分清“数量”与“向量”。
+\end{solution}
+
+\begin{problem}\level{难}
+已知 $\sin\alpha=\dfrac35$，$\alpha\in\left(\dfrac{\pi}{2},\pi\right)$，求 $\sin2\alpha$、$\cos2\alpha$、$\tan2\alpha$。要求分别用实数三角公式与复数法（棣莫弗）各算一遍，并说明在高考解答题中应如何书写。
+\end{problem}
+\begin{solution}
+\paragraph{复平面结构剖析}
+两种算法共用同一结构：实数法用二倍角公式，复数法用 $(\cos\alpha+i\sin\alpha)^2=\cos2\alpha+i\sin2\alpha$。差别在书写规范：高考解答题默认在实数域 $\mathbb{R}$ 内评分，复数法适合选填速算、验算与忘公式时现场推导，解答题须还原为实数三角变换格式，否则有扣分风险。
+\paragraph{标准解题步骤}
+实数法：$\alpha\in\left(\dfrac{\pi}{2},\pi\right)$，故 $\cos\alpha=-\sqrt{1-\dfrac{9}{25}}=-\dfrac45$。$\sin2\alpha=2\sin\alpha\cos\alpha=2\cdot\dfrac35\cdot\left(-\dfrac45\right)=-\dfrac{24}{25}$；$\cos2\alpha=1-2\sin^2\alpha=1-\dfrac{18}{25}=\dfrac{7}{25}$；$\tan2\alpha=\dfrac{\sin2\alpha}{\cos2\alpha}=-\dfrac{24}{7}$。
+复数法（验算）：$(\cos\alpha+i\sin\alpha)^2=\cos^2\alpha-\sin^2\alpha+2i\sin\alpha\cos\alpha=\left(\dfrac{16}{25}-\dfrac{9}{25}\right)-\dfrac{24}{25}i=\dfrac{7}{25}-\dfrac{24}{25}i$，实部 $\cos2\alpha=\dfrac{7}{25}$、虚部 $\sin2\alpha=-\dfrac{24}{25}$，与实数法一致。
+\paragraph{学生典型易错点诊断}
+最易犯的错误是由 $\alpha\in\left(\dfrac{\pi}{2},\pi\right)$ 取错 $\cos\alpha$ 的符号（应为负）；二是 $\cos2\alpha$ 选用 $1-2\sin^2\alpha$ 还是 $2\cos^2\alpha-1$ 时算错；三是解答题直接书写复数法而被扣分；四是 $\tan2\alpha=\dfrac{\sin2\alpha}{\cos2\alpha}$ 时符号错。规避方法：解答题用实数公式规范书写，复数法只做检查；先定象限定符号，再套公式。
+\end{solution}

@@ -1,0 +1,43 @@
+% 数学讲义 · ElegantBook
+% 定位：学生用的主材料，最完整的一档。
+%   与教案的分工：教案写「怎么教」（目标、重难点、过程、板书）；
+%   讲义写「学什么」（概念、推导、例题、练习、小结），可以脱离教师自学。
+%   与导学案的分工：导学案是任务单（填空、探究、检测）；
+%   讲义是正文，不预设学生先做过什么。
+\documentclass[cn,11pt,color=blue,math=newtx]{elegantbook}
+
+\input{../common/preamble}
+
+% 同教案：修复 bbding 的 \HandPencilLeft 导致的 xdvipdfmx 致命错误
+\renewenvironment{exercise}[1][]{%
+  \refstepcounter{exer}%
+  \par\noindent\makebox[-3pt][r]{%
+    \scriptsize\color{red!90}\textdbend\quad}%
+  \textbf{\color{main}{\exercisename} \theexer #1 }\rmfamily}{%
+  \par\ignorespacesafterend}
+
+\input{../common/macros}
+\input{../common/envs}
+
+\title{数学讲义}
+\subtitle{高中必修}
+\author{Shawn Shang}
+\institute{数学教研组}
+\version{0.1}
+\date{2026 年 11 月}
+\extrainfo{高中数学 · 必修第一册}
+
+\graphicspath{{../figures/}{../map/figures/}}
+\cover{cover_blue.png}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+\input{chapters/01}
+
+\end{document}

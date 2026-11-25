@@ -1,0 +1,37 @@
+% 错题本 · ElegantNote
+% 定位：学生订正用。一题一条，四段固定：错解 → 正解 → 变式 → 反思。
+%   与笔记的分工：笔记记「今天学了什么」；错题本记「我错在哪、为什么」。
+%   与题库的分工：题库是题源；错题本是学生自己的错题集，从题库里挑。
+\documentclass[cn,11pt,color=cyan,math=newtx,normal]{elegantnote}
+
+\input{../common/preamble}
+\input{../common/macros}
+\input{../common/envs}
+
+\title{数学错题本}
+\author{Shawn Shang}
+\date{2026 年 11 月}
+
+\graphicspath{{../figures/}}
+
+\begin{document}
+
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  \makebox[\textwidth]{%
+    \includegraphics[width=\paperwidth]{../figures/cover_cyan.png}}\par
+  \vfill
+  {\Huge\bfseries\color{ecolor!70!black} 数学错题本\par}
+  \vskip 1.2em
+  {\large 高中必修\par}
+  \vskip 2.5em
+  {\large Shawn Shang\par}
+  \vfill
+  {\normalsize 2026 年 11 月\par}
+\end{titlepage}
+\tableofcontents
+
+\input{chapters/01}
+
+\end{document}

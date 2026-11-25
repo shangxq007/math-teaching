@@ -1,0 +1,53 @@
+% 高观点系列题库 · ElegantBook（含答案版，第 0 章 ~ 第 7 章）
+% 与 bank/（湘教版章节）分开成册；把「第 X 章」的编号格式固定为阿拉伯数字。
+\documentclass[cn,11pt,color=green,math=newtx,answer]{elegantbook}
+
+\input{../common/preamble}
+
+% 同教案：修复 bbding 的 \HandPencilLeft 导致的 xdvipdfmx 致命错误
+\renewenvironment{exercise}[1][]{%
+  \refstepcounter{exer}%
+  \par\noindent\makebox[-3pt][r]{%
+    \scriptsize\color{red!90}\textdbend\quad}%
+  \textbf{\color{main}{\exercisename} \theexer #1 }\rmfamily}{%
+  \par\ignorespacesafterend}
+
+\input{../common/macros}
+
+% 章节标题编号用阿拉伯数字（默认 \zhnumber 会把 0 写成「零」）
+\renewcommand{\xchaptertitle}{第 \arabic{chapter} 章}
+
+\title{数学题库·高观点系列}
+\subtitle{结构主义视角下的高中数学}
+\author{Shawn Shang}
+\institute{数学教研组}
+\version{0.1}
+\date{2026 年 11 月}
+\extrainfo{高中数学 · 高观点系列}
+
+\graphicspath{{../figures/}}
+\cover{cover_green.png}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+% 让第一个 \chapter 编号为 0（第 0 章是总纲）
+\setcounter{chapter}{-1}
+
+\input{chapters/00}
+\input{chapters/01}
+\input{chapters/02}
+\input{chapters/03}
+\input{chapters/04}
+\input{chapters/05}
+\input{chapters/06}
+\input{chapters/07}
+\input{chapters/08}
+\input{chapters/09}
+
+\end{document}

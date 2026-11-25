@@ -1,7 +1,7 @@
 \section{二级结论卡片}
 
 二级结论是从定义和性质推出来的、使用频率高的结果。
-下面每张卡片包含五栏：结论、推导、适用条件、易错点、配套练习。
+下面每张卡片包含五栏：结论、推导、适用条件、易错点、层级。
 
 \begin{table}[htbp]
 \centering
@@ -41,10 +41,15 @@ $x_1+x_2=-\dfrac{b}{a}$，$x_1x_2=\dfrac{c}{a}$
 & 由 $x=-\dfrac{b}{2a}$ 与 $0$ 比较得到
 & $a\neq0$ & 只记口诀，不会推导 & 三级 \\
 \addlinespace
-恒成立条件
+恒成立条件（在 $\mathbb{R}$ 上）
 $ax^2+bx+c>0$ 恒成立 $\iff a>0$ 且 $\Delta<0$
 & 由「图象全部在 $x$ 轴上方」得到
 & 二次项系数含参时需讨论 & 漏掉 $a=0$ 的讨论 & 二级 \\
+\addlinespace
+区间上恒成立
+$f(x)>0$ 在 $[m,n]$ 上恒成立 $\iff f$ 在 $[m,n]$ 上的最小值 $>0$
+& 由「恒成立即最值」得到
+& 需先用对称轴分类求最小值 & 套判别式；与能成立混淆 & 二级 \\
 \addlinespace
 根的分布
 （两根都在区间内）
@@ -53,6 +58,84 @@ $ax^2+bx+c>0$ 恒成立 $\iff a>0$ 且 $\Delta<0$
 \bottomrule
 \end{tabular}
 \caption{常见二级结论卡片}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{
+  >{\raggedright\arraybackslash}p{4.0cm}
+  >{\raggedright\arraybackslash}p{2.9cm}
+  >{\raggedright\arraybackslash}p{2.6cm}
+  >{\raggedright\arraybackslash}p{2.6cm}
+  >{\raggedright\arraybackslash}p{0.9cm}}
+\toprule
+\key{结论} & \key{推导} & \key{适用条件} & \key{易错点} & \key{层级} \\
+\midrule
+定义域三条限制
+& 使解析式有意义的 $x$ 的范围
+& 分式、偶次根式、对数
+& 漏掉分母不为 $0$ & 一级 \\
+\addlinespace
+奇偶性先看定义域
+& 前提是定义域关于原点对称
+& 任意函数
+& 不检验定义域就下结论 & 一级 \\
+\addlinespace
+幂函数过 $(1,1)$
+& 由 $y=x^{\alpha}$，$1^{\alpha}=1$
+& 幂函数
+& 把 $y=2x^2$ 当幂函数 & 二级 \\
+\addlinespace
+指数函数恒过 $(0,1)$
+& 由 $a^0=1$
+& $a>0$ 且 $a\neq1$
+& 底数取 $1$ 或负数 & 一级 \\
+\addlinespace
+指数函数单调性
+& 底数 $a>1$ 递增，$0<a<1$ 递减
+& 底数不为 $1$
+& 不比较底数就判断 & 二级 \\
+\addlinespace
+换底公式
+& $\log_a b=\dfrac{\log_c b}{\log_c a}$
+& $a,b,c>0$ 且不为 $1$
+& 记错分子分母 & 二级 \\
+\addlinespace
+互为反函数
+& $y=a^x$ 与 $y=\log_a x$ 关于 $y=x$ 对称
+& 同底
+& 底数不同也配成反函数 & 二级 \\
+\addlinespace
+零点存在定理
+& 连续且端点异号 $\implies$ 有零点
+& 在闭区间上连续
+& 误以为零点唯一 & 二级 \\
+\addlinespace
+弧度与角度互换
+& $180^\circ=\pi$ rad
+& 弧度制
+& 弧长公式用角度代入 & 一级 \\
+\addlinespace
+同角关系
+& $\sin^2\alpha+\cos^2\alpha=1$
+& 任意角
+& 开方时忽略符号 & 一级 \\
+\addlinespace
+$y=A\sin(\omega x+\varphi)$ 的周期
+& $T=\dfrac{2\pi}{|\omega|}$
+& $\omega\neq0$
+& 忘记取绝对值 & 二级 \\
+\addlinespace
+增长快慢
+& $x$ 大时指数 $>$ 幂 $>$ 对数
+& 底数大于 $1$
+& 用有限个值代替极限 & 三级 \\
+\bottomrule
+\end{tabular}
+\caption{函数、幂指对与三角中的常见二级结论}
 \end{table}
 
 \section{使用建议}

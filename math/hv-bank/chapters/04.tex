@@ -1,0 +1,213 @@
+% 第 4 章：立体几何与圆锥曲线
+\chapter{立体几何与圆锥曲线}
+
+\section{仿射变换与椭圆面积}
+
+\begin{problem}\level{易}
+把圆 $x^2+y^2=a^2$（$a>0$）沿 $y$ 轴方向按比例 $k=\dfrac ba$（$0<b<a$）作仿射压缩，得到椭圆 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$。
+(1) 写出该仿射变换的坐标公式，并验证它把上述圆映成上述椭圆；
+(2) 利用仿射变换的面积比求该椭圆的面积；
+(3) 当 $a=3,b=2$ 时，求椭圆的面积。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+仿射变换 $(x,y)\mapsto(x,ky)$ 是一次线性压缩：它保持共线、平行、中点与相切关系不变，其雅可比行列式为 $k$，故把平面图形的面积统一放大 $k$ 倍。椭圆正是圆在“横坐标不动、纵坐标乘 $k$”下的像，因此圆与椭圆之间的面积问题可由比例 $k$ 一步打通。
+\paragraph{标准解题步骤}
+(1) 变换 $T:(x,y)\mapsto(X,Y)=(x,ky)$，$k=\dfrac ba$。圆上点满足 $x^2+y^2=a^2$，而 $x=X,\ y=\dfrac Yk$，代入得 $X^2+\dfrac{Y^2}{k^2}=a^2$，即 $\dfrac{X^2}{a^2}+\dfrac{Y^2}{k^2a^2}=1$。由 $k^2a^2=\dfrac{b^2}{a^2}\cdot a^2=b^2$，即 $\dfrac{X^2}{a^2}+\dfrac{Y^2}{b^2}=1$。
+(2) 雅可比 $\left|\dfrac{\partial(X,Y)}{\partial(x,y)}\right|=k$，故 $S_{\text{椭圆}}=k\cdot S_{\text{圆}}=\dfrac ba\cdot\pi a^2=\pi ab$。
+(3) $a=3,b=2$ 时 $S=6\pi$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是压缩方向搞反（沿 $x$ 轴压缩得 $\dfrac{x^2}{b^2}+\dfrac{y^2}{a^2}=1$）；二是面积比误写成 $k^2$ 或 $\dfrac ab$（面积比是 $|k|$，$k^2$ 是长度比的平方，用于长度而非面积）；三是误以为求椭圆面积必须用积分；四是把 $a,b$ 与焦点位置混淆（焦点在长轴上）。规避方法：先写变换公式，再算雅可比行列式，最后回代数值。
+\end{solution}
+
+\begin{problem}\level{中}
+求椭圆 $\dfrac{x^2}{16}+\dfrac{y^2}{9}=1$ 的内接三角形面积的最大值，并指出取到最大值时三角形的形状特征。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+该椭圆是圆 $x^2+y^2=16$ 沿 $y$ 轴按比例 $k=\dfrac34$ 压缩而来。仿射变换保持共线、平行、中点与相切关系，并把所有面积统一放大 $k$ 倍；因此“椭圆内接三角形面积最大”与“圆内接三角形面积最大”是同一个问题。而圆的内接三角形中面积最大者是圆的内接正三角形。
+\paragraph{标准解题步骤}
+圆 $x^2+y^2=16$（$a=4$）的内接正三角形面积为
+$S_{\text{圆}}=\dfrac{3\sqrt3}{4}a^2=\dfrac{3\sqrt3}{4}\times16=12\sqrt3$。
+压缩比 $k=\dfrac ba=\dfrac34$，故椭圆内接三角形面积的最大值为
+$S_{\max}=k\,S_{\text{圆}}=\dfrac34\times12\sqrt3=9\sqrt3$。
+取等条件：圆的内接正三角形经压缩后成为椭圆的内接三角形；由于仿射变换保持中点，其重心仍与椭圆中心重合。故最大值在“圆的内接正三角形的仿射像”处取得。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是直接设椭圆的参数方程硬算，计算量大且容易漏解；二是忘记面积比是 $k$ 而非 $k^2$；三是误以为椭圆内接最大三角形仍是正三角形（椭圆中并不存在正三角形，应为正三角形的仿射像）；四是不说明取等条件，无法判断答案是否可达。规避方法：识别“圆 $\to$ 椭圆”的仿射来源，把最值问题反推到圆上解决。
+\end{solution}
+
+\section{圆锥截面与统一定义}
+
+\begin{problem}\level{中}
+用一个平面去截圆锥面得到椭圆。证明：存在一个球（Dandelin 球）与圆锥面相切于一个圆 $C$、与截面相切于一点 $F$；设圆 $C$ 所在平面与截面交于直线 $l$。证明椭圆上任意一点 $P$ 满足 $\dfrac{|PF|}{d(P,l)}=e$ 为定值（即离心率），并求 $e$ 与圆锥半顶角 $\theta$、截面与圆锥轴的夹角 $\beta$ 的关系。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+Dandelin 球把三维截面问题“降维”为切线长相等的问题：从椭圆上一点 $P$ 引圆锥的母线，设它与切圆 $C$ 交于 $Q$。因为 $PF$ 与 $PQ$ 都是从 $P$ 引向同一个球的切线，所以 $|PF|=|PQ|$。于是“到焦点的距离”被翻译成“沿母线的长度”，后者又与 $P$ 到圆 $C$ 所在平面的距离成正比，再经二面角转化为 $P$ 到准线 $l$ 的距离。
+\paragraph{标准解题步骤}
+设圆锥的半顶角（母线与轴的夹角）为 $\theta$，截面 $\pi$ 与圆锥轴的夹角为 $\beta$（$\beta>\theta$ 时截面与所有母线相交，得椭圆），圆 $C$ 所在平面为 $\pi_1\perp$ 轴，且 $\pi\cap\pi_1=l$。记 $\alpha$ 为母线与平面 $\pi_1$ 的夹角，$\gamma$ 为二面角 $\pi$-$l$-$\pi_1$。对椭圆上任意一点 $P$，母线交 $C$ 于 $Q$，则
+$|PF|=|PQ|$（同一点引球的两条切线等长）。
+设 $P$ 到 $\pi_1$ 的距离为 $h$，则 $h=|PQ|\sin\alpha$；设 $P$ 到 $l$ 的距离为 $d$，则 $d=\dfrac{h}{\sin\gamma}$。因此
+$$\frac{|PF|}{d}=\frac{|PQ|\sin\gamma}{|PQ|\sin\alpha}=\frac{\sin\gamma}{\sin\alpha}.$$
+由 $\alpha=90^\circ-\theta$、$\gamma=90^\circ-\beta$，得 $\sin\alpha=\cos\theta$，$\sin\gamma=\cos\beta$，故
+$$e=\frac{|PF|}{d}=\frac{\cos\beta}{\cos\theta}\quad(<1),$$
+为定值，这正是椭圆的离心率。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是只证“到两焦点距离之和为定值”（Dandelin 球的另一条路线），没有落到焦点—准线定义；二是误以为 $|PF|=|PQ|$ 需要 $Q$ 是垂足（$Q$ 是母线与切圆 $C$ 的交点，不是垂足）；三是把 $\alpha,\gamma$ 与 $\theta,\beta$ 的关系写错（应为 $\sin\alpha=\cos\theta$、$\sin\gamma=\cos\beta$）；四是忘记说明 $\beta>\theta$ 保证 $e<1$、轨迹为椭圆。规避方法：先画“过 $P$ 的母线”这条辅助线，再依次使用切线长相等、线面角、二面角三个比值。
+\end{solution}
+
+\begin{problem}\level{中}
+设动点 $P$ 到定点 $F$（$F\notin l$）的距离与到定直线 $l$ 的距离之比为常数 $e>0$。
+(1) 证明：$e<1$ 时 $P$ 的轨迹是椭圆，$e=1$ 时是抛物线，$e>1$ 时是双曲线；
+(2) 取 $F(2,0)$，$l:x=8$，$e=\dfrac12$，求 $P$ 的轨迹方程；
+(3) 求该轨迹的焦点、顶点与准线。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+统一定义把三类圆锥曲线合并为“到焦点的距离 $=$ 离心率 $\times$ 到准线的距离”。建立坐标系时把原点取在曲线的对称中心、$x$ 轴沿对称轴，右焦点即为 $(ae,0)$、右准线为 $x=\dfrac ae$（$a>0$ 为待定量），代入定义式即可一次性化为标准方程，$e$ 与 $1$ 的大小决定曲线类型。
+\paragraph{标准解题步骤}
+(1) 取 $F(ae,0)$、$l:x=\dfrac ae$。由 $\sqrt{(x-ae)^2+y^2}=e\left|x-\dfrac ae\right|$，两边平方得
+$(x-ae)^2+y^2=e^2\left(x-\dfrac ae\right)^2$，
+展开并整理：$x^2(1-e^2)+y^2=a^2(1-e^2)$，即
+$$\frac{x^2}{a^2}+\frac{y^2}{a^2(1-e^2)}=1.$$
+当 $0<e<1$ 时两分母为正，是椭圆；当 $e>1$ 时 $1-e^2<0$，化为 $\dfrac{x^2}{a^2}-\dfrac{y^2}{a^2(e^2-1)}=1$，是双曲线；当 $e=1$ 时上式退化，须回到原式：以焦点 $F(c,0)$、准线 $x=d$（$c\ne d$）代入并平方，得 $y^2=2(c-d)x+(d^2-c^2)$，是抛物线。
+(2) 由 $c=ae=2$、$\dfrac ae=8$，得 $a=4$，$e=\dfrac12$。故轨迹为
+$\dfrac{x^2}{16}+\dfrac{y^2}{16\left(1-\frac14\right)}=1$，即 $\dfrac{x^2}{16}+\dfrac{y^2}{12}=1$。
+(3) $a=4,b=2\sqrt3,c=2$。焦点 $(\pm2,0)$；顶点 $(\pm4,0)$、$(0,\pm2\sqrt3)$；准线 $x=\pm\dfrac{a^2}{c}=\pm8$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是平方时不说明两边非负（$e>0$ 保证右端非负，故可平方）；二是把焦点与准线配错（右焦点 $(c,0)$ 对应右准线 $x=\dfrac ae$）；三是 $e=1$ 时直接套椭圆公式导致退化；四是把 $a,b,c$ 的关系写错（应为 $b^2=a^2-c^2=a^2(1-e^2)$）。规避方法：先定“焦点—准线”配对，平方后按 $e$ 与 $1$ 的大小分类书写。
+\end{solution}
+
+\section{椭圆方程与直线的位置关系}
+
+\begin{problem}\level{易}
+椭圆 $C:\dfrac{x^2}{25}+\dfrac{y^2}{16}=1$。
+(1) 求 $a,b,c$、焦点坐标、顶点坐标、离心率与准线方程；
+(2) 若点 $P$ 在椭圆上且 $|PF_1|=6$，求 $|PF_2|$ 与 $\triangle PF_1F_2$ 的面积；
+(3) 求椭圆上一点 $P$，使 $\triangle PF_1F_2$ 的面积最大，并求该最大值。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+椭圆的基本量由标准方程直接读出：$a^2=25,b^2=16$，$c^2=a^2-b^2=9$。椭圆的定义 $|PF_1|+|PF_2|=2a$ 是“知一求一”的利器；焦点三角形 $\triangle PF_1F_2$ 的三边为 $|PF_1|,|PF_2|,|F_1F_2|=2c$，其面积既可用海伦公式，也可用 $S=b^2\tan\dfrac{\angle F_1PF_2}{2}$。
+\paragraph{标准解题步骤}
+(1) $a=5,b=4,c=3$；焦点 $F_1(-3,0),F_2(3,0)$；顶点 $(\pm5,0)$、$(0,\pm4)$；离心率 $e=\dfrac35$；准线 $x=\pm\dfrac{a^2}{c}=\pm\dfrac{25}{3}$。
+(2) 由 $|PF_1|+|PF_2|=2a=10$，得 $|PF_2|=10-6=4$。又 $|F_1F_2|=2c=6$，三角形三边为 $6,4,6$，半周长 $p=8$，故
+$S=\sqrt{8(8-6)(8-4)(8-6)}=\sqrt{8\times2\times4\times2}=8\sqrt2$。
+(3) 设 $\theta=\angle F_1PF_2$，则 $S=b^2\tan\dfrac\theta2$。当 $P$ 位于短轴端点 $(0,\pm4)$ 时 $\theta$ 最大，此时 $\tan\dfrac\theta2=\dfrac cb=\dfrac34$，故
+$S_{\max}=b^2\cdot\frac cb=bc=12$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是误用 $c^2=a^2+b^2$（应为 $c^2=a^2-b^2$）；二是把准线写成 $x=\pm\dfrac ac$（应为 $\dfrac{a^2}{c}=\dfrac{25}{3}$）；三是求面积时三边写错或半周长算错；四是误以为 $P$ 在长轴端点时焦点三角形面积最大（实际在短轴端点）。规避方法：先列 $a,b,c$ 与焦点、准线，再用定义求边长，最后用 $S=b^2\tan\dfrac\theta2$ 求最值。
+\end{solution}
+
+\begin{problem}\level{中}
+椭圆 $C:\dfrac{x^2}{4}+y^2=1$，直线 $l:y=x+m$。
+(1) 联立 $l$ 与 $C$，写出关于 $x$ 的二次方程与判别式；
+(2) 求 $l$ 与 $C$ 相交时 $m$ 的取值范围；
+(3) 求弦长 $|AB|$ 关于 $m$ 的表达式，并求其最大值。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+直线与椭圆的位置关系由“联立后二次方程的判别式”判定：$\Delta>0$ 相交（两个交点）、$\Delta=0$ 相切、$\Delta<0$ 相离。弦长公式 $|AB|=\sqrt{1+k^2}\cdot\dfrac{\sqrt\Delta}{|a_{\text{二次项}}|}$ 把判别式与弦长连成一体，因此“判别式”与“弦长”是同一道工序的两个产物。
+\paragraph{标准解题步骤}
+(1) 把 $y=x+m$ 代入 $\dfrac{x^2}{4}+y^2=1$，得 $\dfrac{x^2}{4}+(x+m)^2=1$，整理为
+$$5x^2+8mx+4(m^2-1)=0.$$
+判别式
+$\Delta=(8m)^2-4\times5\times4(m^2-1)=64m^2-80(m^2-1)=16(5-m^2)$。
+(2) 相交 $\iff\Delta>0\iff m^2<5\iff -\sqrt5<m<\sqrt5$。
+(3) 由弦长公式
+$|AB|=\sqrt{1+1^2}\cdot\frac{\sqrt{16(5-m^2)}}{5}=\sqrt2\cdot\frac{4\sqrt{5-m^2}}{5}=\dfrac{4\sqrt{2(5-m^2)}}{5}$。
+当 $m=0$ 时 $|AB|$ 取最大值 $\dfrac{4\sqrt{10}}5$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是联立后二次项系数算错（应为 $5x^2$，若保留 $\dfrac54x^2$ 则判别式要相应地用 $\dfrac54$ 代入，前后不一致）；二是判别式的符号反了（把 $\Delta<0$ 当作相交）；三是弦长公式漏掉因子 $\sqrt{1+k^2}$（$k=1$ 时漏掉 $\sqrt2$）；四是忽略 $m$ 的取值范围，直接对 $|AB|$ 求最值。规避方法：固定流程——联立、写 $\Delta$、判号、代弦长公式，最后注明取等条件。
+\end{solution}
+
+\begin{problem}\level{中}
+椭圆 $C:\dfrac{x^2}{16}+\dfrac{y^2}{9}=1$。
+(1) 用点差法求斜率为 $\dfrac34$ 的弦的中点轨迹；
+(2) 若弦以 $M(2,1)$ 为中点，求弦所在直线的方程；
+(3) 判断 $M(2,1)$ 与椭圆的位置关系，并说明 (2) 中弦的存在性。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+点差法的核心是“设端点、作差、用平方差”：设弦的两端点为 $A(x_1,y_1),B(x_2,y_2)$，代入椭圆方程后相减，利用 $x_1^2-x_2^2=(x_1+x_2)(x_1-x_2)$ 等，把“中点 $(x_0,y_0)$ 与斜率 $k$”直接联系起来。它本质上是“中点弦方程”，也是极点极线在椭圆中的特例。
+\paragraph{标准解题步骤}
+设弦端点 $A(x_1,y_1),B(x_2,y_2)$，中点 $(x_0,y_0)$。两式相减：
+$\dfrac{x_1^2-x_2^2}{16}+\dfrac{y_1^2-y_2^2}{9}=0
+\Rightarrow \dfrac{(x_1+x_2)(x_1-x_2)}{16}+\dfrac{(y_1+y_2)(y_1-y_2)}{9}=0$。
+由 $x_1+x_2=2x_0$，$y_1+y_2=2y_0$，$k=\dfrac{y_1-y_2}{x_1-x_2}$，得
+$\dfrac{2x_0}{16}+\dfrac{2y_0}{9}k=0$，即 $k=-\dfrac{9x_0}{16y_0}$。
+(1) 令 $k=\dfrac34$，得 $-\dfrac{9x_0}{16y_0}=\dfrac34\Rightarrow 3x_0+4y_0=0$，故中点轨迹是直线 $3x+4y=0$ 在椭圆内的部分。
+(2) 对 $M(2,1)$：$k=-\dfrac{9\times2}{16\times1}=-\dfrac98$，直线为 $y-1=-\dfrac98(x-2)$，即 $9x+8y-26=0$。
+(3) $\dfrac{2^2}{16}+\dfrac{1^2}{9}=\dfrac14+\dfrac19=\dfrac{13}{36}<1$，故 $M$ 在椭圆内部，因而 (2) 中的弦必存在（过椭圆内一点的直线必与椭圆相交）。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是点差时符号错（写成 $+\dfrac{9x_0}{16y_0}$）；二是把中点轨迹写成整条直线而忘记限制在椭圆内部；三是求出直线后不检验中点是否在椭圆内（若中点在椭圆外，则该直线对应的是“虚弦”，并不存在）；四是把点差法与判别式割裂，不知道点差得到的直线是否真的与椭圆相交。规避方法：点差得斜率，点斜式得直线，再用“中点在椭圆内 $\iff$ 弦存在”作结。
+\end{solution}
+
+\section{定点定值、立体几何与综合}
+
+\begin{problem}\level{难}
+椭圆 $C:\dfrac{x^2}{4}+y^2=1$，点 $P(0,1)$ 在椭圆上。设 $A,B$ 是椭圆上两点，且 $k_{PA}\cdot k_{PB}=\lambda$（定值）。
+(1) 用极点极线的观点预判：直线 $AB$ 是否过定点？若过，定点在哪里？
+(2) 设直线 $AB:y=kx+m$，用韦达定理验证 (1) 的预判，并求出 $k_{PA}\cdot k_{PB}$ 关于 $m$ 的表达式；
+(3) 若 $\lambda=-\dfrac18$，求直线 $AB$ 所过的定点坐标。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+这是极点极线（二次曲线的配极对应）的一个特例：当 $P$ 固定、$A,B$ 在椭圆上且 $k_{PA}\cdot k_{PB}$ 为定值时，直线 $AB$ 绕着某个定点转动，且该定点在直线 $OP$ 上（$O$ 为椭圆中心）。高观点的“预判”是：条件只约束 $AB$ 的“倾斜结构”而不约束其平移，因此 $AB$ 应当恒过某定点，且该定点位于 $y$ 轴上；下面用韦达定理把它算出来。
+\paragraph{标准解题步骤}
+设 $AB:y=kx+m$，$A(x_1,y_1),B(x_2,y_2)$。代入椭圆 $\dfrac{x^2}{4}+y^2=1$：
+$(1+4k^2)x^2+8kmx+4(m^2-1)=0$。
+韦达定理：$x_1+x_2=-\dfrac{8km}{1+4k^2}$，$x_1x_2=\dfrac{4(m^2-1)}{1+4k^2}$。
+由 $y_i=kx_i+m$，
+$k_{PA}k_{PB}=\dfrac{(y_1-1)(y_2-1)}{x_1x_2}$。分子展开并代入韦达：
+$k^2x_1x_2+k(m-1)(x_1+x_2)+(m-1)^2=\dfrac{(m-1)^2}{1+4k^2}$。
+故
+$$k_{PA}\cdot k_{PB}=\frac{(m-1)^2}{1+4k^2}\cdot\frac{1+4k^2}{4(m^2-1)}=\frac{m-1}{4(m+1)},$$
+与 $k$ 无关，只由 $m$ 决定。于是 $k_{PA}k_{PB}=\lambda\iff m=\dfrac{1+4\lambda}{1-4\lambda}$，即直线 $AB$ 恒过定点 $\left(0,\dfrac{1+4\lambda}{1-4\lambda}\right)$。
+(3) $\lambda=-\dfrac18$ 时 $m=\dfrac{1-\frac12}{1+\frac12}=\dfrac13$，故 $AB$ 过定点 $\left(0,\dfrac13\right)$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是只设 $y=kx+m$ 而忘记讨论斜率不存在的情形（$AB\perp x$ 轴时由对称性乘积仍满足同一公式，可单独验证）；二是代入分子时展开错误，尤其 $k(m-1)(x_1+x_2)$ 与 $(m-1)^2$ 的符号；三是误以为 $k_{PA}k_{PB}$ 与 $k$ 有关，从而认为 $AB$ 不过定点；四是求出 $m$ 后不写定点坐标。规避方法：先预判“过定点”，再设 $y=kx+m$，把 $k$ 全部消去，看剩下什么。
+\end{solution}
+
+\begin{problem}\level{中}
+四棱锥 $P-ABCD$ 中，底面 $ABCD$ 是边长为 $2$ 的正方形，$PA\perp$ 底面 $ABCD$，且 $PA=2$。
+(1) 求二面角 $P-BC-A$ 的大小；
+(2) 求直线 $PD$ 与平面 $PBC$ 所成角的大小；
+(3) 求二面角 $A-PD-C$ 的大小，并说明其几何背景。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+向量法处理空间角的三件套：线面角用 $\sin\theta=\dfrac{|\bm s\cdot\bm n|}{|\bm s||\bm n|}$；二面角用两平面法向量的夹角（注意锐钝）；而“找法向量”靠平面内两个向量的叉积。本题中 $BC\perp$ 平面 $PAB$、$CD\perp$ 平面 $PAD$ 这两个线面垂直关系，正是几何法的抓手，也是检验向量结果的依据。
+\paragraph{标准解题步骤}
+建系：$A(0,0,0),B(2,0,0),C(2,2,0),D(0,2,0),P(0,0,2)$。
+(1) 因 $BC\perp AB$ 且 $BC\perp PA$，故 $BC\perp$ 平面 $PAB$，从而 $BC\perp PB$、$BC\perp AB$，$\angle PBA$ 即二面角 $P-BC-A$ 的平面角。$\tan\angle PBA=\dfrac{PA}{AB}=1$，故为 $45^\circ$。
+(2) 平面 $PBC$ 中 $\overrightarrow{PB}=(2,0,-2)$，$\overrightarrow{PC}=(2,2,-2)$，法向量 $\bm n=\overrightarrow{PB}\times\overrightarrow{PC}=(4,0,4)$，取 $\bm n=(1,0,1)$。又 $\overrightarrow{PD}=(0,2,-2)$，故
+$\sin\theta=\dfrac{|\overrightarrow{PD}\cdot\bm n|}{|\overrightarrow{PD}|\,|\bm n|}=\dfrac{|0+0-2|}{2\sqrt2\cdot\sqrt2}=\dfrac12$，
+由 $\theta\in\left[0,\dfrac\pi2\right]$ 得 $\theta=30^\circ$。
+(3) 平面 $PAD$ 即 $x=0$，法向量 $\bm n_1=(1,0,0)$；平面 $PCD$ 中 $\overrightarrow{PC}=(2,2,-2)$，$\overrightarrow{PD}=(0,2,-2)$，法向量 $\bm n_2=\overrightarrow{PC}\times\overrightarrow{PD}=(0,4,4)$，取 $(0,1,1)$。$\bm n_1\cdot\bm n_2=0$，故两平面垂直，二面角 $A-PD-C=90^\circ$。几何背景：$CD\perp AD$ 且 $CD\perp PA$，故 $CD\perp$ 平面 $PAD$，又 $CD\subset$ 平面 $PCD$，所以平面 $PCD\perp$ 平面 $PAD$。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是把二面角与法向量夹角的关系搞反（相等还是互补），不判断锐钝；二是线面角误用 $\cos$ 而非 $\sin$；三是法向量叉积的分量算错；四是建系时把 $C,D$ 的坐标写混。规避方法：几何关系（线面垂直）与向量运算互相印证；每个角都注明其取值范围。
+\end{solution}
+
+\begin{problem}\level{难}
+椭圆 $C:\dfrac{x^2}{4}+y^2=1$，$O$ 为坐标原点，$A,B$ 是椭圆上两点，且 $\overrightarrow{OA}\cdot\overrightarrow{OB}=0$。
+(1) 求证：$\dfrac{1}{|OA|^2}+\dfrac{1}{|OB|^2}$ 为定值，并求该定值；
+(2) 求 $\triangle OAB$ 的面积的最大值与最小值。
+\end{problem}
+\begin{solution}
+\paragraph{几何结构剖析}
+条件 $\overrightarrow{OA}\cdot\overrightarrow{OB}=0$ 说明 $OA\perp OB$，于是可把 $A,B$ 放在两条互相垂直的射线上，用极坐标表示。椭圆的极坐标方程 $\dfrac1{r^2}=\dfrac{\cos^2\phi}{4}+\sin^2\phi$ 把“距离”与“角度”直接挂钩，而垂直条件使两个极角相差 $\dfrac\pi2$，余弦、正弦恰好互换，于是 $\dfrac1{|OA|^2}+\dfrac1{|OB|^2}$ 化为定值。
+\paragraph{标准解题步骤}
+设 $A$ 的极角为 $\alpha$，$|OA|=r_1$；因 $OA\perp OB$，设 $B$ 的极角为 $\alpha+\dfrac\pi2$，$|OB|=r_2$。由椭圆方程
+$\dfrac1{r_1^2}=\dfrac{\cos^2\alpha}{4}+\sin^2\alpha,\qquad
+\dfrac1{r_2^2}=\dfrac{\sin^2\alpha}{4}+\cos^2\alpha$。
+(1) 两式相加得
+$\dfrac1{r_1^2}+\dfrac1{r_2^2}=\dfrac{\cos^2\alpha+\sin^2\alpha}{4}+(\sin^2\alpha+\cos^2\alpha)=\dfrac14+1=\dfrac54$，为定值。
+(2) $S_{\triangle OAB}=\dfrac12 r_1r_2$。令 $u=\sin^2\alpha\in[0,1]$，则
+$\dfrac1{r_1^2r_2^2}=\left(\dfrac{1-u}{4}+u\right)\left(\dfrac{u}{4}+1-u\right)=\dfrac{(1+3u)(4-3u)}{16}=\dfrac{4+9u-9u^2}{16}$。
+分子 $4+9u-9u^2$ 在 $[0,1]$ 上是开口向下的二次函数，对称轴 $u=\dfrac12$。最大值在 $u=\dfrac12$ 处为 $\dfrac{25}{4}$，最小值在端点 $u=0$ 或 $u=1$ 处为 $4$。故
+$\dfrac1{r_1^2r_2^2}\in\left[\dfrac14,\dfrac{25}{64}\right]\Rightarrow r_1r_2\in\left[\dfrac85,2\right]\Rightarrow S\in\left[\dfrac45,1\right]$。
+最大值为 $1$（$\alpha=0$，即 $A,B$ 分别为长轴、短轴端点），最小值为 $\dfrac45$（$u=\dfrac12$，即 $|OA|=|OB|$）。
+\paragraph{学生典型易错点诊断}
+最易犯的错误一是设参数时把 $B$ 的极角写成 $\alpha+\dfrac\pi2$ 却用错三角函数（$\cos\left(\alpha+\dfrac\pi2\right)=-\sin\alpha$，$\sin\left(\alpha+\dfrac\pi2\right)=\cos\alpha$，平方后符号消失，但写错会导致全盘错）；二是忘记 $\overrightarrow{OA}\cdot\overrightarrow{OB}=0$ 等价于极角相差 $\dfrac\pi2$（取 $\alpha-\dfrac\pi2$ 结果相同）；三是对 $r_1r_2$ 直接用基本不等式，忽略两者由同一个 $\alpha$ 决定、并不独立；四是不验证取等条件。规避方法：用“倒数的平方”把乘积化为和，先证定值，再对单变量 $u$ 求二次函数的最值。
+\end{solution}

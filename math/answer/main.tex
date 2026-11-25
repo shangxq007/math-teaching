@@ -1,0 +1,37 @@
+% 答案与解析 · ElegantNote
+% 定位：与讲义、试卷、作业配套的详解册。学生版讲义只给题目，这里给答案与解析。
+%   与题库的分工：题库自带答案（answer/noanswer 双模式）；本册给的是「详解」——
+%   为什么这样做、还有别的做法吗、容易错在哪。
+\documentclass[cn,11pt,color=cyan,math=newtx,normal]{elegantnote}
+
+\input{../common/preamble}
+\input{../common/macros}
+\input{../common/envs}
+
+\title{答案与解析}
+\author{Shawn Shang}
+\date{2026 年 11 月}
+
+\graphicspath{{../figures/}}
+
+\begin{document}
+
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  \makebox[\textwidth]{%
+    \includegraphics[width=\paperwidth]{../figures/cover_cyan.png}}\par
+  \vfill
+  {\Huge\bfseries\color{ecolor!70!black} 答案与解析\par}
+  \vskip 1.2em
+  {\large 高中数学 · 必修第一册\par}
+  \vskip 2.5em
+  {\large Shawn Shang\par}
+  \vfill
+  {\normalsize 2026 年 11 月\par}
+\end{titlepage}
+\tableofcontents
+
+\input{chapters/01}
+
+\end{document}

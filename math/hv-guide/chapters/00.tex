@@ -1,0 +1,718 @@
+% 高观点导学案：集合、逻辑演算与证明武器库（第 0 章·总纲）
+% 主线：把“集合与逻辑”从概念背诵升级为贯穿高中解题的“题干同解变形与严格证明通用武器库”
+% 四模块：集合语言与同解变形公理 → 命题演算三大变形引擎 → 两大间接证明支柱 → 武器库索引表与跨模块实战
+% 全程用“集合包含 ↔ 逻辑等价 ↔ 量词否命题”三种语言互译，并用韦恩图与多米诺图把抽象逻辑可视化。
+
+\section{集合、逻辑演算与证明武器库（高观点总纲）}
+
+本章不引入新公式，而是把教材第 1 章的集合、常用逻辑用语重新锻造为一套“解题武器库”：
+面对题干，先问它是哪一种\key{对象集合}（解集、值域、参数范围），再问它需要哪一种\key{变形引擎}
+（同解变形、德摩根律、逆否等价、补集转化、反证法、数学归纳法）。四个模块环环相扣：
+\key{集合语言与同解变形公理}（$A=B\iff A\subseteq B\land B\subseteq A$）$\to$
+\key{命题演算三大变形引擎}（德摩根律、逆否等价、量词否定）$\to$
+\key{两大间接证明支柱}（反证法、数学归纳法）$\to$
+\key{武器库索引表与跨模块实战}。
+核心思想：\key{题干中的每一个关键词，都对应一次集合运算或一次逻辑等价变形}；
+解题失误往往不是计算错误，而是\key{没审清变形方向}（增根或漏根）或\key{没找对证明支柱}。
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 掌握集合相等判定公理 $A=B\iff(A\subseteq B)\land(B\subseteq A)$，能用它审查方程、不等式变形的同解性；
+  \item 熟记同解变形防增漏根清单：平方（范围扩大易增根）、同除含参因式（范围缩小易漏根）、对数真数（定义域子集）；
+  \item 掌握德摩根律 $\neg(p\land q)\iff\neg p\lor\neg q$ 与逆否等价 $(p\Rightarrow q)\iff(\neg q\Rightarrow\neg p)$，能用补集转化处理“至多、至少、不都、无解”；
+  \item 掌握量词否定 $\neg\forall=\exists\neg$、$\neg\exists=\forall\neg$，会把“恒成立／能成立”翻译为值域的子集包含／交集非空；
+  \item 理解反证法即证 $A\cap\complement_U B=\varnothing$，识别“唯一性、不存在、无理数、无限性”四类触发信号词；
+  \item 理解数学归纳法的皮亚诺公理与良序原理本质，会用最小反例原理分析“归纳基础＋归纳递推”两步的缺一不可。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection*{知识回顾}
+\begin{itemize}
+  \item $A\subseteq B$ 的定义是：对任意 $a\in A$，都有 \blank；
+  \item 若 $A=\{x\mid x^2=1\}$，$B=\{-1,1\}$，则 $A$ 与 $B$ 的关系是 \blank（相等／互不包含）；
+  \item 命题“若 $p$ 则 $q$”的逆否命题是 \blank；
+  \item 德摩根律：$\neg(p\land q)\iff$ \blank。
+\end{itemize}
+
+\subsection*{教材速读}
+阅读教材第 1 章“集合与常用逻辑用语”及本章导学案，完成下列问题：
+\begin{enumerate}
+  \item 补集 $\complement_U A$ 的定义是 $\{x\in U\mid \blank\}$；
+  \item “$p$ 是 $q$ 的充分条件”用集合语言说是 \blank；
+  \item “方程 $f(x)=0$ 无解”用集合语言说是 \blank；
+  \item 数学归纳法证明的两步是 \blank 与 \blank。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{集合语言与同解变形公理}
+
+\key{探究一：集合相等——互相包含才是相等}
+集合相等不是“看起来一样”，而是\key{互相包含}：
+\[
+  A=B\iff(A\subseteq B)\land(B\subseteq A).
+\]
+证明 $A=B$ 必须证两个方向；只证 $A\subseteq B$ 只能得到包含，不能得到相等。
+这条公理还是审查方程（不等式）变形的“合法性标准”：
+把原方程的解集记为 $A$，变形后方程的解集记为 $B$，则
+\begin{itemize}
+  \item $A=B$：变形\key{同解}，解集不变，安全；
+  \item $A\subsetneqq B$：变形后解集\key{变大}，多出的解是\key{增根}；
+  \item $B\subsetneqq A$：变形后解集\key{变小}，丢掉的解是\key{漏根}。
+\end{itemize}
+因此解方程、解不等式的每一步都要问一句：\key{这一步把解集往哪个方向变了？}
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.6cm}p{2.8cm}p{3.2cm}p{3.2cm}}
+\toprule
+变形操作 & 解集关系 & 方向与风险 & 应对 \\
+\midrule
+两边加/减同一整式 & $A=B$ & 同解，安全 & 直接使用 \\
+两边乘/除以非零常数 & $A=B$ & 同解，安全 & 先确认非零 \\
+两边平方（或去绝对值） & $A\subsetneqq B$ & 范围扩大，易增根 & 必须验根 \\
+两边同除含参/未知因式 & $B\subsetneqq A$ & 范围缩小，易漏根 & 移项分解，讨论零 \\
+取对数/解对数方程 & $A\subsetneqq B$ & 真数 $>0$ 限制，易增根 & 先限定定义域 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{风险一：平方变形范围扩大，易增根。}
+由 $f(x)=g(x)$ 平方得 $f^2(x)=g^2(x)$，而
+\[
+  f^2=g^2\iff(f-g)(f+g)=0\iff f=g\ \text{或}\ f=-g,
+\]
+凭空多出 $f=-g$ 的解。必须验根。
+
+\begin{example}
+解方程 $\sqrt{x+1}=x-1$，并指出直接平方会多出哪个根。
+\end{example}
+\begin{solution}
+两边平方（须先注意右边非负：$x-1\geq0$，即 $x\geq1$）：
+\[
+  x+1=(x-1)^2=x^2-2x+1\implies x^2-3x=0\implies x=0\ \text{或}\ x=3.
+\]
+检验：$x=0$ 时左边 $=1$，右边 $=-1$，不相等，是平方后产生的\key{增根}，舍去；
+$x=3$ 时左边 $=2$，右边 $=2$，成立。故解集为 $\{3\}$。
+\end{solution}
+
+\key{风险二：同除含参因式范围缩小，易漏根。}
+方程两边同除以含未知数（或参数）的因式，若该因式可能为 $0$，就会丢掉使因式为 $0$ 的解。
+正确做法是移项因式分解，并单独讨论因式为 $0$ 的情形。
+
+\begin{example}
+解关于 $x$ 的方程 $x^2=ax$（$a$ 为参数），并说明“两边同除以 $x$”会漏掉什么。
+\end{example}
+\begin{solution}
+移项分解：$x(x-a)=0$，故 $x=0$ 或 $x=a$。
+当 $a\neq0$ 时解集为 $\{0,a\}$；当 $a=0$ 时方程为 $x^2=0$，解集为 $\{0\}$（两个相等实根）。
+若直接两边同除以 $x$，得到 $x=a$，会漏掉 $x=0$（$a\neq0$ 时），
+因为 $x$ 可能为 $0$，同除使解集由 $\{0,a\}$ 缩小为 $\{a\}$，属于“范围缩小易漏根”。
+\end{solution}
+
+\key{风险三：对数真数限制定义域子集，易增根。}
+\[
+  \log_a f(x)=\log_a g(x)\iff f(x)=g(x)>0,
+\]
+其中“$>0$”来自真数的定义域限制。定义域
+$D=\{x\mid f(x)>0,\ g(x)>0\}$ 是一个\key{子集约束}，解必须落在 $D$ 内；忽略它就增根。
+（同理，$a^{\log_a x}=x$ 要求 $x>0$，而 $\log_a a^x=x$ 对一切实数 $x$ 成立。）
+
+\begin{example}
+解方程 $\log_2(x^2-4)=\log_2(3x)$。
+\end{example}
+\begin{solution}
+由对数定义，真数必须为正：$x^2-4>0$ 且 $3x>0$，即 $x>2$。
+在此定义域内 $\log_2$ 是单射，故 $x^2-4=3x$，即 $x^2-3x-4=0$，解得 $x=4$ 或 $x=-1$。
+$x=-1$ 不在定义域 $x>2$ 内，是增根，舍去。故解集为 $\{4\}$。
+\end{solution}
+
+\begin{conccard}[一级]{集合相等判定公理：$A=B\iff(A\subseteq B)\land(B\subseteq A)$}{证明集合相等、审查方程（不等式）同解变形}{只证 $A\subseteq B$ 一个方向就宣布相等；只算“怎么变形”，不算解集往哪变}
+集合相等的本质是“互相包含”。证 $A=B$ 必须证两个方向：$A\subseteq B$ 且 $B\subseteq A$；
+只证一个方向只能得到包含。把方程（不等式）的解集记为 $A$、变形后解集记为 $B$，
+只有 $A=B$ 时变形才同解；$A\subsetneqq B$ 则增根，$B\subsetneqq A$ 则漏根。
+这条公理是全部同解变形的“合法性审查标准”。
+\end{conccard}
+
+\begin{commonerror}{同解变形不审方向}
+常见错误：平方后不验根、同除含参因式不讨论零、解对数方程不写定义域。
+它们都源于同一个疏漏——只算“怎么变形”，不算“解集往哪个方向变”。
+例如由 $\sqrt{x+1}=x-1$ 平方得 $x^2-3x=0$，解集由 $\{3\}$ 扩大为 $\{0,3\}$，多出的 $0$ 就是增根；
+由 $x^2=ax$ 两边除以 $x$ 得 $x=a$，解集由 $\{0,a\}$ 缩小为 $\{a\}$，漏掉了 $0$。
+\end{commonerror}
+
+\subsection{命题演算三大变形引擎}
+
+\key{探究二：德摩根律——“且”的否定是“或”}
+\[
+  \neg(p\land q)\iff\neg p\lor\neg q,\qquad
+  \neg(p\lor q)\iff\neg p\land\neg q.
+\]
+对应的集合版本（补集的分配律）：
+\[
+  \complement_U(A\cap B)=\complement_U A\cup\complement_U B,\qquad
+  \complement_U(A\cup B)=\complement_U A\cap\complement_U B.
+\]
+记忆：否定“且”要变“或”，否定“或”要变“且”，并且每个命题都要否定。
+
+\key{引擎二：逆否等价——正难则反}
+\[
+  (p\Rightarrow q)\iff(\neg q\Rightarrow\neg p).
+\]
+原命题与逆否命题同真同假，这是“正难则反”的合法性来源。它还有集合版本：
+
+\begin{derivation}
+要证 $A\subseteq B\iff\complement_U B\subseteq\complement_U A$。
+\begin{align*}
+  A\subseteq B &\iff \forall x\,(x\in A\Rightarrow x\in B)\\
+  &\iff \forall x\,(x\notin B\Rightarrow x\notin A) &&(\text{逆否等价})\\
+  &\iff \forall x\,(x\in\complement_U B\Rightarrow x\in\complement_U A)\\
+  &\iff \complement_U B\subseteq\complement_U A.
+\end{align*}
+\end{derivation}
+
+可见：要证“小集合含于大集合”（$A\subseteq B$），可改证“大集合的补集含于小集合的补集”
+（$\complement_U B\subseteq\complement_U A$），往往更容易。
+
+\key{引擎三：量词否定与补集转化流程}
+\[
+  \neg(\forall x,P(x))\iff\exists x,\neg P(x),\qquad
+  \neg(\exists x,P(x))\iff\forall x,\neg P(x).
+\]
+口诀：\key{量词互换，结论否定}。与德摩根律联用：
+\[
+  \neg\bigl(\forall x,\,p(x)\land q(x)\bigr)\iff\exists x,\,\neg p(x)\lor\neg q(x).
+\]
+题干关键词的补集转化流程：
+\begin{itemize}
+  \item “至少有一个”（$\exists$）的否定是“一个都没有”（$\forall,\neg$）；
+  \item “至多有一个”= 否定“至少有两个”；
+  \item “不都”= $\neg\forall$ = “至少有一个不”；
+  \item “无解”= 解集 $\varnothing$ = 补集为全集 $U$。
+\end{itemize}
+流程：把“至多／至少／不都／无解”改写成“$\exists/\forall$ + 否定” $\to$ 用德摩根与量词否定化简
+$\to$ 求补集（\key{补集法}）$\to$ 取补并检查端点。
+
+\key{恒成立／能成立：值域的子集包含与交集非空。}
+设 $f:D\to\mathbb{R}$ 的值域为 $R_f=\{f(x)\mid x\in D\}$，目标集合为 $M$，则
+\[
+  \forall x\in D,\ f(x)\in M \iff R_f\subseteq M,\qquad
+  \exists x\in D,\ f(x)\in M \iff R_f\cap M\neq\varnothing.
+\]
+特例 $M=(a,+\infty)$：恒成立 $\iff\min R_f>a$（看最小值）；能成立 $\iff\max R_f>a$（看最大值）。
+例如 $f(x)=x^2-2x$ 在 $[0,3]$ 上的值域为 $[-1,3]$，则 $f(x)>a$ 恒成立 $\iff a<-1$，
+能成立 $\iff a<3$。
+
+\begin{example}
+写出命题“$\exists x\in\mathbb{R},\ x^2-2x+a\leq0$”的否定；
+并说明“方程 $x^2-2x+a=0$ 无实根”用集合语言如何表述。
+\end{example}
+\begin{solution}
+否定为“$\forall x\in\mathbb{R},\ x^2-2x+a>0$”（量词互换，结论否定）。
+“无实根”即解集为空集：$\{x\mid x^2-2x+a=0\}=\varnothing$，
+等价于“对任意 $x\in\mathbb{R}$，$x^2-2x+a\neq0$”，也等价于 $\Delta=4-4a<0$，即 $a>1$。
+\end{solution}
+
+\begin{example}
+已知“存在 $x\in[1,2]$，使 $x^2-ax+1<0$”为真，求 $a$ 的取值范围（用补集法）。
+\end{example}
+\begin{solution}
+因为 $x\in[1,2]$ 为正，原命题等价于
+\[
+  \exists x\in[1,2],\ a>x+\frac1x
+  \iff a>\min_{x\in[1,2]}\Bigl(x+\frac1x\Bigr).
+\]
+由均值不等式 $x+\frac1x\geq2$，当 $x=1$ 时取等号，故最小值为 $2$，于是 $a>2$。
+
+补集法验证：其否定为“$\forall x\in[1,2],\ x^2-ax+1\geq0$”，即 $a\leq x+\frac1x$ 恒成立，
+得 $a\leq2$；取补集得 $a>2$，与上面一致。
+\end{solution}
+
+\begin{problem}
+设 $f(x)=x^2-2x$ 在 $[0,3]$ 上的值域为 $R_f$。分别求“$f(x)>a$ 恒成立”与“$f(x)>a$ 能成立”时 $a$ 的范围。
+\end{problem}
+\begin{solution}
+$R_f=[-1,3]$。恒成立 $\iff R_f\subseteq(a,+\infty)\iff a<-1$；
+能成立 $\iff R_f\cap(a,+\infty)\neq\varnothing\iff a<3$。
+\end{solution}
+
+\begin{conccard}[二级]{逆否等价与补集反向包含：$p\Rightarrow q\iff\neg q\Rightarrow\neg p$；$A\subseteq B\iff\complement_U B\subseteq\complement_U A$}{证明充分条件、正难则反的题目}{把“逆命题”与“逆否命题”混同；把“否命题”当“命题的否定”}
+原命题与逆否命题同真同假，这是“正难则反”的合法性来源。集合语言下，
+要证 $A\subseteq B$ 可改证 $\complement_U B\subseteq\complement_U A$——
+把“小推大”换成“大补推小补”，往往更容易。
+\end{conccard}
+
+\begin{conccard}[二级]{恒成立／能成立：值域的子集包含与交集非空}{含参恒成立、能成立求参数范围}{把“恒成立”与“能成立”方向用反；忽略值域端点是否取到}
+设 $f$ 在 $D$ 上的值域为 $R_f$。$\forall x\in D,\ f(x)\in M\iff R_f\subseteq M$（看最小值）；
+$\exists x\in D,\ f(x)\in M\iff R_f\cap M\neq\varnothing$（看最大值）。
+特例 $M=(a,+\infty)$：恒成立 $\iff\min R_f>a$，能成立 $\iff\max R_f>a$。
+\end{conccard}
+
+\begin{commonerror}{把“否命题”当“命题的否定”}
+命题“若 $p$ 则 $q$”的\key{否定}是“$p$ 且非 $q$”（$p\land\neg q$），它的\key{否命题}是“若非 $p$ 则非 $q$”（$\neg p\Rightarrow\neg q$）。
+两者不同：否定只否定结论，否命题条件与结论都否定。
+例如“若 $x>2$ 则 $x^2>4$”的否定是“存在 $x>2$ 使 $x^2\leq4$”；
+其否命题“若 $x\leq2$ 则 $x^2\leq4$”是假命题（取 $x=-3$）。
+\end{commonerror}
+
+\begin{method}
+补集转化法（正难则反）：遇到“至多、至少、不都、无解、并非”等关键词，先写出它的否定
+（量词互换、联结词用德摩根），把“存在”转“任意”或把“任意”转“存在”，
+求出否定命题成立的参数范围，再取补集。步骤：
+\begin{enumerate}
+  \item 定位量词（$\forall/\exists$）与联结词（$\land/\lor$）；
+  \item 否定量词、否定结论，用德摩根律化简；
+  \item 求否定命题对应的集合（补集法求参数）；
+  \item 取补集，并检查端点。
+\end{enumerate}
+\end{method}
+
+\subsection{两大间接证明支柱}
+
+\key{探究三：反证法——证明反例集为空}
+要证命题 $p\Rightarrow q$。设 $U$ 为论域，$A=\{x\mid p(x)\}$（条件成立），
+$B=\{x\mid q(x)\}$（结论成立），则要证 $A\subseteq B$。
+反证法不是直接证 $A\subseteq B$，而是证明\key{反例集为空}：
+\[
+  A\cap\complement_U B=\varnothing.
+\]
+做法：假设存在反例 $x_0\in A\cap\complement_U B$（满足条件却不满足结论），推出矛盾，
+从而交集为空，即 $A\subseteq B$。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \fill[gray!12] (0,0) rectangle (8,5);
+    \draw[thick, main!70!black] (0,0) rectangle (8,5);
+    \node[main!70!black] at (7.5,4.5) {$U$};
+    \fill[main!10, main!70!black] (4.2,2.5) circle (1.8);
+    \fill[second!20, second] (3.7,2.5) circle (0.9);
+    \node[main!70!black] at (4.9,3.7) {$B$};
+    \node[second] at (3.7,2.5) {$A$};
+    \node[gray!60!black] at (1.1,2.6) {$\complement_U B$};
+    \node[red!70!black] at (1.1,1.6) {$A\cap\complement_U B=\varnothing$};
+  \end{tikzpicture}
+  \caption{反证法的集合图景：条件集合 $A$ 完全落在结论集合 $B$ 内，反例集 $A\cap\complement_U B$ 为空}
+  \label{fig:contradiction}
+\end{figure}
+
+反证法的第一步是明确写出“反设”：$A\not\subseteq B$，即存在 $x\in A$ 且 $x\notin B$。
+图 \ref{fig:contradiction-assumption} 画出这一反设态；随后由条件与 $B$ 的定义推出矛盾，红色月牙收缩为空，回到图 \ref{fig:contradiction} 的结论态。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \fill[gray!12] (0,0) rectangle (8,5);
+    \draw[thick, main!70!black] (0,0) rectangle (8,5);
+    \node[main!70!black] at (7.5,4.5) {$U$};
+
+    \coordinate (B) at (2.7,2.6);
+    \coordinate (A) at (4.9,2.6);
+
+    % B（灰底）与 A；再把 A\B 涂成红色月牙
+    \fill[main!14] (B) circle (1.6);
+    \begin{scope}
+      \clip (A) circle (1.4);
+      \fill[red!50] (A) circle (1.4);
+      \fill[main!14] (B) circle (1.6);
+    \end{scope}
+
+    \draw[main!60!black, thick] (B) circle (1.6);
+    \draw[second!70!black, thick] (A) circle (1.4);
+
+    \node[main!70!black] at (1.85,3.9) {$B$};
+    \node[second!80!black] at (5.5,3.55) {$A$};
+    \node[gray!60!black] at (0.75,4.4) {$\complement_U B$};
+
+    \fill[red!80!black] (5.8,2.6) circle (2.2pt);
+    \node[red!80!black, right] at (5.87,2.6) {$x$};
+    \node[red!70!black, align=center] at (6.05,1.0) {$A\cap\complement_U B$\\ $\neq\varnothing$};
+    \draw[red!60!black, ->, shorten >=1pt] (6.25,1.3) -- (5.9,2.1);
+
+    \node[red!70!black] at (4.0,0.55) {反设：$\exists x\in A$ 且 $x\notin B$};
+  \end{tikzpicture}
+  \caption{反证法的反设态（正难则反）：假设 $A\not\subseteq B$，集合 $A$ 有一部分越出 $B$，红色月牙区域 $A\cap\complement_U B$ 非空，反例点 $x$ 落在其中}
+  \label{fig:contradiction-assumption}
+\end{figure}
+
+\key{触发信号词：}
+\begin{itemize}
+  \item \key{唯一性}（“只有一个”“恰有一个”“唯一”）——假设存在两个不同的对象，推出矛盾（或证明任意两个相等）；
+  \item \key{不存在}（“不存在”“没有”“无”）——假设存在，推出矛盾；
+  \item \key{无理数}（“$\sqrt2$ 是无理数”）——假设可写成既约分数，推出分子分母同为偶数，与既约矛盾；
+  \item \key{无限性}（“有无穷多个”）——假设只有有限个，推出还能构造出下一个，矛盾。
+\end{itemize}
+
+\begin{example}
+用反证法证明：$\sqrt2$ 不是有理数。
+\end{example}
+\begin{solution}
+假设 $\sqrt2$ 是有理数，则可写成既约分数 $\sqrt2=\dfrac pq$
+（$p,q\in\mathbb{Z}^*$，$q>0$，$\gcd(p,q)=1$）。
+两边平方得 $p^2=2q^2$，故 $p^2$ 为偶数，从而 $p$ 为偶数（奇数的平方仍为奇数）。
+设 $p=2k$，代入得 $4k^2=2q^2$，即 $q^2=2k^2$，故 $q$ 也为偶数。
+于是 $p,q$ 均为偶数，与 $\gcd(p,q)=1$ 矛盾。故假设不成立，$\sqrt2$ 是无理数。
+\end{solution}
+
+\key{探究四：数学归纳法——皮亚诺公理与最小反例原理}
+数学归纳法不是“递推直觉”，而是自然数结构的公理推论。皮亚诺公理（$\mathbb{N}^*$）要点：
+\begin{enumerate}
+  \item $1\in\mathbb{N}^*$；
+  \item 每个 $n\in\mathbb{N}^*$ 有唯一后继 $n+1$；
+  \item $1$ 不是任何数的后继；
+  \item 后继函数是单射：$m+1=n+1\Rightarrow m=n$；
+  \item \key{归纳公理}：若 $S\subseteq\mathbb{N}^*$ 满足 $1\in S$ 且 $n\in S\Rightarrow n+1\in S$，则 $S=\mathbb{N}^*$。
+\end{enumerate}
+与归纳公理等价的是\key{良序原理}：$\mathbb{N}^*$ 的任一非空子集必有最小元。
+由此得\key{最小反例原理}：若命题 $P(n)$ 不恒成立，则存在最小反例 $m$。
+由 $m$ 最小知 $P(m-1)$ 成立，再用归纳递推得 $P(m)$ 成立，矛盾；故 $P(n)$ 恒成立。
+
+因此数学归纳法两步缺一不可：
+\begin{itemize}
+  \item \key{归纳基础}：验证 $P(n_0)$ 成立（第一块骨牌倒下）；
+  \item \key{归纳递推}：假设 $P(k)$ 成立，证 $P(k+1)$ 成立（前一块倒下必带倒后一块）。
+\end{itemize}
+只有基础是“只倒第一块”；只有递推是“没有启动”。归纳起点 $n_0$ 可以平移（不一定从 $1$ 开始）。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \draw[->, gray] (0,0)--(10.8,0) node[right]{$n\in\mathbb{N}^*$};
+    \foreach \i/\lab in {0/1,1/2,2/3,3/4,4/5,5/6} {
+      \pgfmathsetmacro{\xx}{0.8+1.5*\i}
+      \draw[main!70!black, fill=main!12, rounded corners=0.8pt] (\xx,0) rectangle ++(0.5,2.0);
+      \node at (\xx+0.25,1.0) {$\lab$};
+    }
+    \foreach \i in {0,1,2,3,4} {
+      \pgfmathsetmacro{\xx}{1.3+1.5*\i}
+      \draw[->, second, thick] (\xx,1.0)--++(0.55,0);
+    }
+    \node[below, main] at (0.8,-0.15) {推倒第 $1$ 块};
+    \node[above, second] at (5.0,2.3) {若第 $k$ 块倒下，则第 $k+1$ 块必倒下};
+    \node[below, gray!70!black] at (8.2,-0.15) {$\cdots$};
+    \node[below, gray!70!black] at (9.8,-0.15) {全部倒下};
+  \end{tikzpicture}
+  \caption{数学归纳法的多米诺模型：归纳基础推倒第 1 块，归纳递推保证“倒一块必带倒下一块”，于是全部倒下}
+  \label{fig:induction}
+\end{figure}
+
+\begin{example}
+用数学归纳法证明：$7^n-1$ 能被 $6$ 整除（$n\in\mathbb{N}^*$）。
+\end{example}
+\begin{solution}
+(1) 基础：$n=1$ 时 $7^1-1=6$，能被 $6$ 整除。
+(2) 递推：假设 $n=k$ 时 $7^k-1$ 能被 $6$ 整除，即 $7^k-1=6m$。则 $n=k+1$ 时
+\[
+  7^{k+1}-1=7\cdot7^k-1=7(7^k-1)+6=7\cdot6m+6=6(7m+1),
+\]
+能被 $6$ 整除。由(1)(2)，命题对一切 $n\in\mathbb{N}^*$ 成立。
+\end{solution}
+
+\subsection{武器库索引表与跨模块实战}
+
+\key{《高中数学逻辑变形与证明触发信号对照表》}
+把题干信号、集合／逻辑翻译、变形引擎与操作风险放在同一张表，解题时“对号入座”。
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.0cm}p{3.2cm}p{2.6cm}p{3.6cm}}
+\toprule
+题干信号 & 逻辑／集合翻译 & 变形引擎 & 操作与风险 \\
+\midrule
+集合相等 $A=B$ & 双向包含 & 集合相等公理 & 分证 $A\subseteq B$ 与 $B\subseteq A$ \\
+\hline
+平方、去绝对值 & $f^2=g^2\iff f=\pm g$ & 同解变形 & 解集扩大，必须验根 \\
+\hline
+同除含参因式 & 可能丢根 & 移项分解＋讨论 & 解集缩小，防漏根 \\
+\hline
+对数方程 & 真数 $>0$ & 同解变形＋定义域 & 忽略定义域则增根 \\
+\hline
+至少有一个 & $\exists x$ & 量词否定 & 否定为 $\forall x,\ \neg$ \\
+\hline
+至多有一个 & 否定“至少两个” & 量词否定＋德摩根 & 命题的否定改写 \\
+\hline
+不都 & $\neg\forall$ & 量词否定 & 否定为“至少有一个不” \\
+\hline
+无解、为空集 & $S=\varnothing$ & 补集 & 补集为全集 $U$ \\
+\hline
+恒成立 & $\forall x,\ f(x)\in M$ & 值域子集 & $R_f\subseteq M$，看最小值 \\
+\hline
+能成立 & $\exists x,\ f(x)\in M$ & 值域交集 & $R_f\cap M\neq\varnothing$，看最大值 \\
+\hline
+唯一性 & 存在且唯一 & 反证法 & 假设第二个，推出矛盾 \\
+\hline
+不存在、没有 & $\neg\exists$ & 反证法 & 假设存在，推出矛盾 \\
+\hline
+无理数 & 非有理数 & 反证法 & 设 $\sqrt2=\frac pq$ 既约 \\
+\hline
+无限性 & 非有限 & 反证法 & 假设有限，构造下一个 \\
+\hline
+对所有 $n\in\mathbb{N}^*$ & 自然数命题 & 数学归纳法 & 基础＋递推，缺一不可 \\
+\hline
+整除、离散不等式 & 自然数命题 & 数学归纳法／最小反例 & 归纳起点可平移至 $n_0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{example}
+解不等式 $\dfrac{x^2-4}{x-2}\geq0$，并说明直接约去 $(x-2)$ 会丢掉什么。
+\end{example}
+\begin{solution}
+定义域要求 $x-2\neq0$。在定义域内
+\[
+  \frac{x^2-4}{x-2}=\frac{(x-2)(x+2)}{x-2}=x+2,
+\]
+故原不等式等价于 $x+2\geq0$ 且 $x\neq2$，即 $x\geq-2$ 且 $x\neq2$，
+解集为 $[-2,2)\cup(2,+\infty)$。
+若直接约去 $(x-2)$ 得 $x+2\geq0$，解集为 $[-2,+\infty)$，把分母不能为 $0$ 的限制丢了（漏掉限制，不是漏根，而是扩大了解集），
+所以必须保留 $x\neq2$。
+\end{solution}
+
+\begin{example}
+若“存在 $x\in\mathbb{R}$，使 $x^2+2ax+4<0$”是假命题，求 $a$ 的取值范围。
+\end{example}
+\begin{solution}
+该命题为假 $\iff$ 其否定“$\forall x\in\mathbb{R},\ x^2+2ax+4\geq0$”为真。
+这是恒成立问题：$\Delta=(2a)^2-16\leq0\iff4a^2-16\leq0\iff-2\leq a\leq2$。
+故 $a\in[-2,2]$。
+\end{solution}
+
+\begin{example}
+证明：函数 $f(x)=x^3+x+1$ 有且只有一个零点。
+\end{example}
+\begin{solution}
+\key{存在性}：$f(-1)=-1-1+1=-1<0$，$f(0)=1>0$，且 $f$ 是多项式（连续），
+由零点存在定理，$(-1,0)$ 内至少有一个零点。
+\key{唯一性（反证）}：假设有两个不相等的零点 $x_1,x_2$（设 $x_1<x_2$），则
+\[
+  x_1^3+x_1+1=0,\qquad x_2^3+x_2+1=0.
+\]
+两式相减得 $(x_1^3-x_2^3)+(x_1-x_2)=0$，即
+\[
+  (x_1-x_2)(x_1^2+x_1x_2+x_2^2+1)=0.
+\]
+因 $x_1\neq x_2$，需 $x_1^2+x_1x_2+x_2^2+1=0$。
+但 $x_1^2+x_1x_2+x_2^2=\left(x_1+\frac{x_2}{2}\right)^2+\frac34x_2^2\geq0$，
+故 $x_1^2+x_1x_2+x_2^2+1\geq1>0$，矛盾。故零点唯一。
+\end{solution}
+
+\begin{example}
+用数学归纳法证明：$n^3+5n$ 能被 $6$ 整除（$n\in\mathbb{N}^*$）。
+\end{example}
+\begin{solution}
+(1) 基础：$n=1$ 时 $1+5=6$，能被 $6$ 整除。
+(2) 递推：假设 $n=k$ 时 $k^3+5k=6m$。则 $n=k+1$ 时
+\begin{align*}
+  (k+1)^3+5(k+1)&=k^3+3k^2+3k+1+5k+5\\
+  &=(k^3+5k)+3k^2+3k+6\\
+  &=6m+3k(k+1)+6.
+\end{align*}
+因为 $k(k+1)$ 是两个连续整数之积，必为偶数，故 $3k(k+1)$ 能被 $6$ 整除；又 $6$ 能被 $6$ 整除。
+所以 $(k+1)^3+5(k+1)$ 能被 $6$ 整除。由(1)(2)，结论对一切 $n\in\mathbb{N}^*$ 成立。
+\end{solution}
+
+\begin{example}
+用数学归纳法证明：对一切 $n\geq5$，$2^n>n^2$。
+\end{example}
+\begin{solution}
+(1) 基础：$n=5$ 时 $2^5=32>25=5^2$，成立。
+(2) 递推：假设 $n=k$（$k\geq5$）时 $2^k>k^2$。则 $n=k+1$ 时
+\[
+  2^{k+1}=2\cdot2^k>2k^2.
+\]
+要证 $2k^2>(k+1)^2=k^2+2k+1$，即 $k^2-2k-1>0$，即 $(k-1)^2>2$。
+因 $k\geq5$，$(k-1)^2\geq16>2$，成立。故 $2^{k+1}>(k+1)^2$。
+由数学归纳法，对一切 $n\geq5$，$2^n>n^2$（注意归纳起点平移到了 $5$）。
+\end{solution}
+
+\begin{example}
+设命题 $p$：$\forall x\in\mathbb{R},\ x^2+ax+1>0$；命题 $q$：$\exists x\in\mathbb{R},\ x^2-2x+a=0$。
+若 $p\lor q$ 为假，求 $a$ 的取值范围。
+\end{example}
+\begin{solution}
+$p\lor q$ 为假 $\iff$ $p$ 假且 $q$ 假（德摩根律）。
+$p$ 真 $\iff\Delta_1=a^2-4<0\iff-2<a<2$，故 $p$ 假 $\iff a\leq-2$ 或 $a\geq2$。
+$q$ 真 $\iff\Delta_2=4-4a\geq0\iff a\leq1$，故 $q$ 假 $\iff a>1$。
+取交：$(a\leq-2\ \text{或}\ a\geq2)\cap(a>1)$，得 $a\geq2$。
+故 $a\in[2,+\infty)$。
+\end{solution}
+
+\begin{conccard}[三级]{反证法触发信号：唯一性、不存在、无理数、无限性}{结论含“只有一个／不存在／无理数／无穷多”的证明题}{把反证法当成“随便假设”；假设后没有推出矛盾就下结论}
+反证法即证反例集 $A\cap\complement_U B=\varnothing$：假设反例存在，推出与公理、定理或临时假设矛盾的结果。
+唯一性假设“至少两个”；不存在假设“存在”；无理数设既约分数 $\frac pq$；无限性设“只有有限个”。
+矛盾必须明确写出，否则证明不完整。
+\end{conccard}
+
+\begin{conccard}[三级]{数学归纳法：归纳基础＋归纳递推}{证明对全体自然数（或 $n\geq n_0$）成立的命题}{只做递推不做基础；归纳假设没有真正用上；归纳起点误写为 $1$}
+归纳公理：若 $1\in S$ 且 $n\in S\Rightarrow n+1\in S$，则 $S=\mathbb{N}^*$。
+其根基是良序原理与最小反例原理：若存在反例，则存在最小反例，与递推矛盾。
+使用时要检查两点：归纳基础是否验证；递推中是否用到了归纳假设。起点可按命题需要平移到 $n_0$。
+\end{conccard}
+
+\begin{summary}
+本章把集合与逻辑锻造成一套“武器库”：集合相等公理 $A=B\iff(A\subseteq B)\land(B\subseteq A)$ 是审查一切同解变形的标准（$A\subsetneqq B$ 增根、$B\subsetneqq A$ 漏根）；德摩根律、逆否等价、量词否定与补集转化处理“至多、至少、不都、无解、恒成立、能成立”；反证法即证反例集 $A\cap\complement_U B=\varnothing$，由“唯一性、不存在、无理数、无限性”四类信号词触发；数学归纳法以皮亚诺公理与良序原理为根基，用最小反例原理保证“归纳基础＋归纳递推”两步缺一不可。解题时先翻译题干（集合／逻辑语言），再选引擎，最后审方向（防增漏根）。
+\end{summary}
+
+\end{explore}
+
+\subsection{四视角等价地图：同一对象，多副面孔}
+
+前四个模块其实都在做同一件事：给同一个数学对象换一副面孔。
+代数、几何、集合、映射（对象本身）不是四门课，而是同一结构的四种\key{表示}；
+只要两种表示之间存在\emph{保持结构的对应}（同构），命题就能互相翻译。
+但「等价」不等于「一样难」：\textbf{同一问题在不同框架下的可解释性与计算量差别极大}，
+所以解题的关键动作是\key{找一个同构映射，把问题搬到更顺的那一侧}。
+
+\begin{center}
+\footnotesize
+\begin{tabular}{c|p{2.6cm}|p{3.2cm}|p{3.0cm}|p{3.4cm}}
+\toprule
+视角 & 看什么 & 擅长 & 短板 & 典型「搬运」 \\
+\midrule
+代数 & 符号、方程、恒等变形 & 机械化、可执行、可检验 & 缺直观，易迷失方向 & 几何 $\to$ 方程（解析几何）\\
+几何 & 图形、变换、位置关系 & 直观、好找思路、便于猜答案 & 精度与严格性弱 & 方程 $\to$ 图形（数形结合）\\
+集合 & 元素、包含、交并补、量词 & 严谨分类、盯住边界与反例 & 不给算法 & 命题 $\to$ 集合关系（充分必要）\\
+映射／对象 & 对应关系、迭代、结构本身 & 统一语言、跨领域搬运结论 & 太抽象，需落地实例 & 矩阵 $=$ 线性映射；坐标 $=$ 同构 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Stealth,semithick,font=\footnotesize,
+  box/.style={draw,rounded corners,inner sep=4pt,align=center,minimum width=2.1cm}]
+  \node[box,draw=main] (A) at (-2.2,1.9) {代数\\方程};
+  \node[box,draw=second] (G) at (2.2,1.9) {几何\\图形};
+  \node[box,draw=third] (S) at (-2.2,-1.9) {集合\\逻辑};
+  \node[box,draw=gray!60!black] (M) at (2.2,-1.9) {映射\\结构};
+  \node[box,draw=main!70!black,minimum width=2.4cm] (C) at (0,0) {\textbf{同一个}\\数学对象};
+  \draw[<->,main] (C)--(A) node[midway,above left,font=\scriptsize] {列方程};
+  \draw[<->,second] (C)--(G) node[midway,above right,font=\scriptsize] {画出来};
+  \draw[<->,third] (C)--(S) node[midway,below left,font=\scriptsize] {下定义};
+  \draw[<->,gray!60!black] (C)--(M) node[midway,below right,font=\scriptsize] {建模型};
+  \draw[->,gray!55,dashed] (A)--(G) node[midway,above,font=\scriptsize] {数形结合};
+  \draw[->,gray!55,dashed] (S)--(M) node[midway,below,font=\scriptsize] {关系即映射};
+\end{tikzpicture}
+\caption{四视角等价地图：中心是对象本身，四个顶点是它的四种表示；
+箭头都是「保持结构的映射」。解题时沿箭头换到顺手的一侧，算完再换回来}
+\label{fig:four-view-map}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Stealth,semithick,font=\footnotesize,
+  ch/.style={draw,rounded corners,inner sep=5pt,align=center,minimum width=2.0cm},
+  lanename/.style={rotate=90,anchor=south,font=\scriptsize\bfseries,text=main!70!black}]
+  % 三条主线 + 一条独立线
+  \node[lanename] at (-1.1,6) {几何·结构线};
+  \node[lanename] at (-1.1,3) {离散动力线};
+  \node[lanename] at (-1.1,0.6) {连续分析线};
+  % 第 0 层：语言底座
+  \node[ch,draw=main,fill=main!8] (c0) at (1.6,7.6) {第 0 章\\集合·逻辑·证明};
+  \node[ch,draw=gray!60!black,fill=gray!8] (c7) at (11.4,7.6) {第 7 章\\概率·统计};
+  \draw[->,main] (c0)--(c7) node[midway,above,font=\scriptsize] {测度＝归一化计数};
+  % 几何·结构线
+  \node[ch,draw=second] (c1) at (1.6,6) {第 1 章\\函数};
+  \node[ch,draw=second] (c2) at (5.0,6) {第 2 章\\三角·复数};
+  \node[ch,draw=second] (c3) at (8.2,6) {第 3 章\\向量};
+  \node[ch,draw=second] (c4) at (11.4,6) {第 4 章\\立几·圆锥曲线};
+  \draw[->,second] (c1)--(c2);
+  \draw[->,second] (c2)--(c3);
+  \draw[->,second] (c3)--(c4);
+  % 离散动力线
+  \node[ch,draw=third] (c5) at (1.6,3) {第 5 章\\数列·递推};
+  \node[ch,draw=third] (c9) at (11.4,3) {第 9 章\\不动点};
+  \draw[->,third] (c5)--(c9) node[midway,above,font=\scriptsize] {递推求通项·收敛};
+  % 连续分析线
+  \node[ch,draw=main!60!black] (c6) at (5.0,0.6) {第 6 章\\导数·局部线性化};
+  \node[ch,draw=main!60!black] (c8) at (8.2,0.6) {第 8 章\\齐次化};
+  \draw[->,main!60!black] (c6)--(c9) node[midway,right,font=\scriptsize] {稳定性};
+  \draw[->,main!60!black] (c8)--(c9) node[midway,right,font=\scriptsize] {射影};
+  % 跨线接口
+  \draw[->,gray!55,dashed] (c1)--(c5) node[midway,left,font=\scriptsize] {离散函数};
+  \draw[->,gray!55,dashed] (c1)--(c6) node[midway,left,font=\scriptsize] {变化率};
+  \draw[<->,gray!55,dashed] (c5)--(c6) node[midway,below,font=\scriptsize] {差分 $\leftrightarrow$ 导数};
+  \draw[->,gray!55,dashed] (c4)--(c8) node[midway,right,font=\scriptsize] {条件最值};
+  \draw[->,main!35] (c0)--(c1);
+  \draw[->,gray!55,dashed] (c3)--(c9) node[midway,above right,font=\scriptsize] {特征方向};
+\end{tikzpicture}
+\caption{全书知识脉络图：实线是各自主线的推进，虚线是跨主线接口。
+三条主线（几何·结构／离散动力／连续分析）最终在第 9 章不动点汇合；
+第 8 章齐次化是射影观点的入口，第 0 章语言底座供全局调用}
+\label{fig:book-map}
+\end{figure}
+
+\textbf{脉络怎么读}：几何·结构线从函数到圆锥曲线，解决「形的问题」；
+离散动力线与连续分析线在 \key{差分 $\leftrightarrow$ 导数}处对接（同一个
+「以直代曲／以比代差」思想），分别解决「列的问题」与「极限的问题」，
+并共同汇入第 9 章的不动点理论；第 8 章齐次化把二元问题压到一元比例，
+是通往射影／映射观点的接口。每一章章首的「多框架对读」卡，就是在这张
+图上标明「你现在在哪条线、哪一侧」。
+
+\textbf{怎么用它找思路}：拿到题先问「我现在站在哪个视角」——
+卡在代数就画图（第 2、4 章的向量与圆锥曲线）；卡在几何就设坐标列方程
+（第 4 章的仿射、第 8 章的齐次化）；被式子的次数与比值绕晕就升到射影／映射
+观点（第 9 章的不动点与 Möbius）；讨论「有没有、有几个」就回到集合与量词
+（本章的同解变形与反证法）。\textbf{同一结论往往能在四处各证一遍}，选最省力的那处书写。
+此后各章章首统一附「多框架对读」卡，把这条暗线显性化。
+
+\begin{inclasstest}
+\begin{enumerate}
+  \item 写出“$\exists x\in\mathbb{R},\ x^2-2x+1\leq0$”的否定，并判断其真假；\level{易}
+  \item 解方程 $\sqrt{x+3}=x+1$，并说明验根的必要性；\level{中}
+  \item 已知“存在 $x\in[1,3]$，使 $x^2-ax+2\leq0$”为真，求 $a$ 的取值范围；\level{中}
+  \item 用反证法证明：若 $a,b\in\mathbb{Z}$ 且 $ab$ 能被 $3$ 整除，则 $a,b$ 中至少有一个能被 $3$ 整除。\level{中}
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection*{基础巩固}
+
+\begin{enumerate}
+  \item 写出德摩根律与量词否定的四条公式：$\neg(p\land q)$、$\neg(p\lor q)$、$\neg(\forall x,P(x))$、$\neg(\exists x,P(x))$；
+  \item 解方程 $x^2=2x$，并说明若两边同除以 $x$ 会漏掉哪个根。
+\end{enumerate}
+
+\subsection*{进阶提升}
+\begin{enumerate}
+  \item 已知“$\forall x\in\mathbb{R},\ x^2+2x+a>0$”为真，求 $a$；再写出它的否定命题为真时 $a$ 的范围；
+  \item 用数学归纳法证明：$5^n-1$ 能被 $4$ 整除。
+\end{enumerate}
+
+\subsection*{拓展探究}
+\begin{enumerate}
+  \item 用反证法证明：$\sqrt3$ 是无理数。（提示：用到上面第 4 题的结论“若 $3\mid ab$，则 $3\mid a$ 或 $3\mid b$”。）
+\end{enumerate}
+
+\subsection*{教师版答案}
+\begin{solution}
+\textbf{基础 1：}$\neg(p\land q)\iff\neg p\lor\neg q$；$\neg(p\lor q)\iff\neg p\land\neg q$；
+$\neg(\forall x,P(x))\iff\exists x,\neg P(x)$；$\neg(\exists x,P(x))\iff\forall x,\neg P(x)$。
+\end{solution}
+\begin{solution}
+\textbf{基础 2：}移项分解 $x(x-2)=0$，得 $x=0$ 或 $x=2$，解集 $\{0,2\}$。
+若两边同除以 $x$ 得 $x=2$，漏掉 $x=0$（同除使解集由 $\{0,2\}$ 缩小为 $\{2\}$）。
+\end{solution}
+\begin{solution}
+\textbf{进阶 1：}$x^2+2x+a>0$ 恒成立 $\iff\Delta=4-4a<0\iff a>1$。
+其否定“$\exists x\in\mathbb{R},\ x^2+2x+a\leq0$”为真 $\iff\Delta\geq0\iff a\leq1$。
+\end{solution}
+\begin{solution}
+\textbf{进阶 2：}(1) $n=1$ 时 $5-1=4$，能被 $4$ 整除。
+(2) 假设 $5^k-1=4m$，则 $5^{k+1}-1=5(5^k-1)+4=20m+4=4(5m+1)$，能被 $4$ 整除。
+由数学归纳法，结论成立。
+\end{solution}
+\begin{solution}
+\textbf{拓展：}假设 $\sqrt3$ 是有理数，写成既约分数 $\sqrt3=\frac pq$（$\gcd(p,q)=1$）。
+平方得 $p^2=3q^2$，故 $3\mid p^2$；由提示（取 $a=b=p$）得 $3\mid p$，设 $p=3k$。
+代入得 $9k^2=3q^2$，即 $q^2=3k^2$，故 $3\mid q$。于是 $p,q$ 均为 $3$ 的倍数，与既约矛盾。
+故 $\sqrt3$ 是无理数。
+\end{solution}
+\reading{拓展阅读 00}{逻辑与证明的武器库}
+\end{afterclass}

@@ -1,0 +1,230 @@
+% 专题五：恒成立与能成立
+\section{专题五：恒成立与能成立}
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 会区分“恒成立”与“能成立”，并识别题目中的关键词；
+  \item 会把恒成立问题转化为最值问题；
+  \item 会用举反例说明“不恒成立”、举例子说明“能成立”；
+  \item 会用分离参数结合图象解决含参不等式。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection{导语：同一个问题，五种看法}
+“对任意 $x$，$f(x)>0$ 都成立”与“存在 $x$，使 $f(x)>0$ 成立”，
+看起来只差两个字，方向却正好相反：前者看最小值，后者看最大值。
+这类问题在函数、方程、不等式里反复出现，工具也会不断升级：
+判别式、图象位置、最值、分离参数、数形结合。
+本专题把三个“种子问题”用五种视角各做一遍。
+
+\subsection{种子问题}
+先自己做，再看后面的五种视角。
+\begin{enumerate}
+  \item 若 $x^2+2x+c>0$ 对任意实数 $x$ 恒成立，求 $c$ 的取值范围。
+  \item 若 $x^2-2x+m>0$ 对任意 $x\in[0,3]$ 恒成立，求 $m$ 的取值范围。
+  \item 若存在 $x\in[0,3]$，使 $x^2-2x+m>0$ 成立，求 $m$ 的取值范围。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+\subsection{视角一：来源——“恒成立”与“能成立”从哪来}
+
+\key{要点}
+\begin{itemize}
+  \item \key{恒成立}：不等关系对某个范围内的\key{所有} $x$ 都成立，常用“对任意”“恒成立”“总有”。
+  \item \key{能成立}：不等关系对某个范围内\key{至少一个} $x$ 成立，常用“存在”“有解”“能成立”。
+  \item 常见来源：给定不等式，反求参数的取值范围。
+\end{itemize}
+
+\begin{example}
+判断下列说法是恒成立还是能成立，并指出参数应满足什么条件：
+\begin{enumerate}
+  \item 对任意 $x\in\mathbb{R}$，$x^2+1>0$；
+  \item 存在 $x\in\mathbb{R}$，使 $x^2+1<0$；
+  \item 对任意 $x\in[0,1]$，$x^2\leq a$。
+\end{enumerate}
+\end{example}
+\begin{solution}
+(1) 恒成立，且对任意实数都成立（$x^2+1\geq1>0$）。
+(2) 能成立；但 $x^2+1\geq1>0$ 对任意 $x$ 成立，故不存在这样的 $x$，即它不成立。
+(3) 恒成立；需 $a$ 不小于 $x^2$ 在 $[0,1]$ 上的最大值，即 $a\geq1$。
+\key{（回头看：种子问题 1、2 是恒成立，种子问题 3 是能成立）}
+\end{solution}
+
+\begin{problem}
+判断下列问题的类型（恒成立 / 能成立），并求参数的取值范围：
+\begin{enumerate}
+  \item 对任意 $x\in\mathbb{R}$，$x^2+ax+1>0$ 恒成立，求 $a$；
+  \item 存在 $x\in\mathbb{R}$，使 $x^2+ax+1<0$，求 $a$。
+\end{enumerate}
+\end{problem}
+\begin{solution}
+(1) 恒成立。$\Delta=a^2-4<0$，得 $-2<a<2$。
+(2) 能成立。只需图象与 $x$ 轴下方有交点，即 $\Delta=a^2-4>0$，得 $a<-2$ 或 $a>2$。
+\end{solution}
+
+\subsection{视角二：证明——怎么说明“恒成立”}
+
+\key{要点}
+\begin{itemize}
+  \item 证\key{恒成立}：要说明对所有 $x$ 都成立，通常转化为求最值（证最小值 $>0$）。
+  \item 说明\key{不恒成立}：只需举一个反例（找到一个 $x$ 使不等式不成立）。
+  \item 说明\key{能成立}：只需举一个例子（找到一个 $x$ 使不等式成立）。
+  \item 说明\key{不能成立}：要说明对所有 $x$ 都不成立，同样转化为最值。
+\end{itemize}
+
+\begin{example}
+证明：当 $c>1$ 时，$x^2+2x+c>0$ 对任意实数 $x$ 恒成立。
+\end{example}
+\begin{solution}
+$x^2+2x+c=(x+1)^2+c-1$。因为 $(x+1)^2\geq0$，所以 $x^2+2x+c\geq c-1$。
+当 $c>1$ 时 $c-1>0$，故 $x^2+2x+c>0$ 对任意实数 $x$ 恒成立。
+\key{（回头看：种子问题 1 的证明）}
+\end{solution}
+
+\begin{problem}
+说明“存在实数 $x$，使 $x^2+1<0$”不能成立。
+\end{problem}
+\begin{solution}
+对任意实数 $x$，$x^2\geq0$，故 $x^2+1\geq1>0$，
+所以不存在使 $x^2+1<0$ 成立的 $x$。
+\end{solution}
+
+\subsection{视角三：函数——用图象的位置看}
+
+\key{要点}
+\begin{itemize}
+  \item 恒成立：函数图象（在指定范围内）全部在 $x$ 轴上方（或下方）。
+  \item 能成立：函数图象（在指定范围内）至少有一部分在 $x$ 轴上方。
+\end{itemize}
+
+\begin{example}
+若 $x^2+2x+c>0$ 对任意实数 $x$ 恒成立，求 $c$ 的取值范围。
+\end{example}
+\begin{solution}
+$y=x^2+2x+c$ 开口向上。要图象全部在 $x$ 轴上方，需与 $x$ 轴无交点，
+即 $\Delta=4-4c<0$，得 $c>1$。
+\key{（回头看：种子问题 1 的图象解法）}
+\end{solution}
+
+\begin{problem}
+若 $-x^2+2x+m>0$ 对任意 $x\in[0,3]$ 恒成立，求 $m$ 的取值范围。
+\end{problem}
+\begin{solution}
+$y=-x^2+2x+m$ 开口向下。要图象在 $[0,3]$ 上全部在 $x$ 轴上方，
+只需两个端点都在上方：$f(0)=m>0$，$f(3)=m-3>0$，故 $m>3$。
+\end{solution}
+
+\subsection{视角四：极值——恒成立与能成立都化为最值}
+
+\key{要点}
+\begin{itemize}
+  \item \key{恒成立}：$f(x)>0$ 对任意 $x\in D$ 成立 $\iff f$ 在 $D$ 上的最小值 $>0$。
+  \item \key{能成立}：存在 $x\in D$ 使 $f(x)>0$ $\iff f$ 在 $D$ 上的最大值 $>0$。
+  \item \key{方向相反}：恒成立看最小值，能成立看最大值。
+  \item 求区间上的最值：看对称轴与区间的位置（顶点或端点）。
+\end{itemize}
+
+\begin{example}
+若 $x^2-2x+m>0$ 对任意 $x\in[0,3]$ 恒成立，求 $m$ 的取值范围。
+\end{example}
+\begin{solution}
+设 $f(x)=x^2-2x+m$，对称轴 $x=1\in[0,3]$，最小值为 $f(1)=m-1$。
+由 $m-1>0$ 得 $m>1$。
+\key{（回头看：种子问题 2）}
+\end{solution}
+
+\begin{example}
+若存在 $x\in[0,3]$，使 $x^2-2x+m>0$ 成立，求 $m$ 的取值范围。
+\end{example}
+\begin{solution}
+能成立看最大值。$f(x)=x^2-2x+m$ 在 $[0,3]$ 上的最大值在端点处取得：
+$f(0)=m$，$f(3)=m+3$，故最大值为 $m+3$。由 $m+3>0$ 得 $m>-3$。
+\key{（回头看：种子问题 3）}
+\end{solution}
+
+\begin{problem}
+若存在 $x\in[3,4]$，使 $x^2-2x+m>0$ 成立，求 $m$ 的取值范围。
+\end{problem}
+\begin{solution}
+$f$ 在 $[3,4]$ 上递增，最大值为 $f(4)=m+8$。由 $m+8>0$ 得 $m>-8$。
+\end{solution}
+
+\begin{problem}
+若 $x^2-2x+m>0$ 对任意 $x\in[3,4]$ 恒成立，求 $m$ 的取值范围。
+\end{problem}
+\begin{solution}
+$f$ 在 $[3,4]$ 上递增，最小值为 $f(3)=m+3$。由 $m+3>0$ 得 $m>-3$。
+\end{solution}
+
+\begin{problem}
+设 $f(x)=x^2-2x-3$，求 $m$ 的取值范围，使 $f(x)<m$ 对任意 $x\in[0,2]$ 恒成立。
+\end{problem}
+\begin{solution}
+$f(x)=(x-1)^2-4$，在 $[0,2]$ 上的最大值为 $f(0)=f(2)=-3$。
+恒成立看最大值，故 $m>-3$。
+\end{solution}
+\key{（贯穿题：$f(x)=x^2-2x-3$ 已在专题一、二、三、四出现）}
+
+\subsection{视角五：几何——分离参数后的直线与曲线}
+
+\key{要点}
+\begin{itemize}
+  \item 把参数分离到一边：$f(x,m)>0$ 恒成立 $\iff m>g(x)$（或 $m<g(x)$）恒成立。
+  \item 几何上看：$m>g(x)$ 对任意 $x\in D$ 恒成立 $\iff$ 直线 $y=m$ 在曲线 $y=g(x)$（$x\in D$）的\key{上方}。
+  \item 于是 $m>g(x)_{\max}$；若 $m<g(x)$ 恒成立，则 $m<g(x)_{\min}$。
+\end{itemize}
+
+\begin{example}
+若 $x^2-2x+m>0$ 对任意 $x\in[0,3]$ 恒成立，求 $m$ 的取值范围。
+\end{example}
+\begin{solution}
+分离参数：$m>-x^2+2x$ 对任意 $x\in[0,3]$ 恒成立。
+设 $g(x)=-x^2+2x=-(x-1)^2+1$，在 $[0,3]$ 上的最大值为 $g(1)=1$。
+故 $m>1$（直线 $y=m$ 要在曲线 $y=g(x)$ 上方）。
+\key{（回头看：种子问题 2 的分离参数解法）}
+\end{solution}
+
+\begin{problem}
+若 $x^2-2x+m>0$ 对任意 $x\in[3,4]$ 恒成立，求 $m$ 的取值范围。
+\end{problem}
+\begin{solution}
+$m>-x^2+2x$ 恒成立。$g(x)=-x^2+2x$ 在 $[3,4]$ 上递减，最大值为 $g(3)=-3$。
+故 $m>-3$。
+\end{solution}
+\end{explore}
+
+\begin{inclasstest}
+\subsection{变式训练}
+只改一个条件，重新做一遍。
+\begin{enumerate}
+  \item 若 $x^2+ax+1>0$ 对任意 $x\in\mathbb{R}$ 恒成立，求 $a$；再改为“存在 $x\in\mathbb{R}$ 使 $x^2+ax+1<0$，求 $a$”。
+  \item 若 $x^2-2x+m\geq0$ 对任意 $x\in[0,2]$ 恒成立，求 $m$；再改为“存在 $x\in[0,2]$ 使 $x^2-2x+m\geq0$，求 $m$”。
+  \item 若 $-x^2+2x+m>0$ 对任意 $x\in[0,3]$ 恒成立，求 $m$。
+  \item 若 $x^2-2x+m>0$ 对任意 $x\in[m,m+2]$ 恒成立，求 $m$。
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection{知识来源对照表}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{3.6cm}p{3.8cm}p{5.6cm}}
+\toprule
+结论 / 方法 & 最早从哪来 & 后面从哪个角度看 \\
+\midrule
+恒成立与能成立的区分 & 视角一（来源） & 视角二（证明）、视角四（极值） \\
+举反例 & 视角二（证明） & 视角一（来源） \\
+图象位置 & 视角三（函数） & 视角五（几何） \\
+恒成立 $\iff$ 最值 & 视角四（极值） & 视角三（函数）、视角五（几何） \\
+分离参数 & 视角五（几何） & 视角四（极值） \\
+判别式 & 视角三（函数） & 视角四（极值） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\key{下一步}：这类问题会在任何函数主题里再出现——工具不变，对象在变。
+\end{afterclass}

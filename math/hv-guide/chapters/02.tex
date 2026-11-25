@@ -1,0 +1,631 @@
+% 高观点导学案：三角函数、解三角形与复平面旋转（第 2 章·高观点统一版）
+% 主线：以「乘以 e^{iβ} = 逆时针旋转 β」为唯一母公理，让整套三角恒等变换从指数运算律自然生长
+% 四模块：数系扩张与 i 的几何诞生 → 结构同构（旋转必为指数函数）→ 切线速度锁定底数 → 母公式引擎
+% 另配一节：解三角形与边角互化。全程用「复平面旋转 ↔ 实虚部投影」互译，原生 TikZ 图可视化。
+
+\section{三角函数、解三角形与复平面旋转（高观点统一版）}
+
+\begin{methodbox}{多框架对读}
+\small
+\begin{center}
+\begin{tabular}{c|p{2.9cm}|p{5.0cm}|p{3.1cm}}
+\toprule
+视角 & 本章看点 & 别的视角怎么说 & 哪侧最省力 \\
+\midrule
+代数 & 和差倍半公式、恒等变形 & 符号系统的机械推导 & 硬算与验算 \\
+几何 & 单位圆上的旋转与投影 & 角度相加＝复数相乘 & 猜公式、看符号 \\
+集合 & $\theta\mapsto(\cos\theta,\sin\theta)$ & 参数方程即一个对应 & 界定义域与值域 \\
+映射 & 乘 $e^{i\beta}$＝逆时针转 $\beta$ & 旋转群与指数函数同构 & 统一推导所有公式 \\
+\bottomrule
+\end{tabular}
+\end{center}
+卡的使用：公式卡壳时回到单位圆「转一遍」；证明题优先用旋转映射（总图见第 0 章图~\ref{fig:four-view-map}）。
+\end{methodbox}
+
+本章不新增公式，而是给三角函数一章装上一个\key{母引擎}：
+在复平面上，\key{乘以 $e^{i\beta}$ 就等于把向量逆时针旋转 $\beta$ 角}（模长不变）。
+由这一条母公理出发，两角和差、二倍角三倍角、诱导公式、和差化积与积化和差，
+全部只是指数运算律 $e^{i(\alpha+\beta)}=e^{i\alpha}e^{i\beta}$ 的代数推论。
+四个模块环环相扣：
+\key{数系扩张与 $i$ 的几何诞生}（为什么需要虚数）$\to$
+\key{结构同构}（单位圆旋转必为指数函数）$\to$
+\key{切线速度锁定底数}（欧拉公式 $e^{i\theta}=\cos\theta+i\sin\theta$）$\to$
+\key{母公式引擎}（一条指数律长出全套公式），
+最后用 \key{解三角形与边角互化} 把复数直觉落回高考主战场。
+核心思想：\key{三角恒等变换不是几十个孤立公式，而是同一个旋转群的三种语言}（指数、坐标、三角形）。
+
+\begin{learnobjective}
+\begin{itemize}
+  \item 理解虚数单位 $i$ 的几何意义（逆时针旋转 $90^\circ$），知道 $i^2=-1$ 是「转两次直角 $=$ 掉头」的代数翻译；
+  \item 理解数系扩张 $\mathbb{N}\to\mathbb{Z}\to\mathbb{Q}\to\mathbb{R}\to\mathbb{C}$ 每一步都在为运算封闭与几何变换解锁新维度；
+  \item 会用单位复数 $z(\theta)=\cos\theta+i\sin\theta$ 验证 $z(\alpha)z(\beta)=z(\alpha+\beta)$，理解「加法变乘法」是指数函数的基因；
+  \item 会用切线速度 $(e^{k\theta})'\big|_{\theta=0}=k$ 锁定底数，写出欧拉公式 $e^{i\theta}=\cos\theta+i\sin\theta$，并得出 $e^{i\pi}+1=0$；
+  \item 会用 $e^{i(\alpha+\beta)}$ 展开、棣莫弗定理与指数分解，现场推导两角和差、二倍角三倍角与和差化积／积化和差；
+  \item 掌握正弦定理（外接圆半径 $R$）、余弦定理与面积公式，会按「一次齐次用正弦、二次齐次用余弦」做边角互化，并识别钝角三角形中的隐藏定义域。
+\end{itemize}
+\end{learnobjective}
+
+\begin{preview}
+\subsection*{知识回顾}
+\begin{itemize}
+  \item 实数轴上，乘以正数 $2$ 的几何意义是 \blank（拉伸／旋转）；乘以 $-1$ 的几何意义是 \blank；
+  \item $(-1)\times(-1)=$ \blank；
+  \item 指数函数 $a^x$ 满足的运算律是 $a^{\alpha+\beta}=$ \blank；
+  \item 单位圆上辐角 $\theta$ 对应的点是 $(\cos\theta,\sin\theta)$，它到原点的距离是 \blank。
+\end{itemize}
+
+\subsection*{教材速读}
+阅读三角函数一章及本章导学案，完成下列问题：
+\begin{enumerate}
+  \item $i^2=$ \blank；
+  \item 欧拉公式 $e^{i\theta}=$ \blank；
+  \item 正弦定理 $\dfrac{a}{\sin A}=$ \blank（用外接圆半径 $R$ 表示）；
+  \item 余弦定理 $a^2=$ \blank。
+\end{enumerate}
+\end{preview}
+
+\begin{explore}
+
+\subsection{数系扩张与虚数单位 $i$ 的几何诞生}
+
+\key{探究一：乘法即变换——从一维缩放、掉头到二维旋转}
+在实数轴上盯住数字 $1$，看对它做乘法时的几何运动：
+\begin{itemize}
+  \item 乘以正数（如 $\times2$）：线段被\key{拉伸}为原来的 $2$ 倍，方向不变——纯\key{缩放}；
+  \item 乘以 $-1$：把 $1$ 变成 $-1$，几何意义是绕原点逆时针旋转 \key{$180^\circ$}（半圈）；
+  \item 连续乘两次 $-1$：$(-1)\times(-1)=1$，即转 $180^\circ+180^\circ=360^\circ$，恰好回到原位。
+\end{itemize}
+于是提出关键问题：\key{有没有一种操作，连续做两次恰好等于乘 $-1$（即一次只逆时针转 $90^\circ$）？}
+设这个操作是 $i$，则
+\[
+  i\times i=-1\iff i^2=-1.
+\]
+一维数轴上根本容不下「转 $90^\circ$」后的落点，数轴被迫向垂直方向张开，出现\key{虚轴}，
+一维直线跃升为二维\key{复平面}。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    % 左图：乘 -1 转 180°
+    \draw[->, gray] (-2.5,0)--(2.5,0) node[below right] {实轴};
+    \fill (0,0) circle (1pt);
+    \draw[->, main!80!black, thick] (0,0)--(1,0) node[midway,above] {$1$};
+    \draw[second, thick] (1,0) arc (0:180:1);
+    \draw[->, second, thick] (0,0)--(-1,0) node[midway,above] {$-1$};
+    \node[second] at (0,1.35) {$180^\circ$};
+    \node[main!70!black] at (0,-2.05) {乘 $-1$};
+    % 右图：乘 i 转 90°，张开虚轴
+    \begin{scope}[xshift=6.2cm]
+      \draw[->, gray] (-1.4,0)--(2.5,0) node[below right] {实轴};
+      \draw[->, dashed, gray!70!black] (0,-1.7)--(0,2.3) node[above] {虚轴};
+      \fill (0,0) circle (1pt);
+      \draw[->, main!80!black, thick] (0,0)--(1,0) node[midway,below] {$1$};
+      \draw[third, thick] (1,0) arc (0:90:1);
+      \draw[->, third, thick] (0,0)--(0,1) node[midway,right] {$i$};
+      \draw[dashed, gray] (0,1) arc (90:180:1);
+      \draw[->, dashed, gray] (0,0)--(-1,0) node[midway,below] {$i^2=-1$};
+      \node[third] at (0.62,0.30) {$90^\circ$};
+      % 说明文字放在虚轴下端之下（虚轴只画到 $-1.7$），避免被竖直虚线穿过
+      \node[main!70!black] at (0,-2.05) {乘 $i$（连乘两次得 $-1$）};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{乘法的几何：乘 $-1$ 逆时针转 $180^\circ$；乘 $i$ 只转 $90^\circ$，一维数轴被迫张开虚轴，成为复平面}
+  \label{fig:rotate-i}
+\end{figure}
+
+点睛：实数 $1$ 负责向前走，$-1$ 负责向后转，$i$ 负责向左转；
+连喊两次「向左转」正好就是「向后转」（$i^2=-1$）。
+
+乘 $i$ 的作用不止于「转两次得 $-1$」：对任意辐角 $\theta$ 的单位向量，乘 $i$ 都把它的两个分量整体倒置（图~\ref{fig:i-component-flip}）。
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    % ===== 左面板：转前 z=cosθ+isinθ =====
+    \draw[->, gray] (-1.9,0)--(1.9,0) node[below right] {实轴};
+    \draw[->, gray] (0,-0.9)--(0,1.95) node[above] {虚轴};
+    \draw[gray!55, dashed] (0,0) circle (1.6);
+    \draw[black!70, thick] (0,0)--(40:1.6) node[above right, font=\scriptsize] {$z$};
+    \draw[blue!70!black, very thick] (0,0)--({1.6*cos(40)},0);
+    \node[blue!70!black, below] at ({0.8*cos(40)},0) {$\cos\theta$};
+    \draw[green!55!black, very thick] ({1.6*cos(40)},0)--(40:1.6);
+    \node[green!55!black, left] at ({1.6*cos(40)+0.02},{0.8*sin(40)}) {$\sin\theta$};
+    % 直角符号：两个投影分量互相垂直
+    \draw[black!60, thin] ({1.6*cos(40)-0.22},0)--({1.6*cos(40)-0.22},0.22)--({1.6*cos(40)},0.22);
+    \draw[black!70, thick] (0.42,0) arc (0:40:0.42) node[midway, above, font=\scriptsize] {$\theta$};
+    \node[main!70!black] at (0,-0.7) {$z=\cos\theta+i\sin\theta$};
+    % ===== 右面板：乘 i 后 iz=-sinθ+icosθ =====
+    \begin{scope}[xshift=4.4cm]
+      \draw[->, gray] (-1.9,0)--(1.9,0) node[below right] {实轴};
+      \draw[->, gray] (0,-0.9)--(0,1.95) node[above] {虚轴};
+      \draw[gray!55, dashed] (0,0) circle (1.6);
+      \draw[dashed, gray!70!black, thick] (0,0)--(40:1.6);
+      % 直角符号：z 与 iz 垂直（随 θ 取向）
+      \draw[third, thin] ({0.24*cos(40)},{0.24*sin(40)})--({0.24*cos(40)-0.24*sin(40)},{0.24*sin(40)+0.24*cos(40)})--({-0.24*sin(40)},{0.24*cos(40)});
+      % 90° 弧：从 θ 扫到 θ+90°
+      \draw[->, third, thick] (40:0.5) arc (40:130:0.5);
+      \node[third, left] at ({0.72*cos(95)},{0.72*sin(95)}) {$90^\circ$};
+      \draw[->, second, very thick] (0,0)--({1.6*cos(130)},{1.6*sin(130)}) node[above left, font=\scriptsize] {$iz$};
+      % 倒置后的两个分量：蓝竖（cosθ）、绿横（-sinθ）
+      \draw[blue!70!black, very thick] (0,0)--(0,{1.6*cos(40)});
+      \node[blue!70!black, right] at (0,{0.8*cos(40)}) {$\cos\theta$};
+      \draw[green!55!black, very thick] (0,{1.6*cos(40)})--({-1.6*sin(40)},{1.6*cos(40)});
+      \node[green!55!black, below] at ({-0.8*sin(40)},{1.6*cos(40)}) {$-\sin\theta$};
+      \draw[dashed, gray] ({1.6*cos(130)},{1.6*sin(130)})--({1.6*cos(130)},0);
+      \node[main!70!black] at (0,-0.7) {$iz=-\sin\theta+i\cos\theta$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{乘 $i$ 的分量倒置：$z=\cos\theta+i\sin\theta$（横蓝 $\cos\theta$、纵绿 $\sin\theta$）乘 $i=e^{i\pi/2}$ 逆时针转 $90^\circ$ 后，蓝分量竖到虚轴成 $\cos\theta$、绿分量倒向负实轴成 $-\sin\theta$，即 $iz=-\sin\theta+i\cos\theta$}
+  \label{fig:i-component-flip}
+\end{figure}
+
+\begin{example}
+三次方程 $x^3=15x+4$ 显然有实根 $x=4$。用卡丹公式却会得到
+\[
+  x=\sqrt[3]{2+\sqrt{-121}}+\sqrt[3]{2-\sqrt{-121}}
+  =\sqrt[3]{2+11i}+\sqrt[3]{2-11i}.
+\]
+请验证 $(2+i)^3=2+11i$，并说明虚部如何抵消得到 $x=4$。
+\end{example}
+\begin{solution}
+\[
+  (2+i)^3=8+12i+6i^2+i^3=8+12i-6-i=2+11i,
+\]
+同理 $(2-i)^3=2-11i$。于是
+\[
+  x=(2+i)+(2-i)=4,
+\]
+两个虚部一正一负抵消，还原出真实的实数解。
+可见虚数不是凭空捏造的幻想，而是连接实数问题与实数解的「地下通道」：
+引入 $i$ 后，$n$ 次代数方程必有 $n$ 个根（代数基本定理），数系运算彻底封闭。
+\end{solution}
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.8cm}p{3.4cm}p{5.4cm}}
+\toprule
+扩张阶段 & 解决的方程障碍 & 解锁的几何空间与变换 \\
+\midrule
+$\mathbb{N}\to\mathbb{Z}$（引入负数） & $x+3=1$ 无解 & 数轴向负半轴延伸，解锁反向平移与 $180^\circ$ 掉头 \\
+$\mathbb{Z}\to\mathbb{Q}$（引入分数） & $2x=1$ 无解 & 填满离散整数点之间的空隙，解锁任意比例缩放 \\
+$\mathbb{Q}\to\mathbb{R}$（引入无理数） & $x^2=2$ 无解 & 消除数轴上的「针眼漏洞」，得到连续完备实数线 \\
+$\mathbb{R}\to\mathbb{C}$（引入虚数 $i$） & $x^2+1=0$ 无解 & 一维直线跃升为二维平面，解锁任意角度旋转与代数封闭 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{conccard}[一级]{虚数单位 $i$ 的几何意义：$i^2=-1$}{理解复数的几何来源、判断复数乘法的旋转角与伸缩倍数}{把 $i$ 只当成「$\sqrt{-1}$」的代数符号，丢掉它的旋转几何；把 $i^2=-1$ 与「转 $180^\circ$」脱钩}
+$1\times i$ 表示逆时针转 $90^\circ$，$1\times(-1)$ 表示转 $180^\circ$，而 $i\times i=-1$ 正是「转两次直角等于掉头」。
+任何复数 $z$ 乘以 $i$，都是把 $z$ 的辐角加 $90^\circ$、模长不变。
+\end{conccard}
+
+\subsection{结构同构：单位圆旋转必为指数函数}
+
+\key{探究二：角度相加，复数相乘}
+把单位圆上辐角为 $\theta$ 的点写成复数
+\[
+  z(\theta)=\cos\theta+i\sin\theta.
+\]
+计算两个单位复数的乘积：
+\begin{derivation}
+\begin{align*}
+  z(\alpha)z(\beta)&=(\cos\alpha+i\sin\alpha)(\cos\beta+i\sin\beta)\\
+  &=(\cos\alpha\cos\beta-\sin\alpha\sin\beta)+i(\sin\alpha\cos\beta+\cos\alpha\sin\beta)\\
+  &=\cos(\alpha+\beta)+i\sin(\alpha+\beta)=z(\alpha+\beta).
+\end{align*}
+\end{derivation}
+（最后一步用了两角和公式——这正是我们稍后要用旋转重新解释的对象。）
+惊人之处：\key{输入的角度相加，输出的复数相乘}。
+
+唤醒旧知：哪类函数的核心基因是 $f(\alpha+\beta)=f(\alpha)f(\beta)$？
+学生应脱口而出\key{指数函数} $f(x)=b^x$。
+而 $z(0)=\cos0+i\sin0=1$，所以 $z(\theta)$ 在代数结构上就是一个底数为某复常数 $b$ 的指数函数 $z(\theta)=b^\theta$——
+\key{单位圆旋转群与指数函数同构}。
+
+\begin{conccard}[二级]{结构同构：$z(\alpha)z(\beta)=z(\alpha+\beta)$}{判断两个复数相乘的几何效果、理解三角公式的共同来源}{只记「模相乘、辐角相加」的结论，不从结构公理出发；把 $z(\theta)$ 与指数函数割裂}
+单位复数 $z(\theta)=\cos\theta+i\sin\theta$ 满足「角度相加 $\to$ 复数相乘」，且 $z(0)=1$。
+凡是满足 $f(\alpha+\beta)=f(\alpha)f(\beta)$ 的连续函数必为指数函数，故 $z(\theta)$ 一定可以写成 $b^\theta$ 的形式。
+\end{conccard}
+
+几何上看，$z(\alpha)\cdot e^{i\beta}$ 就是把 $z_1=z(\alpha)$ 绕原点再逆时针转 $\beta$，终点辐角为 $\alpha+\beta$（图~\ref{fig:rotate-sum}）。
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \draw[->, gray] (-1.8,0)--(3.5,0) node[below right] {$\mathrm{Re}$};
+    \draw[->, gray] (0,-1.7)--(0,2.9) node[above] {$\mathrm{Im}$};
+    \draw[gray!55, dashed] (0,0) circle (2.2);
+    % 三段同心弧：α、β、α+β（半径与标注角错层，避免相叠）
+    \draw[main, thick] (0.5,0) arc (0:20:0.5);
+    \node[main] at (10:0.68) {$\alpha$};
+    \draw[->, third, thick] (20:0.85) arc (20:75:0.85);
+    \node[third] at (47:1.06) {$\beta$};
+    \draw[->, gray!60!black, thick] (1.2,0) arc (0:75:1.2);
+    \node[gray!60!black] at (12:1.45) {$\alpha+\beta$};
+    % 旋转轨迹：z1 沿单位圆转到 z2
+    \draw[->, third, thin] (20:2.2) arc (20:75:2.2);
+    % z1=e^{iα} 与 z2=e^{i(α+β)}
+    \draw[->, main!80!black, thick] (0,0)--(20:2.2) node[above right] {$z_1=e^{i\alpha}$};
+    \draw[->, second, very thick] (0,0)--(75:2.2) node[above left] {$z_2=e^{i(\alpha+\beta)}$};
+    % z2 的两轴投影：实部红、虚部青
+    \draw[red!80!black, very thick] (0,0)--({2.2*cos(75)},0);
+    \node[red!80!black, below] at ({1.1*cos(75)},0) {$\cos(\alpha+\beta)$};
+    \draw[dashed, gray] (75:2.2)--(0,{2.2*sin(75)});
+    \draw[cyan!80!black, very thick] ({2.2*cos(75)},0)--(75:2.2);
+    \node[cyan!80!black, right] at ({2.2*cos(75)},1.2) {$\sin(\alpha+\beta)$};
+    \node[main!70!black] at (0.9,-1.25) {$z_1\cdot e^{i\beta}=e^{i(\alpha+\beta)}=z_2$};
+  \end{tikzpicture}
+  \caption{旋转叠加：$z_1=e^{i\alpha}$ 再乘 $e^{i\beta}$ 即绕原点逆时针转 $\beta$，终点 $z_2=e^{i(\alpha+\beta)}$；$z_2$ 在实轴、虚轴上的投影 $\cos(\alpha+\beta)$、$\sin(\alpha+\beta)$ 与 $(\cos\alpha+i\sin\alpha)(\cos\beta+i\sin\beta)$ 的实部、虚部一一对应——两角和公式就是这么「转」出来的}
+  \label{fig:rotate-sum}
+\end{figure}
+
+\subsection{切线速度锁定底数}
+
+\key{探究三：切线速度——底数只能是 $e$}
+对比两个「指数运动」的动力学：
+\begin{itemize}
+  \item 实指数 $e^{x}$：在 $x=0$ 处位置为 $1$，速度方向与位置\key{同向}（沿实轴向右），越跑越快，轨迹是直线爆炸；
+  \item 复指数 $e^{i\theta}$：在 $\theta=0$ 处位置为 $1$，速度方向必须与位置\key{垂直}（沿虚轴向上，即 $+i$），只转弯不伸长，轨迹是单位圆。
+\end{itemize}
+把 $z(\theta)$ 看作质点位置，求导得切线速度：
+\[
+  z'(\theta)=-\sin\theta+i\cos\theta\implies z'(0)=i.
+\]
+而实指数 $f(\theta)=e^{k\theta}$ 满足
+\[
+  (e^{k\theta})'\Big|_{\theta=0}=k\cdot e^{0}=k.
+\]
+要让圆周运动在出发点的瞬时速度恰好是 $+i$，唯一可能就是 \key{$k=i$}。于是
+\[
+  e^{i\theta}=\cos\theta+i\sin\theta.
+\]
+代入 $\theta=\pi$：
+\[
+  e^{i\pi}=\cos\pi+i\sin\pi=-1\implies e^{i\pi}+1=0,
+\]
+即被誉为「上帝公式」的欧拉恒等式，把 $0,1,e,i,\pi$ 五个常数用最纯粹的圆周旋转焊在一起。
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{2.2cm}p{2.0cm}p{2.6cm}p{3.2cm}p{3.0cm}}
+\toprule
+函数 & 起点位置 & 初始速度方向 & 速度与位置关系 & 轨迹 \\
+\midrule
+$e^{x}$ & $1$ & $+1$（实轴向右） & 同向 & 沿实轴指数爆炸 \\
+$e^{i\theta}$ & $1$ & $+i$（虚轴向上） & 垂直 & 绕单位圆匀速旋转 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+    \draw[->, gray] (-2.6,0)--(2.9,0) node[below right] {$\mathrm{Re}$};
+    \draw[->, gray] (0,-2.3)--(0,2.5) node[above] {$\mathrm{Im}$};
+    \draw[gray!55, dashed] (0,0) circle (2);
+    % 一般位置 z(θ)：θ≈50°
+    \draw[->, dashed, gray!80!black] (0,0)--(1.286,1.532) node[above] {$z(\theta)$};
+    \draw[->, dashed, gray!80!black] (1.286,1.532)--(0.826,1.918) node[above left, font=\scriptsize] {$i\,z(\theta)$};
+    % 起点 (1,0) 与切线速度 +i
+    \fill (2,0) circle (1.2pt);
+    \draw[->, main!80!black, thick] (0,0)--(2,0) node[midway,below] {$z(0)=1$};
+    \draw[->, second, thick] (2,0)--(2,0.95) node[right] {$z'(0)=i$};
+    \draw[gray, thin] (1.52,0)--(1.52,0.48)--(2,0.48);
+    \draw[gray] (0.72,0) arc (0:50:0.72);
+    \node[gray!80!black] at (0.98,0.22) {$\theta$};
+    \node[main!70!black] at (0,-2.8) {位置向量与切线速度垂直：只转弯，不伸长};
+  \end{tikzpicture}
+  \caption{复平面单位圆：起点 $(1,0)$ 处位置向量为 $1$，切线速度 $+i$ 与其垂直；任意位置的速度 $i\,z(\theta)$ 始终垂直于位置}
+  \label{fig:euler-tangent}
+\end{figure}
+
+\begin{conccard}[一级]{欧拉公式：$e^{i\theta}=\cos\theta+i\sin\theta$}{推导三角公式、判断复数旋转角、快速验算}{只把它当结论背诵；忘记「乘以 $e^{i\beta}$ 就是逆时针转 $\beta$」这一几何含义}
+由 $z(\alpha)z(\beta)=z(\alpha+\beta)$ 与 $z(0)=1$ 知 $z(\theta)$ 必为指数函数 $b^\theta$；
+再由切线速度 $(e^{k\theta})'\big|_{\theta=0}=k$ 与 $z'(0)=i$ 锁定 $k=i$。
+于是乘以 $e^{i\beta}$ 等价于逆时针旋转 $\beta$，这就是本章全部三角公式的母公理。
+\end{conccard}
+
+\subsection{母公式引擎：一条指数律长出全套公式}
+
+\key{探究四：$e^{i(\alpha+\beta)}=e^{i\alpha}e^{i\beta}$ 的展开与投影}
+
+\key{（1）诱导公式——乘 $i=e^{i\pi/2}$ 即转 $90^\circ$。}
+\[
+  i(\cos\theta+i\sin\theta)=-\sin\theta+i\cos\theta,
+\]
+对比实部虚部，一眼读出
+\[
+  \cos\left(\theta+\frac{\pi}{2}\right)=-\sin\theta,\qquad
+  \sin\left(\theta+\frac{\pi}{2}\right)=\cos\theta.
+\]
+同理乘 $-1=e^{i\pi}$ 得 $\cos(\theta+\pi)=-\cos\theta$、$\sin(\theta+\pi)=-\sin\theta$；
+取共轭 $\overline{e^{i\theta}}=e^{-i\theta}$ 即关于实轴对称，这正是奇偶性
+$\cos(-\theta)=\cos\theta$、$\sin(-\theta)=-\sin\theta$ 的几何本质。
+「奇变偶不变，符号看象限」不再是口诀，而是「转了几个直角」的图形事实。
+
+\key{（2）两角和与差——多项式展开一步到位。}
+\begin{derivation}
+\begin{align*}
+  e^{i(\alpha+\beta)}&=e^{i\alpha}e^{i\beta}
+  =(\cos\alpha+i\sin\alpha)(\cos\beta+i\sin\beta)\\
+  &=(\cos\alpha\cos\beta-\sin\alpha\sin\beta)
+  +i(\sin\alpha\cos\beta+\cos\alpha\sin\beta).
+\end{align*}
+\end{derivation}
+左边又是 $\cos(\alpha+\beta)+i\sin(\alpha+\beta)$，对比实部与虚部：
+\[
+  \cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta,\qquad
+  \sin(\alpha+\beta)=\sin\alpha\cos\beta+\cos\alpha\sin\beta.
+\]
+把 $\beta$ 换成 $-\beta$（用 $\cos(-\beta)=\cos\beta$、$\sin(-\beta)=-\sin\beta$），立刻得到差角公式：
+\[
+  \cos(\alpha-\beta)=\cos\alpha\cos\beta+\sin\alpha\sin\beta,\qquad
+  \sin(\alpha-\beta)=\sin\alpha\cos\beta-\cos\alpha\sin\beta.
+\]
+
+\key{（3）二倍角与三倍角——棣莫弗定理。}
+由 $e^{in\theta}=(e^{i\theta})^n$ 得
+\[
+  (\cos\theta+i\sin\theta)^n=\cos n\theta+i\sin n\theta.
+\]
+$n=2$ 展开即得二倍角；$n=3$ 用二项式定理：
+\[
+  (\cos\theta+i\sin\theta)^3
+  =(\cos^3\theta-3\cos\theta\sin^2\theta
+  +i(3\cos^2\theta\sin\theta-\sin^3\theta),
+\]
+于是
+\[
+  \cos3\theta=4\cos^3\theta-3\cos\theta,\qquad
+  \sin3\theta=3\sin\theta-4\sin^3\theta.
+\]
+
+\key{（4）和差化积与积化和差——同一指数分解。}
+由欧拉公式解出
+\[
+  \cos\theta=\frac{e^{i\theta}+e^{-i\theta}}{2},\qquad
+  \sin\theta=\frac{e^{i\theta}-e^{-i\theta}}{2i}.
+\]
+例如
+\begin{align*}
+  \cos\alpha\cos\beta
+  &=\frac{(e^{i\alpha}+e^{-i\alpha})(e^{i\beta}+e^{-i\beta})}{4}\\
+  &=\frac{e^{i(\alpha+\beta)}+e^{-i(\alpha+\beta)}+e^{i(\alpha-\beta)}+e^{-i(\alpha-\beta)}}{4}\\
+  &=\frac{\cos(\alpha+\beta)+\cos(\alpha-\beta)}{2},
+\end{align*}
+这就是积化和差；把 $\alpha+\beta=A$、$\alpha-\beta=B$ 反解即得和差化积。
+结论：和差、乘积、倍角只是同一组指数幂的不同代数外形。
+
+\begin{example}
+用棣莫弗定理把 $\cos3\theta$ 用 $\cos\theta$ 表示。
+\end{example}
+\begin{solution}
+\[
+  \cos3\theta=\operatorname{Re}(\cos\theta+i\sin\theta)^3
+  =\cos^3\theta-3\cos\theta\sin^2\theta
+  =\cos^3\theta-3\cos\theta(1-\cos^2\theta)
+  =4\cos^3\theta-3\cos\theta.
+\]
+\end{solution}
+
+\begin{example}
+求 $\cos\theta+\cos2\theta+\cdots+\cos n\theta$（$\theta\neq2k\pi$）。
+\end{example}
+\begin{solution}
+令 $q=e^{i\theta}$，则 $\cos k\theta=\operatorname{Re}q^k$，于是
+\[
+  S=\sum_{k=1}^{n}q^k=\frac{q(1-q^n)}{1-q}
+  =\frac{e^{i\theta}(1-e^{in\theta})}{1-e^{i\theta}}
+  =e^{i\frac{(n+1)\theta}{2}}\cdot\frac{\sin\frac{n\theta}{2}}{\sin\frac{\theta}{2}}.
+\]
+取实部即得
+\[
+  \cos\theta+\cos2\theta+\cdots+\cos n\theta
+  =\frac{\sin\frac{n\theta}{2}}{\sin\frac{\theta}{2}}\cos\frac{(n+1)\theta}{2}.
+\]
+实数域里要凑 $\sin\frac{\theta}{2}$ 裂项，技巧性强；复数域里只是公比为 $q=e^{i\theta}$ 的等比数列求和。
+\end{solution}
+
+\begin{conccard}[一级]{考纲安全边界：复数法用于选填秒杀，解答题须还原为实数格式}{选择填空快速求值、验算；忘记公式时现场推导；快速判断符号}{在解答题中直接写 $e^{i\theta}$、$i$ 的推导过程而跳过实数三角变换步骤，造成阅卷扣分}
+高考解答题默认在实数域 $\mathbb{R}$ 内评分。复数法与欧拉公式的正确用法是：
+选填小题秒杀、快速验算、忘记公式时现场推导。
+解答题书写必须还原为实数三角变换格式（和差倍半公式、正弦定理、余弦定理的标准步骤），
+不能把 $e^{i\theta}$ 与 $i$ 直接写进解答题过程。
+\end{conccard}
+
+\begin{commonerror}{指数展开时丢符号：忘了 $i^2=-1$}
+用 $e^{i(\alpha+\beta)}$ 展开时，交叉项来自 $i\sin\alpha\cdot i\sin\beta=i^2\sin\alpha\sin\beta=-\sin\alpha\sin\beta$。
+若忘记 $i^2=-1$，就会把实部写成 $\cos\alpha\cos\beta+\sin\alpha\sin\beta$，得到错误的「和角公式」。
+记住：\key{每出现一个 $i^2$ 就要换成 $-1$}，符号自然正确。
+\end{commonerror}
+
+\begin{method}
+母公式引擎使用流程（复数法三步）：
+\begin{enumerate}
+  \item \key{翻译}：把三角式写成 $e^{i\theta}$ 的指数形式（$\cos\theta=\frac{e^{i\theta}+e^{-i\theta}}2$，$\sin\theta=\frac{e^{i\theta}-e^{-i\theta}}{2i}$）；
+  \item \key{指数运算}：用 $e^{i(\alpha+\beta)}=e^{i\alpha}e^{i\beta}$、棣莫弗定理、等比数列求和等纯代数工具计算；
+  \item \key{取实虚部还原}：需要余弦取实部，需要正弦取虚部，最后写回实数三角形式。
+\end{enumerate}
+\end{method}
+
+\subsection{解三角形与边角互化}
+
+\key{探究五：正余弦定理——把三角形放进外接圆}
+正弦定理：
+\[
+  \frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}=2R,
+\]
+其中 $R$ 是 $\triangle ABC$ 外接圆半径。几何意义：作外接圆，由圆周角定理得 $a=2R\sin A$，其余同理。
+余弦定理：
+\[
+  a^2=b^2+c^2-2bc\cos A
+  \iff \cos A=\frac{b^2+c^2-a^2}{2bc}.
+\]
+面积公式：
+\[
+  S=\frac12bc\sin A=\frac12ca\sin B=\frac12ab\sin C=\frac{abc}{4R}.
+\]
+
+\key{边角互化的选择标准。}
+\begin{itemize}
+  \item 关于 $a,b,c$（或 $\sin A,\sin B,\sin C$）的\key{一次齐次式} $\to$ 用正弦定理，把边化角或把角化边；
+  \item 关于 $a^2,b^2,c^2$（或 $\sin^2$）的\key{二次齐次式} $\to$ 用余弦定理。
+\end{itemize}
+
+\begin{example}
+在 $\triangle ABC$ 中，已知 $a=2b\cos C$，判断三角形的形状。
+\end{example}
+\begin{solution}
+由正弦定理把边化角：$\sin A=2\sin B\cos C$。
+又 $A=\pi-(B+C)$，故 $\sin A=\sin(B+C)=\sin B\cos C+\cos B\sin C$，于是
+\[
+  \sin B\cos C+\cos B\sin C=2\sin B\cos C
+  \implies \cos B\sin C-\sin B\cos C=0
+  \implies \sin(C-B)=0.
+\]
+因为 $B,C\in(0,\pi)$，所以 $C-B=0$，即 $B=C$。故三角形为等腰三角形。
+（一次齐次式，选正弦定理。）
+\end{solution}
+
+\begin{example}
+在 $\triangle ABC$ 中，已知 $a^2=b^2+c^2-bc$，求角 $A$。
+\end{example}
+\begin{solution}
+与余弦定理 $a^2=b^2+c^2-2bc\cos A$ 对比，得 $2\cos A=1$，即 $\cos A=\frac12$。
+又 $A\in(0,\pi)$，故 $A=\dfrac{\pi}{3}$（$60^\circ$）。
+（二次齐次式，选余弦定理。）
+\end{solution}
+
+\key{钝角三角形的隐藏定义域。}
+当题目给出「钝角三角形」或隐含某角为钝角时，角的范围被额外压缩：
+钝角 $\gamma\in\left(\dfrac{\pi}{2},\pi\right)$，两个锐角满足 $\alpha+\beta<\dfrac{\pi}{2}$。
+用余弦定理处理时，$\cos\gamma<0$ 给出边的平方约束，而三角形存在条件给出另一侧约束，两者共同构成隐藏定义域。
+
+\begin{example}
+在 $\triangle ABC$ 中，已知 $a=2$，$b=3$，且 $C$ 为钝角，求边 $c$ 的取值范围。
+\end{example}
+\begin{solution}
+由余弦定理
+\[
+  \cos C=\frac{a^2+b^2-c^2}{2ab}=\frac{13-c^2}{12}.
+\]
+$C$ 为钝角 $\iff \cos C<0\iff c^2>13\iff c>\sqrt{13}$。
+同时三角形存在要求 $c<a+b=5$（且 $c>|b-a|=1$，已被 $c>\sqrt{13}$ 包含）。
+故 $c\in(\sqrt{13},5)$。
+若只写 $c^2>13$，就漏掉了三角形存在给出的上界 $c<5$——这正是「钝角三角形」隐藏的定义域。
+\end{solution}
+
+\begin{conccard}[二级]{边角互化：一次齐次用正弦，二次齐次用余弦}{解三角形中的求值、求角、判断形状、求范围}{齐次次数判断错误；用正弦定理求角时忽略两解；忽略钝角三角形对边角范围的额外约束}
+正弦定理 $\frac{a}{\sin A}=2R$ 把边与角的正弦互相转化，适合一次齐次式；
+余弦定理 $a^2=b^2+c^2-2bc\cos A$ 把三边与一角联系起来，适合二次齐次式。
+涉及「钝角三角形」时，必须同时写出 $\cos\gamma<0$ 与三角形存在条件，得到完整的定义域。
+\end{conccard}
+
+\begin{commonerror}{解三角形忽略隐藏定义域}
+两类常见失误：
+\begin{itemize}
+  \item 用正弦定理由 $\sin B=\frac{b\sin A}{a}$ 求角时，只取锐角解，漏掉钝角解；
+  \item 题目说「钝角三角形」却只列 $\cos\gamma<0$，漏掉三角形存在条件（两边之和大于第三边）。
+\end{itemize}
+例如由 $a=2,b=3$ 且 $C$ 为钝角求 $c$ 时，只写 $c>\sqrt{13}$ 会漏掉 $c<5$。
+正确做法是把「角的范围」与「三角形存在条件」同时列出，求交集。
+\end{commonerror}
+
+\begin{summary}
+本章以「乘以 $e^{i\beta}=$ 逆时针旋转 $\beta$」为唯一母公理，把三角函数从零散公式还原为同一个旋转群的三种语言：
+数系扩张 $\mathbb{N}\to\mathbb{Z}\to\mathbb{Q}\to\mathbb{R}\to\mathbb{C}$ 让 $i^2=-1$（转 $90^\circ$ 两次等于掉头）成为二维复平面的入场券；
+单位复数 $z(\theta)=\cos\theta+i\sin\theta$ 满足 $z(\alpha)z(\beta)=z(\alpha+\beta)$ 且 $z(0)=1$，故必为指数函数；
+由切线速度 $(e^{k\theta})'\big|_{\theta=0}=k$ 与 $z'(0)=i$ 锁定 $k=i$，得到欧拉公式 $e^{i\theta}=\cos\theta+i\sin\theta$ 与 $e^{i\pi}+1=0$；
+再用 $e^{i(\alpha+\beta)}$ 展开、棣莫弗定理与 $\cos\theta=\frac{e^{i\theta}+e^{-i\theta}}2$、$\sin\theta=\frac{e^{i\theta}-e^{-i\theta}}{2i}$，
+一次性长出两角和差、二倍角三倍角、诱导公式与和差化积／积化和差。
+解三角形部分用正弦定理（外接圆半径 $R$）、余弦定理与面积公式，按「一次齐次用正弦、二次齐次用余弦」做边角互化，并警惕钝角三角形的隐藏定义域。
+考纲边界：复数法用于选填秒杀与验算，解答题必须还原为实数三角变换格式。
+\end{summary}
+
+\end{explore}
+
+\begin{inclasstest}
+\begin{enumerate}
+  \item 计算 $i\cdot(1+i)$，并说明它在复平面上表示怎样的旋转与伸缩；\level{易}
+  \item 用 $e^{i(\alpha+\beta)}=e^{i\alpha}e^{i\beta}$ 展开并对比实部与虚部，写出 $\cos(\alpha-\beta)$ 与 $\sin(\alpha-\beta)$；\level{中}
+  \item 用棣莫弗定理把 $\cos3\theta$ 用 $\cos\theta$ 表示；\level{中}
+  \item 在 $\triangle ABC$ 中，$a=2$，$b=3$，$C=120^\circ$，求边 $c$ 与面积 $S$。\level{中}
+\end{enumerate}
+\end{inclasstest}
+
+\begin{afterclass}
+\subsection*{基础巩固}
+\begin{enumerate}
+  \item 计算 $i^3$、$i^4$ 与 $(1+i)^2$，并说出各自的几何意义；
+  \item 由 $e^{i\theta}=\cos\theta+i\sin\theta$ 解出 $\cos\theta,\sin\theta$ 的指数表达式，并验证 $\cos^2\theta+\sin^2\theta=1$。
+\end{enumerate}
+
+\subsection*{进阶提升}
+\begin{enumerate}
+  \item 用 $i=e^{i\pi/2}$ 推导 $\cos\left(\theta-\dfrac{\pi}{2}\right)$ 与 $\sin\left(\theta-\dfrac{\pi}{2}\right)$；
+  \item 在 $\triangle ABC$ 中，$a=2$，$b=3$，$c=4$，判断三角形的形状并求面积。
+\end{enumerate}
+
+\subsection*{拓展探究}
+\begin{enumerate}
+  \item 用复数等比数列求 $\cos\theta+\cos2\theta+\cdots+\cos n\theta$（$\theta\neq2k\pi$），写出结果并说明它为什么只是「取实部」。
+\end{enumerate}
+
+\subsection*{教师版答案}
+\begin{solution}
+\textbf{基础 1：}$i^3=i^2\cdot i=-i$（逆时针转 $270^\circ$）；$i^4=(i^2)^2=1$（转 $360^\circ$ 回到原位）；
+$(1+i)^2=1+2i+i^2=2i$（模由 $\sqrt2$ 变为 $2$，辐角由 $45^\circ$ 变为 $90^\circ$）。
+\end{solution}
+\begin{solution}
+\textbf{基础 2：}由 $e^{i\theta}=\cos\theta+i\sin\theta$、$e^{-i\theta}=\cos\theta-i\sin\theta$ 解得
+\[
+  \cos\theta=\frac{e^{i\theta}+e^{-i\theta}}{2},\qquad
+  \sin\theta=\frac{e^{i\theta}-e^{-i\theta}}{2i}.
+\]
+于是
+\[
+  \cos^2\theta+\sin^2\theta
+  =\frac{(e^{i\theta}+e^{-i\theta})^2}{4}+\frac{(e^{i\theta}-e^{-i\theta})^2}{(2i)^2}
+  =\frac{e^{2i\theta}+2+e^{-2i\theta}-e^{2i\theta}+2-e^{-2i\theta}}{4}=1.
+\]
+\end{solution}
+\begin{solution}
+\textbf{进阶 1：}乘以 $-i=e^{-i\pi/2}$（顺时针转 $90^\circ$）：
+\[
+  (\cos\theta+i\sin\theta)(-i)=\sin\theta-i\cos\theta,
+\]
+对比实虚部得
+\[
+  \cos\left(\theta-\frac{\pi}{2}\right)=\sin\theta,\qquad
+  \sin\left(\theta-\frac{\pi}{2}\right)=-\cos\theta.
+\]
+\end{solution}
+\begin{solution}
+\textbf{进阶 2：}最大边为 $c=4$，
+\[
+  \cos C=\frac{a^2+b^2-c^2}{2ab}=\frac{4+9-16}{12}=-\frac14<0,
+\]
+故 $C$ 为钝角，三角形是钝角三角形。
+\[
+  \sin C=\sqrt{1-\frac1{16}}=\frac{\sqrt{15}}4,\qquad
+  S=\frac12ab\sin C=\frac12\cdot2\cdot3\cdot\frac{\sqrt{15}}4=\frac{3\sqrt{15}}4.
+\]
+\end{solution}
+\begin{solution}
+\textbf{拓展：}令 $q=e^{i\theta}$，则
+\[
+  \sum_{k=1}^{n}q^k=\frac{q(1-q^n)}{1-q}
+  =\frac{e^{i\theta}(1-e^{in\theta})}{1-e^{i\theta}}
+  =e^{i\frac{(n+1)\theta}{2}}\cdot\frac{\sin\frac{n\theta}{2}}{\sin\frac{\theta}{2}}.
+\]
+取实部得
+\[
+  \cos\theta+\cos2\theta+\cdots+\cos n\theta
+  =\frac{\sin\frac{n\theta}{2}}{\sin\frac{\theta}{2}}\cos\frac{(n+1)\theta}{2}.
+\]
+因为 $\cos k\theta=\operatorname{Re}(e^{ik\theta})$，所以它只是等比数列求和后「取实部」。
+\end{solution}
+\reading{拓展阅读 08}{复数与三角的大一统}
+\end{afterclass}

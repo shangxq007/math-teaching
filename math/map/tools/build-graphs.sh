@@ -4,7 +4,7 @@
 set -e
 cd "$(dirname "$0")/.."
 mkdir -p figures
-for f in knowledge flow-inequality flow-condition flow-extreme; do
+for f in knowledge flow-inequality flow-condition flow-extreme flow-exp-log flow-trig; do
   dot -Tpdf "figures-src/$f.dot" -o "figures/$f.pdf"
   echo "wrote figures/$f.pdf"
 done
