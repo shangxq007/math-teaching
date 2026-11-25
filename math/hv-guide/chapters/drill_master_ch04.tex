@@ -1,0 +1,316 @@
+% ==========================================================
+%  第 4 章 drill：结构雷达闪电战 + 五问连环母题
+% ------------------------------------------------------------
+%  纯模块化片段：不含 documentclass / document；
+%  编译入口：_check_ch04.tex（preamble + versions + 本文件）。
+%  只使用 versions.tex 与 common/ 已提供的环境（warmupbox、
+%  advancedonly、\tk 等），不新增任何 \newcommand / \newenvironment。
+%  数值核验：母题二的 Frégier 定点 (2/7,0) 已用 sympy 符号验证
+%  （对多个 k_PA 及 495 组随机椭圆 / 随机点均成立，见工作记录）。
+% ==========================================================
+
+% ---------------------------------------------------------
+%  第一部分：五分钟结构雷达闪电战
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五分钟结构雷达闪电战：只练核心一步变形}
+规则：每题\textbf{只写关键一步}（不是解完整题）。先读「雷达触发」，在脑子里把这一步放回整条链里，再动笔；答案处以下划线留白（学生版显示等宽下划线，教师版显红）。
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+\item 椭圆 $\dfrac{x^2}{4}+\dfrac{y^2}{3}=1$，$P(0,\sqrt3)$，$PA\perp PB$。设 $AB:y=kx+m$，$A(x_1,y_1),B(x_2,y_2)$。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}垂直翻译成斜率积 $-1$；分子展开后只会剩下 $x_1x_2$ 与 $x_1+x_2$，正好交给韦达整体代入。\\
+由韦达写出 $k_{PA}\cdot k_{PB}=-1$ 代入后关于 $m$ 的方程：\tk{7m^2-6\sqrt3\,m-3=0}。
+
+\item 作平移 $x'=x,\ y'=y-\sqrt3$，写出椭圆在新坐标系中的方程。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}常数项就是原方程在 $P$ 处的取值；$P$ 在椭圆上，所以常数项应当消失，只剩二次项加一次项。\\
+答案：\tk{3x'^2+4y'^2+8\sqrt3\,y'=0}。
+
+\item 设动直线 $m'x'+n'y'=1$，把上式的一次项 $8\sqrt3\,y'$ 乘 $(m'x'+n'y')$ 作齐次化。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}目标是把式子补成二次齐次式，这样才能同除 $x'^2$、变成斜率的一元二次方程。\\
+答案：\tk{3x'^2+8\sqrt3\,m'x'y'+(4+8\sqrt3\,n')y'^2=0}。
+
+\item 两边同除 $x'^2$，写出关于斜率 $k=\dfrac{y'}{x'}$ 的二次方程，并直接写出两根之积 $k_1k_2$。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}齐次二次方程的两根恰是 $PA,PB$ 的斜率；垂直就是两根之积为 $-1$，根本不需要求根。\\
+答案：\tk{(4+8\sqrt3\,n')k^2+8\sqrt3\,m'k+3=0,\quad k_1k_2=\dfrac{3}{4+8\sqrt3\,n'}}。
+
+\item 单独检验斜率不存在的情形：若弦 $AB$ 竖直（设为 $x=t$），能否有 $PA\perp PB$？\\
+{\small\bfseries\textcolor{third}{雷达触发：}}竖直弦与椭圆的两交点纵坐标互为相反数，即 $y_1+y_2=0$，斜率积可以直接硬算，不必设 $k$。\\
+答案：\tk{k_{PA}\cdot k_{PB}=\dfrac34\neq -1}，故不存在这样的竖直弦。
+
+\item 写出椭圆 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$ 上任意点 $P(x_0,y_0)$ 所对应的 Frégier 点 $Q$（所有满足 $PA\perp PB$ 的弦 $AB$ 恒过的定点）的坐标公式。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}把特例 $a^2=4,b^2=3,P=(0,\sqrt3)$ 的结果按比例还原：分母必是 $a^2+b^2$，分子带因子 $a^2-b^2$。\\
+答案：\tk{Q\left(\dfrac{x_0(a^2-b^2)}{a^2+b^2},\ \dfrac{y_0(b^2-a^2)}{a^2+b^2}\right)}。
+\end{enumerate}
+\end{warmupbox}
+
+% ---------------------------------------------------------
+%  第二部分：解答即笔记 · 五问连环母题
+% ---------------------------------------------------------
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题一：上顶点发出的垂弦},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+已知椭圆 $E:\dfrac{x^2}{4}+\dfrac{y^2}{3}=1$ 的上顶点 $P(0,\sqrt3)$，$PA\perp PB$，且 $k_{PA}=1$。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：先把 $k_{PA}=1$ 用到底——写出 $PA$ 的方程并求出 $A$；由对称性写出 $B$，再观察直线 $AB$ 的位置。
+
+$PA:y-\sqrt3=x$，代入椭圆得
+\[
+\frac{x^2}{4}+\frac{(x+\sqrt3)^2}{3}=1
+\;\Longrightarrow\;7x^2+8\sqrt3\,x=0,
+\]
+除 $P$ 外的交点为 $A\left(\tk{-\dfrac{8\sqrt3}{7}},\ \tk{-\dfrac{\sqrt3}{7}}\right)$；$PB$ 的斜率为 $-1$，同理得 $B\left(\tk{\dfrac{8\sqrt3}{7}},\ \tk{-\dfrac{\sqrt3}{7}}\right)$。于是 $AB$ 是水平线 $\tk{y=-\dfrac{\sqrt3}{7}}$，它经过定点 $\tk{Q\left(0,-\dfrac{\sqrt3}{7}\right)}$（第 (2)(3) 问将说明：为什么任意垂直弦都过这一点）。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[gray!22] (-2.5,-2) grid (2.5,2);
+  \draw[->, gray] (-2.6,0)--(2.7,0) node[below right] {$x$};
+  \draw[->, gray] (0,-2.1)--(0,2.2) node[above left] {$y$};
+  \foreach \x in {-2,-1,1,2}{ \draw (\x,0.06)--(\x,-0.06) node[below=1pt] {\scriptsize \x}; }
+  \foreach \y in {-1,1}{ \draw (0.06,\y)--(-0.06,\y) node[left=1pt] {\scriptsize \y}; }
+  \draw[main!70!black, very thick] (0,0) ellipse (2 and 1.732);
+  \fill[main] (0,1.732) circle (1.6pt) node[above right] {$P(0,\sqrt3)$};
+  \ifteacher
+    \draw[second, thick, dashed] (0,1.732)--(-1.98,-0.247) node[midway,above left] {\scriptsize $k_{PA}=1$};
+    \draw[second, thick, dashed] (0,1.732)--(1.98,-0.247) node[midway,above right] {\scriptsize $k_{PB}=-1$};
+    \draw[second, very thick] (-1.98,-0.247)--(1.98,-0.247);
+    \fill[second] (-1.98,-0.247) circle (1.6pt) node[above left] {$A$};
+    \fill[second] (1.98,-0.247) circle (1.6pt) node[above right] {$B$};
+    \fill[second] (0,-0.247) circle (1.6pt) node[right] {$Q$};
+  \else
+    \node[third] at (0,-1.55) {描出 $A,B$ 与弦 $AB$，观察它经过的定点 $Q$};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{考纲满分通法}：设 $AB:y=kx+m\ (\tk{m\ne\sqrt3})$，按「设线—联立—韦达—回代」写全。动机：垂直条件只认坐标差，联立后用韦达可把两个交点的信息压成两个对称式。
+
+代入椭圆 $3x^2+4y^2=12$：
+\[
+(3+4k^2)x^2+8kmx+4m^2-12=0 .
+\]
+判别式（提前算简，回代时好用）：
+\[
+\Delta=64k^2m^2-4(3+4k^2)(4m^2-12)=\tk{48(3+4k^2-m^2)}.
+\]
+韦达：
+\[
+x_1+x_2=\tk{-\dfrac{8km}{3+4k^2}},\qquad
+x_1x_2=\tk{\dfrac{4m^2-12}{3+4k^2}}.
+\]
+因为 $y_i=kx_i+m$，垂直条件 $k_{PA}\cdot k_{PB}=-1$ 化为
+\[
+\frac{(y_1-\sqrt3)(y_2-\sqrt3)}{x_1x_2}=-1
+\;\Longrightarrow\;
+(k^2+1)x_1x_2+k(m-\sqrt3)(x_1+x_2)+(m-\sqrt3)^2=0 .
+\]
+（动机：交叉项自动凑成 $(m-\sqrt3)$，这正是把「直线不过 $P$」写成 $m\ne\sqrt3$ 的原因。）整体代入韦达并化简：
+\[
+7m^2-6\sqrt3\,m-3=0=(7m+\sqrt3)(m-\sqrt3).
+\]
+$m=\sqrt3$ 时直线过 $P$，$x_1x_2=0$，一个交点与 $P$ 重合，不是弦，故舍去；取
+\[
+\tk{m=-\dfrac{\sqrt3}{7}}.
+\]
+回代检验：$\Delta=48\left(3+4k^2-\dfrac{3}{49}\right)>0$，确有两个交点。当 $k_{PA}=1$ 时 $k=0$，回到第 (1) 问的 $A,B$。
+
+\item \textbf{高观点降维秒杀}：同一条题，用「平移原点 $+$ 齐次化」四步重解。
+
+\begin{enumerate}[label=\textcircled{\scriptsize\arabic*}, itemsep=2pt, leftmargin=2.4em]
+\item 平移 $x'=x,\ y'=y-\sqrt3$：\;$3x'^2+4y'^2+8\sqrt3\,y'=0$。（动机：常数项因 $P$ 在椭圆上而消失，曲线过新原点。）
+\item 设 $AB:m'x'+n'y'=1$，把一次项乘 $(m'x'+n'y')$ 齐次化：
+\[
+3x'^2+8\sqrt3\,m'x'y'+(4+8\sqrt3\,n')y'^2=0 .
+\]
+\item 同除 $x'^2$，令 $k=\dfrac{y'}{x'}$：$(4+8\sqrt3\,n')k^2+8\sqrt3\,m'k+3=0$，于是
+\[
+k_1k_2=\frac{3}{4+8\sqrt3\,n'} .
+\]
+\item 垂直 $\Rightarrow k_1k_2=-1\Rightarrow \tk{n'=-\dfrac{7}{8\sqrt3}}$；令 $x'=0$ 得 $y'=\dfrac1{n'}=\tk{-\dfrac{8\sqrt3}{7}}$，还原
+\[
+y=y'+\sqrt3=\tk{-\dfrac{\sqrt3}{7}},
+\]
+即定点 $Q\left(0,-\dfrac{\sqrt3}{7}\right)$。
+\end{enumerate}
+
+与第 (2) 问左右对读：
+\begin{center}\small
+\begin{tabular}{p{2.4cm}|p{5.6cm}|p{5.6cm}}
+\toprule
+ & 考纲通法（第 (2) 问） & 平移齐次化（第 (3) 问）\\
+\midrule
+思路 & 设线联立，韦达回代，解关于参数 $m$ 的方程 & 平移到 $P$，把直线「归一」为 $1$ 乘进一次项 \\
+计算量 & 一次代入 $+$ 一次因式分解，步骤多但每步熟悉 & 三行恒等变形，几乎不用韦达 \\
+何时用 & 解答题必须写满规范步骤 & 选填预判、定点证明的「秒算」侧 \\
+风险点 & 忘记 $m\ne\sqrt3$ 会增根 & 忘记检查 $x'\neq0$、直线过新原点无解 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\item \textbf{结构推广与变式}：把结论推到任意点。
+\begin{advancedonly}
+椭圆 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$ 上任意一点 $P(x_0,y_0)$，所有满足 $PA\perp PB$ 的弦 $AB$ 恒过\emph{Frégier 点}
+\[
+Q=\left(\frac{x_0(a^2-b^2)}{a^2+b^2},\ \frac{y_0(b^2-a^2)}{a^2+b^2}\right).
+\]
+推导（仍是齐次化三步）：平移到 $P$ 得
+\[
+b^2x'^2+a^2y'^2+2b^2x_0x'+2a^2y_0y'=0,
+\]
+设 $m'x'+n'y'=1$ 齐次化后同除 $x'^2$，由两根之积为 $-1$ 得
+\[
+2b^2x_0m'+2a^2y_0n'=-(a^2+b^2),
+\]
+即动直线恒过 $\bigl(\tk{-\dfrac{2b^2x_0}{a^2+b^2}},\ \tk{-\dfrac{2a^2y_0}{a^2+b^2}}\bigr)$（平移坐标），还原到原坐标即上式。
+\end{advancedonly}
+回代验算：$a^2=4,b^2=3,x_0=0,y_0=\sqrt3$ 时
+\[
+Q=\left(0,\frac{\sqrt3(3-4)}{7}\right)=\tk{\left(0,-\frac{\sqrt3}{7}\right)},
+\]
+与 (1)–(3) 完全一致；右顶点 $P(2,0)$ 时给出 $Q=\left(\dfrac27,0\right)$——这正是母题二。
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似合理」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}设 $AB:y=kx+m$，联立得 $(3+4k^2)x^2+8kmx+4m^2-12=0$，由 $k_{PA}k_{PB}=-1$ 代入韦达得 $7m^2-6\sqrt3\,m-3=0$，解得 $m=\sqrt3$ 或 $m=-\dfrac{\sqrt3}{7}$，故直线 $AB$ 恒过 $(0,\sqrt3)$ 与 $\left(0,-\dfrac{\sqrt3}{7}\right)$ 两个定点；又因为设了 $y=kx+m$，无需讨论斜率不存在。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{增根}：$m=\sqrt3$ 使直线过 $P$，此时 $x_1x_2=0$，一个交点即 $P$，$k_{PA}$ 或 $k_{PB}$ 失去意义。通法开头必须先声明参数限制，例如 $\tk{m\ne\sqrt3}$；求出的每个参数都要回代检验判别式与「两交点互异」。
+\item \textbf{竖直弦}：设 $y=kx+m$ 默认斜率存在。竖直弦 $x=t$ 要另行检验：$y_1+y_2=0,\ y_1y_2=\dfrac{3t^2-12}{4}$，故
+\[
+k_{PA}k_{PB}=\frac{y_1y_2+3}{t^2}=\frac34\ne-1,
+\]
+本例恰好无遗漏；但换一组数字就可能漏解。保险做法是改用 $\tk{x=ty+n}$，把竖直情形一并包含。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：设线先写限制 $\tk{m\ne\sqrt3}$，解出参数必回代检验；斜率不存在要么单独验证，要么改用 $\tk{x=ty+n}$。
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题二（变式）：右顶点发出的垂弦},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+同一椭圆 $E:\dfrac{x^2}{4}+\dfrac{y^2}{3}=1$，把 $P$ 换成右顶点 $(2,0)$，仍有 $PA\perp PB$；求弦 $AB$ 恒过的定点。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：取 $k_{PA}=1$ 试一条。$PA:y=x-2$，代入椭圆：
+\[
+\frac{x^2}{4}+\frac{(x-2)^2}{3}=1
+\;\Longrightarrow\;7x^2-16x+4=0,
+\]
+除 $P$ 外 $x=\tk{\dfrac27}$，从而 $A\left(\dfrac27,\tk{-\dfrac{12}{7}}\right)$；$PB$ 斜率 $-1$ 给出 $B\left(\dfrac27,\tk{\dfrac{12}{7}}\right)$。此弦是竖直线 $\tk{x=\dfrac27}$，经过定点 $\tk{Q\left(\dfrac27,0\right)}$。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[gray!22] (-2.5,-2) grid (2.5,2);
+  \draw[->, gray] (-2.6,0)--(2.7,0) node[below right] {$x$};
+  \draw[->, gray] (0,-2.1)--(0,2.2) node[above left] {$y$};
+  \foreach \x in {-2,-1,1,2}{ \draw (\x,0.06)--(\x,-0.06) node[below=1pt] {\scriptsize \x}; }
+  \foreach \y in {-1,1}{ \draw (0.06,\y)--(-0.06,\y) node[left=1pt] {\scriptsize \y}; }
+  \draw[main!70!black, very thick] (0,0) ellipse (2 and 1.732);
+  \fill[main] (2,0) circle (1.6pt) node[below right] {$P(2,0)$};
+  \ifteacher
+    \draw[second, thick, dashed] (2,0)--(0.2857,-1.714);
+    \draw[second, thick, dashed] (2,0)--(0.2857,1.714);
+    \draw[second, very thick] (0.2857,-1.714)--(0.2857,1.714);
+    \fill[second] (0.2857,-1.714) circle (1.6pt) node[below right] {$A$};
+    \fill[second] (0.2857,1.714) circle (1.6pt) node[above right] {$B$};
+    \fill[second] (0.2857,0) circle (1.6pt) node[above right] {$Q$};
+  \else
+    \node[third] at (0,-1.55) {描出这条弦并猜想：改变斜率，它恒过哪个定点？};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{考纲满分通法}：仍设 $AB:y=kx+m$，联立同前。垂直条件（注意 $P(2,0)$）为
+\[
+(x_1-2)(x_2-2)+y_1y_2=0
+\;\Longrightarrow\;
+(1+k^2)x_1x_2+(km-2)(x_1+x_2)+m^2+4=0 .
+\]
+（动机：把 $y_i=kx_i+m$ 代入后，含 $x_1+x_2$ 的项自动合并成 $(km-2)$。）韦达代入并化简：
+\[
+7m^2+16km+4k^2=0=(7m+2k)(m+2k).
+\]
+舍去 $\tk{m=-2k}$（此时直线 $y=k(x-2)$ 过 $P$，弦退化），得
+\[
+\tk{m=-\dfrac{2k}{7}},
+\qquad\text{于是 } AB:y=k\left(x-\frac27\right)\text{ 恒过定点 }\left(\frac27,0\right).
+\]
+竖直情形检验：$AB:x=c$ 时 $k_{PA}k_{PB}=-\dfrac{3(2+c)}{4(2-c)}$，令其 $=-1$ 得 $c=\dfrac27$，与上面一致，无遗漏。
+
+\item \textbf{高观点降维秒杀}：公式秒算，再与第 (2) 问对读。
+
+法一（Frégier 公式，两行）：
+\[
+Q=\left(\frac{2(4-3)}{4+3},\ 0\right)=\tk{\left(\frac27,0\right)}.
+\]
+法二（齐次化，三行）：平移到 $(2,0)$ 得
+\[
+3x'^2+4y'^2+12x'=0 ;
+\]
+设 $m'x'+n'y'=1$ 齐次化并同除 $x'^2$：
+\[
+4k^2+12n'k+(3+12m')=0,\qquad
+k_1k_2=\frac{3+12m'}{4}=-1\;\Longrightarrow\; m'=-\frac{7}{12}.
+\]
+令 $y'=0$ 得 $x'=-\dfrac{12}{7}$，还原 $x=x'+2=\dfrac27$。对读：通法要解含两个参数的二次方程并舍根；公式直接代入坐标，齐次化只需一次韦达（两根之积）。
+
+\item \textbf{结构推广与变式}：放进一般椭圆的框架。
+\begin{advancedonly}
+一般椭圆 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$ 上任意点 $P(x_0,y_0)$ 的 Frégier 点为
+\[
+Q=\left(\frac{x_0(a^2-b^2)}{a^2+b^2},\ \frac{y_0(b^2-a^2)}{a^2+b^2}\right)
+\]
+（推导见母题一第 (4) 问）。回代检验：$P(2,0)$ 得 $Q=\left(\dfrac27,0\right)$；$P(0,\sqrt3)$ 得 $Q=\left(0,-\dfrac{\sqrt3}{7}\right)$。特例观察：圆（$a=b$）时 $Q=(0,0)$ 即圆心——「直径所对的圆周角是直角」正是 Frégier 定理的特例。
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断错解并填空。
+
+{\bfseries\color{red!70!black}错解：}设 $AB:y=kx+m$，由垂直条件得 $7m^2+16km+4k^2=0$，故 $m=-2k$ 或 $m=-\dfrac{2k}{7}$，于是 $AB$ 恒过 $(2,0)$ 和 $\left(\dfrac27,0\right)$ 两个定点；又因为求的是「定点」，无需再检验。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item $m=-2k$ 即 $y=k(x-2)$，直线过 $P$，弦退化为点 $P$，必须舍去；
+\item 「恒过定点」必须覆盖参数的\textbf{所有}取值：竖直弦 $x=c$ 单独算得 $c=\dfrac27$，恰为同一点，才敢下结论；
+\item 若改用 $\tk{x=ty+n}$ 设线，竖直与非竖直两类可合并处理，减少一次讨论。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：含参直线先排除过已知点的情形（$\tk{m=-2k}$ 必舍），再用 $\tk{x=ty+n}$ 或单独讨论把竖直情形补齐。
+\else
+{\small（先自己找出漏洞，再对照教师版。）}
+\fi
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{notezone}{章末归档：五问与笔记功能 + 两种解法对照}
+\textbf{五问与笔记}：(1) 具象感知与画图 $\to$ 概念引入笔记；(2) 考纲满分通法 $\to$ 规范书写笔记；(3) 高观点降维秒杀 $\to$ 大招与二级结论笔记；(4) 结构推广与变式 $\to$ 公式族笔记；(5) 易错边界排雷 $\to$ 错题本笔记。
+
+\textbf{通法与齐次化对照}：通法胜在「步步可得分」，齐次化胜在「三行出定点」。考场上先用齐次化（或 Frégier 公式）预判答案，再用通法把步骤写满。
+
+\textbf{Frégier 点速记}：$Q=\left(\dfrac{x_0(a^2-b^2)}{a^2+b^2},\ \dfrac{y_0(b^2-a^2)}{a^2+b^2}\right)$。上顶点 $P(0,\sqrt3)$ 给 $\left(0,-\dfrac{\sqrt3}{7}\right)$；右顶点 $P(2,0)$ 给 $\left(\dfrac27,0\right)$；圆的 Frégier 点是圆心。
+\end{notezone}

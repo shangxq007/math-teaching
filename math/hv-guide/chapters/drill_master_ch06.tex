@@ -1,0 +1,288 @@
+% ==========================================================
+%  第 6 章 母题演练：切线放缩与隐零点（drill 模块）
+% ------------------------------------------------------------
+%  说明：本文件为纯正文片段（无导言区、无文档级命令），
+%       由 _check_ch06.tex 单独编译验证，后续可挂载进 main_body。
+%       版本感知组件全部来自 versions.tex：
+%       \tk（教师红答案 / 学生留白）、\ifteacher（教师红笔）、
+%       advancedonly（薄弱生版隐藏）、warmupbox / methodbox 盒子。
+%       母题二载体取 f(x)=e^x-3x-1 的理由：
+%         f(0)=0 给出精确锚点；正零点 x0∈(1,2) 无法初等形式解出，
+%         而 f'(x)=e^x-3 使单调性与唯一性一目了然，
+%         极小值 f(ln3)=2-3ln3<0 干净可用。
+% ==========================================================
+
+% ------------------------------------------------------------
+%  第一部分：五分钟结构雷达闪电战
+% ------------------------------------------------------------
+
+\begin{warmupbox}{五分钟结构雷达闪电战：只练核心一步变形}
+说明：以下六题\textbf{每题只练一步}核心变形。先在留白处写出答案，再对照「雷达」提示自检；六题全对，即通过本章结构雷达的最低门槛。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{「1 的代换」}：已知 $x+2y=1$，把 $\left(\dfrac1x+\dfrac2y\right)$ 乘以 $(x+2y)$ 展开，得 \tk{5+\dfrac{2y}{x}+\dfrac{2x}{y}}。\\
+{\small\textcolor{third}{雷达：看到「和等于 1」，先把它当 1 乘进分式，升次配平。}}
+
+\item \textbf{次数配平}：已知 $\dfrac{x^2}{2}+y^2=1$，用约束构造零次比值 $\dfrac{(x+y)^2}{\dfrac{x^2}{2}+y^2}$，令 $t=\dfrac xy$ 后化为 \tk{\dfrac{(t+1)^2}{\dfrac{t^2}{2}+1}}（即 $\dfrac{2(t+1)^2}{t^2+2}$）。\\
+{\small\textcolor{third}{雷达：分子分母同为二次，同除 $y^2$ 即降为一元 $t$。}}
+
+\item \textbf{切线放缩来源}：由 $e^t\ge t+1$（对一切实数 $t$）推出 $\ln x\le x-1$，关键代换是 \tk{t=\ln x}（$x>0$），于是 $x=e^t\ge t+1=\ln x+1$，移项即得。\\
+{\small\textcolor{third}{雷达：证关于 $\ln x$ 的式子，就设 $t=\ln x$，把对数「翻译」成直线。}}
+
+\item \textbf{放大数列}：用 $e^x\ge x+1$ 把 $\left(1+\dfrac1n\right)^n$ 与 $e$ 比较，关键缩放一步是 \tk{1+\dfrac1n\le e^{1/n}}，两边 $n$ 次方得 $\left(1+\dfrac1n\right)^n\le e$，且等号取不到。\\
+{\small\textcolor{third}{雷达：见 $1+\dfrac1n$ 就想 $\dfrac1n$ 处的切线不等式 $e^{1/n}\ge1+\dfrac1n$。}}
+
+\item \textbf{隐零点代换}：$f(x)=x e^x-1$ 的零点 $x_0$ 满足 \tk{x_0 e^{x_0}=1}；两边取对数（注意 $x_0>0$）得 \tk{\ln x_0+x_0=0}。\\
+{\small\textcolor{third}{雷达：零点满足的等式就是代换关系，取对数即可「拆开」乘积。}}
+
+\item \textbf{判别式一步}：$x^2+2kx+4>0$ 恒成立，需 $\Delta=(2k)^2-16<0$，即 \tk{-2<k<2}。\\
+{\small\textcolor{third}{雷达：开口向上恒正 $\iff$ 与 $x$ 轴无交点 $\iff \Delta<0$（严格大于，取不到等号）。}}
+\end{enumerate}
+\end{warmupbox}
+
+% ------------------------------------------------------------
+%  第二部分：两道五问连环母题
+% ------------------------------------------------------------
+
+\begin{warmupbox}{五问连环母题怎么用（先看这里）}
+本部分两道大题，每道\textbf{严格五问}：(1) 具象感知与画图（教师版附红笔批注）；(2) 考纲满分通法（用 \texttt{\textbackslash tk} 搭骨架）；(3) 高观点降维秒杀（与通法对读）；(4) 结构推广（完整版渲染，薄弱生版自动隐藏）；(5) 易错边界排雷（诊断错解 + 防扣分铁律）。\vchoice{做完一道，「切线放缩」或「隐零点」的完整解题说明书就长在你的留白处。}{基础较弱的同学先落实第 (1)(2)(5) 问；第 (3)(4) 问留给学有余力者。}
+\end{warmupbox}
+
+% ========== 母题一：切线放缩 e^x >= x+1 ==========
+
+\begin{methodbox}{五问连环母题 1：切线放缩 $e^x\ge x+1$——一题证尽「以直代曲」}
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+
+\item \textbf{具象感知与画图}：在同一坐标系中作 $y=e^x$ 与 $y=x+1$，计算 $x=-1,0,1$ 处的函数值差 $e^x-(x+1)$，提出猜想。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, scale=1.0]
+  \draw[->, gray] (-2.3,0)--(2.15,0) node[below right] {$x$};
+  \draw[->, gray] (0,-1.35)--(0,5.25) node[above left] {$y$};
+  \foreach \x in {-2,-1,1} \draw (\x,0.07)--(\x,-0.07) node[below] {$\x$};
+  \draw (0.07,1)--(-0.07,1) node[left] {$1$};
+  \node[below left] at (0,0) {$O$};
+  \ifteacher
+    \fill[main!10] plot[domain=-2:1.6, samples=60] (\x, {exp(\x)})
+      -- plot[domain=1.6:-2, samples=60] (\x, {\x+1}) -- cycle;
+    \draw[second, very thick, domain=-2:1.6, smooth, samples=80] plot (\x, {exp(\x)});
+    \draw[main!70!black, thick, domain=-2:1.6] plot (\x, {\x+1});
+    \draw[gray, dashed] (-1,0)--(-1, {exp(-1)});
+    \draw[gray, dashed] (1,2)--(1, {exp(1)});
+    \fill[second] (-1, {exp(-1)}) circle (1.5pt);
+    \fill[second] (0,1) circle (1.5pt);
+    \fill[second] (1, {exp(1)}) circle (1.5pt);
+    \fill[main!70!black] (-1,0) circle (1.5pt);
+    \fill[main!70!black] (1,2) circle (1.5pt);
+    \node[above right] at (0,1) {$(0,1)$};
+    \node[second, anchor=north west] at (-2.25,5.2) {$y=e^x$};
+    \node[main!70!black, anchor=north west] at (-2.25,4.72) {$y=x+1$};
+  \else
+    \node[gray!60] at (-0.1,2.4) {请描点作出 $y=e^x$ 与 $y=x+1$};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+动机：先用数值「看见」大小关系，猜想才有着力点；两线的公共点暗示了取等位置。
+
+\ifteacher
+{\small\textcolor{second}{红笔：$e^{-1}-0=\dfrac1e\approx0.37>0$；$e^0-1=0$；$e-2\approx0.72>0$。猜想：$e^x\ge x+1$ 对一切实数 $x$ 成立，等号仅在 $x=0$ 取得。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：用导数严格证明 $e^x\ge x+1$，并套用证明 $\left(1+\dfrac1n\right)^n<e$。
+
+证明：设 $g(x)=\tk{e^x-x-1}$，则 $g'(x)=\tk{e^x-1}$。
+
+动机：要证的不等式形如「$A-B\ge0$」，标准动作是把差造成函数 $g$，用导数符号判决。
+
+当 $x<0$ 时 $g'(x)<0$，当 $x>0$ 时 $g'(x)>0$，故 $g$ 在 $x=0$ 处取最小值 $g(0)=\tk{0}$。于是
+\[ e^x-x-1\ge0\quad\Longrightarrow\quad e^x\ge x+1, \]
+当且仅当 $x=\tk{0}$ 取等。
+
+应用（考纲书写）：证明 $\left(1+\dfrac1n\right)^n<e$。
+
+取 $x=\dfrac1n$ 代入 $e^x\ge x+1$，得
+\[ 1+\frac1n\le e^{1/n}. \]
+动机：数列通项 $1+\dfrac1n$ 恰好是切线不等式右端的形状，代值即可「搭上」已知不等式。
+
+两边取 $n$ 次方（正数保序）得 $\left(1+\dfrac1n\right)^n\le e$；等号要求 $\dfrac1n=0$，这不可能，故
+\[ \tk{\left(1+\frac1n\right)^n<e}. \]
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：切线即下界——$y=e^x$ 是凸曲线，整条压在切线 $y=x+1$ 上方，切点 $(0,1)$ 就是全局最小点。$e^x\ge x+1$ 不是「技巧」，而是「一次求导得到的全局支撑边界」。由它\textbf{生成不等式族}：
+
+动机：一个不等式 + 一次变量代换 = 一族不等式；族中每个成员都是一个现成的放缩工具。
+
+\begin{itemize}[itemsep=2pt]
+\item 代换 $t=\ln x\ (x>0)$：$\ln x\le x-1$（等号 $x=1$）；
+\item 代换 $t=x-1$：$e^{x-1}\ge x$，即 $e^x\ge ex$（等号 $x=1$；即 $y=e^x$ 在 $(1,e)$ 处的切线，本章基础 2 已用求导证过）。
+\end{itemize}
+
+\textbf{用在同一道应用题上与通法对读}：要证 $\left(1+\dfrac1n\right)^n<e$，取族成员 $\ln x\le x-1$ 并令 $x=1+\dfrac1n$，得
+\[ \ln\!\left(1+\frac1n\right)\le\frac1n. \]
+动机：数列在指数位置，取对数就落到对数切线的不等式里——「指数侧」与「对数侧」是同一族的两面。
+
+于是 $n\ln\!\left(1+\dfrac1n\right)\le1$，即 $\left(1+\dfrac1n\right)^n\le e$；等号要求 $1+\dfrac1n=1$，不可能，故 $\tk{\left(1+\dfrac1n\right)^n<e}$。
+
+\textbf{对读结论}：通法（第 (2) 问）负责「为什么对」——造函数、求导、判号；高观点负责「怎么快」——认出切线、直接代换。考试书写用通法，审题直觉用高观点。
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：对数型切线不等式族与「多次放缩等号条件冲突」预告}。
+
+由 $\ln x\le x-1$ 继续代换，可得对数型切线族（都是「凹曲线压在切线下方」）：
+\[
+\ln x\ge1-\frac1x\ \left(x>0,\ \text{在 }\ln u\le u-1\text{ 中取 }u=\tfrac1x\right);\qquad
+\ln(1+x)\le x\ \ (x>-1,\ \text{切点 }0);
+\]
+\[
+\ln x\le \frac{x}{e}\ \ (x>0,\ \text{切点 }e).
+\]
+动机：切点不同，得到的边界不同；用之前先看清楚每一条的取等点。
+
+\textbf{等号条件冲突分析（预告）}：把 $e^x\ge x+1$（取等 $x=0$）与 $-\ln x\ge1-x$（取等 $x=1$）相加，得
+\[
+e^x-\ln x\ge (x+1)+(1-x)=2 .
+\]
+但两式的取等点 $0$ 与 $1$ 不可能同时成立，所以末尾的 $\ge$ 必须收紧为 $>$：$e^x-\ln x>2$（完整推导见本章探究四）。反过来，若两条不等式在同一点取等（如 $\ln x\le x-1$ 与 $\ln x\ge1-\dfrac1x$ 都在 $x=1$ 取等），夹逼时才允许写等号。
+
+动机：放缩链的等号是否相容，决定你落笔写 $\ge$ 还是 $>$——这是「多次放缩」与「一次放缩」的本质差别。下一问的错解则是另一种病：引理本身为假。
+\logotag{公式族}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断错解，写防扣分铁律。
+
+错解（某同学卷面）：要证 $e^x\ge x^2+x+1$，他写——
+
+「因为 $e^x\ge x+1$，且 $x+1\ge x^2+x+1$，所以 $e^x\ge x^2+x+1$。」
+
+\ifteacher
+{\small\textcolor{second}{红笔诊断：第一步 $e^x\ge x+1$ 没问题；第二步 $x+1\ge x^2+x+1\iff x^2\le0$，只在 $x=0$ 成立，并不恒成立——放缩链在此断裂。更严重的是命题本身为假：取 $x=-1$，$e^{-1}\approx0.37<1=(-1)^2+(-1)+1$。能「证出」假命题，说明途中必有一步是假的。}}
+\else
+\noteblank[5ex]
+\fi
+
+防扣分铁律：\textbf{放缩方向必须与被证式一致，且每一步都必须恒真、可传递}（只有 $A\ge B$ 与 $B\ge C$ 同时成立，才能写 $A\ge C$）；动手放缩前，先用特殊值（$x=0,1,-1$）检验命题本身的真假。
+\logotag{避坑铁律}
+
+\end{enumerate}
+\end{methodbox}
+
+% ========== 母题二：隐零点 f(x)=e^x-3x-1 ==========
+
+\begin{methodbox}{五问连环母题 2：隐零点 $f(x)=e^x-3x-1$——设而不求，整体代换}
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+
+\item \textbf{具象感知与画图}：算 $f(-1),f(0),f(1),f(2)$ 的值并列表，估计零点所在区间，再画草图。
+
+\begin{center}\footnotesize\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{c|cccc}
+$x$ & $-1$ & $0$ & $1$ & $2$ \\ \hline
+$f(x)$ & $\tk{e^{-1}+2\approx2.37}$ & $\tk{0}$ & $\tk{e-4\approx-1.28}$ & $\tk{e^2-7\approx0.39}$ \\ \hline
+符号 & $\tk{+}$ & $\tk{0}$ & $\tk{-}$ & $\tk{+}$
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, scale=1.0]
+  \draw[->, gray] (-1.75,0)--(2.95,0) node[below right] {$x$};
+  \draw[->, gray] (0,-1.9)--(0,4.2) node[above left] {$y$};
+  \foreach \x in {-1,1,2} \draw (\x,0.07)--(\x,-0.07) node[below] {$\x$};
+  \draw (0.07,1)--(-0.07,1) node[left] {$1$};
+  \draw (0.07,-1)--(-0.07,-1) node[left] {$-1$};
+  \node[below left] at (0,0) {$O$};
+  \ifteacher
+    \draw[second, very thick, domain=-1.5:2.4, smooth, samples=90] plot (\x, {exp(\x)-3*\x-1});
+    \fill[second] (0,0) circle (1.5pt) node[above right] {$(0,0)$};
+    \fill[second] (1.9,0) circle (1.5pt) node[above left] {$(x_0,0)$};
+    \fill[gray!70!black] ({ln(3)}, {2-3*ln(3)}) circle (1.5pt);
+  \else
+    \node[gray!60] at (0.5,2.4) {请描点作出 $y=e^x-3x-1$ 的示意图};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+动机：符号由正转负再转正，说明曲线两次穿过 $x$ 轴；先定位区间，后面的单调性讨论才有靶子。
+
+\ifteacher
+{\small\textcolor{second}{红笔：$f(-1)>0$，$f(0)=0$（恰为一个零点），$f(1)<0$，$f(2)>0$，故另一零点在 $(1,2)$ 内；极小值 $f(\ln3)=2-3\ln3\approx-1.30<0$。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：求导判断单调、证明零点唯一，设 $x_0$ 而不解出。
+
+$f'(x)=\tk{e^x-3}$，令 $f'(x)=0$ 得 $x=\tk{\ln3}$。
+
+动机：单调性是「零点唯一」的考纲依据；先求导，再看端点符号。
+
+当 $x<\ln3$ 时 $f'(x)<0$，当 $x>\ln3$ 时 $f'(x)>0$，故 $f$ 在 $(-\infty,\ln3)$ 上递减、在 $(\ln3,+\infty)$ 上递增，极小值
+\[ f(\ln3)=3-3\ln3-1=\tk{2-3\ln3}<0. \]
+又 $f(1)=e-4<0$，$f(2)=e^2-7>0$，且 $(1,2)\subset(\ln3,+\infty)$，$f$ 在其上递增，故在 $\tk{(1,2)}$ 内存在唯一零点，记为 $x_0$（另一零点为 $x=0$）。
+
+动机：解不出 $x_0$ 并不影响合法性——「设而不求」的底气来自单调性保证的唯一性。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：「设而不求、整体代换」——凡含 $x_0$ 的目标式，都用 $f(x_0)=0$ 提供的等量关系降幂消元。
+
+由 $f(x_0)=0$ 得代换关系
+\[ \tk{e^{x_0}=3x_0+1}\qquad(\text{等价地 }\ln(3x_0+1)=x_0). \]
+
+示范：求 $\dfrac{e^{x_0}}{x_0}$ 的取值范围。
+
+硬解 $x_0$ 办不到（$e^{x_0}=3x_0+1$ 是超越方程）。用代换：
+\[
+\frac{e^{x_0}}{x_0}=\frac{3x_0+1}{x_0}=3+\frac1{x_0}.
+\]
+动机：代换把超越结构 $e^{x_0}$ 一次性压成有理结构，剩下的只是 $x_0$ 的范围问题。
+
+由 $x_0\in(1,2)$ 得 $\dfrac1{x_0}\in\left(\dfrac12,1\right)$，故
+\[
+\frac{e^{x_0}}{x_0}\in\tk{\left(\frac72,4\right)}.
+\]
+
+\textbf{与通法对读}：第 (2) 问的单调性负责「$x_0$ 在哪、唯一吗」；本问的代换负责「含 $x_0$ 的式子怎么算」。一个给范围，一个给关系，缺一不可。
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：零点存在性的二分定位}。
+
+存在性只保证「有」，二分法进一步回答「在哪」。从 $(1,2)$ 出发，每次取中点、按 $f$ 的符号缩半：
+
+\begin{center}\footnotesize\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|c|c}
+当前区间 & 中点 $m$ & $f(m)=e^m-3m-1$ \\ \hline
+$(1,2)$ & $1.5$ & $\approx\tk{-1.02}<0$\\
+$(1.5,2)$ & $1.75$ & $\approx\tk{-0.50}<0$\\
+$(1.75,2)$ & $1.875$ & $\approx\tk{-0.10}<0$\\
+$(1.875,2)$ & $1.9375$ & $\approx\tk{+0.13}>0$
+\end{tabular}
+\end{center}
+
+故 $x_0\in\tk{(1.875,\,1.9375)}$，约为 $1.90$；每二分一次，区间长度减半，$n$ 步后误差不超过 $2^{-n}$。
+
+动机：二分法把「存在」量化成「可任意精度逼近」；这也是检查答案合理性的手段（例如验证 $e^{1.9}\approx6.69$ 与 $3\cdot1.9+1=6.7$ 几乎相等）。
+\logotag{充要边界}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：错在未证零点唯一就代换。
+
+错解：设 $x_0$ 是 $g(x)=x^3-3x$ 的零点，求 $x_0^2$。某同学写——
+
+「由 $g(x_0)=0$ 得 $x_0^3=3x_0$，即 $x_0^2=3$，故 $x_0^2=3$。」
+
+\ifteacher
+{\small\textcolor{second}{红笔诊断：$g(x)=x^3-3x=x(x^2-3)$ 有三个零点 $-\sqrt3,0,\sqrt3$；当 $x_0=0$ 时 $x_0^2=0\ne3$——「$x_0^2=3$」只对非零零点成立。题设没指明是哪一个零点，也没证明唯一，$x_0$ 指向不明，代换瞬间失义。}}
+\else
+\noteblank[5ex]
+\fi
+
+防扣分铁律：\textbf{用 $f(x_0)=0$ 做隐零点代换前，必须先证明零点唯一、或明确指定是哪一个零点（连带其所在区间）}；多零点情形要逐个检验代换关系与目标式是否对该零点成立。回看本题：$f(x)=e^x-3x-1$ 恰有两个零点 $0$ 与 $x_0$，所以第 (2) 问特意声明「$x_0$ 指 $(1,2)$ 内那一个」——这个声明就是代换的合法性来源。
+\logotag{避坑铁律}
+
+\end{enumerate}
+\end{methodbox}
