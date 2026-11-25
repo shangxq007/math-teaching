@@ -1,0 +1,386 @@
+% ==========================================================
+%  第 5 章 drill：结构雷达闪电战 + 五问连环母题
+% ------------------------------------------------------------
+%  纯模块化片段：不含 documentclass / document；
+%  编译入口：_check_ch05.tex（preamble + versions + 本文件）。
+%  只使用 versions.tex 与 common/ 已提供的环境（warmupbox、
+%  methodbox、advancedonly、\tk、\ifteacher 等），
+%  不新增任何 \newcommand / \newenvironment。
+%
+%  选题（对应第 5 章两大高频降维变换，避开已布置的 ch04 齐次化、
+%  ch06 切线放缩／隐零点，也避开 ch05 正文已有例题的同一组数字）：
+%    母题一 Abel 变换：S_n = sum (2k+1)·3^{k-1} = n·3^n
+%           ——错位相减（考纲）、Abel 公式（大招）、裂项差分（一秒）三法对读；
+%    母题二 特征值法：a_{n+2}=4a_{n+1}-3a_n, a_1=1, a_2=5
+%           ——特征根法（考纲）与矩阵特征方向分解（高观点）对读，
+%           并解释「a_n+1 恰为等比」的结构性原因。
+%  导航约定：不动点／稳定性在本章只作入口，源、汇、黎曼球等深入理论
+%  见第 9 章第 5 节；莫比乌斯矩阵与特征方向见本章探究三；齐次化见第 8 章。
+%
+%  数值核验：以上全部断言均经 sympy 实算核验（逐项 partial sums、
+%  Abel 公式、错位相减错解结果、sum k r^{k-1} 通式、递推前七项、
+%  特征值与特征向量、分解系数、逐项比值），与文中写法一致。
+% ==========================================================
+
+% ---------------------------------------------------------
+%  第一部分：五分钟结构雷达闪电战
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五分钟结构雷达闪电战：只练核心一步变形}
+规则：每题\textbf{只写关键一步}（不是解完整题）。先读「雷达触发」，把这一步放回整条链里，再动笔；答案处以下划线留白（学生版显示等宽下划线，教师版显红）。
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+\item \textbf{差分降次}：设 $a_n=n^2$，写出 $\Delta a_n$ 与 $\Delta^2a_n$。\\
+{\small\textcolor{third}{雷达触发：}}每差一次，多项式次数降一次，对应导数 $(x^2)'=2x$。\\
+答案：$\Delta a_n=\tk{2n+1}$，$\Delta^2a_n=\tk{2}$。
+
+\item \textbf{由和式反求}：已知 $S_n=3n^2-2n$，写出 $n\ge2$ 时的 $a_n$，并指出还必须补哪一步。\\
+{\small\textcolor{third}{雷达触发：}}$n=1$ 不在 $S_n-S_{n-1}$ 的有效范围里，必须单独回代。\\
+答案：$n\ge2$ 时 $a_n=S_n-S_{n-1}=\tk{6n-5}$，再检验 $\tk{a_1=S_1=1}$（本题恰好可并入）。
+
+\item \textbf{不动点导航}：对 $a_{n+1}=2a_n+3$，解出不动点 $x^*$，并写出 $b_n=a_n-x^*$ 满足的递推。\\
+{\small\textcolor{third}{雷达触发：}}「减去不动点」就是换坐标系，常数尾巴立刻消失（不动点的深入理论见第 9 章第 5 节）。\\
+答案：$x^*=\tk{-3}$，令 $b_n=a_n+3$，则 $b_{n+1}=\tk{2b_n}$。
+
+\item \textbf{特征方程}：写出 $a_{n+2}=pa_{n+1}+qa_n$ 的特征方程，并解 $a_{n+2}=4a_{n+1}-3a_n$ 的特征根。\\
+{\small\textcolor{third}{雷达触发：}}特征方程来自转移矩阵 $\begin{pmatrix}0&1\\ q&p\end{pmatrix}$，中间是 $-\,p\lambda$，符号别记反。\\
+答案：$\tk{\lambda^2-p\lambda-q=0}$；$\tk{\lambda^2-4\lambda+3=0\Rightarrow\lambda_1=1,\ \lambda_2=3}$。
+
+\item \textbf{Abel 搭骨架}：写出 Abel 恒等式，并指出用 $B_k=\sum_{i=1}^kb_i$ 求 $\sum_{k=1}^nk\cdot2^{k-1}$ 时应取谁当 $a_k$、谁当 $b_k$。\\
+{\small\textcolor{third}{雷达触发：}}$a_k$ 选「差分后变简单」的（等差），$b_k$ 选「部分和现成」的（等比），角色用反则失效。\\
+答案：$\tk{\sum_{k=1}^na_kb_k=a_nB_n-\sum_{k=1}^{n-1}(a_{k+1}-a_k)B_k}$；取 $\tk{a_k=k,\ b_k=2^{k-1}}$。
+
+\item \textbf{裂项差分}：把 $\dfrac1{k(k+1)}$ 写成 $\Delta F(k)$ 的形式，并求和。\\
+{\small\textcolor{third}{雷达触发：}}通项若能写成「差」，求和自动相消——这就是离散版牛顿—莱布尼茨公式。\\
+答案：$\tk{\dfrac1{k(k+1)}=\dfrac1k-\dfrac1{k+1}=\Delta\!\left(-\dfrac1k\right)}$，故 $\tk{\sum\limits_{k=1}^n\dfrac1{k(k+1)}=1-\dfrac1{n+1}=\dfrac n{n+1}}$。
+\end{enumerate}
+\end{warmupbox}
+
+% ---------------------------------------------------------
+%  第二部分：解答即笔记 · 五问连环母题
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五问连环母题怎么用（先看这里）}
+本部分两道大题，每道\textbf{严格五问}：(1) 具象感知与画图（教师版附红笔批注）；(2) 考纲满分通法（用 \texttt{\textbackslash tk} 搭骨架）；(3) 高观点降维秒杀（与通法左右对读）；(4) 结构推广（完整版渲染，薄弱生版自动隐藏）；(5) 易错边界排雷（诊断错解 + 防扣分铁律）。\vchoice{做完一道，「Abel 变换」或「特征值法」的完整解题说明书就长在你的留白处。}{基础较弱的同学先落实第 (1)(2)(5) 问；第 (3)(4) 问留给学有余力者。}
+
+导航：本章的不动点与稳定性只是「换坐标系」的入口，源／汇、黎曼球等深入理论统一见第 9 章第 5 节，此处不重复展开；分式递推的矩阵推导见本章探究三；齐次化的完整方法链见第 8 章。
+\end{warmupbox}
+
+% ========== 母题一：Abel 变换 ==========
+
+\begin{methodbox}{五问连环母题 1：Abel 变换——$\sum_{k=1}^n(2k+1)\cdot3^{k-1}$ 的三种算法}
+求
+\[
+S_n=\sum_{k=1}^n(2k+1)\cdot3^{\,k-1}
+=3+5\cdot3+7\cdot3^2+\cdots+(2n+1)\cdot3^{\,n-1}.
+\]
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+
+\item \textbf{具象感知与画图}：先算前四项与部分和，描点，提出猜想。
+
+逐项累加：
+\[
+S_1=3,\quad S_2=3+15=18,\quad S_3=18+63=81,\quad S_4=81+243=324.
+\]
+与 $n\cdot3^n$ 对照：
+\[
+1\cdot3=3,\quad 2\cdot9=18,\quad 3\cdot27=81,\quad 4\cdot81=324.
+\]
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, x=1.15cm, y=0.012cm]
+  \draw[->, gray] (0,0)--(5.2,0) node[below right] {$n$};
+  \draw[->, gray] (0,0)--(0,350) node[above left] {$S_n$};
+  \foreach \x in {1,2,3,4}{ \draw (\x,2)--(\x,-2) node[below] {\x}; }
+  \foreach \y in {81,324}{ \draw (0.08,\y)--(-0.08,\y) node[left] {\y}; }
+  \ifteacher
+    \draw[main!70!black, very thick, domain=0.75:4.25, smooth, samples=70] plot (\x, {exp(\x*ln(3))*\x});
+    \node[main!70!black, right] at (4.28,318) {$y=x\cdot3^x$};
+    \fill[second] (1,3) circle (1.8pt);
+    \fill[second] (2,18) circle (1.8pt);
+    \fill[second] (3,81) circle (1.8pt);
+    \fill[second] (4,324) circle (1.8pt);
+    \node[second, above right] at (1,3) {$3$};
+    \node[second, above right] at (2,18) {$18$};
+    \node[second, above right] at (3,81) {$81$};
+    \node[second, above left] at (4,324) {$324$};
+  \else
+    \node[third] at (2.4,170) {描出 $(1,3),(2,18),(3,81),(4,324)$，作 $y=x\cdot3^x$ 对照};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：四个点全落在曲线 $y=x\cdot3^x$ 上——$S_1=1\cdot3,\ S_2=2\cdot3^2,\ S_3=3\cdot3^3,\ S_4=4\cdot3^4$。猜想：$S_n=n\cdot3^n$，下面用三种方法证实。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：错位相减，两行对齐再相减。
+
+\[
+\begin{aligned}
+S_n&=3+5\cdot3+7\cdot3^2+\cdots+(2n+1)\cdot3^{n-1},\\
+3S_n&=\phantom{3+{}}3\cdot3+5\cdot3^2+\cdots+(2n-1)\cdot3^{n-1}+(2n+1)\cdot3^n .
+\end{aligned}
+\]
+首项 $3$ 与末项 $(2n+1)\cdot3^n$ 都没有对齐项，其余每项之差都是 $2\cdot3^k$。两式相减（上式减下式）：
+\[
+-2S_n=\tk{3+2\cdot3+2\cdot3^2+\cdots+2\cdot3^{n-1}-(2n+1)\cdot3^n}.
+\]
+括号内是首项 $3$、公比 $3$、共 $n-1$ 项的等比数列：
+\[
+-2S_n=3+2\cdot\tk{\dfrac{3^n-3}{2}}-(2n+1)\cdot3^n
+=3+3^n-3-(2n+1)\cdot3^n
+=\tk{-2n\cdot3^n},
+\]
+故
+\[
+S_n=\tk{n\cdot3^n}.
+\]
+检验：$n=1$ 时 $S_1=3=1\cdot3$，吻合。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：Abel 变换套公式，三行收尾；再补一刀「裂项差分」。
+
+取 $a_k=2k+1$（等差，$\Delta a_k=2$），$b_k=3^{k-1}$（等比，$B_k=\dfrac{3^k-1}{2}$）。由 Abel 恒等式：
+\[
+\begin{aligned}
+S_n&=a_nB_n-\sum_{k=1}^{n-1}\Delta a_k B_k
+=\frac{(2n+1)(3^n-1)}{2}-2\sum_{k=1}^{n-1}\frac{3^k-1}{2}\\
+&=\frac{(2n+1)(3^n-1)}{2}-\left[\tk{\dfrac{3^n-3}{2}-(n-1)}\right]
+=\tk{n\cdot3^n}.
+\end{aligned}
+\]
+更快的一行：注意到
+\[
+(2k+1)\cdot3^{k-1}=\Delta\!\bigl[(k-1)\cdot3^{k-1}\bigr],
+\]
+通项本身就是「差」，求和直接相消：
+\[
+S_n=\sum_{k=1}^n\Delta\!\bigl[(k-1)\cdot3^{k-1}\bigr]
+=\bigl[n\cdot3^n\bigr]-0=\tk{n\cdot3^n}.
+\]
+
+与第 (2) 问对读：错位相减要写两行、对齐、相减、再求等比和，步步可得分但篇幅长；Abel 直接套「末端乘积 $-$ 差分 $\times$ 部分和」，三行收工；裂项差分只需看出通项是 $\Delta F$，一行相消。考场上先用后两者预判答案，卷面上再写错位相减。
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：$\sum k r^{k-1}$ 的通式与生成函数指针}。
+
+取 $a_k=k$（$\Delta a_k=1$），$b_k=r^{k-1}$（$r\ne1$，$B_k=\dfrac{r^k-1}{r-1}$），由 Abel：
+\[
+\sum_{k=1}^nk r^{k-1}
+=\frac{n(r^n-1)}{r-1}-\frac{1}{r-1}\left(\frac{r^n-r}{r-1}-(n-1)\right)
+=\tk{\frac{1-(n+1)r^n+n r^{n+1}}{(1-r)^2}};
+\]
+$r=1$ 时逐项就是 $k$，和为 $\tk{\dfrac{n(n+1)}2}$。代回 $r=3$：
+\[
+\sum_{k=1}^nk\cdot3^{k-1}=\frac{1-(n+1)3^n+n\cdot3^{n+1}}{4}
+=\tk{\frac{1+(2n-1)\,3^n}{4}}.
+\]
+于是母题一可拆成两个现成结论：
+\[
+S_n=2\sum_{k=1}^nk\cdot3^{k-1}+\sum_{k=1}^n3^{k-1}
+=2\cdot\frac{1+(2n-1)3^n}{4}+\frac{3^n-1}{2}
+=\tk{n\cdot3^n},
+\]
+与前三法完全一致。强基拓展：$\sum(2k+1)y^k$ 可由 $\dfrac1{1-y}$ 逐项求导得到，即生成函数视角（见正文探究六）。
+\logotag{公式族}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断「多算一项」的错位相减。
+
+{\bfseries\color{red!70!black}错解：}仍设 $S_n=3+5\cdot3+\cdots+(2n+1)3^{n-1}$，$3S_n=3\cdot3+5\cdot3^2+\cdots+(2n+1)3^n$，相减得
+\[
+-2S_n=3+2\,(3+3^2+\cdots+3^{n-1})-(2n+1)3^n .
+\]
+该生把括号写成 $\dfrac{3^n-1}{2}$（他坚持那是「首项 $1$、公比 $3$ 的等比求和」），于是
+\[
+-2S_n=3+(3^n-1)-(2n+1)3^n=-2n\cdot3^n+2,
+\quad\text{得 } S_n=n\cdot3^n-1 .
+\]
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{项数错误}：$3+3^2+\cdots+3^{n-1}$ 的首项是 $3$、共 $n-1$ 项，应为 $\dfrac{3(3^{n-1}-1)}{2}=\dfrac{3^n-3}{2}$；他凭空多算了不存在的 $3^0$ 项。
+\item \textbf{缺少检验}：$n=1$ 时他的公式给出 $3-1=2\ne S_1=3$，一个回代就能当场拆穿。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：错位相减后先数清「首项、末项、项数」再写等比求和公式；凡是闭式必用 $n=1$（必要时 $n=2$）回代检验。
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+
+\end{enumerate}
+\end{methodbox}
+
+% ========== 母题二：特征值法 ==========
+
+\begin{methodbox}{五问连环母题 2：特征值法——$a_{n+2}=4a_{n+1}-3a_n$ 与矩阵特征方向}
+设 $a_1=1,\ a_2=5,\ a_{n+2}=4a_{n+1}-3a_n$，求通项公式。
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+
+\item \textbf{具象感知与画图}：先算前几项，看相邻两项的比值，再盯住 $a_n+1$。
+
+逐项算：
+\[
+a_1=1,\ a_2=5,\ a_3=17,\ a_4=53,\ a_5=161.
+\]
+相邻比值
+\[
+\frac{a_2}{a_1}=5,\quad \frac{a_3}{a_2}=\frac{17}{5}=3.4,\quad
+\frac{a_4}{a_3}=\frac{53}{17}\approx3.12,\quad
+\frac{a_5}{a_4}=\frac{161}{53}\approx3.04,
+\]
+趋于 $3$。再看 $a_n+1$：
+\[
+a_1+1=2,\ a_2+1=6,\ a_3+1=18,\ a_4+1=54,\ a_5+1=162,
+\]
+恰好是 $2\cdot3^{\,n-1}$——纯粹的等比数列。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, x=1.05cm, y=0.09cm]
+  \draw[->, gray] (0,0)--(5.3,0) node[below right] {$n$};
+  \draw[->, gray] (0,0)--(0,62) node[above left] {};
+  \foreach \x in {1,2,3,4}{ \draw (\x,0.35)--(\x,-0.35) node[below] {\x}; }
+  \foreach \y in {6,18,54}{ \draw (0.12,\y)--(-0.12,\y) node[left] {\y}; }
+  \ifteacher
+    \draw[main!55, fill=main!12] (0.72,0) rectangle (1.28,2);
+    \draw[main!55, fill=main!12] (1.72,0) rectangle (2.28,6);
+    \draw[main!55, fill=main!12] (2.72,0) rectangle (3.28,18);
+    \draw[main!55, fill=main!12] (3.72,0) rectangle (4.28,54);
+    \fill[second] (1,1) circle (1.8pt);
+    \fill[second] (2,5) circle (1.8pt);
+    \fill[second] (3,17) circle (1.8pt);
+    \fill[second] (4,53) circle (1.8pt);
+    \node[above=1pt] at (1,2) {\scriptsize $2$};
+    \node[above=1pt] at (2,6) {\scriptsize $6$};
+    \node[above=1pt] at (3,18) {\scriptsize $18$};
+    \node[above=1pt] at (4,54) {\scriptsize $54$};
+    \node[main!70!black, right] at (4.35,54) {$b_n=a_n+1$};
+    \node[second, right] at (4.35,50) {$a_n=b_n-1$};
+  \else
+    \node[third] at (2.5,30) {描出 $(n,a_n)$ 与 $(n,a_n+1)$，观察哪一列是等比};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：柱高 $2,6,18,54$ 的公比恒为 $3$，即 $\{a_n+1\}$ 是等比数列；点 $a_n$ 总比同位置的柱顶低 $1$。猜想 $a_n=2\cdot3^{n-1}-1$。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：特征方程 + 待定系数，配满初值。
+
+递推 $a_{n+2}=4a_{n+1}-3a_n$ 的特征方程为
+\[
+\lambda^2-4\lambda+3=0
+\ \Longrightarrow\
+\tk{\lambda_1=1,\quad \lambda_2=3}.
+\]
+两根相异，设
+\[
+a_n=c_1\cdot1^{\,n-1}+c_2\cdot3^{\,n-1}.
+\]
+代入初值 $a_1=1,\ a_2=5$：
+\[
+c_1+c_2=1,\qquad c_1+3c_2=5
+\ \Longrightarrow\
+\tk{c_1=-1,\quad c_2=2}.
+\]
+故
+\[
+\tk{a_n=2\cdot3^{\,n-1}-1}.
+\]
+检验：$a_3=4\cdot5-3\cdot1=17=2\cdot9-1$，吻合。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：状态向量沿特征方向分解，$r$ 倍缩放替代逐项迭代。
+
+把递推升维成矩阵乘法：
+\[
+\binom{a_{n+1}}{a_{n+2}}
+=\begin{pmatrix}0&1\\ -3&4\end{pmatrix}\binom{a_n}{a_{n+1}},
+\qquad
+A\begin{pmatrix}1\\1\end{pmatrix}=1\cdot\begin{pmatrix}1\\1\end{pmatrix},\quad
+A\begin{pmatrix}1\\3\end{pmatrix}=3\cdot\begin{pmatrix}1\\3\end{pmatrix}.
+\]
+把初值向量按两个特征方向分解：
+\[
+\binom{a_1}{a_2}=\binom{1}{5}
+=\tk{-1}\cdot\binom{1}{1}+\tk{2}\cdot\binom{1}{3}.
+\]
+每迭代一步，$(1,1)$ 分量乘 $1$、$(1,3)$ 分量乘 $3$，故
+\[
+\binom{a_n}{a_{n+1}}
+=-\binom{1}{1}+2\cdot3^{\,n-1}\binom{1}{3},
+\qquad
+a_n=\tk{2\cdot3^{\,n-1}-1}.
+\]
+
+与第 (2) 问对读：待定系数解出的 $c_1,c_2$ 正是特征方向分解的系数；$\lambda=3$ 主控增长，$\lambda=1$ 主控常数偏移。第 (1) 问「$a_n+1$ 恰为等比」不是巧合：常数分量恰为 $-1$，平移 $+1$ 后只剩纯 $\lambda=3$ 分量，数列自然退化为等比。
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：复特征值与重根}。
+
+若判别式 $p^2+4q<0$，特征根为共轭复数
+\[
+\lambda_{1,2}=r(\cos\theta\pm i\sin\theta),
+\]
+则通项写成伸缩 $\times$ 旋转：
+\[
+a_n=r^{\,n-1}\bigl(c_1\cos n\theta+c_2\sin n\theta\bigr).
+\]
+特别地，$r=1$ 且 $\theta=\dfrac{2\pi}{T}$ 时数列为周期 $T$——例如 $a_{n+2}=a_{n+1}-a_n$ 的 $\lambda=e^{\pm i\pi/3}$，周期为 $6$（螺线迭代的图像见正文「跨章方法论大一统」一节的复特征值图）。
+
+若 $\lambda_1=\lambda_2=\lambda$（重根），特征方向只有一个，通项升级为
+\[
+a_n=(c_1+c_2\,n)\lambda^{\,n-1},
+\]
+多项式因子 $n$ 来自「约当块」型的耦合（对比二次曲线旋转消交叉项的一般理论，见第 8 章手术刀之五）。
+\logotag{公式族}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：丢掉 $\lambda=1$ 的特征根，会丢掉了整个常数项。
+
+{\bfseries\color{red!70!black}错解：}由 $\lambda^2-4\lambda+3=0$ 得 $\lambda_1=1,\lambda_2=3$。该生认为「$1^{n-1}=1$ 是常数，不影响变化趋势」，于是设 $a_n=c\cdot3^{\,n-1}$，由 $a_2=5$ 得 $c=\dfrac53$，即
+\[
+a_n=\frac53\cdot3^{\,n-1}=5\cdot3^{\,n-2}.
+\]
+但 $a_1=\dfrac53\ne1$；他改口「以 $a_2$ 为首项重标下标即可」。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{特征根一个不能丢}：$\lambda=1$ 必须保留，它贡献通项里的常数项 $c_1$，使 $a_1,a_2$ 同时被满足；丢掉它，等于默认 $c_1=0$。
+\item \textbf{初值必须配满}：两条独立初值确定两个系数，不能只挑一条；靠「改下标」迁就答案更是篡改题意。
+\item \textbf{指数起点}：设 $a_n=c_1\lambda_1^{n-1}+c_2\lambda_2^{n-1}$ 时起点是 $n-1$，与 $a_1$ 对齐；误写成 $\lambda^n$ 会使两个系数整体错位。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：特征根（包括 $1$ 与负根）一个不丢；待定系数个数等于相异特征根个数（重根另加 $n$ 因子）；解出后至少回代 $a_3$ 检验。
+\else
+{\small（先自己找出漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+
+\end{enumerate}
+\end{methodbox}
+
+% ---------------------------------------------------------
+
+\begin{notezone}{章末归档：五问与笔记功能 + 两法对照}
+\textbf{五问与笔记}：(1) 具象感知与画图 $\to$ 概念引入笔记；(2) 考纲满分通法 $\to$ 规范书写笔记；(3) 高观点降维秒杀 $\to$ 大招与二级结论笔记；(4) 结构推广 $\to$ 公式族笔记；(5) 易错边界排雷 $\to$ 错题本笔记。
+
+\textbf{求和三路线对照}：错位相减＝两行对齐再相减，步步可得分；Abel 变换＝末端乘积 $-$ 差分 $\times$ 部分和，三行收工；裂项差分＝认出 $\Delta F$ 后一行相消。\textbf{递推两路线对照}：特征根法 $=$ 特征方向分解，$c_1,c_2$ 即分解系数；$\lambda=1$ 的方向贡献常数项，这就是「$a_n+1$ 是等比」的结构原因。
+
+\textbf{导航}：不动点／稳定性的深入（源、汇、黎曼球）见第 9 章第 5 节；莫比乌斯矩阵与特征方向见本章探究三；齐次化完整方法链见第 8 章。
+\end{notezone}

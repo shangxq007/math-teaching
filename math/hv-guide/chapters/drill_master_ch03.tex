@@ -1,0 +1,332 @@
+% ==========================================================
+%  第 3 章 drill：向量结构雷达闪电战 + 五问连环母题
+% ------------------------------------------------------------
+%  纯模块化片段：不含 documentclass / document；
+%  编译入口：_check_ch03.tex（preamble + versions + 本文件）。
+%  只使用 versions.tex 与 common/ 已提供的环境（warmupbox、
+%  advancedonly、\ifteacher、\logotag 等），不新增任何
+%  \newcommand / \newenvironment。
+%  数值核验（sympy 实算，全部吻合）：
+%    矩形 AB=4, AD=3，P 在 CD 上：PA·PB=(p-2)^2+5 ∈ [5,9]；
+%    一般矩形 AB=a, AD=b：PA·PB ∈ [b^2-a^2/4,\ b^2]；
+%    三直角四面体 OA=1, OB=2, OC=3：S_{OBC}=3，S_{ABC}=7/2，
+%        射影面积法 cosθ=6/7，法向量点积亦为 6/7；
+%    一般公式 cosθ = bc/√(b^2c^2+c^2a^2+a^2b^2)。
+% ==========================================================
+
+% ---------------------------------------------------------
+%  第一部分：五分钟结构雷达闪电战
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五分钟结构雷达闪电战：只练核心一步变形}
+规则：每题\textbf{只写关键一步}（不是解完整题）。先读「雷达触发」，在脑子里把这一步放回整条链里，再动笔；答案处以下划线留白（学生版显示等宽下划线，教师版显红）。
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+\item \textbf{「三角平方升次」次数配平}：用 $\sin^2x+\cos^2x=1$ 把 $\sin^4x+\cos^4x$ 配成「一次恒等式 $+$ 修正项」。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}见四次先想 $(\sin^2x+\cos^2x)^2$，多出的交叉项就是要减掉的修正；次数从四压到二。\\
+答案：$\sin^4x+\cos^4x=(\sin^2x+\cos^2x)^2-2\sin^2x\cos^2x=$\tk{1-2\sin^2x\cos^2x}（还可续写为 $1-\tfrac12\sin^22x$）。
+
+\item \textbf{设 $t=\tan x$ 化零次比值}：把 $\dfrac{\sin x\cos x}{\sin^2x+\cos^2x+1}$ 化为只含 $t$ 的式子。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}分子分母\textbf{同除} $\cos^2x$；分母的常数 $2$ 会变成 $2(1+t^2)$，约掉绝对尺度后只剩 $t$。\\
+答案：\tk{\dfrac{t}{2(1+t^2)}}（$x\neq\dfrac{\pi}2+k\pi$；$t=1$ 时取最大值 $\dfrac14$）。
+
+\item \textbf{中点的向量分解}：在 $\triangle ABC$ 中，$D$ 是 $BC$ 的中点，用基底 $\{\overrightarrow{AB},\overrightarrow{AC}\}$ 表示 $\overrightarrow{AD}$。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}中点即「系数各半」；一般地 $\overrightarrow{OP}=x\overrightarrow{OA}+y\overrightarrow{OB}$ 且 $x+y=1$ 就是等和线。\\
+答案：\tk{\dfrac12(\overrightarrow{AB}+\overrightarrow{AC})}。
+
+\item \textbf{垂直翻译成数量积}：已知 $\vec a=(2,1)$，$\vec b=(x,3)$，且 $\vec a\perp\vec b$，求 $x$。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}垂直 $\iff$ 数量积为 $0$；坐标运算后只剩一个方程 $2x+3=0$。\\
+答案：\tk{-\dfrac32}。
+
+\item \textbf{投影向量一步}：求 $\vec a=(3,4)$ 在 $\vec b=(1,0)$ 上的投影向量。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}$\mathrm{proj}_{\vec b}\vec a=\dfrac{\vec a\cdot\vec b}{|\vec b|^2}\vec b$；分母是 $|\vec b|^2$，别写成 $|\vec b|$。\\
+答案：\tk{(3,0)}（数量投影为 $3$）。
+
+\item \textbf{法向量一步}：写出过 $A(1,0,0)$，$B(0,2,0)$，$C(0,0,3)$ 的平面的一个法向量。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}法向量同时垂直于面内两条相交向量，叉乘 $\overrightarrow{AB}\times\overrightarrow{AC}$ 一步给出；用 $\vec n\cdot\overrightarrow{AB}=0,\ \vec n\cdot\overrightarrow{AC}=0$ 解方程组亦可。\\
+答案：\tk{(6,3,2)}（与其共线的非零向量均可）。
+\end{enumerate}
+\end{warmupbox}
+
+% ---------------------------------------------------------
+%  第二部分：解答即笔记 · 五问连环母题
+% ---------------------------------------------------------
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题一：矩形边上一点的极化恒等式},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+矩形 $ABCD$ 中 $AB=4$，$AD=3$，点 $P$ 在边 $CD$ 上运动（可与端点重合），求 $\overrightarrow{PA}\cdot\overrightarrow{PB}$ 的取值范围。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：建立坐标系 $A(0,0)$，$B(4,0)$，$C(4,3)$，$D(0,3)$，取 $AB$ 的中点 $M(2,0)$。先试三个特殊位置：$P=D$、$P=C$ 与 $P=(2,3)$（即 $M$ 正上方、在 $CD$ 上的垂足），算出 $\overrightarrow{PA}\cdot\overrightarrow{PB}$ 的值并猜想范围。
+
+$P=(p,3)$ 时 $\overrightarrow{PA}=(-p,-3)$，$\overrightarrow{PB}=(4-p,-3)$，故
+\[
+\overrightarrow{PA}\cdot\overrightarrow{PB}=-p(4-p)+9=p^2-4p+9=(p-2)^2+5 .
+\]
+于是 $P=D$（$p=0$）与 $P=C$（$p=4$）时都得 \tk{9}，$P=(2,3)$ 时得 \tk{5}。猜想：取值范围是 \tk{[5,9]}。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, scale=1.05]
+  \draw[->, gray] (-0.7,0)--(4.9,0) node[below right] {$x$};
+  \draw[->, gray] (0,-0.7)--(0,3.8) node[above left] {$y$};
+  \draw[main!70!black, very thick] (0,0) rectangle (4,3);
+  \node[below left] at (0,0) {$A(0,0)$};
+  \node[below right] at (4,0) {$B(4,0)$};
+  \node[above right] at (4,3) {$C(4,3)$};
+  \node[above left] at (0,3) {$D(0,3)$};
+  \fill[third] (2,0) circle (1.5pt) node[below] {$M(2,0)$};
+  \ifteacher
+    \draw[second, thick, dashed] (2,3)--(0,0);
+    \draw[second, thick, dashed] (2,3)--(4,0);
+    \fill[second] (2,3) circle (1.5pt) node[above] {$P_0(2,3):5$};
+    \draw[second, thick, dashed] (0,3)--(0,0);
+    \draw[second, thick, dashed] (0,3)--(4,0);
+    \fill[second] (0,3) circle (1.5pt) node[below right] {$D:9$};
+    \fill[second] (4,3) circle (1.5pt) node[below left] {$C:9$};
+  \else
+    \node[third] at (2,1.5) {描出 $P=D,P=(2,3),P=C$ 三处的 $\overrightarrow{PA},\overrightarrow{PB}$，算出数量积};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{考纲满分通法（基底法）}：不建系，取基底 $\{\overrightarrow{AB},\overrightarrow{AD}\}$，用参数 $s$ 设出 $P$，展开后配方。动机：基底分解是本题的「章节母语」，把动点问题压成单参数二次函数。
+
+由 $\overrightarrow{AB}\perp\overrightarrow{AD}$ 知 $\overrightarrow{AB}\cdot\overrightarrow{AD}=0$。设
+\[
+\overrightarrow{DP}=s\,\overrightarrow{AB}\quad (0\le s\le 1),
+\qquad
+\overrightarrow{AP}=\overrightarrow{AD}+s\overrightarrow{AB}.
+\]
+于是
+\[
+\overrightarrow{PA}=-\overrightarrow{AD}-s\overrightarrow{AB},\qquad
+\overrightarrow{PB}=(1-s)\overrightarrow{AB}-\overrightarrow{AD}.
+\]
+展开（交叉项因垂直而消失）：
+\[
+\overrightarrow{PA}\cdot\overrightarrow{PB}
+=-s(1-s)\,|\overrightarrow{AB}|^2+|\overrightarrow{AD}|^2
+=\tk{16s^2-16s+9}
+=\tk{16\left(s-\dfrac12\right)^2+5}.
+\]
+由 $0\le s\le 1$ 得 $\left(s-\dfrac12\right)^2\in\left[0,\dfrac14\right]$，故
+\[
+\overrightarrow{PA}\cdot\overrightarrow{PB}\in\tk{[5,9]}.
+\]
+
+\item \textbf{高观点降维秒杀}：认出「一定线段 $+$ 一动顶点」，用极化恒等式一步到位。
+
+$M$ 是 $AB$ 的中点，故
+\[
+\overrightarrow{PA}\cdot\overrightarrow{PB}
+=|\overrightarrow{PM}|^2-|\overrightarrow{MB}|^2
+=|\overrightarrow{PM}|^2-4 .
+\]
+$P$ 在 $CD$ 上：$M$ 到直线 $CD$ 的距离为 $3$，垂足 $(2,3)$ 恰好落在线段 $CD$ 内，故 $|\overrightarrow{PM}|_{\min}=3$；端点处 $|\overrightarrow{PM}|=\sqrt{2^2+3^2}=\sqrt{13}$ 最大。一行收束：
+\[
+\overrightarrow{PA}\cdot\overrightarrow{PB}\in[3^2-4,\ (\sqrt{13})^2-4]=\tk{[5,9]}.
+\]
+
+与第 (2) 问左右对读：
+\begin{center}\small
+\begin{tabular}{p{2.4cm}|p{5.6cm}|p{5.6cm}}
+\toprule
+ & 考纲通法（第 (2) 问） & 极化恒等式（第 (3) 问）\\
+\midrule
+思路 & 选基底、设参数 $s$、展开配方 & 找中点 $M$，化为动点到定点的距离 \\
+计算量 & 三次代数变形 $+$ 二次函数值域 & 两次距离 $+$ 一次减法 \\
+何时用 & 解答题要写满规范步骤 & 选填预判、「一定弦一动顶点」模型 \\
+风险点 & 忘记 $\overrightarrow{AB}\cdot\overrightarrow{AD}=0$ 前就展开 & 垂足落在线段外时最小值会跑偏 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\item \textbf{结构推广与变式}。
+\begin{advancedonly}
+矩形改成 $AB=a$、$AD=b$。同一推导给出
+\[
+|\overrightarrow{PM}|^2\in\left[b^2,\ b^2+\dfrac{a^2}{4}\right]
+\quad\Longrightarrow\quad
+\overrightarrow{PA}\cdot\overrightarrow{PB}\in
+\tk{\left[\,b^2-\dfrac{a^2}{4},\ \ b^2\,\right]}.
+\]
+代回 $a=4,b=3$ 得 $[5,9]$，与 (1)–(3) 一致。两个观察：最大值恰为 $b^2=|\overrightarrow{AD}|^2$（$P$ 与 $C$ 或 $D$ 重合时 $\overrightarrow{PA}\cdot\overrightarrow{PB}=|\overrightarrow{AD}|^2$）；把 $P$ 的轨迹换成以 $M$ 为圆心的圆，则数量积只由 $|\overrightarrow{PM}|$ 决定——这正是第 3 章探究三「一定弦、一动顶点」模型的一般形式（该章例题：半径 $2$、弦 $BC=2$ 时最大值为 $6+4\sqrt3$）。
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似合理」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}取 $AB$ 的中点 $M$，由极化恒等式
+$\overrightarrow{PA}\cdot\overrightarrow{PB}=|\overrightarrow{PM}|^2+|\overrightarrow{MB}|^2$；
+又 $|MB|=|AB|=4$，而 $|\overrightarrow{PM}|\in[3,\sqrt{13}]$，
+所以取值范围是 $[13,17]$。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{符号错}：极化恒等式是\textbf{平方差} $|\overrightarrow{PM}|^2-|\overrightarrow{MB}|^2$，不是平方和；
+\item \textbf{中点分半错}：$M$ 是中点，$|\overrightarrow{MB}|=\dfrac{|AB|}{2}=2$，误写成 $4$；
+\item 两处叠加给出 $[13,17]$。修正后为 $[3^2-2^2,\ 13-2^2]=[5,9]$，与第 (2)(3) 问一致。
+\item 附带检查：$|\overrightarrow{PM}|$ 的最小值 $3$ 是否在轨迹内部取到（垂足 $(2,3)$ 落在 $CD$ 内），这一步不能省。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：背极化恒等式要连同\textbf{符号}与\textbf{中点分半}一起背；得出结果后用特殊位置（$P$ 与 $D$ 或 $C$ 重合）验算数量级。
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题二（变式）：三直角四面体的二面角},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+三棱锥 $O-ABC$ 中，$OA,OB,OC$ 两两垂直，$OA=1$，$OB=2$，$OC=3$。求二面角 $A-BC-O$ 的余弦值。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：先建系读数。以 $O$ 为原点，$\overrightarrow{OA},\overrightarrow{OB},\overrightarrow{OC}$ 方向为 $x,y,z$ 轴，则
+\[
+O(0,0,0),\quad A(1,0,0),\quad B(0,2,0),\quad C(0,0,3).
+\]
+平面 $OBC$ 即坐标面 $x=0$。先算两个可直接读出的量：$|BC|=\sqrt{2^2+3^2}=\tk{\sqrt{13}}$，
+$S_{\triangle OBC}=\dfrac12\cdot OB\cdot OC=\tk{3}$。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (-1.9,-0.8);
+  \coordinate (B) at (2.5,-0.55);
+  \coordinate (C) at (0,3.1);
+  \fill[third!8] (O)--(B)--(C)--cycle;
+  \draw[third!50!black, thin] (O)--(B)--(C)--cycle;
+  \draw[->, gray] (O)--(A) node[below left] {$x:\ OA=1$};
+  \draw[->, gray] (O)--(B) node[below right] {$y:\ OB=2$};
+  \draw[->, gray] (O)--(C) node[above] {$z:\ OC=3$};
+  \draw[main!70!black, thick] (A)--(B)--(C)--cycle;
+  \draw[very thick, gray] (B)--(C);
+  \fill (O) circle (1.4pt) node[above left] {$O(0,0,0)$};
+  \fill[main] (A) circle (1.4pt) node[below] {$A(1,0,0)$};
+  \fill[main] (B) circle (1.4pt) node[below right] {$B(0,2,0)$};
+  \fill[main] (C) circle (1.4pt) node[above right] {$C(0,0,3)$};
+  \ifteacher
+    \draw[second, thick, dashed] (A)--(O);
+    \node[second] at (-1.0,-0.75) {$A$ 在平面 $OBC$ 上的射影恰为 $O$};
+    \node[third!70!black] at (1.9,1.5) {$S_{\triangle OBC}=3$};
+    \node[main!70!black] at (0.2,2.0) {$S_{\triangle ABC}=\dfrac72$};
+  \else
+    \node[gray!70!black] at (0.4,1.3) {描出三棱锥，观察面 $OBC$ 与面 $ABC$ 的夹角};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{考纲满分通法（向量法）}：按「建系—求法向量—套公式—判锐钝」写全。动机：空间位置关系一律翻译成方向向量与法向量的运算，步骤可复制。
+
+平面 $OBC$ 的方程为 $x=0$，取其一个法向量
+\[
+\vec n_1=\tk{(1,0,0)}.
+\]
+平面 $ABC$ 内取 $\overrightarrow{AB}=(-1,2,0)$，$\overrightarrow{AC}=(-1,0,3)$，则
+\[
+\vec n_2=\overrightarrow{AB}\times\overrightarrow{AC}
+=(2\cdot3-0\cdot0,\ 0\cdot(-1)-(-1)\cdot3,\ (-1)\cdot0-2\cdot(-1))
+=\tk{(6,3,2)}.
+\]
+代入二面角公式：
+\[
+|\cos\theta|
+=\frac{|\vec n_1\cdot\vec n_2|}{|\vec n_1|\,|\vec n_2|}
+=\frac{6}{1\cdot\sqrt{6^2+3^2+2^2}}
+=\frac{6}{7}.
+\]
+（动机：$\sqrt{36+9+4}=\sqrt{49}=7$，数字干净正是本题的设计。）锐钝判断：$A$ 在平面 $OBC$ 上的射影恰为 $O$，落在面 $OBC$ 内，故二面角 $A-BC-O$ 为锐角，于是
+\[
+\cos\theta=\tk{\dfrac67}.
+\]
+
+\item \textbf{高观点降维秒杀}：面积射影定理——射影面积 $=$ 原面积 $\times\cos\theta$。
+
+因为 $OA\perp OB$ 且 $OA\perp OC$，所以 $OA\perp$ 平面 $OBC$，即 $A$ 在平面 $OBC$ 上的射影就是 $O$。于是 $\triangle ABC$ 在平面 $OBC$ 上的射影恰为 $\triangle OBC$（$B,C$ 不动，$A\mapsto O$），故
+\[
+S_{\triangle OBC}=S_{\triangle ABC}\cos\theta
+\quad\Longrightarrow\quad
+\cos\theta=\frac{S_{\triangle OBC}}{S_{\triangle ABC}}
+=\frac{3}{\tfrac12\sqrt{6^2+3^2+2^2}}
+=\frac{3}{\tfrac72}=\tk{\dfrac67}.
+\]
+（只需算一个三角形的面积，连叉乘都可以省掉。）
+
+与第 (2) 问左右对读：
+\begin{center}\small
+\begin{tabular}{p{2.4cm}|p{5.6cm}|p{5.6cm}}
+\toprule
+ & 通法（第 (2) 问） & 面积射影（第 (3) 问）\\
+\midrule
+思路 & 求两个法向量，套 $|\cos\theta|$ 公式 & 找一个面的射影，比面积 \\
+计算量 & 一次叉乘 $+$ 一次点积 & 一次叉乘（面积）$+$ 一次除法 \\
+何时用 & 通用，任何二面角都能写 & 有「一面上的点垂直于另一面」时最快 \\
+风险点 & 公式带绝对值，锐钝未判会丢一半 & 必须确认射影三角形确实是那个面 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\item \textbf{结构推广与变式}。
+\begin{advancedonly}
+设 $OA=a$，$OB=b$，$OC=c$（仍两两垂直）。同理
+\[
+\overrightarrow{AB}\times\overrightarrow{AC}=(bc,ca,ab),\qquad
+S_{\triangle ABC}=\frac12\sqrt{b^2c^2+c^2a^2+a^2b^2},
+\]
+而 $S_{\triangle OBC}=\dfrac{bc}{2}$，故
+\[
+\cos\theta=\tk{\dfrac{bc}{\sqrt{b^2c^2+c^2a^2+a^2b^2}}}
+=\tk{\dfrac{1}{\sqrt{1+\dfrac{a^2}{b^2}+\dfrac{a^2}{c^2}}}}.
+\]
+代回 $a=1,b=2,c=3$ 得 $\dfrac{6}{\sqrt{36+9+4}}=\dfrac67$。特例：$a=b=c$ 时 $\cos\theta=\dfrac{1}{\sqrt3}=\dfrac{\sqrt3}{3}$（第 3 章探究四的正方体例正是此型的特例）；只要保留「$OA\perp$ 平面 $OBC$」，底面换成任意三角形，射影面积法依旧成立——这就是它比法向量公式更耐用的原因。
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似合理」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}取 $\vec n_1=(1,0,0)$，$\vec n_2=(6,3,2)$，则
+$\cos\theta=\dfrac{\vec n_1\cdot\vec n_2}{|\vec n_1||\vec n_2|}=\dfrac67$，
+所以二面角 $A-BC-O$ 的余弦是 $\dfrac67$。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{建系未交代合法性}：使用空间直角坐标系前必须说明三条轴两两垂直（本题题设已给，但要写出这句话）；否则坐标系本身没有依据。
+\item \textbf{公式自带绝对值}：$|\cos\theta|=\dfrac{|\vec n_1\cdot\vec n_2|}{|\vec n_1||\vec n_2|}$ 只给大小；必须结合图形（或取棱上一点用两个半平面内的向量验号）判定锐钝，否则遇到钝二面角会错。
+\item \textbf{法向量来路要写明}：$\vec n_1=(1,0,0)$ 来自「平面 $OBC$ 的方程是 $x=0$」，不能凭空取；换一般平面须由 $\vec n\cdot\vec a=0,\ \vec n\cdot\vec b=0$ 解方程组。
+\item 别与线面角混用：线面角是 $\sin\varphi=\dfrac{|\vec s\cdot\vec n|}{|\vec s||\vec n|}$（第 3 章高频失误二），二面角才是余弦。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：建系先证垂直，套公式带绝对值，最后一步必须显式判断锐钝并写出理由。
+\else
+{\small（先自己找出漏洞，再对照教师版。）}
+\fi
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{notezone}{章末归档：五问与笔记功能 + 两个二级结论}
+\textbf{五问与笔记}：(1) 具象感知与画图 $\to$ 概念引入笔记；(2) 考纲满分通法 $\to$ 规范书写笔记；(3) 高观点降维秒杀 $\to$ 大招与二级结论笔记；(4) 结构推广与变式 $\to$ 公式族笔记；(5) 易错边界排雷 $\to$ 错题本笔记。
+
+\textbf{两个二级结论}：（1）极化恒等式 $\overrightarrow{PA}\cdot\overrightarrow{PB}=|\overrightarrow{PM}|^2-|\overrightarrow{MB}|^2$（$M$ 为 $AB$ 中点）；矩形 $a\times b$ 中 $P$ 在 $CD$ 上时其范围为 $\left[b^2-\dfrac{a^2}{4},\,b^2\right]$。（2）面积射影定理：$S_{\text{射影}}=S_{\text{原}}\cos\theta$；$OA,OB,OC$ 两两垂直且长 $a,b,c$ 时，二面角 $A-BC-O$ 的余弦为 $\dfrac{bc}{\sqrt{b^2c^2+c^2a^2+a^2b^2}}$。
+
+\textbf{三角平方升次备忘}（呼应「高阶次数雷达」）：$\sin^4x+\cos^4x=1-2\sin^2x\cos^2x$；$\dfrac{\sin x\cos x}{\sin^2x+\cos^2x+1}=\dfrac{t}{2(1+t^2)}$（$t=\tan x$）。
+\end{notezone}

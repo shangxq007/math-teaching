@@ -1,0 +1,347 @@
+% ==========================================================
+%  第 7 章 drill：结构雷达闪电战 + 五问连环母题
+% ------------------------------------------------------------
+%  纯模块化片段：不含 documentclass / document；
+%  编译入口：_check_ch07.tex（preamble + versions + 本文件）。
+%  只使用 versions.tex 与 common/ 已提供的环境（warmupbox、
+%  advancedonly、\ifteacher、\tk、\logotag 等），不新增任何
+%  \newcommand / \newenvironment。
+%  选题理由：第 7 章的两大引擎——「归一化测度与空间缩放」（探究二）
+%  与「最小二乘投影」（探究三）。母题一把条件概率画成可以看见的
+%  面积收缩，母题二把回归直线画成散点云的正交投影。
+%  数值核验（sympy 实算，见工作记录）：
+%    三角形区域面积 mu(O)=1/2, mu(B)=1/8, mu(A∩B)=3/32, mu(A)=7/32；
+%    P(B)=1/4, P(A|B)=3/4, P(B|A)=3/7, P(A)=7/16, P(A|B^c)=1/3；
+%    全概率自洽 P(A)=3/4*1/4+1/3*3/4=7/16。
+%    回归数据 (1,3),(2,2),(3,4),(4,5),(5,6)：x̄=3, ȳ=4,
+%    Σ(x-x̄)(y-ȳ)=9, Σ(x-x̄)^2=10, Σ(y-ȳ)^2=10,
+%    b̂=9/10, â=13/10, r=9/10, 残差平方和 19/10, R²=81/100。
+%    2×2 列联表 a=40,b=20,c=20,d=20：φ=1/6, K²=nφ²=25/9≈2.78。
+% ==========================================================
+
+% ---------------------------------------------------------
+%  第一部分：五分钟结构雷达闪电战
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五分钟结构雷达闪电战：只练核心一步变形}
+规则：每题\textbf{只写关键一步}（不是解完整题）。先读「雷达触发」，在脑子里把这一步放回整条链里，再动笔；答案处以下划线留白（学生版显示等宽下划线，教师版显红）。
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+\item 平均分组除序：8 名同学平均分成 4 个小组（每组 2 人，组与组之间无区别），共有多少种分法？\\
+{\small\bfseries\textcolor{third}{雷达触发：}}先按 $C_8^2C_6^2C_4^2C_2^2$ 有序地选，再除以组数的阶乘 $4!$——无编号的分组必须除序。\\
+关键一步：$\dfrac{C_8^2C_6^2C_4^2C_2^2}{4!}=$\tk{105}。
+
+\item 分配问题：4 本不同的书分给甲、乙、丙 3 人，每人至少 1 本，有多少种分法？\\
+{\small\bfseries\textcolor{third}{雷达触发：}}先允许空盒 $3^4$，再用容斥减掉「有人没分到」：$3^4-C_3^1\cdot2^4+C_3^2\cdot1^4$。\\
+关键一步：\tk{36}。
+
+\item 古典概型：两枚均匀骰子同时掷出，点数之和为 7 的概率。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}和为 7 的有序结果 $(1,6),(2,5),\dots,(6,1)$ 恰 6 个，总结果 $6\times6=36$。\\
+关键一步：\tk{\dfrac{1}{6}}。
+
+\item 几何概型：在三角形 $\Omega=\{(x,y)\mid x\ge0,\ y\ge0,\ x+y\le1\}$ 上均匀取点，求 $P\!\left(Y\ge\dfrac12\right)$。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}$B=\{Y\ge\tfrac12\}$ 是与 $\Omega$ 相似的三角形，相似比 $\tfrac12$，面积比就是概率比。\\
+关键一步：$P(B)=\dfrac{(1/2)\cdot(1/2)\cdot(1/2)}{1/2}=$\tk{\dfrac{1}{4}}。
+
+\item 条件概率方向：同上，求 $P\!\left(X\le\dfrac14\mid Y\ge\dfrac12\right)$，并想一想它是否等于 $P\!\left(Y\ge\dfrac12\mid X\le\dfrac14\right)$。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}把 $B$ 当作新的「全宇宙」重新归一：交集 $A\cap B$ 在 $B$ 内占 $\tfrac34$；方向互换后只剩 $\tfrac37$，二者不相等。\\
+关键一步：$P(A\mid B)=$\tk{\dfrac{3}{4}}（不是 $\dfrac37$）。
+
+\item 回归直线必过样本中心：样本中心 $(\bar x,\bar y)=(3,4)$，$\hat b=\dfrac9{10}$，求 $\hat a$。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}由 $\bar y=\hat b\,\bar x+\hat a$ 反解截距。\\
+关键一步：$\hat a=4-\dfrac9{10}\times3=$\tk{\dfrac{13}{10}}。
+\end{enumerate}
+\end{warmupbox}
+
+% ---------------------------------------------------------
+%  第二部分：解答即笔记 · 五问连环母题
+% ---------------------------------------------------------
+
+以下两道大题每道\textbf{严格五问}：(1) 具象感知与画图（教师版附红笔批注）；(2) 考纲满分通法（用 \texttt{\textbackslash tk} 搭骨架）；(3) 高观点降维秒杀（与通法对读）；(4) 结构推广与变式（完整版渲染，薄弱生版自动隐藏）；(5) 易错边界排雷（诊断错解 + 防扣分铁律）。
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题一：几何概型与条件概率——把样本宇宙「缩小再归一」},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+设随机点 $(X,Y)$ 在三角形区域
+\[
+\Omega=\{(x,y)\mid x\ge0,\ y\ge0,\ x+y\le1\}
+\]
+上服从均匀分布（几何概型：概率＝面积之比，$\mu(\Omega)=\tfrac12$）。记 $A=\{X\le\tfrac14\}$，$B=\{Y\ge\tfrac12\}$。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：在图中画出 $\Omega$、$B$ 与交集 $A\cap B$，用「相似」和「梯形面积」读出三块面积，提出猜想 $P(B)$ 与 $P(A\mid B)$。
+
+$\Omega$ 是直角边为 $1$ 的等腰直角三角形，$\mu(\Omega)=\tfrac12$；
+$B$ 被直线 $y=\tfrac12$ 截出，与 $\Omega$ 相似、相似比 $\tfrac12$，故
+\[
+\mu(B)=\left(\frac12\right)^2\mu(\Omega)=\frac18 .
+\]
+$A\cap B$ 是直角梯形（两条平行竖边长 $\tfrac12$ 与 $\tfrac14$，宽 $\tfrac14$）：
+\[
+\mu(A\cap B)=\frac{\tfrac12+\tfrac14}{2}\times\frac14=\tk{\frac{3}{32}}.
+\]
+猜想：$P(B)=\dfrac{1/8}{1/2}=\tk{\dfrac14}$，$P(A\mid B)=\dfrac{3/32}{1/8}=\tk{\dfrac34}$。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[->, gray] (-0.3,0)--(5.5,0) node[below right] {$x$};
+  \draw[->, gray] (0,-0.3)--(0,5.5) node[above left] {$y$};
+  \draw[main!70!black, very thick] (0,0)--(5,0)--(0,5)--cycle;
+  \fill[second!18] (0,2.5)--(0,5)--(2.5,2.5)--cycle;
+  \fill[main!38] (0,2.5)--(0,5)--(1.25,3.75)--(1.25,2.5)--cycle;
+  \draw[gray, dashed] (1.25,0)--(1.25,3.75);
+  \draw[gray, dashed] (0,2.5)--(2.5,2.5);
+  \node[below left] at (0,0) {$O$};
+  \node[below] at (1.25,0) {{\scriptsize $\tfrac14$}};
+  \node[left] at (0,2.5) {{\scriptsize $\tfrac12$}};
+  \node[second!70!black] at (1.55,3.25) {$B$: $y\ge\tfrac12$};
+  \node[main!70!black] at (0.55,3.6) {$A\cap B$};
+  \ifteacher
+    \node[second!80!black, align=left] at (3.7,4.7) {$\mu(\Omega)=\tfrac12$\\$\mu(B)=\tfrac18$\\$\mu(A\cap B)=\tfrac{3}{32}$\\$P(B)=\tfrac14,\ P(A\mid B)=\tfrac34$};
+    \node[main!70!black, align=left] at (3.7,2.6) {深色块占 $B$ 的\\[2pt] $\dfrac{3/32}{1/8}=\dfrac34$};
+  \else
+    \node[third] at (2.6,1.1) {描出 $B$ 与 $A\cap B$，猜猜 $P(A\mid B)$};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\item \textbf{考纲满分通法}：几何概型 + 条件概率公式，按「写测度—算交集—再归一」写全。
+
+古典（面积）概型给出
+\[
+P(B)=\frac{\mu(B)}{\mu(\Omega)}=\frac{1/8}{1/2}=\tk{\frac14},\qquad
+P(A\cap B)=\frac{\mu(A\cap B)}{\mu(\Omega)}=\frac{3/32}{1/2}=\tk{\frac{3}{16}}.
+\]
+由条件概率公式（注意前提 $P(B)>0$）：
+\[
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}=\frac{3/16}{1/4}=\tk{\frac34}.
+\]
+顺手算出 $P(A)=\dfrac{\mu(A)}{\mu(\Omega)}$，其中 $\mu(A)=\mu(A\cap B)+\mu(A\cap B^c)=\dfrac{3}{32}+\dfrac18=\tk{\dfrac{7}{32}}$，故 $P(A)=\tk{\dfrac{7}{16}}$，满足 $0\le P(A)\le1$、$P(A\mid B)\le1$。
+
+动机：几何概型与条件概率都只是「除以全集」；先各自归一，再作商，三步到底。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：把 $\Omega$ 换成 $B$，一切归一重新来过——$P(A\mid B)$ 根本不必算 $P(A)$。
+
+测度语言：$P(E)=\dfrac{\mu(E)}{\mu(\Omega)}$；条件概率＝样本宇宙由 $\Omega$ 缩小为 $B$ 后的\emph{空间缩放}，
+\[
+P(A\mid B)=\frac{\mu(A\cap B)}{\mu(B)}=\frac{3/32}{1/8}=\tk{\frac34}.
+\]
+右图把 $B$ 单独放大成一个新三角形：$A\cap B$ 正好占它的 $\tfrac34$，$\tfrac34$ 直接「看」出来。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[main!70!black, very thick] (0,0)--(3,0)--(0,3)--cycle;
+  \fill[main!38] (0,0)--(0,3)--(1.5,1.5)--(1.5,0)--cycle;
+  \draw[gray, dashed] (1.5,0)--(1.5,1.5);
+  \node[below left] at (0,0) {$O'$};
+  \node[main!70!black] at (0.62,1.7) {$A\cap B$};
+  \node[second!70!black] at (2.1,0.55) {$B$ 内其余};
+  \ifteacher
+    \node[main, align=center] at (1.5,-0.62) {把 $B$ 当作新全集：\\[2pt]$\dfrac{\mu(A\cap B)}{\mu(B)}=\dfrac{3}{4}$};
+  \else
+    \node[third] at (1.5,-0.62) {量一量：深色块占整个三角形的几分之几？};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+与第 (2) 问左右对读：
+\begin{center}\small
+\begin{tabular}{p{2.4cm}|p{5.6cm}|p{5.6cm}}
+\toprule
+ & 考纲通法（第 (2) 问） & 空间缩放假说（第 (3) 问）\\
+\midrule
+思路 & 各自除以 $\mu(\Omega)$ 归一，再作商 & 直接把 $B$ 当新宇宙，只量相对面积 \\
+计算量 & 三次面积 + 两次除法 & 两个面积 + 一次除法 \\
+何时用 & 解答题要写满规范步骤 & 选填预判、「条件概率＝比例」的直觉 \\
+风险点 & 忘记写 $P(B)>0$ 的前提 & 把 $P(A\mid B)$ 误当成 $P(B\mid A)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广与逆向追问}：同一幅图还能反着用——全概率与贝叶斯互为逆运算。
+
+先看方向不可换：由 $\mu(A)=\dfrac{7}{32}$ 得
+\[
+P(B\mid A)=\frac{\mu(A\cap B)}{\mu(A)}=\frac{3/32}{7/32}=\tk{\frac37}\ne P(A\mid B)=\frac34 .
+\]
+再用全概率公式做自洽性检查：把 $\Omega$ 沿 $y=\tfrac12$ 切成 $B$ 与 $B^c$ 两块，
+\[
+\mu(A\cap B^c)=\mu(A)-\mu(A\cap B)=\frac{7}{32}-\frac{3}{32}=\frac18,\quad
+\mu(B^c)=\frac12-\frac18=\frac38,
+\]
+\[
+P(A\mid B^c)=\frac{1/8}{3/8}=\tk{\frac13},\qquad
+P(A)=P(A\mid B)P(B)+P(A\mid B^c)P(B^c)
+=\frac34\times\frac14+\frac13\times\frac34=\tk{\frac{7}{16}},
+\]
+与第 (2) 问的 $P(A)$ 完全一致。
+
+动机：条件概率「由因及果」（知道 $B$ 发生，问 $A$），全概率「把因拆散再合成」，贝叶斯「由果溯因」——三者共用同一张测度图，只是除以的「宇宙」不同。
+\logotag{充要边界}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似合理」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}「$A\cap B$ 的面积是 $\dfrac{3}{32}$，所以 $P(A\mid B)=\dfrac{3}{32}$；又因为 $A\cap B=B\cap A$，所以 $P(A\mid B)=P(B\mid A)=\dfrac{3}{32}\div\dfrac{7}{32}=\dfrac37$。」
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{忘了重新归一}：$P(A\mid B)$ 的分母必须是条件事件 $B$ 的测度 $\mu(B)=\tfrac18$，不是全集 $\mu(\Omega)=\tfrac12$，更不是交集本身。正确为 $\tk{\dfrac{3/32}{1/8}=\dfrac34}$。
+\item \textbf{方向弄反}：$P(A\mid B)$ 与 $P(B\mid A)$ 的分母不同（$\tfrac18$ 与 $\tfrac{7}{32}$），一般不相等；本题 $P(B\mid A)=\tk{\dfrac37}$，只有数字巧合时才相等。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：条件概率三步——画准条件事件 $B$；只保留 $B$ 的内部；用 $\mu(\cdot)/\mu(B)$ 重新归一。写方向时默念「竖线右边是谁，宇宙就缩成谁」。
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题二：最小二乘回归直线——散点云的竖直投影},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+已知 5 组成对数据 $(1,3),(2,2),(3,4),(4,5),(5,6)$，求回归方程 $\hat y=\hat bx+\hat a$ 与样本相关系数 $r$。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：描点，找出样本中心 $(\bar x,\bar y)$，观察残差的竖直方向，猜一猜回归直线大致的位置。
+
+\[
+\bar x=\frac{1+2+3+4+5}{5}=\tk{3},\qquad
+\bar y=\frac{3+2+4+5+6}{5}=\tk{4}.
+\]
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[->, gray] (-0.4,0)--(5.9,0) node[below right] {$x$};
+  \draw[->, gray] (0,-0.6)--(0,7.2) node[above left] {$y$};
+  \foreach \x in {1,...,5} \draw (\x,0.06)--(\x,-0.06) node[below] {\x};
+  \foreach \y in {2,4,6} \draw (0.06,\y)--(-0.06,\y) node[left] {\y};
+  \foreach \x/\y in {1/3,2/2,3/4,4/5,5/6}{
+    \fill[main] (\x,\y) circle (1.7pt);
+  }
+  \ifteacher
+    \draw[second, very thick, domain=0.4:5.6, samples=2] plot (\x,{0.9*\x+1.3});
+    \foreach \x/\y in {1/3,2/2,4/5,5/6}{
+      \draw[second!80, dashed, very thick] (\x,\y)--(\x,{0.9*\x+1.3});
+    }
+    \draw[third, dashed, thick] (2.7,4)--(3.3,4);
+    \draw[third, dashed, thick] (3,3.7)--(3,4.3);
+    \fill[third] (3,4) circle (1.7pt);
+    \node[third, right] at (3.35,4.06) {$(\bar x,\bar y)=(3,4)$};
+    \node[second] at (0.8,5.6) {$\hat y=\tfrac9{10}x+\tfrac{13}{10}$};
+  \else
+    \node[third] at (2.6,6.4) {描点，标出样本中心，试画一条「残差小」的直线};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+动机：回归直线是「竖直距离」最小的那条，先看见中心与走势，公式的计算才有方向。
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：按公式「先中心化，再作比」。
+
+\[
+\sum_{i=1}^5(x_i-\bar x)(y_i-\bar y)
+=(-2)(-1)+(-1)(-2)+0\cdot0+1\cdot1+2\cdot2=\tk{9},
+\]
+\[
+\sum_{i=1}^5(x_i-\bar x)^2=4+1+0+1+4=\tk{10},\qquad
+\sum_{i=1}^5(y_i-\bar y)^2=1+4+0+1+4=\tk{10}.
+\]
+\[
+\hat b=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sum(x_i-\bar x)^2}=\tk{\frac{9}{10}},\qquad
+\hat a=\bar y-\hat b\,\bar x=4-\frac9{10}\times3=\tk{\frac{13}{10}}.
+\]
+回归方程 $\hat y=\tk{\dfrac9{10}x+\dfrac{13}{10}}$，必过样本中心：$\dfrac9{10}\times3+\dfrac{13}{10}=4=\bar y$。
+\[
+r=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum(x_i-\bar x)^2\sum(y_i-\bar y)^2}}
+=\frac{9}{\sqrt{10\times10}}=\tk{\frac{9}{10}}=0.9,
+\]
+高度正相关。
+\level{难}\quad 动机：分母是「中心化后的平方和」，不是 $\sum x_i^2$——这是最常见的丢分点。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：回归直线＝观测向量 $\vec y$ 在平面 $\operatorname{span}\{\vec 1,\vec x\}$ 上的正交投影；正规方程给出残差的两条正交性，可用来秒验答案。
+
+残差 $e_i=y_i-\hat y_i$：
+\[
+(e_1,e_2,e_3,e_4,e_5)=\tk{\left(\frac45,\ -\frac{11}{10},\ 0,\ \frac1{10},\ \frac15\right)} .
+\]
+检验：$\sum e_i=0$，$\sum e_ix_i=0$（残差既与常数方向正交，也与 $x$ 方向正交——这正是「垂足」的含义）。进一步
+\[
+R^2=1-\frac{\sum e_i^2}{\sum(y_i-\bar y)^2}=1-\frac{19/10}{10}=\tk{\frac{81}{100}}=r^2 .
+\]
+对读：通法（第 (2) 问）负责逐项算出 $\hat b,\hat a$；投影观点一句话「找垂足」，还附带检验工具。考试书写用通法，交卷前用「过中心 + 残差和为零」秒验。
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广与变式}：独立性检验与相关系数是同一个 Pearson 公式的两面。
+
+对 $2\times2$ 列联表（四个数据 $a,b,c,d$，$n=a+b+c+d$），把两变量看成 $0/1$ 指示变量，其相关系数（$\varphi$ 系数）为
+\[
+\varphi=\frac{ad-bc}{\sqrt{(a+b)(c+d)(a+c)(b+d)}},
+\]
+于是
+\[
+K^2=\frac{n(ad-bc)^2}{(a+b)(c+d)(a+c)(b+d)}=n\varphi^2 .
+\]
+例：$a=40,b=20,c=20,d=20$ 时
+\[
+\varphi=\frac{40\times20-20\times20}{\sqrt{60\times40\times60\times40}}=\tk{\frac16},\qquad
+K^2=100\times\left(\frac16\right)^2=\tk{\frac{25}{9}}\approx2.78<3.841,
+\]
+故没有 $95\%$ 以上的把握认为两变量有关。同一个 $r$：连续变量给出回归相关系数（本题 $r=\tfrac9{10}$），$0/1$ 变量给出 $\varphi$，而 $K^2=n\varphi^2$——「相关性」与「独立性检验」在此合流。
+
+动机：本章探究三的「最小二乘投影」与「小概率反证」看似无关，共用同一套中心化语言：都是先减去均值，再看剩余结构。
+\logotag{大招公式}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似合理」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}「回归直线过原点，所以 $\hat b=\dfrac{\sum x_iy_i}{\sum x_i^2}=\dfrac{69}{55}\approx1.25$；截距 $\hat a=\bar y=4$。」
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item $\dfrac{69}{55}$ 是「强制直线过原点」时的最优斜率，不是最小二乘解；最小二乘要求的是中心化平方和之比 $\tk{\dfrac{9}{10}}$，两者相差悬殊。
+\item 回归直线必过\emph{样本中心} $(\bar x,\bar y)=(3,4)$，而不是 $(0,\bar y)$；把 $\hat a$ 写成 $4$ 相当于让直线过 $(0,4)$，代入 $x=3$ 得 $y\approx7.75\ne4$，立刻露馅。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：先算 $(\bar x,\bar y)$；分子分母都要中心化（分母是 $\sum(x_i-\bar x)^2$，不是 $\sum x_i^2$）；求完后把 $x=\bar x$ 代回，检查是否得到 $\bar y$。
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{notezone}{章末归档：五问与笔记功能 + 两种观点对照}
+\textbf{五问与笔记}：(1) 具象感知与画图 $\to$ 直观引入笔记；(2) 考纲满分通法 $\to$ 规范书写笔记；(3) 高观点降维秒杀 $\to$ 二级结论笔记；(4) 结构推广与变式 $\to$ 公式族笔记；(5) 易错边界排雷 $\to$ 错题本笔记。
+
+\textbf{两模块一句话}：概率侧——条件概率是把样本宇宙缩小为条件事件后的重新归一（$P(A\mid B)=\mu(A\cap B)/\mu(B)$，方向不可换）；统计侧——回归直线是散点云的正交投影（必过 $(\bar x,\bar y)$，残差满足 $\sum e_i=0$、$\sum e_ix_i=0$，$R^2=r^2$）。
+
+\textbf{跨模块接口}：$2\times2$ 列联表的 $\varphi$ 系数满足 $K^2=n\varphi^2$——独立性检验与相关系数同源，这也是本章压轴「新定义题四步法」中「翻译回熟悉结构」的又一例证。
+\end{notezone}

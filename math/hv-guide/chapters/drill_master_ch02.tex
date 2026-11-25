@@ -1,0 +1,377 @@
+% ==========================================================
+%  第 2 章 drill：结构雷达闪电战 + 五问连环母题
+% ------------------------------------------------------------
+%  纯模块化片段：不含 documentclass / document；
+%  编译入口：_check_ch02.tex（preamble + versions + 本文件）。
+%  只使用 versions.tex 与 common/ 已提供的环境（warmupbox、
+%  advancedonly、\ifteacher、\tk、\logotag 等），不新增任何
+%  \newcommand / \newenvironment。
+%  数值核验（sympy 实算，全部吻合）：
+%    母题一：sin(α+β)=63/65，cos(α+β)=16/65，tan(α+β)=63/16，
+%            sin(α-β)=33/65，cos(α-β)=56/65；
+%            z1z2=(16+63i)/65，z1·z̄2=(56+33i)/65；
+%            错解自检 63²+56²=7105≠4225=65²（正确对 63²+16²=4225）。
+%    母题二：h=b·sinA=3，AD=3√3，DB=√7；c²-6√3c+20=0，Δ=28，
+%            c=3√3±√7≈2.55/7.84（两根均满足三角不等式）；
+%            cosC=(3∓√21)/8；sinB=3/4，2R=8。
+% ==========================================================
+
+% ---------------------------------------------------------
+%  第一部分：五分钟结构雷达闪电战
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五分钟结构雷达闪电战：只练核心一步变形}
+规则：每题\textbf{只写关键一步}（不是解完整题）。先读「雷达触发」，在脑子里把这一步放回整条链里，再动笔；答案处以下划线留白（学生版显示等宽下划线，教师版显红）。
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+\item 乘 $i$ 即逆时针转 $90^\circ$：计算 $i(\cos\theta+i\sin\theta)$，写成 $a+b i$ 形式。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}分配律展开后 $i\cdot i\sin\theta=i^2\sin\theta=-\sin\theta$ 落到实部，$\cos\theta$ 落到虚部——模长不变，只转弯。\\
+答案：\tk{-\sin\theta+i\cos\theta}。
+
+\item 角度相加＝复数相乘：设 $\alpha,\beta$ 为锐角，$\cos\alpha=\dfrac35,\ \sin\alpha=\dfrac45,\ \cos\beta=\dfrac{12}{13},\ \sin\beta=\dfrac5{13}$，求 $z_1z_2$ 的虚部（$z_1=\cos\alpha+i\sin\alpha,\ z_2=\cos\beta+i\sin\beta$）。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}虚部就是 $\sin(\alpha+\beta)$——一次乘法顶替和角公式，不必先背公式。\\
+答案：\tk{\dfrac{63}{65}}。
+
+\item 平方出二倍角：写出 $(\cos\theta+i\sin\theta)^2$ 的实部与虚部。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}棣莫弗定理 $n=2$：实部给余弦、虚部给正弦，对比即得二倍角公式。\\
+答案：实部 \tk{\cos^2\theta-\sin^2\theta}，虚部 \tk{2\sin\theta\cos\theta}。
+
+\item 共轭给出差角：求 $z_1\overline{z_2}$（数据同第 (2) 题）的实部。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}乘共轭＝辐角相减；实部即 $\cos(\alpha-\beta)$，符号与和角相反。\\
+答案：\tk{\dfrac{56}{65}}。
+
+\item 正弦定理求角：在 $\triangle ABC$ 中，$a=4,\ b=6,\ A=30^\circ$，由 $\dfrac{a}{\sin A}=\dfrac{b}{\sin B}$ 求 $\sin B$。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}先算外接圆直径 $2R=\dfrac{a}{\sin A}=8$，再取比例 $\dfrac{b}{2R}$。\\
+答案：\tk{\dfrac34}。
+
+\item 垂足分段：同一三角形中从 $C$ 向 $AB$ 作高 $CD$，则 $AD=b\cos A=$ \tk{3\sqrt3}，$DB=\sqrt{a^2-b^2\sin^2A}=$ \tk{\sqrt7}，故第三边 $c=$ \tk{3\sqrt3\pm\sqrt7}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}高把对边切成两段，$\pm$ 就是两个三角形——SSA 两解的几何来源。
+\end{enumerate}
+\end{warmupbox}
+
+% ---------------------------------------------------------
+%  第二部分：解答即笔记 · 五问连环母题
+% ---------------------------------------------------------
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题一：一次复数乘法，长出两角和差},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+设 $\alpha,\beta$ 均为锐角，且 $\cos\alpha=\dfrac35,\ \sin\beta=\dfrac5{13}$。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：在单位圆上描出 $P_1(\cos\alpha,\sin\alpha)=\left(\dfrac35,\dfrac45\right)$、$P_2(\cos\beta,\sin\beta)=\left(\dfrac{12}{13},\dfrac5{13}\right)$，再把 $OP_1$ 逆时针转 $\beta$，观察落点 $P_3$ 与两坐标轴的投影。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[->, gray] (-2.5,0)--(2.6,0) node[below right] {$x$};
+  \draw[->, gray] (0,-2.5)--(0,2.6) node[above left] {$y$};
+  \draw[gray!55, dashed] (0,0) circle (2.2);
+  \draw[main, thick] (0.55,0) arc (0:53.13:0.55);
+  \node[main] at ({0.75*cos(26.5)},{0.75*sin(26.5)}) {$\alpha$};
+  \draw[->, third, thick] ({0.9*cos(53.13)},{0.9*sin(53.13)}) arc (53.13:75.75:0.9);
+  \node[third] at ({1.12*cos(64.4)},{1.12*sin(64.4)}) {$\beta$};
+  \draw[gray!70!black, thick] (1.4,0) arc (0:75.75:1.4);
+  \node[gray!70!black] at ({1.6*cos(37.9)},{1.6*sin(37.9)}) {$\alpha+\beta$};
+  \draw[->, main!80!black, very thick] (0,0)--({2.2*cos(53.13)},{2.2*sin(53.13)});
+  \fill[main!80!black] ({2.2*cos(53.13)},{2.2*sin(53.13)}) circle (1.6pt) node[above right] {$P_1(\frac35,\frac45)$};
+  \draw[->, third, very thick] (0,0)--({2.2*cos(22.62)},{2.2*sin(22.62)});
+  \fill[third] ({2.2*cos(22.62)},{2.2*sin(22.62)}) circle (1.6pt) node[right] {$P_2(\frac{12}{13},\frac5{13})$};
+  \draw[->, second, very thick] (0,0)--({2.2*cos(75.75)},{2.2*sin(75.75)});
+  \fill[second] ({2.2*cos(75.75)},{2.2*sin(75.75)}) circle (1.6pt) node[above left] {$P_3$};
+  \ifteacher
+    \draw[dashed, gray] ({2.2*cos(75.75)},{2.2*sin(75.75)})--({2.2*cos(75.75)},0);
+    \draw[dashed, gray] ({2.2*cos(75.75)},{2.2*sin(75.75)})--(0,{2.2*sin(75.75)});
+    \node[gray!70!black, below] at ({2.2*cos(75.75)},0) {$\frac{16}{65}$};
+    \node[gray!70!black, left] at (0,{2.2*sin(75.75)}) {$\frac{63}{65}$};
+  \else
+    \node[third] at (0,-2.3) {描出 $P_1,P_2$；把 $OP_1$ 转 $\beta$，猜 $P_3$ 的坐标};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：}$\sin\alpha=\dfrac45,\ \cos\beta=\dfrac{12}{13}$；$P_3$ 恰为 $z_1z_2$ 的落点 $\left(\dfrac{16}{65},\dfrac{63}{65}\right)$，它到原点距离仍为 $1$——乘法只转不改模。}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：先定象限定符号，再套和差公式，最后写正切。动机：考纲按步骤给分，象限判断与公式书写都是独立得分点。
+
+由 $\cos\alpha=\dfrac35$ 且 $\alpha\in\left(0,\dfrac{\pi}{2}\right)$，得
+\[
+\sin\alpha=\sqrt{1-\frac{9}{25}}=\tk{\frac45};\qquad
+\text{由 }\sin\beta=\frac5{13}\text{ 且 }\beta\in\left(0,\frac{\pi}{2}\right),\text{ 得 }\cos\beta=\tk{\frac{12}{13}}.
+\]
+于是
+\begin{align*}
+\sin(\alpha+\beta)&=\sin\alpha\cos\beta+\cos\alpha\sin\beta
+=\frac{48}{65}+\frac{15}{65}=\tk{\frac{63}{65}},\\
+\cos(\alpha+\beta)&=\cos\alpha\cos\beta-\sin\alpha\sin\beta
+=\frac{36}{65}-\frac{20}{65}=\tk{\frac{16}{65}},\\
+\tan(\alpha+\beta)&=\tk{\frac{63}{16}}.
+\end{align*}
+顺手记录差角（第 (3)(4) 问会解释：它们只差一个共轭）：
+\[
+\sin(\alpha-\beta)=\tk{\frac{33}{65}},\qquad\cos(\alpha-\beta)=\tk{\frac{56}{65}}.
+\]
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：把角翻译成单位复数，\textbf{一次乘法}同时给出和角的正弦与余弦。
+
+$z_1=\dfrac{3+4i}{5},\ z_2=\dfrac{12+5i}{13}$，则
+\[
+z_1z_2=\frac{(3+4i)(12+5i)}{65}
+=\frac{36+15i+48i+20i^2}{65}
+=\frac{\tk{16}+\tk{63}i}{65}.
+\]
+对比「乘积＝模相乘、辐角相加」：
+\[
+\operatorname{Re}(z_1z_2)=\cos(\alpha+\beta)=\tk{\frac{16}{65}},\qquad
+\operatorname{Im}(z_1z_2)=\sin(\alpha+\beta)=\tk{\frac{63}{65}}.
+\]
+差角只是乘共轭：
+\[
+z_1\overline{z_2}=\frac{(3+4i)(12-5i)}{65}
+=\frac{\tk{56}+\tk{33}i}{65}
+\implies
+\cos(\alpha-\beta)=\frac{56}{65},\quad \sin(\alpha-\beta)=\frac{33}{65}.
+\]
+
+与第 (2) 问左右对读：
+\begin{center}\small
+\begin{tabular}{p{2.4cm}|p{5.6cm}|p{5.6cm}}
+\toprule
+ & 考纲通法（第 (2) 问） & 复数乘法（第 (3) 问）\\
+\midrule
+思路 & 象限定号，套和差公式，逐式计算 & 写成 $z_1,z_2$ 一次相乘，读实虚部 \\
+计算量 & 开方两次、公式两套、通分四次 & 一次多项式乘法 $+i^2=-1$ \\
+何时用 & 解答题必须按步书写 & 选填预判、批量生成公式 \\
+风险点 & 公式符号记反、漏开方符号 & 忘记 $i^2=-1$、实虚部对应错位 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：一条指数律生长出整个公式族}。把 $e^{i(\alpha+\beta)}=e^{i\alpha}e^{i\beta}$ 当作唯一的「母公式」，其余公式都是它的代数外形：
+\begin{itemize}[itemsep=2pt]
+\item 令 $\beta=\alpha$（平方）：$\cos2\theta=\cos^2\theta-\sin^2\theta$，$\sin2\theta=2\sin\theta\cos\theta$；
+\item 把 $z_1z_2$ 与 $z_1\overline{z_2}$ 相加、相减（积化和差）：
+\[
+\cos\alpha\cos\beta=\frac{\cos(\alpha+\beta)+\cos(\alpha-\beta)}{2},\qquad
+\sin\alpha\sin\beta=\frac{\cos(\alpha-\beta)-\cos(\alpha+\beta)}{2};
+\]
+\item 三次幂（棣莫弗）：$\cos3\theta=4\cos^3\theta-3\cos\theta$，取 $\theta=30^\circ$ 立即验证 $4\left(\dfrac{\sqrt3}{2}\right)^3-3\cdot\dfrac{\sqrt3}{2}=0=\cos90^\circ$。
+\end{itemize}
+动机：公式族的每个成员都是同一条指数律的代入值；记住「母公式＋代入清单」，比背几十个孤立公式更抗遗忘。
+\logotag{公式族}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似合理」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}由 $\cos\alpha=\dfrac35$ 得 $\sin\alpha=\dfrac45$；由 $\sin\beta=\dfrac5{13}$ 得 $\cos\beta=\dfrac{12}{13}$。所以
+\[
+\cos(\alpha+\beta)=\cos\alpha\cos\beta+\sin\alpha\sin\beta
+=\frac{36}{65}+\frac{20}{65}=\frac{56}{65},
+\]
+从而 $\tan(\alpha+\beta)=\dfrac{63}{65}\div\dfrac{56}{65}=\dfrac{63}{56}$，作答。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{公式符号记反}：和角余弦应为减号——
+$\cos(\alpha+\beta)=\dfrac{36}{65}-\dfrac{20}{65}=\tk{\dfrac{16}{65}}$，连锁地 $\tan(\alpha+\beta)=\tk{\dfrac{63}{16}}$。
+\item \textbf{恒等式自检被跳过}：$\sin^2(\alpha+\beta)+\cos^2(\alpha+\beta)$ 必为 $1$，而错解给出
+$\dfrac{63^2+56^2}{65^2}=\dfrac{7105}{4225}\ne1$，一票否决；正确的一对 $\dfrac{63^2+16^2}{65^2}=1$ 通过。
+\item \textbf{估值检验}：$\alpha+\beta\approx75.75^\circ$，$\cos$ 应约 $0.25$（即 $\dfrac{16}{65}$）；$\dfrac{56}{65}\approx0.86$ 对应约 $30^\circ$，明显不符。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：和差公式符号口诀「\textbf{正弦同号、余弦异号}」（角度相加，正弦就用加号、余弦就用减号；角度相减则相反）；每算完一组值，用 $\tk{\sin^2\theta+\cos^2\theta=1}$ 自检。若题目没有「锐角」条件，开方得到的 $\sin\alpha=\pm\dfrac45$ 必须分类讨论——符号条件也是得分点。
+\else
+{\small（先自己找出漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题二：两边一对角——高的判据与两解},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+在 $\triangle ABC$ 中，已知 $a=4,\ b=6,\ A=30^\circ$，求 $B,C,c$。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：作射线 $AX$ 与 $AY$ 使 $\angle XAY=30^\circ$，在 $AY$ 上取 $AC=b=6$ 得定点 $C$；从 $C$ 向直线 $AX$ 作垂线，垂足为 $D$；再以 $C$ 为圆心、$a=4$ 为半径画弧，数它与直线 $AX$ 的交点个数。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[->, gray] (-0.5,0)--(9.2,0) node[below right] {$x$（直线 $AB$）};
+  \draw[->, gray] (0,-1.1)--(0,4.0) node[above left] {$y$};
+  \draw[main!70!black, thick] (0,0)--({6*cos(30)},{6*sin(30)}) node[midway,above left] {$b=6$};
+  \fill[main!70!black] ({6*cos(30)},{6*sin(30)}) circle (1.6pt) node[above right] {$C$};
+  \node[below left] at (0,0) {$A$};
+  \draw[third, thick] (0.9,0) arc (0:30:0.9) node[midway,right] {$30^\circ$};
+  \draw[dashed, gray] ({6*cos(30)},{6*sin(30)})--({6*cos(30)},0);
+  \fill[gray!70!black] ({6*cos(30)},0) circle (1.3pt);
+  \node[below] at ({6*cos(30)},0) {$D$};
+  \draw[gray] ({6*cos(30)-0.18},0)--({6*cos(30)-0.18},{0.18})--({6*cos(30)},{0.18});
+  \draw[gray!55, dashed] ({6*cos(30)+4*cos(228.59)},{3+4*sin(228.59)}) arc (228.59:311.41:4);
+  \fill[second] ({6*cos(30)+4*cos(228.59)},0) circle (1.6pt);
+  \node[below] at ({6*cos(30)+4*cos(228.59)},0) {$B_1$};
+  \fill[second] ({6*cos(30)+4*cos(311.41)},0) circle (1.6pt);
+  \node[below] at ({6*cos(30)+4*cos(311.41)},0) {$B_2$};
+  \ifteacher
+    \draw[second, very thick] ({6*cos(30)},{3})--({6*cos(30)+4*cos(228.59)},0);
+    \draw[second, very thick] ({6*cos(30)},{3})--({6*cos(30)+4*cos(311.41)},0);
+    \node[gray!70!black, right] at ({6*cos(30)+0.12},{1.5}) {$h=3$};
+    \node at ({3*cos(30)},{0.22}) {$3\sqrt3$};
+    \node at ({(6*cos(30)+4*cos(228.59)+6*cos(30))/2},{-0.34}) {$\sqrt7$};
+    \node at ({(6*cos(30)+6*cos(30)+4*cos(311.41))/2},{-0.34}) {$\sqrt7$};
+  \else
+    \node[third] at (4.85,-0.85) {以 $C$ 为圆心、$a=4$ 为半径画弧，数交点个数};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：}$h=b\sin30^\circ=3$，$AD=b\cos30^\circ=3\sqrt3$，$DB=\sqrt{a^2-h^2}=\sqrt7$。因 $h<a<b$，弧与直线有两个交点：$DB_1=DB_2=\sqrt7$，故 $c=AB=3\sqrt3\pm\sqrt7$——画图直接读出两解。}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：已知「两边一对角」，关于第三边的式子是二次齐次式——用余弦定理列方程，判别式天然携带两解信息。动机：「二次齐次用余弦」在此不仅是经验法则，更是不漏解的机制。
+
+由 $a^2=b^2+c^2-2bc\cos A$：
+\[
+16=36+c^2-2\cdot6\cdot c\cdot\frac{\sqrt3}{2}
+\;\Longrightarrow\;
+c^2-6\sqrt3\,c+20=0 .
+\]
+\[
+\Delta=(6\sqrt3)^2-4\cdot20=108-80=\tk{28},\qquad
+c=\frac{6\sqrt3\pm\sqrt{28}}{2}=\tk{3\sqrt3\pm\sqrt7}.
+\]
+检验（必做）：较小根 $3\sqrt3-\sqrt7\approx2.55>|b-a|=2$，较大根 $\approx7.84<a+b=10$，两根均满足三角形存在条件，\textbf{全部保留}。
+
+回代求角：
+\[
+\sin B=\frac{b\sin A}{a}=\frac{6\cdot\frac12}{4}=\tk{\frac34},
+\qquad B\approx\tk{48.59^\circ}\ \text{或}\ \tk{131.41^\circ}.
+\]
+再由余弦定理逐根回代：
+当 $c=3\sqrt3+\sqrt7$ 时，
+\(\cos C=\dfrac{a^2+b^2-c^2}{2ab}=\tk{\dfrac{3-\sqrt{21}}{8}}\)（$C\approx101.41^\circ$）；
+当 $c=3\sqrt3-\sqrt7$ 时，
+\(\cos C=\dfrac{a^2+b^2-c^2}{2ab}=\tk{\dfrac{3+\sqrt{21}}{8}}\)（$C\approx18.59^\circ$）。
+两种配置都合法：$(A,B,C)\approx(30^\circ,48.59^\circ,101.41^\circ)$ 与 $(30^\circ,131.41^\circ,18.59^\circ)$。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：把同一构图当成「判据仪」——高 $h$ 是 SSA 情形的临界尺。
+
+先在图上一眼判定解的个数：
+\[
+h=b\sin A=3,\qquad h<a<b\ (3<4<6)\ \Longleftrightarrow\ \tk{\text{两解}}.
+\]
+（完整判据见第 (4) 问：$a<h$ 无解；$a=h$ 一解；$h<a<b$ 两解；$a\ge b$ 一解。）
+
+再心算第三边：垂足 $D$ 把 $AB$ 切成两段，
+\[
+AD=b\cos A=3\sqrt3,\qquad DB=\sqrt{a^2-h^2}=\sqrt7,
+\]
+故
+\[
+c=AB=AD\pm DB=\tk{3\sqrt3\pm\sqrt7}.
+\]
+与第 (2) 问左右对读：
+\begin{center}\small
+\begin{tabular}{p{2.4cm}|p{5.6cm}|p{5.6cm}}
+\toprule
+ & 考纲通法（第 (2) 问） & 高的几何法（第 (3) 问）\\
+\midrule
+思路 & 余弦定理建二次方程，求根公式出两根 & 作高比较 $h,a,b$，垂足分段直接写 $c$\\
+计算量 & 判别式、开方、回代检验 & 两个直角三角形，各一步勾股 \\
+何时用 & 解答题规范书写（步骤分） & 选填秒判解的个数与第三边 \\
+风险点 & 忘记检验两根的三角不等式 & 记错判据方向（把 $a\ge b$ 误当两解） \\
+\bottomrule
+\end{tabular}
+\end{center}
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：SSA 两解判据与逆向追问}。一般地，已知角 $A$、对边 $a$ 与邻边 $b$，设
+\[
+h=b\sin A .
+\]
+则三角形个数完全由 $h,a,b$ 的大小决定：
+\[
+\begin{cases}
+a<h, & \text{无解};\\
+a=h, & \text{恰好一解（直角三角形）};\\
+h<a<b, & \text{两解};\\
+a\ge b, & \text{恰好一解}.
+\end{cases}
+\]
+（$A$ 为钝角或直角时更简单：$a\le b$ 无解，$a>b$ 一解。）
+
+逆向追问（参数变式）：若固定 $b=6,\ A=30^\circ$，则 $h=3$，两解要求
+\[
+3<a<6,
+\]
+这正是「已知两解反求参数范围」的充要边界；本例 $a=4$ 恰好落在其中。
+
+动机：判据把「解三角形」从「算」变成「先判后算」——先数解，再开算，可从源头堵住漏解。
+\logotag{充要边界}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似完整」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}由正弦定理
+\[
+\frac{a}{\sin A}=\frac{b}{\sin B}
+\implies
+\sin B=\frac{b\sin A}{a}=\frac{6\cdot\frac12}{4}=\frac34,
+\]
+故 $B=\arcsin\frac34\approx48.59^\circ$，$C\approx180^\circ-30^\circ-48.59^\circ=101.41^\circ$，再由 $\dfrac{c}{\sin C}=\dfrac{a}{\sin A}$ 得 $c\approx7.84$。作答完毕。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{漏掉钝角解}：$\sin B=\dfrac34$ 在 $(0,\pi)$ 上有两个解 $B_1\approx48.59^\circ$ 与 $B_2=180^\circ-B_1\approx131.41^\circ$；两者都满足 $A+B<180^\circ$（$30^\circ+131.41^\circ=161.41^\circ$），第二个三角形同样合法，其 $c=3\sqrt3-\sqrt7\approx2.55$。
+\item \textbf{病根}：把「$\sin B=\frac34$」自动等同于「$B$ 为锐角」。几何上看，这正是 $h<a<b$ 的两解情形，正弦定理本身不会提醒你。
+\item \textbf{稳妥做法}：改用余弦定理的二次方程（两根自动齐全），或求角后逐根检验 $A+B<\pi$ 与三角不等式。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：正弦定理求角必查两解；确认两解后逐个验证 $\tk{A+B<\pi}$ 与三角不等式，再写答案。
+\else
+{\small（先自己找出漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{notezone}{章末归档：五问与笔记功能 + 两种解法对照}
+\textbf{五问与笔记}：(1) 具象感知与画图 $\to$ 概念引入笔记；(2) 考纲满分通法 $\to$ 规范书写笔记；(3) 高观点降维秒杀 $\to$ 大招与二级结论笔记；(4) 结构推广 $\to$ 公式族／判据笔记；(5) 易错边界排雷 $\to$ 错题本笔记。
+
+\textbf{两种解法对照}：两角和差——「通法背公式、复数乘一次」；SSA 两解——「通法解方程、几何先判解」。考场上先用高观点预判答案与解的个数，再用通法把步骤写满。
+
+\textbf{数值速记}：$\sin(\alpha+\beta)=\dfrac{63}{65}$，$\cos(\alpha+\beta)=\dfrac{16}{65}$；$c=3\sqrt3\pm\sqrt7\approx2.55$ 或 $7.84$，$\sin B=\dfrac34$，$h=3$ 是 SSA 两解的临界尺。
+\end{notezone}

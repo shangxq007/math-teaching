@@ -1,0 +1,404 @@
+% ==========================================================
+%  第 0 章 drill：结构雷达闪电战 + 五问连环母题
+% ------------------------------------------------------------
+%  纯模块化片段：不含 documentclass / document；
+%  编译入口：_check_ch00.tex（preamble + versions + 本文件）。
+%  只使用 versions.tex 与 common/ 已提供的环境（warmupbox、
+%  advancedonly、\ifteacher、\tk 等），不新增任何 \newcommand /
+%  \newenvironment。
+%  母题选题（第 0 章＝语言底座，两类最核心的结构动作）：
+%    母题一 同解变形的方向审查——平方单向扩大（增根）vs
+%           换元 t=√(·) 把 t≥0 内嵌（天然同解）；
+%    母题二 存在性命题的值域翻译——∃ 看最小值、补集转化
+%            正难则反（∃ f<0 ⟺ min<0）。
+%  数值核验（sympy 实算，见工作记录）：
+%    √(x+1)=x-1 的解为 {3}；平方后方程 x²-3x=0 的根为 {0,3}；
+%    反射分支给出增根 0；换元 t 得 t²-t-2=(t-2)(t+1)，t=2→x=3；
+%    g=x+1/x 在 [1,2] 上 min=2(x=1)、max=5/2(x=2)；
+%    f_a=x²-ax+1 在 [1,2] 上 min<0 ⟺ a>2，端点 a=2 时
+%    f=(x-1)²≥0 必须排除；a=3 时两根 (3±√5)/2 在区间外而
+%    f 在 [1,2] 上恒负（说明「方程有根」≠「存在函数值为负」）。
+% ==========================================================
+
+% ---------------------------------------------------------
+%  第一部分：五分钟结构雷达闪电战
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五分钟结构雷达闪电战：只练核心一步变形}
+规则：每题\textbf{只写关键一步}（不是解完整题）。先读「雷达触发」，在脑子里把这一步放回整条链里，再动笔；答案处以下划线留白（学生版显示等宽下划线，教师版显红）。
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+\item \textbf{集合相等公理}：设 $A=\{x\mid x^2-3x+2=0\}$，$B=\{1,2\}$。判定 $A=B$ 的核心一步是 \tk{A\subseteq B\ \text{且}\ B\subseteq A}（解出 $A=\{1,2\}$ 后逐元素核对）。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}相等＝互相包含；只证 $A\subseteq B$ 一个方向，得到的只是包含，不是相等。
+
+\item \textbf{平方的方向}：把 $\sqrt{x+1}=x-1$ 两边平方得 $x^2-3x=0$，解集由 $\{3\}$ 变为 \tk{\{0,3\}}，方向是 \tk{\text{扩大}}，多出的 \tk{x=0} 是增根。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}平方＝并上「$f=-g$」分支，解集只会变大不会变小，所以必须验根。
+
+\item \textbf{换元保同解}：令 $t=\sqrt{x+1}\ge0$，则 $x=t^2-1$，原方程化为 \tk{t^2-t-2=0}；由 $t\ge0$ 舍负根得 \tk{t=2}，回代得 \tk{x=3}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}把根式整体设为 $t$，让 $t\ge0$ 内嵌进新变量，增根自动出局，无需验根。
+
+\item \textbf{同除的方向}：方程 $x^2=ax$ 移项分解得 \tk{x(x-a)=0}，解集为 \tk{\{0,a\}}（$a\ne0$）；若两边同除以 $x$，解集缩小为 $\{a\}$，漏掉 \tk{x=0}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}除以含未知数的因式前，先问一句「它能为 $0$ 吗」；移项分解才安全。
+
+\item \textbf{量词否定}：命题「$\exists x\in\mathbb{R},\ x^2-2x+a\le0$」的否定是 \tk{\forall x\in\mathbb{R},\ x^2-2x+a>0}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}量词互换、结论否定；「无解」就是解集为空集。
+
+\item \textbf{存在性看最小}：$g(x)=x+\dfrac1x$ 在 $[1,2]$ 上的最小值为 \tk{2}（在 $x=1$ 取得），故「$\exists x\in[1,2],\ a>g(x)$」等价于 \tk{a>2}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}存在看最小、恒成立看另一端最值；值域端点是否取到，决定等号往哪边开。
+\end{enumerate}
+\end{warmupbox}
+
+% ---------------------------------------------------------
+%  第二部分：解答即笔记 · 五问连环母题
+% ---------------------------------------------------------
+
+下面两道大题是本版「语言底座」的两根主梁：母题一管\textbf{代数变形的方向}（方程解集），母题二管\textbf{逻辑命题的翻译}（参数范围）。每题五问：先画图感知，再走考纲通法，然后用高观点秒算并对读，最后推广与排雷；你写在留白处的推理，就是这一章的笔记。
+
+% ========== 母题一：平方的代价与换元的同解 ==========
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题一：平方的代价与换元的同解},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+解方程 $\sqrt{x+1}=x-1$，并逐步审查每一步变形把解集往哪个方向推。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：先算值、描点、看图，提出猜想。
+
+动机：先用数值「看见」两曲线谁在上、在哪里相交，猜想才有靶子；猜错也没关系，后面三问会给出判据。
+
+\begin{center}\footnotesize\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{c|cccccc}
+$x$ & $-1$ & $0$ & $1$ & $2$ & $3$ & $4$ \\ \hline
+$\sqrt{x+1}$ & $0$ & $1$ & $\sqrt2\approx1.41$ & $\sqrt3\approx1.73$ & $2$ & $\sqrt5\approx2.24$ \\ \hline
+$x-1$ & $-2$ & $-1$ & $0$ & $1$ & $2$ & $3$
+\end{tabular}
+\end{center}
+
+两行只在 $x=3$ 处相等；$x=4$ 处直线已反超曲线，说明在 $(3,4)$ 附近发生了穿越。猜想：方程只有唯一解 \tk{x=3}。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[->, gray] (-1.7,0)--(4.9,0) node[below right] {$x$};
+  \draw[->, gray] (0,-1.5)--(0,3.4) node[above left] {$y$};
+  \foreach \x in {-1,1,2,3,4}{ \draw (\x,0.06)--(\x,-0.06) node[below=1pt] {\scriptsize \x}; }
+  \foreach \y in {1,2,3}{ \draw (0.06,\y)--(-0.06,\y) node[left=1pt] {\scriptsize \y}; }
+  \draw[main!70!black, very thick, domain=-1:4.6, smooth, samples=80] plot (\x, {sqrt(\x+1)});
+  \draw[third, thick, domain=-1:4.2] plot (\x, {\x-1});
+  \draw[gray, dashed, domain=-1:2.2] plot (\x, {1-\x});
+  \node[main!70!black, above right] at (4.6,2.36) {$y=\sqrt{x+1}$};
+  \node[third, above right] at (4.2,3.2) {$y=x-1$};
+  \node[gray, below right] at (2.2,-1.2) {$y=1-x$};
+  \ifteacher
+    \fill[second] (3,2) circle (1.6pt);
+    \fill[second] (0,1) circle (1.6pt);
+    \node[second, align=left, anchor=west] at (-1.6,-1.35) {红笔：真交点 $(3,2)$；\\ $(0,1)$ 在反射线上，是平方后\\ 多出来的增根};
+  \else
+    \node[third, align=center] at (1.7,1.9) {描出曲线、直线与虚线反射线，\\ 标出全部交点并比较};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：交点 $(3,2)$ 是真实解；$(0,1)$ 也在曲线 $y=\sqrt{x+1}$ 上，且落在反射直线 $y=1-x$ 上——它恰是平方后凭空多出的根（原方程右边 $x-1=-1<0$，不可能等于算术根）。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：规范流程「限号—平方—求解—验根」。
+
+动机：平方是单向变形（解集只大不小），考纲书写的两大得分点正是「先限号、后验根」——缺一不可。
+
+定义域 $x\ge-1$；更关键的是被开方数非负蕴含左边 $\sqrt{x+1}\ge0$，故右边必须非负：
+\[
+x-1\ge0\quad\Longrightarrow\quad \tk{x\ge1}.
+\]
+在此前提下两边平方：
+\[
+x+1=(x-1)^2\ \Longrightarrow\ x^2-3x=0\ \Longrightarrow\ x=0\ \text{或}\ x=3 .
+\]
+验根：$x=0$ 时右边 $=-1<0$，与左边 $\ge0$ 矛盾，是增根，舍去；$x=3$ 时两边都等于 $2$，成立。故解集为 \tk{\{3\}}。
+
+解集方向（集合语言）：原方程解集 $A=\{3\}$，平方后解集 $B=\{0,3\}$，则 $A\subseteq B$ 且 $A\ne B$——平方把解集\textbf{放大}了，放大出来的部分必须回代剔除。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：两个「一眼看穿」的视角。
+
+动机：等价变形未必要「先破坏、再修复」；把结构认出来，可以让定义域条件自己长在新变量里，增根从源头消失。
+
+\textbf{几何读法（反射分支）}：$f^2=g^2\iff(f-g)(f+g)=0\iff f=g$ 或 $f=-g$。平方相当于把直线 $y=x-1$ 换成它关于 $x$ 轴的\textbf{反射线} $y=1-x$ 的并集：增根 $x=0$ 正是曲线 $y=\sqrt{x+1}$ 与反射线的交点（反射方程的另一个代数根 $x=3$ 不满足反射分支的定义域 $1-x\ge0$，也被舍去）。
+
+\textbf{代数换元（同解替换）}：令 $t=\sqrt{x+1}\ge0$，则 $x=t^2-1$，原方程变成
+\[
+t=(t^2-1)-1\ \Longrightarrow\ t^2-t-2=0\ \Longrightarrow\ (t-2)(t+1)=0 .
+\]
+因 $t\ge0$ 舍 $t=-1$，得 $t=2$，回代 $x=t^2-1=3$。全程无需验根——$t\ge0$ 已经内嵌在替换里，$x\ge-1$ 也由 $x=t^2-1$ 自动保证。
+
+与第 (2) 问左右对读：
+\begin{center}\small
+\begin{tabular}{p{2.4cm}|p{5.6cm}|p{5.6cm}}
+\hline
+ & 考纲通法（第 (2) 问） & 换元／几何（第 (3) 问）\\
+\hline
+思路 & 限号—平方—求解—验根 & 令 $t=\sqrt{x+1}\ge0$，或读作曲线与反射线交点 \\
+计算量 & 一次平方 $+$ 两次验根，步骤多但每步熟悉 & 三行恒等变形，几乎不用验根 \\
+何时用 & 解答题必须写满规范步骤 & 选填预判、「增根从哪来」的几何解释 \\
+风险点 & 忘记 $x-1\ge0$ 会增根 & 换元后忘记写 $t\ge0$，或回代时漏掉单调性 \\
+\hline
+\end{tabular}
+\end{center}
+\logotag{高观点}
+
+\item \textbf{结构推广与变式}：把「解集方向」总结成一张审查表。
+
+\begin{advancedonly}
+记原解集为 $A$、变形后解集为 $B$。第 (2) 问的本质是：\emph{每一次变形都在推动包含关系}，方向判断错了，解就错了。
+
+\begin{center}\small
+\begin{tabular}{p{3.0cm}p{2.9cm}p{3.2cm}p{3.2cm}}
+\hline
+变形操作 & 解集关系 & 风险 & 应对 \\
+\hline
+两边加／减同一整式 & $A=B$ & 同解，安全 & 直接使用 \\
+两边乘／除以非零常数 & $A=B$ & 同解，安全 & 先确认非零 \\
+平方／去绝对值 & $A\subseteq B$ 且 $A\ne B$ & 解集扩大，易增根 & 先写符号条件，解后验根 \\
+同除含未知数因式 & $B\subseteq A$ 且 $B\ne A$ & 解集缩小，易漏根 & 移项分解，讨论零 \\
+取对数／解对数方程 & $A\subseteq B$ & 真数 $>0$ 限制，易增根 & 先限定义域 \\
+\hline
+\end{tabular}
+\end{center}
+
+反向印证（漏根一侧）：$x^2=ax$ 移项分解为 $x(x-a)=0$，$a\ne0$ 时解集为 $\{0,a\}$；两边同除以 $x$ 得 $x=a$，解集缩小为 $\{a\}$，漏掉了 $x=0$。若 $a=0$，原方程为 $x^2=0$，解集为 $\{0\}$（二重根），同除同样非法。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[->, gray] (-1.2,0)--(4.2,0) node[right] {$x$};
+  \foreach \x in {0,3}{ \draw (\x,0.07)--(\x,-0.07); }
+  \node[below=1pt] at (0,0) {\scriptsize $0$}; \node[below=1pt] at (3,0) {\scriptsize $3$};
+  \fill[gray!50] (0,0) circle (1.8pt);
+  \fill[gray!50] (3,0) circle (1.8pt);
+  \fill[second] (3,0) circle (2.4pt);
+  \node[gray, above=2pt] at (1.5,0) {$B=\{0,3\}$};
+  \node[second, below=6pt] at (3,0) {$A=\{3\}$};
+\end{tikzpicture}
+\end{center}
+
+动机：平方与同除是方向相反的两类「破坏等价」；表格记住了方向，考场上就不会只算「怎么变」、不算「往哪变」。
+\logotag{公式族}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似合理」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}两边平方得 $x^2-3x=0$，所以 $x=0$ 或 $x=3$，解集为 $\{0,3\}$；平方是代数恒等变形，既然没做别的操作，就不必检验。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{平方不是恒等变形}：它是单向的——$A\subseteq B$，解集只会变大；说「不必检验」恰好把唯一的防线拆掉了。
+\item \textbf{漏掉前提}：左边算术根 $\ge0$，故必须 $x-1\ge0$（$x\ge1$）。$x=0$ 不在这个前提内，是增根。
+\item \textbf{验根是唯一补救}：即使平方不可避免，也必须把每个解代回原方程（或检查符号前提）核对。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：平方／去绝对值前先写符号条件 \tk{x\ge1}，解出每个根必回代验根；若题目允许，改用 \tk{t=\sqrt{x+1}\ge0} 换元，让非负条件内嵌，从源头消除增根。
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\end{enumerate}
+\end{tcolorbox}
+
+% ========== 母题二：存在性命题的值域翻译 ==========
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题二：存在性命题的值域翻译},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+设 $f_a(x)=x^2-ax+1$，$x\in[1,2]$。命题 $P(a)$：「存在 $x\in[1,2]$，使 $f_a(x)<0$」。求 $P(a)$ 为真时参数 $a$ 的取值范围。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：取三个参数值，画出曲线在 $[1,2]$ 上的片段。
+
+动机：把「存在 $x$ 使 $f_a(x)<0$」先翻译成「曲线有没有钻到 $x$ 轴下方」，参数边界就有了直观的候选值。
+
+算三个样本的最小值：
+\[
+a=\tfrac32:\ f_{\frac32}(x)=x^2-\tfrac32x+1,\quad \min_{[1,2]}f_{\frac32}=f(1)=\tk{\tfrac12}>0;
+\]
+\[
+a=2:\ f_2(x)=\tk{(x-1)^2},\quad \min=0\ \text{（只碰到轴，并不严格小于 $0$）};
+\]
+\[
+a=\tfrac52:\ f_{\frac52}(x)=x^2-\tfrac52x+1,\quad \min=f\!\left(\tfrac54\right)=\tk{-\tfrac{9}{16}}<0.
+\]
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[->, gray] (0.7,0)--(2.4,0) node[below right] {$x$};
+  \draw[->, gray] (1,-1.3)--(1,2.35) node[above left] {$y$};
+  \foreach \x in {1.5,2}{ \draw (\x,0.06)--(\x,-0.06) node[below=1pt] {\scriptsize \x}; }
+  \foreach \y in {-1,1,2}{ \draw (0.94,\y)--(1.06,\y) node[left=1pt] {\scriptsize \y}; }
+  \node[below=1pt] at (1,0) {\scriptsize $1$};
+  \draw[gray, thick] (0.75,0)--(2.35,0);
+  \draw[third, very thick, domain=1:1.95, smooth, samples=60] plot (\x, {\x*\x-1.5*\x+1});
+  \draw[main!70!black, very thick, domain=1:2, smooth, samples=60] plot (\x, {\x*\x-2*\x+1});
+  \draw[second, very thick, domain=1:2, smooth, samples=60] plot (\x, {\x*\x-2.5*\x+1});
+  \node[third, above right] at (1.85,1.55) {$a=\frac32$};
+  \node[main!70!black, above right] at (1.9,0.72) {$a=2$};
+  \node[second, below right] at (1.9,-0.45) {$a=\frac52$};
+  \ifteacher
+    \fill[second] (1.25,-0.5625) circle (1.6pt);
+    \fill[main!70!black] (1,0) circle (1.6pt);
+    \fill[third] (1,0.5) circle (1.6pt);
+    \node[second, align=left, anchor=west] at (1.55,-1.2) {红笔：只有 $a=\frac52$ 的曲线\\\ 落到 $x$ 轴下方};
+  \else
+    \node[third, align=center] at (1.5,1.6) {描出三条曲线，\\ 看哪条落到 $x$ 轴下方};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：$a=\frac32$ 最小值 $\frac12>0$（不存在）；$a=2$ 时 $f=(x-1)^2$ 仅在 $x=1$ 碰到 $0$，严格小于不成立；$a=\frac52$ 顶点处 $-\frac{9}{16}<0$（存在）。边界候选是 $a=2$，但必须检验等号。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：按对称轴与区间的相对位置分类，逐类求最小值。
+
+动机：考纲书写要求「分类—单调性—最值」三段式；「存在 $<0$」翻译成「最小值 $<0$」后，剩下的只是常规讨论。
+
+对称轴为 $x=\tk{\dfrac a2}$。
+
+\textbf{(i) $\dfrac a2\le1$（即 $a\le2$）}：$f_a$ 在 $[1,2]$ 上递增，最小值
+\[
+\min=f_a(1)=\tk{2-a}.
+\]
+要 $<0$ 需 $a>2$，与 $a\le2$ 矛盾，此段无解。
+
+\textbf{(ii) $1<\dfrac a2<2$（即 $2<a<4$）}：最小值在顶点处，
+\[
+\min=f_a\!\left(\frac a2\right)=\tk{1-\frac{a^2}{4}}.
+\]
+由 $1-\dfrac{a^2}{4}<0\iff a^2>4\iff a>2$，结合前提得 \tk{2<a<4}。
+
+\textbf{(iii) $\dfrac a2\ge2$（即 $a\ge4$）}：$f_a$ 在 $[1,2]$ 上递减，最小值
+\[
+\min=f_a(2)=\tk{5-2a}.
+\]
+由 $5-2a<0\iff a>\dfrac52$，结合前提得 \tk{a\ge4}。
+
+合并三段：$\tk{a>2}$。注意 $a=2$ 时 $\min=0$，严格小于不成立，故端点不取。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：分离参数 $+$ 补集转化，两路都通向同一个答案。
+
+动机：存在性命题的正面是「最小值」，反面是「恒成立」；两条路共用同一个最值，选一条算到底即可。
+
+\textbf{正面（分离参数）}：$x\in[1,2]$ 为正，故
+\[
+x^2-ax+1<0\ \Longleftrightarrow\ a>x+\frac1x .
+\]
+于是
+\[
+P(a)\iff a>\min_{x\in[1,2]}\Bigl(x+\frac1x\Bigr).
+\]
+由均值不等式 $x+\dfrac1x\ge2$，等号在 $x=1\in[1,2]$ 取得，最小值为 $2$，一行得出
+\[
+\tk{a>2}.
+\]
+
+\textbf{反面（补集转化）}：$\neg P(a)$ 是「$\forall x\in[1,2],\ x^2-ax+1\ge0$」，等价于 $a\le x+\dfrac1x$ 恒成立，即 $a\le\min_{[1,2]}\bigl(x+\frac1x\bigr)=2$；取补集得 $a>2$，与正面一致。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize]
+  \draw[->, gray] (-1.2,0)--(4.2,0) node[right] {$a$};
+  \foreach \x in {0,2}{ \draw (\x,0.07)--(\x,-0.07); }
+  \node[below=1pt] at (0,0) {\scriptsize $0$}; \node[below=1pt] at (2,0) {\scriptsize $2$};
+  \fill[gray!45, rounded corners=1pt] (-1.1,0.09) rectangle (2.0,0.32);
+  \fill[second, rounded corners=1pt] (2.08,0.09) rectangle (4.1,0.32);
+  \fill[gray!70!black] (2,0.205) circle (2.2pt);
+  \node[gray!70!black, above=4pt] at (0.45,0.2) {$\neg P:a\le2$};
+  \node[second, above=4pt] at (3.1,0.2) {$P:a>2$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{对读结论}：通法胜在「步步可得分」，但要分三段；分离参数／补集胜在「一行出答案」。考场上先用高观点预判答案，再用通法把步骤写满。
+\logotag{高观点}
+
+\item \textbf{结构推广与变式}：把「存在／恒成立」统一翻译成值域的包含与交集。
+
+\begin{advancedonly}
+设 $f$ 在 $D$ 上的值域为 $R_f$，目标集合为 $M$：
+\[
+\forall x\in D,\ f(x)\in M\iff R_f\subseteq M,\qquad
+\exists x\in D,\ f(x)\in M\iff R_f\cap M\neq\varnothing .
+\]
+特例 $M=(a,+\infty)$：恒成立 $\iff\min R_f>a$（看最小）；能成立 $\iff\max R_f>a$（看最大）。
+
+\begin{center}\small
+\begin{tabular}{p{3.6cm}p{5.4cm}p{3.2cm}}
+\hline
+题干 & 集合翻译 & 看什么 \\
+\hline
+$\forall x\in D,\ f(x)\in M$ & $R_f\subseteq M$ & 最小值 \\
+$\exists x\in D,\ f(x)\in M$ & $R_f\cap M\neq\varnothing$ & 最大值 \\
+$\forall x\in D,\ f(x)>a$ & $R_f\subseteq(a,+\infty)$ & $\min R_f>a$ \\
+$\exists x\in D,\ f(x)>a$ & $R_f\cap(a,+\infty)\neq\varnothing$ & $\max R_f>a$ \\
+$\exists x\in D,\ f(x)<0$ & $R_f\cap(-\infty,0)\neq\varnothing$ & $\min R_f<0$ \\
+\hline
+\end{tabular}
+\end{center}
+
+一般分离参数结构（$D\subseteq(0,+\infty)$）：
+\[
+\exists x\in D,\ f(x)<ax\iff a>\min_{x\in D}\frac{f(x)}x,\qquad
+\forall x\in D,\ f(x)\ge ax\iff a\le\min_{x\in D}\frac{f(x)}x .
+\]
+回代验算：$f(x)=x^2-2x$ 在 $[0,3]$ 上的值域为 $[-1,3]$，故「$f(x)>a$ 恒成立」$\iff a<-1$，「$f(x)>a$ 能成立」$\iff a<3$——与本章教材例题一致。
+
+动机：题干里的「至少、至多、不都、恒成立、能成立」都只是值域与目标集合的包含／交集；翻译对了，参数范围问题就只剩下「求最值」一件事。
+\logotag{充要边界}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断错解，写防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}「方程 $x^2-ax+1=0$ 在 $[1,2]$ 上有解，需 $\Delta=a^2-4\ge0$ 且端点异号 $f(1)f(2)=(2-a)(5-2a)\le0$，解得 $2\le a\le\dfrac52$。」
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{命题翻译错误}：$P(a)$ 说的是「存在函数值为负」，不是「方程有根」。取 $a=3$：$f_3(1)=f_3(2)=-1$，曲线在整个 $[1,2]$ 上都位于 $x$ 轴下方，$P(3)$ 为真；但其两根 $\dfrac{3\pm\sqrt5}{2}\approx0.38,\,2.62$ 都不在 $[1,2]$ 内，判别式 $+$ 端点异号判据反而把它排除在外，漏掉全部 $a>\dfrac52$。
+\item \textbf{端点等号陷阱}：$a=2$ 时 $f_2(x)=(x-1)^2\ge0$，只在 $x=1$ 处等于 $0$，不存在严格小于 $0$ 的点，必须排除；错解含等号 $a\ge2$，多算了一个端点。
+\item \textbf{正确结论}：$a>2$。判别式法只回答「方程有没有根」，不能替代函数符号分析。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：先把「存在／恒成立」翻译成值域语言（$P(a)\iff\min_{[1,2]}f_a<0$），再选引擎；严格不等号必须单独检验端点；$f(1)f(2)\le0$ 只适用于「连续函数在区间内有根」的判定，不能拿来判断函数值的符号。
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{notezone}{章末归档：五问与笔记功能 + 两种视角对照}
+\textbf{五问与笔记}：(1) 具象感知与画图 $\to$ 概念引入笔记；(2) 考纲满分通法 $\to$ 规范书写笔记；(3) 高观点降维秒杀 $\to$ 大招与二级结论笔记；(4) 结构推广与变式 $\to$ 公式族笔记；(5) 易错边界排雷 $\to$ 错题本笔记。
+
+\textbf{通法与妙招对照}：解方程用「限号—平方—验根」最稳，用 $t=\sqrt{\cdot}$ 换元最快；求参数范围用「分类—单调性—最值」最稳，用「分离参数／补集」最快。考场上先用妙招预判，再用通法写满。
+
+\textbf{同解方向速记}：平方／去绝对值 $\to$ 解集扩大（增根，验根）；同除含未知数因式 $\to$ 解集缩小（漏根，移项分解）；对数 $\to$ 真数 $>0$（先写定义域）；换元 $t=\sqrt{\cdot}$ 把 $t\ge0$ 内嵌 $\to$ 天然同解。
+
+\textbf{存在／恒成立速记}：$\exists$ 看最小（交集非空）、$\forall$ 看包含（子集）；严格不等号单独查端点；先翻译，再求最值。
+\end{notezone}
