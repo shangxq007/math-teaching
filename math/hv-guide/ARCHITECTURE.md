@@ -7,8 +7,8 @@
 
 ## 1. 定位
 
-- 册名：高观点系列导学案（第 0 章 — 第 8 章 + 附录 A/B），编号自成体系，
-  不与 `../guide/`（湘教版章节）混排。
+- 册名：高观点系列导学案（第 0 章 — 第 9 章 + 附录 A/B），编号自成体系，
+  不与 `../guide/`（章节）混排。
 - 文档类：`elegantnote`（选项 `cn,11pt,color=cyan,math=newtx,normal`），XeLaTeX。
 - 输出形态：同源四版本（教师/学生 × 完整/薄弱生），单源维护，无副本漂移。
 
@@ -18,7 +18,9 @@
 |---|---|---|
 | `main.tex` | 薄壳：文档类 + `\input{../common/{preamble,macros,envs}}` + `\input{versions}` + 版本面板两行开关 + `\input{main_body}` | 只改「版本面板」两行即可切换导出 |
 | `main_body.tex` | 封面 + 目录 + `\input{chapters/*}` + 附录装配 | `\setcounter{section}{-1}` 使首章编号为 0 |
-| `chapters/*.tex` | 各章源文件（00–08、appA/appB、demo_multiversion） | 加新章 = 建文件 + 在 main_body 加一行 |
+| `chapters/*.tex` | 各章源文件（00–09、appA/appB、demo_multiversion） | 加新章 = 建文件 + 在 main_body 加一行 |
+| `chapters/drill_master_chNN.tex` | 各章 drill：结构雷达闪电战（6 题）＋两道五问连环母题＋notezone 归档 | 挂载在对应 `chapters/NN` 之后；编写规范见 skill `hv-guide-drill-authoring`；「五问」与正文七问 masterq 的分工见 §7 |
+| `../extension/` | 拓展阅读实体分册（`\reading{}{}` 指向处） | 各章末尾用 `\reading{拓展阅读 NN}{标题}` 挂指引行；全局编号注册表见 `../extension/README.md` |
 | `versions.tex` | 四版本引擎：布尔开关、`\tk{}`、`\vchoice{}{}`、`advancedonly`/`basiconly`、盒子、计数器、`solution` 重定义、`masterq` 母题环境 | 所有「版本感知」环境唯一定义处 |
 | `../common/preamble.tex`、`macros.tex`、`envs.tex` | 数学组共享宏包与宏 | **不属于本分册**，不得复制进分册 |
 
@@ -103,6 +105,24 @@ python3 build_all.py --only student_basic   # 只编指定版本
 落地情况：`chapters/08_homogenization.tex` 第 5 节已有两道母题
 （线性约束 `x+y=1`；二次约束 `x^2+y^2=1`）。后续新增章节按此模板补母题，
 并在本章末 `notezone` 给出「七问 ↔ 笔记功能」对应表。
+
+**专题章骨架豁免（第 8、9 章）**：这两章是「二级结论／方法链」专题，
+采用编号小节（`subsection{第 N 节 …}`）＋ `methodbox`/`corebox`/`warmupbox`
+＋ 章内七问母题的体例，**不要求** `learnobjective/preview/explore/inclasstest/
+afterclass` 全套骨架；其课后练习功能由独立 drill 模块
+`chapters/drill_master_ch08.tex`、`chapters/drill_master_ch09.tex` 承载
+（结构雷达闪电战 6 题＋两道五问连环母题＋notezone）。第 0–7 章仍按标准骨架执行。
+新增专题章若沿用此豁免，必须在本段登记并同步挂载对应 drill。
+
+drill 的「五问」与正文七问 masterq 的分工（避免同册混淆）：drill 的两道连环母题为
+考纲五问版——(1) 具象感知、(2) 考纲通法、(3) 高观点降维、(4) 结构推广、
+(5) 易错排雷，不重列七问中的「多视角翻译」「公式族全表」，这两类由正文
+masterq 承担；drill 标题写「五问连环母题」，正文标题写「七问连环母题」，不得混用。
+
+第 8 章特有的版本互换：其第 3 节按版本二选一——完整/教师版为 advancedonly
+「射影桥梁」，薄弱生版为 basiconly 同名「大白话版」。因此手动小节编号必须随版本
+写对（薄弱生版末节为「第 6 节」，教师版为「第 5 节」），跨节指针一律用 `\vchoice`
+给出两版措辞，禁止只写「见第 3 节」而假定内容相同。
 
 ## 8. 变更流程
 

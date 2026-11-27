@@ -59,12 +59,12 @@
 | `map/` | 知识图谱与流程 | ElegantNote | 知识层次图、二级结论卡片、解题流程图 |
 | `topic/` | 专题训练 | ElegantNote | 跨课次主题，螺旋式 |
 | `errorbook/` | 错题本 | ElegantNote | 一题一条，四段订正 |
-| `guide/` | 导学案（湘教版章节） | ElegantNote | 每课含预习、探究、检测、作业 |
+| `guide/` | 导学案（章节） | ElegantNote | 每课含预习、探究、检测、作业 |
 | `hv-guide/` | 高观点系列导学案（第 0–9 章） | ElegantNote | 独立成册，编号 0–9 |
 | `extension/` | 拓展阅读 | ElegantPaper | 课后延伸与深入 |
 | `modeling/` | 建模活动单 | ElegantNote | 完整建模过程 |
 | `exam/` | 试卷 | exam-zh | A3 横版双栏 + 密封线 |
-| `bank/` | 题库（湘教版章节） | ElegantBook | 题目 + 答案双模式 |
+| `bank/` | 题库（章节） | ElegantBook | 题目 + 答案双模式 |
 | `hv-bank/` | 高观点系列题库（第 0–9 章） | ElegantBook | 独立成册，编号 0–9 |
 | `answer/` | 答案与解析 | ElegantNote | 配套详解 |
 | `lesson/` | 教案 | ElegantBook | 每章一课时 |
@@ -91,7 +91,7 @@ latexmk -xelatex blueprint   # 细目表
 - 图片统一放 `figures/`，在 `main.tex` 中用 `\graphicspath{{../figures/}}` 引入。
 - 中文字体与数学字体已在 `common/preamble.tex` 中统一配置，不要在单个文件里重复设置。
 - **新增文档类时，先看 `common/envs.tex` 里有没有现成的环境**，再自己造盒子。
-- `extension/` 的编号与 `lesson/` 的课次号对应；教案与导学案的作业环节用 `\reading{编号}{篇名}` 指向对应篇目。
+- `extension/` 的拓展阅读采用全局连续编号（注册表见 `extension/README.md`）：01–06 段与 `lesson/` 课次号一致，07 段及以后归高观点系列；教案与导学案的作业环节用 `\reading{编号}{篇名}` 指向对应篇目。
 - 讲义改动练习后，同步更新 `answer/` 对应小节。
 
 ## 五、高观点章节系列

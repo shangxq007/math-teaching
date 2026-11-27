@@ -1,0 +1,112 @@
+% 建模活动单 · 第六组
+% 两个活动都用基本不等式处理“约束下的最值”：先锁死取等条件，再代数求解。
+\section{活动十二：方盒怎样最省料——基本不等式}
+
+\subsection{情境}
+纸盒厂要生产一种容积为 $4000\ \mathrm{cm^3}$ 的长方体包装盒。
+纸板成本近似与盒子的表面积成正比，老板希望“同样装 $4000\ \mathrm{cm^3}$，用的纸板越少越好”。
+
+\subsection{提出问题}
+长、宽、高各取多少时，盒子的表面积最小？最小是多少？
+
+\subsection{选模型}
+设长、宽、高为 $x,y,z$，则约束与目标分别为
+\[
+  xyz=V\quad(V=4000),\qquad S=2(xy+yz+zx).
+\]
+“乘积固定，求和的最小值”正是基本不等式的用武之地。
+
+\subsection{求解}
+由三元基本不等式
+\[
+  xy+yz+zx\ge 3\sqrt[3]{(xy)(yz)(zx)}=3\sqrt[3]{(xyz)^2}=3\sqrt[3]{V^2},
+\]
+当且仅当 $xy=yz=zx$，即 $x=y=z$ 时取等号。于是
+\[
+  S\ge 6\sqrt[3]{V^2}=6\sqrt[3]{4000^2}\approx 1511.9\ (\mathrm{cm^2}),
+\]
+最优尺寸为立方体
+\[
+  a=\sqrt[3]{4000}=10\sqrt[3]{4}\approx 15.87\ (\mathrm{cm}).
+\]
+
+\subsection{与常见方案的比较}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{3.2cm}p{4.6cm}p{3.0cm}p{2.4cm}}
+\toprule
+方案 & 尺寸（cm） & 表面积（$\mathrm{cm^2}$） & 与最优之差 \\
+\midrule
+立方体（最优） & $15.87\times15.87\times15.87$ & $1511.9$ & — \\
+$1:2:1$ & $12.60\times25.20\times12.60$ & $1587.4$ & $+5.0\%$ \\
+$2:2:1$ & $20\times20\times10$ & $1600$ & $+5.8\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+$1:2:1$ 方案中，由 $x\cdot 2x\cdot x=4000$ 得 $x=\sqrt[3]{2000}\approx12.60$，
+$S=10x^2\approx1587.4$；$20\times20\times10$ 的体积虽然正好 $4000$，
+但形状偏离立方体更远。可见“体积对”不等于“省料”，偏离最优形状 $1:2:1$
+就多花约 $5\%$ 的纸板。
+
+\subsection{检验与反思}
+用拉格朗日乘数法看（选学）：$\nabla S=\lambda\nabla(xyz)$ 给出
+$y+z=\lambda yz,\ z+x=\lambda zx,\ x+y=\lambda xy$，化简后同样是 $x=y=z$。
+两种方法指向同一结论——最优点处三个“面面积”$xy,yz,zx$ 相等。
+\key{“乘积固定求和最小”，先用基本不等式锁定取等条件（相等），再代回约束求尺寸。}
+
+\section{活动十三：易拉罐的高矮胖瘦——基本不等式}
+
+\subsection{情境}
+某厂要设计一款 $355\ \mathrm{mL}$ 的圆柱形易拉罐。铝材用量正比于表面积，
+从省料角度看，罐身高与直径的比值 $h:d$ 取多少最好？
+
+\subsection{提出问题}
+怎样的 $r,h$ 使表面积最小？这时 $h$ 与 $d$ 有什么关系？
+
+\subsection{选模型与求解}
+容积固定：$\pi r^2h=V=355$。表面积
+\[
+  S=2\pi r^2+2\pi rh=2\pi r^2+\frac{2V}{r}
+\]
+把 $\dfrac{2V}{r}$ 拆成两项，用三元基本不等式：
+\[
+  S=2\pi r^2+\frac{V}{r}+\frac{V}{r}
+   \ge 3\sqrt[3]{2\pi r^2\cdot\frac{V}{r}\cdot\frac{V}{r}}
+   =3\sqrt[3]{2\pi V^2}\approx 277.5\ (\mathrm{cm^2}),
+\]
+取等条件为 $2\pi r^2=\dfrac{V}{r}$，即 $r^3=\dfrac{V}{2\pi}$。代回 $h=\dfrac{V}{\pi r^2}$
+得 $h=2r=d$：\emph{高等于直径}时最省料，此时
+\[
+  r\approx 3.84\ \mathrm{cm},\quad d=h\approx 7.67\ \mathrm{cm},\quad S_{\min}\approx 277.5\ \mathrm{cm^2}.
+\]
+
+\subsection{若比例自定：$h=2d$}
+若按外观需要先定 $h=2d$，则 $V=\pi\left(\dfrac d2\right)^2\cdot 2d=\dfrac{\pi d^3}{2}$，
+\[
+  d=\sqrt[3]{\frac{2V}{\pi}}\approx 6.09\ \mathrm{cm},\quad h\approx 12.18\ \mathrm{cm},
+  \quad S=\frac52\pi d^2\approx 291.4\ \mathrm{cm^2},
+\]
+比数学最优多约 $5.0\%$——和自由优化相比，“拍脑袋定比例”并不便宜多少。
+
+\subsection{检验与反思：为什么市售易拉罐不按数学最优}
+市售 $355\ \mathrm{mL}$ 易拉罐多为 $d\approx6.6\ \mathrm{cm}$、$h\approx12.2\ \mathrm{cm}$
+（$h:d\approx1.85$，罐内预留顶隙，实际容积约 $417\ \mathrm{mL}$）。
+若保持这一比例、按 $355\ \mathrm{mL}$ 等比折算，表面积约 $288.5\ \mathrm{cm^2}$，
+仍比数学最优多约 $4\%$；顶底局部加厚还会进一步拉大差距。原因不在数学，而在工程与使用：
+\begin{itemize}
+  \item 顶盖强度：罐内承压，顶面越大越易变形，矮粗罐必须把顶盖加厚，反而更费料；
+  \item 堆叠与运输：$h:d\approx2$ 的重心与码放层数更稳，托盘装卸不易倒罐；
+  \item 手感：单手握持、入口角度都偏好细高外形；
+  \item 货架效果：竖立陈列时细高罐的正面展示面积更大。
+\end{itemize}
+修正模型思路：把人的需求写成\emph{约束或惩罚项}，而不是改目标函数。例如规定
+$h\ge 1.5\,d$（强度与握持下限），则最优解被约束推到边界 $h=1.5\,d$ 处取得，
+由 $V=\dfrac{3\pi d^3}{8}$ 得
+\[
+  d\approx 6.70\ \mathrm{cm},\quad h\approx 10.06\ \mathrm{cm},\quad S\approx 282.4\ \mathrm{cm^2},
+\]
+只比无约束最优多 $1.8\%$。也可以改成加权目标 $J=S+\lambda\left(\dfrac hd-\rho_0\right)^2$，
+用 $\lambda$ 权衡材料成本与体验、强度。
+\key{工程最优常不在数学极值点，而在约束边界上；建模时先把“人”的需求翻译成约束或惩罚项。}

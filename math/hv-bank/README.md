@@ -1,6 +1,6 @@
 # 高观点系列题库（第 0 章 — 第 9 章）
 
-独立成册，编号 0–9，不与 `../bank/`（湘教版章节）混排。文档类 `elegantbook`，`answer` 模式显示答案，XeLaTeX 编译。
+独立成册，编号 0–9，不与 `../bank/`（章节）混排。文档类 `elegantbook`，`answer` 模式显示答案，XeLaTeX 编译。
 
 ## 结构
 

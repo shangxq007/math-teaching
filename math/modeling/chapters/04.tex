@@ -1,0 +1,183 @@
+% 建模活动单 · 第四组活动
+% 活动八：潮汐/摩天轮（简谐模型 h(t)=A cos(ωt+φ)+b，数据定参 + 反问题预测）
+% 活动九：音叉与拍频（和差化积 f_beat=|f1-f2| + 人耳分辨极限）
+\section{活动八：潮汐与摩天轮——简谐模型}
+
+\subsection{情境}
+海边的潮水、摩天轮的座舱，都在做周期性的起落。
+以某次高潮时刻为 $t=0$，测得某港口一天内水深 $h$（单位 m）随时间 $t$（单位 h）的变化如下表（保留两位小数）：
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|cccccccccccc}
+\toprule
+$t$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
+\midrule
+$h$ & 8.50 & 8.17 & 7.25 & 6.00 & 4.75 & 3.83 & 3.50 & 3.83 & 4.75 & 6.00 & 7.25 & 8.17 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+（表中列出的是一个完整周期；下一次高潮仍在 $t=12$，$h=8.50$。）
+
+\subsection{提出问题}
+（1）怎样用一条式子把整天的水位变化刻画出来？
+（2）已知低潮出现的时刻，预报从低潮起水深首次涨到 $7.0$~m 的时刻。
+
+\subsection{选模型}
+水位围绕某个平均值上下波动，并且起伏具有对称性，最自然的候选是简谐模型
+\[
+  h(t)=A\cos(\omega t+\varphi)+b,
+\]
+其中 $A>0$ 是振幅，$b$ 是平均水平面，$T=\dfrac{2\pi}{\omega}$ 是周期，$\varphi$ 由计时起点决定。
+因为把高潮时刻取为 $t=0$，此时余弦取最大值，可取 $\varphi=0$，模型简化为
+\[
+  h(t)=A\cos(\omega t)+b.
+\]
+
+\subsection{拟合}
+由表中最大、最小值
+\[
+  h_{\max}=8.50,\qquad h_{\min}=3.50
+\]
+得
+\[
+  b=\frac{h_{\max}+h_{\min}}{2}=\frac{8.50+3.50}{2}=6.00,\qquad
+  A=\frac{h_{\max}-h_{\min}}{2}=\frac{8.50-3.50}{2}=2.50.
+\]
+相邻两个高潮分别出现在 $t=0$ 与 $t=12$，故 $T=12$~h，$\omega=\dfrac{2\pi}{12}=\dfrac{\pi}{6}$。于是
+\[
+  h(t)=2.5\cos\frac{\pi t}{6}+6.
+\]
+检验：$h(1)=6+2.5\cos\dfrac{\pi}{6}=6+2.5\times0.866\approx8.17$，
+$h(5)=6-2.5\cos\dfrac{\pi}{6}\approx3.83$，$h(3)=6.00$，均与表中数据一致。
+
+\subsection{预测（解反问题）}
+低潮出现在 $t=6$。问：从低潮起，水深首次涨到 $7.0$~m 是什么时候？
+解
+\[
+  2.5\cos\frac{\pi t}{6}+6=7.0
+  \quad\Longrightarrow\quad
+  \cos\frac{\pi t}{6}=0.4.
+\]
+令 $\theta=\dfrac{\pi t}{6}$。涨潮段 $t\in[6,12]$ 对应 $\theta\in[\pi,2\pi]$，在此区间内
+$\cos\theta=0.4$ 的解为 $\theta=2\pi-\cos^{-1}0.4$。由计算器 $\cos^{-1}0.4\approx1.1593$，所以
+\[
+  \theta\approx2\pi-1.1593=5.1239,\qquad
+  t=\frac{6\theta}{\pi}\approx\frac{6\times5.1239}{3.1416}\approx9.79.
+\]
+即从低潮算起约 $3.79$~h（从高潮算起约 $9.79$~h）首次达到 $7.0$~m。
+
+注意：若不限定“涨潮段”，方程在一个周期内还有另一个解（回落时在 $t\approx2.21$~h）。
+余弦在一个周期内两次经过同一高度，所以“首次”必须结合单调区间来说，否则答案不唯一。
+
+\subsection{同一模型看摩天轮}
+摩天轮直径 $40$~m，中心距地面 $30$~m，转一圈 $12$~min；从座舱位于最高点时开始计时，则
+\[
+  H(t)=20\cos\frac{\pi t}{6}+30\quad(\text{m}),\qquad t\text{ 以 min 计}.
+\]
+$t=0$ 时 $H=50$~m（最高点），$t=6$ 时 $H=10$~m（最低点）。求首次降到 $40$~m 的时刻：
+\[
+  20\cos\frac{\pi t}{6}+30=40
+  \;\Longrightarrow\;
+  \cos\frac{\pi t}{6}=0.5
+  \;\Longrightarrow\;
+  \frac{\pi t}{6}=\frac{\pi}{3}
+  \;\Longrightarrow\;
+  t=2\text{（min）}.
+\]
+模型没有变，仍是 $A\cos(\omega t)+b$；改变的只是参数、单位和研究对象。
+
+\subsection{检验与反思}
+简谐模型是近似：真实潮汐的周期约为 $12.4$~h，且受海底地形、风力和径流影响，
+并不是标准的余弦曲线；用更长时间的多次观测取平均，可以提高可靠性。
+这里的参数读法用到“波动关于平均值对称”这一事实：$A,b$ 可直接由最大、最小值得到；
+若数据并不对称，就要用最小二乘之类的方法重新拟合。
+\key{周期现象先想 $A\cos(\omega t+\varphi)+b$：$A,b$ 管“波动范围”，$\omega$ 管“快慢”，$\varphi$ 管“从哪儿开始”。}
+
+\section{活动九：音叉与拍频}
+
+\subsection{情境}
+把一支 $440$~Hz 的标准音叉与另一支 $443$~Hz 的音叉同时敲响，会听到声音一强一弱、周而复始，这就是“拍”。
+
+\subsection{提出问题}
+拍的快慢由什么决定？两个音的频率相差多少时，人耳还把它听成“同一个音在起伏”，而不是“两个音”？
+
+\subsection{选模型：两个正弦的叠加}
+设两列声波的位移分别为
+\[
+  y_1=A\cos(2\pi f_1t),\qquad y_2=A\cos(2\pi f_2t),
+\]
+合成波为 $y=y_1+y_2$。由和差化积公式
+$\cos\alpha+\cos\beta=2\cos\dfrac{\alpha-\beta}{2}\cos\dfrac{\alpha+\beta}{2}$，得
+\[
+  y=2A\cos\!\left(2\pi\,\frac{f_1-f_2}{2}\,t\right)
+     \cos\!\left(2\pi\,\frac{f_1+f_2}{2}\,t\right).
+\]
+前一个因子随时间缓慢变化，是包络；后一个因子快速振动，是载波。
+
+\subsection{计算拍频}
+振幅 $\left|2A\cos\bigl(\pi(f_1-f_2)t\bigr)\right|$ 完成一次强弱循环的时间为
+\[
+  T_{\text{拍}}=\frac{1}{|f_1-f_2|},
+  \qquad
+  f_{\text{拍}}=\frac{1}{T_{\text{拍}}}=|f_1-f_2|.
+\]
+代入 $f_1=440$~Hz、$f_2=443$~Hz：
+\[
+  f_{\text{拍}}=|440-443|=3\text{ Hz},\qquad
+  T_{\text{拍}}=\frac13\approx0.33\text{ s}.
+\]
+也就是说每秒约听到 $3$ 次强弱；合成波形的平均频率 $\dfrac{440+443}{2}=441.5$~Hz，决定我们听到的音调高低。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=12cm, height=4.2cm,
+  axis lines=middle,
+  xlabel={$t$}, ylabel={$y$},
+  xtick={0,1,2}, ytick={-2,0,2},
+  domain=0:2, samples=500,
+]
+\addplot[thick,main] {cos(deg(2*pi*8*x))+cos(deg(2*pi*9*x))};
+\addplot[dashed,second] {2*cos(deg(pi*x))};
+\addplot[dashed,second] {-2*cos(deg(pi*x))};
+\end{axis}
+\end{tikzpicture}
+\caption{两列频率接近的正弦叠加（示意频率，未按 $440$~Hz 比例）。实线为合成波，虚线为包络 $\pm2A\cos(\pi\Delta f\,t)$。}
+\end{figure}
+
+不同频率差对应的拍周期：
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|ccccc}
+\toprule
+$\Delta f$（Hz） & $1$ & $3$ & $5$ & $10$ & $20$ \\
+\midrule
+$T_{\text{拍}}$（s） & $1.00$ & $0.33$ & $0.20$ & $0.10$ & $0.05$ \\
+\midrule
+人耳感受（参考） & 慢，拍清晰 & 典型可闻拍 & 偏快 & 趋于粗糙 & 近乎两个音 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{人耳的分辨极限}
+频率差只有几 Hz 时，每一次强弱都听得清清楚楚，调音师正是利用这一点：
+把待校音叉与标准音叉同时敲响，拍越慢说明两者越接近，拍消失就意味着同频对准。
+频率差增大到十几 Hz 时，拍快到连不成“一拍一拍”，声音听起来发“粗”；
+再增大，人耳就逐渐把两个音听成两个独立的音高。
+实验上，中频段（约 $1000$~Hz 附近）人耳把两个纯音分辨开的最小频率差只有几 Hz，
+比这更小的差异只能表现为拍。$440$~Hz 与 $443$~Hz 相差约 $0.7\%$，
+正处于“拍听得清、又没分裂成两个音”的范围。
+
+\subsection{检验与反思}
+拍频不是新产生的第三个音，而是两个频率之差的显现：
+音调由平均频率 $(f_1+f_2)/2$ 决定，强弱的起伏快慢由 $|f_1-f_2|$ 决定。
+和差化积在这里是关键一步，它把“两个振动的叠加”改写成“一个慢包络乘一个快振动”。
+\key{听到“音在晃”，先去想两个频率的差；差越小拍越慢，差越大越像两个音。}

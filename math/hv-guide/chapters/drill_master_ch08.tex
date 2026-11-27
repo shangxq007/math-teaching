@@ -1,0 +1,410 @@
+% ==========================================================
+%  第 8 章 drill：结构雷达闪电战 + 五问连环母题
+% ------------------------------------------------------------
+%  纯模块化片段：不含 documentclass / document；
+%  编译入口：_check_drill08.tex（preamble + versions + 本文件）。
+%  只使用 versions.tex 与 common/ 已提供的环境（warmupbox、
+%  advancedonly、\ifteacher、\tk、\logotag、tikz 等），
+%  不新增任何 \newcommand / \newenvironment。
+%
+%  选题（齐次化两大核心结构，避开其它章节已 drill 的模型）：
+%    母题一 二元齐次分式 F=(x^2+xy+y^2)/(x^2-y^2) 的值域
+%      ——同除 x^2 后只剩 t=y/x；判别式法与「二次型半定」对读；
+%    母题二 x^2+y^2=1 (x,y>0) 下 1/x+1/y 的最小值
+%      ——负次目标先平方再乘「1」配成零次齐次；p-导数通法对读。
+%  数值核验（sympy 实算）：
+%    f(t)=(1+t+t^2)/(1-t^2)：f(0)=1, f(1/2)=7/3, f(2)=-7/3,
+%      f(-1/2)=1, f(-2)=-1, f(-3)=-7/8；
+%      极值 f(√3-2)=√3/2, f(-(2+√3))=-√3/2；f' 分子 t^2+4t+1；
+%      Δ(k)=4k^2-3；t=±1 代入方程得 3,1，永不为根；
+%    (x^2+y^2)/(x^2+xy+y^2) 值域 [2/3,2]（Δ=(3k-2)(2-k)）；
+%    母题二：恒等式 (1+1/t)^2(1+t^2)=(t+1/t)(t+1/t+2)≥8；
+%      φ'(p)=-2(p^2+1)/(p^2-1)^2<0, φ(√2)=2√2；
+%      推广 min=(a^(2/3)+b^(2/3))^(3/2)/(ab), 取等 y/x=(b/a)^(2/3),
+%      a=2,b=1 时约为 2.08097；放缩错解的下界 2 确实小于 2√2。
+% ==========================================================
+
+% ---------------------------------------------------------
+%  第一部分：五分钟结构雷达闪电战
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五分钟结构雷达闪电战：只练核心一步变形}
+规则：每题\textbf{只写关键一步}（不是解完整题）。先读「雷达触发」，在脑子里把这一步放回整条链里，再动笔；答案处以下划线留白（学生版显示等宽下划线，教师版显红）。
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+\item \textbf{次数扫描}：判断 $P(x,y)=x^3+2x^2y-y^3$ 是不是齐次式；若是，次数是多少？\\
+{\small\bfseries\textcolor{third}{雷达触发：}}常数是 $0$ 次，$x,y$ 各 $1$ 次，$x^2,xy,y^2$ 各 $2$ 次，$x^3,x^2y,xy^2,y^3$ 各 $3$ 次——逐项标次数再比较。\\
+答案：三项都是 \tk{3} 次，故 $P$ 是 \tk{3} 次齐次式。
+
+\item \textbf{同除主元最高次幂}：把 $\dfrac{x^2-y^2}{x^2}$ 的分子分母同除 $x^2$（设 $t=\dfrac yx$），得 \tk{1-t^2}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}分子分母要除同一个量；$\dfrac{y^2}{x^2}=t^2$，除完每一项都只含 $t$ 的幂。
+
+\item \textbf{$t=\dfrac yx$ 代换}：把 $\dfrac{x^2+y^2}{xy}$ 写成只含 $t$ 的式子 \tk{t+\dfrac1t}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}分式先拆成两项，各自凑出 $\dfrac yx$ 或它的倒数 $\dfrac xy=\dfrac1t$。
+
+\item \textbf{「1 的代换」升次}：已知 $2x+y=1$，把 $\dfrac1x+\dfrac2y$ 乘「1」展开，得 \tk{4+\dfrac{y}{x}+\dfrac{4x}{y}}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}条件等式就是 $1$，乘进去低次项被抬成同次；展开后应出现 $t$ 与 $\dfrac1t$ 的配对。
+
+\item \textbf{齐次坐标 $(u,v)\sim\lambda(u,v)$}：判断 $(2,4)$ 与 $(-1,-2)$ 是否代表同一射影点，并写出其比值坐标 $t=\dfrac vu$：\tk{\text{是}}，$t=\tk{2}$。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}齐次坐标只认方向不认长度；同一条过原点直线上的所有非零点都是同一射影点的代表元。
+
+\item \textbf{分式目标式的齐次配平}：把 $\dfrac{x^2+xy}{x^2+y^2}$ 的分子分母同除 $x^2$，化为只含 $t$ 的式子 \tk{\dfrac{1+t}{1+t^2}}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}分子分母同次的分式是零次齐次式；同除主元最高次幂后只剩 $t$，这就是把分式目标压成一元的那一步。
+\end{enumerate}
+\end{warmupbox}
+
+% ---------------------------------------------------------
+%  第二部分：解答即笔记 · 五问连环母题
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五问连环母题怎么用（先看这里）}
+本部分两道大题，每道\textbf{严格五问}：(1) 具象感知与画图（教师版附红笔批注）；(2) 考纲满分通法（用 \texttt{\textbackslash tk} 搭骨架）；(3) 高观点降维秒杀（与通法左右对读）；(4) 结构推广（完整版渲染，薄弱生版自动隐藏）；(5) 易错边界排雷（诊断错解 + 防扣分铁律）。\vchoice{做完一道，「齐次化」的完整解题说明书就长在你的留白处。}{基础较弱的同学先落实第 (1)(2)(5) 问；第 (3)(4) 问留给学有余力者。}
+
+导航：齐次化的完整方法链（次数扫描、五把配平手术刀、射影桥梁）见本章正文；「1 的代换」的入口见第 6 章动作一；不动点与射影的深入理论见第 9 章。
+\end{warmupbox}
+
+% ========== 母题一：齐次分式的值域 ==========
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题一：齐次分式的值域——同除 $x^2$ 后只剩 $t=\dfrac yx$},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+设
+\[
+F(x,y)=\frac{x^2+xy+y^2}{x^2-y^2},\qquad (x,y)\ne(0,0),\ x\ne\pm y,
+\]
+求 $F$ 的值域。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：先算几个具体值，再令 $t=\dfrac yx$，画出 $f(t)=\dfrac{1+t+t^2}{1-t^2}$ 的图象。
+
+\[
+F(1,0)=1,\quad F\!\left(1,\tfrac12\right)=\tfrac73,\quad F(1,2)=-\tfrac73,\quad
+F(0,1)=-1,\quad F(1,-3)=-\tfrac78 .
+\]
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, x=1.02cm, y=0.6cm]
+  \fill[second!10] (-4.8,-0.866) rectangle (4.8,0.866);
+  \draw[->, gray] (-4.9,0)--(5.0,0) node[below right] {$t$};
+  \draw[->, gray] (0,-5.4)--(0,10.4) node[above left] {$f(t)$};
+  \foreach \x in {-4,-3,-2,-1,1,2,3,4}{ \draw (\x,0.14)--(\x,-0.14) node[below=1pt] {\scriptsize \x}; }
+  \foreach \y in {-4,-2,2,4,6,8}{ \draw (0.14,\y)--(-0.14,\y) node[left=1pt] {\scriptsize \y}; }
+  \draw[third, dashed, thick] (-1,-5.4)--(-1,10.4);
+  \draw[third, dashed, thick] (1,-5.4)--(1,10.4);
+  \draw[gray, dashed] (-4.9,-1)--(5.0,-1);
+  \draw[main!70!black, very thick, domain=-4:-1.15, samples=70, smooth] plot(\x,{(1+\x+\x*\x)/(1-\x*\x)});
+  \draw[main!70!black, very thick, domain=-0.85:0.85, samples=70, smooth] plot(\x,{(1+\x+\x*\x)/(1-\x*\x)});
+  \draw[main!70!black, very thick, domain=1.15:4, samples=70, smooth] plot(\x,{(1+\x+\x*\x)/(1-\x*\x)});
+  \fill[second] ({sqrt(3)-2},{sqrt(3)/2}) circle (1.7pt);
+  \fill[second] ({-(2+sqrt(3))},{-sqrt(3)/2}) circle (1.7pt);
+  \ifteacher
+    \node[third!70!black] at (1,9.9) {$t=1$};
+    \node[third!70!black] at (-1,9.9) {$t=-1$};
+    \node[gray] at (-4.75,-1.28) {$f=-1$};
+    \draw (0.12,0.866)--(-0.12,0.866) node[left=1pt] {\scriptsize $\frac{\sqrt3}{2}$};
+    \draw (0.12,-0.866)--(-0.12,-0.866) node[left=1pt] {\scriptsize $-\frac{\sqrt3}{2}$};
+    \node[second!80!black, font=\scriptsize] at (-0.268,1.25) {$\left(\sqrt3-2,\frac{\sqrt3}{2}\right)$};
+    \node[second!80!black, font=\scriptsize] at (-3.732,-1.45) {$\left(-(2+\sqrt3),-\frac{\sqrt3}{2}\right)$};
+    \node[second!70!black, align=center, font=\scriptsize] at (3.1,0) {带状区\\取不到};
+  \else
+    \node[third] at (-2.9,5.6) {描点作图：值域里有没有「取不到的带」？};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：$F(1,0)=1$、$F(1,\frac12)=\frac73$、$F(1,2)=-\frac73$、$F(0,1)=-1$、$F(1,-3)=-\frac78$。分子 $x^2+xy+y^2=\left(x+\frac y2\right)^2+\frac34y^2>0$ 恒正，符号完全由分母 $(x-y)(x+y)$ 决定：在直线 $y=\pm x$ 两侧变号，所以值域「两头都伸向无穷」。两条竖直渐近线 $t=\pm1$ 之间，中间支最低只到 $\frac{\sqrt3}{2}\approx0.866$，左支最高只到 $-\frac{\sqrt3}{2}$——猜想：值域中间有一段缺口。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：次数扫描 → 同除 $x^2$ → 判别式法，四步写满。
+
+第一步（次数扫描）：分子 $x^2+xy+y^2$ 与分母 $x^2-y^2$ 都是 \tk{2} 次齐次式，故 $F$ 是 \tk{0} 次齐次式，取值只依赖射线方向。
+
+第二步（同除主元最高次幂）：$x\ne0$ 时令 $t=\dfrac yx$，得
+\[
+F=\frac{1+t+t^2}{1-t^2}.
+\]
+（$x=0$ 时 $F(0,y)=-1$，而 $t=-2$ 时 $F(1,-2)=-1$，不产生新值。）
+
+第三步（判别式法）：设 $k=F(t)$，整理得
+\[
+(1+k)t^2+t+(1-k)=0.
+\]
+$t\in\mathbb R$ 有解，要求
+\[
+\Delta=1-4(1+k)(1-k)=\tk{4k^2-3\ge0}
+\]
+（若 $1+k=0$，方程退化为 $t+2=0$，$t=-2$ 仍合法），即
+\[
+\tk{k\le-\frac{\sqrt3}{2}\ \text{或}\ k\ge\frac{\sqrt3}{2}}.
+\]
+
+第四步（端点回代）：$k=\dfrac{\sqrt3}{2}$ 时 $t=\tk{\sqrt3-2}$；$k=-\dfrac{\sqrt3}{2}$ 时 $t=\tk{-(2+\sqrt3)}$；且 $t=\pm1$ 代入方程分别得 $3$ 与 $1$，永不为根，根不会落在定义域外。
+
+结论：值域为
+\[
+\tk{\left(-\infty,-\frac{\sqrt3}{2}\right]\cup\left[\frac{\sqrt3}{2},+\infty\right)}.
+\]
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：把值域问题翻译成「二次型定不定号」——一行收工，再用导数复核。
+
+$k$ 取不到，等价于关于 $(x,y)$ 的二次齐次方程 $P-kQ=0$（$P=x^2+xy+y^2$，$Q=x^2-y^2$）没有非零实方向，即二次型
+\[
+P-kQ=(1-k)x^2+xy+(1+k)y^2
+\]
+是定号的。定号要求
+\[
+\tk{B^2-4AC=1-4(1-k)(1+k)\le0}\quad\text{且}\quad A=1-k>0,\ C=1+k>0,
+\]
+即 \tk{|k|\le\dfrac{\sqrt3}{2}}。值域就是它的补集——这正是图中阴影带。几何读法：每个 $k$ 对应一族过原点的等值直线；$|k|<\frac{\sqrt3}{2}$ 时等值线缩成原点，射影直线上没有对应方向。
+
+导数复核：
+\[
+f'(t)=\frac{t^2+4t+1}{(1-t^2)^2},\qquad t^2+4t+1=0\ \Longrightarrow\ t=\tk{-2\pm\sqrt3},
+\]
+回代得极值 \tk{\pm\dfrac{\sqrt3}{2}}，与通法完全一致。
+
+与第 (2) 问左右对读：
+\begin{center}\small
+\begin{tabular}{p{2.2cm}|p{5.2cm}|p{5.2cm}}
+\toprule
+ & 考纲通法（第 (2) 问） & 高观点秒杀（第 (3) 问）\\
+\midrule
+思路 & 令 $k=f(t)$ 整理成 $t$ 的二次方程，用 $\Delta\ge0$ 求 $k$ & 值域补集 $=$ 二次型 $P-kQ$ 定号的 $k$ \\
+步骤 & 四步，含退化情形与端点回代 & 一步判别，导数复核 \\
+何时用 & 解答题规范书写；一般有理函数值域 & 齐次分式快速预判与检验 \\
+风险点 & 漏 $1+k=0$ 的一次情形；$\Delta$ 方向写反 & 忘记 $A,C$ 同号条件；边界 $k$ 不回代 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：齐次分式值域判据与对偶例子}。
+
+定理（值域判据）：设 $P,Q$ 为二元二次齐次多项式且 $Q$ 不恒为零，则
+\[
+\frac PQ\ \text{的值域}=\{\,k:\ P-kQ\ \text{非定号}\,\}.
+\]
+（若 $P-kQ$ 只在 $Q=0$ 的直线上取零，要单独回代检验，见第 (5) 问排雷。）
+
+对偶例子：$\dfrac{x^2+y^2}{x^2+xy+y^2}$ 中
+\[
+P-kQ=(1-k)x^2-kxy+(1-k)y^2,
+\]
+非定号等价于
+\[
+\Delta=k^2-4(1-k)^2=(3k-2)(2-k)\ge0,
+\]
+故值域为 \tk{\left[\dfrac23,2\right]}；检验：$x=y$ 给 $\dfrac23$，$y=-x$ 给 $2$。同一个判据，分子分母互换角色，值域从「带缺口的无界集」变成「闭区间」。
+
+射影注记：同除 $x^2$ 之所以有效，是因为零次齐次式在 $(u,v)\sim\lambda(u,v)$ 下不变；$t=\dfrac vu$ 正是射影直线上的坐标\vchoice{（见本章第 3 节「射影桥梁」）}{（见本章第 3 节同名「大白话版」，完整推导见教师版该节）}。
+\logotag{公式族}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似合理」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}同除 $x^2$ 得 $f(t)=\dfrac{1+t+t^2}{1-t^2}$。令 $f(t)=k$ 并整理为 $(1+k)t^2+t+(1-k)=0$。因为 $t$ 必须是实数，方程有实根要求
+\[
+\Delta=1-4(1+k)(1-k)\le0,
+\]
+即 $4k^2-3\le0$，故值域为 $\left[-\dfrac{\sqrt3}{2},\dfrac{\sqrt3}{2}\right]$。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{判别式方向写反}：二次方程有实根等价于 $\Delta\ge0$；写成 $\le0$ 求出的是「无实根」的区间，与值域互补。
+\item \textbf{数值当场反驳}：$F\!\left(1,\dfrac12\right)=\dfrac73\approx2.33$ 落在「值域」之外却真实存在；$t\to1^-$ 时 $f(t)\to+\infty$，更说明值域无界。
+\item \textbf{两个补漏}：即便方向正确，也要单独检查 $1+k=0$ 的一次方程情形，并把端点 $k=\pm\dfrac{\sqrt3}{2}$ 回代验证可取。
+\item \textbf{别忘 $x=0$ 方向}：同除 $x^2$ 假定了 $x\ne0$；$x=0$ 时 $F(0,y)=-1$，本题恰好不产生新值，换成别的式子可能漏值。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：判别式非负才有实根——\tk{\Delta\ge0}；值域端点与退化情形必须回代检验。
+\else
+{\small（先自己找出三处漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+\end{enumerate}
+\end{tcolorbox}
+
+% ========== 母题二：「1 的代换」升次配平 ==========
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题二：「1 的代换」升次配平——负次目标 $\dfrac1x+\dfrac1y$ 的最小值},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+设 $x>0,\ y>0,\ x^2+y^2=1$，求目标式 $T=\dfrac1x+\dfrac1y$ 的最小值。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：先在四分之一单位圆弧上取三个点算值，再观察等值线 $T=c$ 与圆弧的位置关系。
+
+\[
+T\!\left(\tfrac{\sqrt2}{2},\tfrac{\sqrt2}{2}\right)=2\sqrt2\approx2.83,\quad
+T\!\left(\tfrac35,\tfrac45\right)=\frac{35}{12}\approx2.92,\quad
+T\!\left(\tfrac12,\tfrac{\sqrt3}{2}\right)=2+\frac{2\sqrt3}{3}\approx3.15,
+\]
+且 $(x,y)\to(1,0)$ 时 $T\to+\infty$。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, x=3.0cm, y=3.0cm]
+  \draw[->, gray] (-0.12,0)--(1.62,0) node[below right] {$x$};
+  \draw[->, gray] (0,-0.12)--(0,1.42) node[above left] {$y$};
+  \foreach \x in {1}{ \draw (\x,0.05)--(\x,-0.05) node[below=1pt] {\scriptsize \x}; }
+  \foreach \y in {1}{ \draw (0.05,\y)--(-0.05,\y) node[left=1pt] {\scriptsize \y}; }
+  \draw[main!70!black, very thick, domain=0:1, samples=80, smooth] plot(\x,{sqrt(1-\x*\x)});
+  \draw[gray, dashed] (0,0)--(0.82,0.82);
+  \draw[third, thick, domain=0.31:1, samples=60, smooth] plot(\x,{\x/(4*\x-1)});
+  \draw[third, dashed, thick, domain=0.15:1, samples=60, smooth] plot(\x,{\x/(8*\x-1)});
+  \draw[second, very thick, domain=0.48:1, samples=60, smooth] plot(\x,{\x/(2*sqrt(2)*\x-1)});
+  \fill[main] (0.6,0.8) circle (1.5pt);
+  \fill[main] (0.7071,0.7071) circle (1.5pt);
+  \fill[main] (0.5,0.866) circle (1.5pt);
+  \ifteacher
+    \node[main!80!black, font=\scriptsize] at (0.6,0.93) {$A\left(\frac35,\frac45\right)$};
+    \node[main!80!black, font=\scriptsize] at (0.79,0.60) {$B\left(\frac{\sqrt2}{2},\frac{\sqrt2}{2}\right)$};
+    \node[main!80!black, font=\scriptsize] at (0.42,1.0) {$C\left(\frac12,\frac{\sqrt3}{2}\right)$};
+    \node[main!80!black, font=\scriptsize, right] at (1.02,0.35) {$T=4$};
+    \node[main!80!black, font=\scriptsize, right] at (1.02,0.16) {$T=8$};
+    \node[second!80!black, font=\scriptsize, right] at (1.02,0.55) {$T=2\sqrt2$};
+    \node[main!80!black, font=\scriptsize] at (0.16,1.13) {$x^2+y^2=1$};
+    \node[second!70!black, align=left, font=\scriptsize] at (0.95,1.15) {等值线 $T=c$ 与圆弧\\ 第一次相切在 $x=y$ 处};
+  \else
+    \node[third] at (0.36,1.22) {描出 $A,B,C$ 三点，猜最小值在哪里};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：三个点中 $x=y$ 处最小；等值线 $T=\frac1x+\frac1y=c$ 自小变大时，第一次碰到圆弧正是在 $x=y$ 处（相切），此时 $c=2\sqrt2$。靠近坐标轴时 $T$ 爆炸，所以最小值一定在内部取得。猜想：$T_{\min}=2\sqrt2$。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：令 $p=x+y$，用约束消去 $xy$，转化为单变量函数求导。
+
+由 $x^2+y^2=1$ 得 $p^2=1+2xy$，即
+\[
+xy=\tk{\frac{p^2-1}{2}},\qquad p\in\tk{(1,\sqrt2]}.
+\]
+于是
+\[
+T=\frac1x+\frac1y=\frac{x+y}{xy}=\tk{\frac{2p}{p^2-1}}=:\varphi(p).
+\]
+求导：
+\[
+\varphi'(p)=\tk{\frac{-2(p^2+1)}{(p^2-1)^2}}<0,
+\]
+故 $\varphi$ 在 $(1,\sqrt2]$ 上单调递减，最小值在 $p=\sqrt2$ 处取得：
+\[
+T_{\min}=\tk{2\sqrt2},\qquad \text{此时 } x=y=\tk{\frac{\sqrt2}{2}}.
+\]
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：先平方升次，再乘「1」配成零次齐次——三行收工。
+
+次数扫描：$T$ 是 $-1$ 次齐次式；$T^2$ 是 $-2$ 次；约束 $x^2+y^2=1$ 提供 $2$ 次的「1」，乘一次即归零次。令 $t=\dfrac yx>0$：
+\[
+T^2=T^2(x^2+y^2)=\left(1+\frac1t\right)^2(1+t^2)
+=\left(t+\frac1t\right)\left(t+\frac1t+2\right)\ge 2\cdot4=8,
+\]
+其中用 $s=t+\dfrac1t\ge2$ 得 $s(s+2)\ge8$。因 $T>0$，
+\[
+\tk{T\ge2\sqrt2},
+\]
+取等 $t=1$ 即 $x=y=\dfrac{\sqrt2}{2}$，与通法一致。
+
+与第 (2) 问左右对读：
+\begin{center}\small
+\begin{tabular}{p{2.2cm}|p{5.2cm}|p{5.2cm}}
+\toprule
+ & 考纲通法（第 (2) 问） & 高观点秒杀（第 (3) 问）\\
+\midrule
+思路 & 令 $p=x+y$，用 $xy=\frac{p^2-1}{2}$ 化一元，求导判单调 & 平方后乘「1」配成零次齐次，$t$ 代换 + 均值 \\
+步骤 & 五步：设元—定范围—换元—求导—回代 & 三行恒等变形 \\
+何时用 & 解答题规范书写；目标和式、约束二次 & 选填预判；倒数型混次目标 \\
+风险点 & 端点 $\sqrt2$ 能否取到要说清 & 平方后忘开方；均值取等 $t=1$ 未回代 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：椭圆约束族的配平与最优比例}。
+
+设 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1\ (a,b>0)$，求 $T=\dfrac1x+\dfrac1y$ 的最小值。伸缩 $X=\dfrac xa,\ Y=\dfrac yb$，则 $X^2+Y^2=1$，目标化为 $\dfrac1a\dfrac1X+\dfrac1b\dfrac1Y$。仍平方乘「1」，令 $t=\dfrac YX$：
+\[
+T^2=\frac{(1+t^2)(bt+a)^2}{a^2b^2t^2}.
+\]
+再令 $w=\dfrac ba t$（把系数吸收进比例），得
+\[
+T^2=h(w)=\frac{(w+1)^2}{b^2}+\frac{\left(1+\frac1w\right)^2}{a^2},
+\qquad
+h'(w)=\frac{2(w+1)(a^2w^3-b^2)}{a^2b^2w^3}.
+\]
+令 $h'(w)=0$ 得 $w^3=\dfrac{b^2}{a^2}$，代回即得
+\[
+T_{\min}=\tk{\frac{(a^{2/3}+b^{2/3})^{3/2}}{ab}},\qquad
+\text{取等比例 }\ \tk{\frac yx=\left(\frac ba\right)^{2/3}}.
+\]
+检验：$a=b=1$ 回到 $2\sqrt2$；$a=2,b=1$ 时 $T_{\min}\approx2.081$，对应 $\dfrac yx\approx0.630$。结构不变、取等位置随 $a:b$ 改变——配平负责降维，比例负责定位。
+\logotag{公式族}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：诊断下面的「貌似合理」的解法，并填空防扣分铁律。
+
+{\bfseries\color{red!70!black}错解：}由 $x^2+y^2=1$ 得 $x+y\ge1$，且
+\[
+xy\le\frac{x^2+y^2}{2}=\frac12,
+\]
+故
+\[
+\frac1x+\frac1y=\frac{x+y}{xy}\ge\frac{1}{1/2}=2,
+\]
+所以最小值是 $2$。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{取等条件不相容}：$x+y\ge1$ 的等号只在 $(x,y)\to(1,0)$ 附近逼近，此时 $xy\to0$；而 $xy\le\frac12$ 的等号在 $x=y=\frac{\sqrt2}{2}$。两次放缩的取等条件不可能同时成立，拼出的下界 $2$ 根本取不到——它只是「松」的下界，真实最小值是 $2\sqrt2>2$。
+\item \textbf{符号前提}：若删去 $x,y>0$，取 $x\to0^-$ 时 $\frac1x+\frac1y\to-\infty$，连下界都不存在——基本不等式只在正数范围内可用。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：多次放缩前先核对所有取等条件能同时成立——\tk{\text{取等条件必须相容}}；用基本不等式前先确认各项为正。
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{notezone}{章末归档：齐次化二级结论 + 五问与笔记功能}
+\textbf{二级结论}（方法链压缩版）：
+(i) 零次齐次式只认射影点：$(u,v)\sim\lambda(u,v)\ \Rightarrow\ \dfrac vu$ 不变；同除主元最高次幂，就把二元压成一元 $t$。
+(ii) 负次目标先平方（或乘方）升到与约束同绝对次数，再乘约束这个「1」配成零次。
+(iii) 齐次分式 $\dfrac PQ$ 的值域 $=\{\,k:\ P-kQ\ \text{非定号}\,\}$；二元二次型即 $\Delta(k)\ge0$。
+(iv) 「1 的代换」把条件等式乘入混次目标；多次放缩的取等条件必须相容。
+
+\textbf{五问与笔记功能}：(1) 具象感知与画图 $\to$ 概念引入笔记；(2) 考纲满分通法 $\to$ 规范书写笔记；(3) 高观点降维秒杀 $\to$ 大招与二级结论笔记；(4) 结构推广 $\to$ 公式族笔记；(5) 易错边界排雷 $\to$ 错题本笔记。
+
+\textbf{导航}：齐次化完整方法链（次数扫描、五把配平手术刀、射影桥梁）见本章正文；「1 的代换」入口见第 6 章动作一；不动点与射影的深入理论见第 9 章。
+\end{notezone}

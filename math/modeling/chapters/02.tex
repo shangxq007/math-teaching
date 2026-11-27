@@ -1,0 +1,262 @@
+% 建模活动单 · 第二组活动
+% 匀加速直线运动与自由落体：二次模型的拟合、预测与修正。
+\section{活动四：纸带上的加速度——二次模型}
+
+\subsection{情境}
+打点计时器是实验室里记录运动的常用仪器：所用交流电源频率为 $50\ \mathrm{Hz}$，
+每隔 $0.02\ \mathrm{s}$ 在纸带上打下一个点。实验时把纸带穿过打点计时器并固定在小车尾部，
+小车在砝码牵引下沿长木板加速滑行。
+
+处理纸带时每 5 个点取一个计数点，相邻计数点间的时间间隔为
+\[
+  T=5\times0.02\ \mathrm{s}=0.10\ \mathrm{s}.
+\]
+某次实验的纸带如图所示，各计数点到起点的距离用毫米刻度尺量得，列入下表。
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{2.2cm}}
+\toprule
+计数点 $n$ & $t_n$（s） & 分段位移 $d_n$（cm） & 累计位移 $s_n$（cm） \\
+\midrule
+0 & 0.0 & --- & 0.0 \\
+1 & 0.1 & 1.1 & 1.1 \\
+2 & 0.2 & 3.0 & 4.1 \\
+3 & 0.3 & 4.9 & 9.0 \\
+4 & 0.4 & 7.1 & 16.1 \\
+5 & 0.5 & 8.9 & 25.0 \\
+6 & 0.6 & 11.1 & 36.1 \\
+7 & 0.7 & 12.9 & 49.0 \\
+8 & 0.8 & 15.1 & 64.1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=11cm, height=6.2cm,
+  xlabel={$t\ \text{（s）}$}, ylabel={$s\ \text{（cm）}$},
+  xmin=0, xmax=1.0, ymin=0, ymax=110,
+  xtick={0,0.2,0.4,0.6,0.8,1.0}, ytick={0,20,40,60,80,100},
+  grid=both, minor tick num=1, font=\footnotesize,
+  legend pos=north west, legend style={font=\footnotesize},
+]
+\addplot[only marks, mark=*, mark size=1.8pt, color=ecolor]
+  coordinates {(0,0) (0.1,1.1) (0.2,4.1) (0.3,9.0) (0.4,16.1)
+               (0.5,25.0) (0.6,36.1) (0.7,49.0) (0.8,64.1)};
+\addplot[smooth, very thick, color=second, domain=0:1, samples=60]
+  {99.7*x^2};
+\legend{测量值, 拟合曲线 $s=99.7\,t^{2}$}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{提出问题}
+小车做的是什么运动？怎样从纸带求出它的加速度？
+
+\subsection{选模型}
+若小车做匀加速直线运动，速度随时间均匀增大，位移应满足
+\[
+  s=s_0+v_0t+\tfrac12at^2,
+\]
+即 $s$ 是 $t$ 的二次函数。它有一个便于检验的推论：在相等时间间隔 $T$ 内，
+相邻两段位移之差
+\[
+  \Delta d=d_{n+1}-d_n=aT^2
+\]
+应当是常数（“第二差分恒定”）。所以先不看公式，先看数据：
+上表中 $\Delta d$ 依次为
+\[
+  1.9,\ 1.9,\ 2.2,\ 1.8,\ 2.2,\ 1.8,\ 2.2\ \text{（cm）},
+\]
+彼此相差不过 $0.4\ \mathrm{cm}$，近似不变，故可选用二次模型。
+（若小车匀速，应有各段位移相等，即 $\Delta d=0$，与数据不符。）
+
+\subsection{拟合}
+方法一（逐差法）。把 8 段分成前后两半：
+\[
+  \sum_{i=1}^{4}d_i=1.1+3.0+4.9+7.1=16.1\ \mathrm{cm},\qquad
+  \sum_{i=5}^{8}d_i=8.9+11.1+12.9+15.1=48.0\ \mathrm{cm},
+\]
+每一段的位移差满足 $d_{i+4}-d_i=4aT^2$，故
+\[
+  a=\frac{(d_5+d_6+d_7+d_8)-(d_1+d_2+d_3+d_4)}{16T^2}
+  =\frac{31.9\times10^{-2}}{16\times(0.10)^2}
+  \approx1.99\ \mathrm{m/s^2}.
+\]
+
+方法二（最小二乘）。认定从静止出发，取 $s=\tfrac12at^2$，则使
+$\sum\left(s_n-\tfrac12at_n^2\right)^2$ 最小的 $a$ 为
+\[
+  a=\frac{2\sum s_nt_n^2}{\sum t_n^4}\approx2.00\ \mathrm{m/s^2}.
+\]
+若作完整三参数拟合 $s=s_0+v_0t+\tfrac12at^2$，得
+$a\approx2.00\ \mathrm{m/s^2}$、$v_0\approx0.0003\ \mathrm{m/s}$、
+$s_0\approx0.0005\ \mathrm{m}$。后两个参数都近乎为零，说明“从静止出发”的假设
+与数据一致；残差最大约 $0.6\ \mathrm{mm}$，落在读数误差之内。
+
+\subsection{预测}
+用 $a=1.99\ \mathrm{m/s^2}$ 预测计数点 10（$t=1.00\ \mathrm{s}$）处的位移：
+\[
+  s(1.00)=\tfrac12\times1.99\times(1.00)^2\approx0.997\ \mathrm{m}=99.7\ \mathrm{cm},
+\]
+并预测第 10 段（$0.90\ \mathrm{s}\to1.00\ \mathrm{s}$）的位移
+\[
+  d_{10}=\tfrac12\times1.99\times(1.00^2-0.90^2)\approx0.189\ \mathrm{m}=18.9\ \mathrm{cm}.
+\]
+
+\subsection{结论}
+这条纸带对应初速度为零的匀加速直线运动：
+\[
+  a\approx2.0\ \mathrm{m/s^2},\qquad s\approx0.997\,t^2\ \text{（m）}.
+\]
+由于 $\tfrac12a\approx1.0\ \mathrm{m/s^2}$，就有了一个好记的对照：
+以米计量的位移数值，几乎等于以秒计量的时间的平方。
+
+\subsection{检验与反思}
+换一条纸带重复实验，在计数点 10 处量得 $s=100.9\ \mathrm{cm}$，
+与预测值 $99.7\ \mathrm{cm}$ 相差 $1.2\ \mathrm{cm}$：
+\[
+  \frac{100.9-99.7}{99.7}\approx1.2\%.
+\]
+相对误差只有一个多百分点，说明模型不只是“拟合得上”，还能“预报得准”。
+
+误差来源：刻度尺读数（估读到 $0.1\ \mathrm{cm}$）、打点周期不稳、纸带与限位孔间的摩擦。
+模型失效的条件要记牢：
+\begin{itemize}
+  \item 加速度不再恒定（牵引力变化、砝码落地、摩擦不均），$\Delta d$ 随之漂移，二次模型只在局部成立；
+  \item 初速度不为零却仍按 $s=\tfrac12at^2$ 拟合，会引入系统偏差；
+  \item 计时频率弄错：若电源实为 $60\ \mathrm{Hz}$ 却仍取 $T=0.10\ \mathrm{s}$，算得的 $a$ 只有真实值的
+        $\left(\frac{50}{60}\right)^2\approx0.69$ 倍，即被低估约 $31\%$。
+\end{itemize}
+\key{二次模型的资格来自“第二差分恒定”；先判断该不该用，再谈拟合得准不准。}
+
+\section{活动五：自由落体测楼高——修正与失效条件}
+
+\subsection{情境}
+教学楼约 40 多米高，找不到足够长的卷尺。可行的办法是：在楼顶由静止释放一个小钢球
+（半径约 $2.5\ \mathrm{cm}$，质量约 $0.51\ \mathrm{kg}$），地面的同学用秒表测出从释放到听见落地声的时间，
+三次测量的平均值为 $t_{\text{obs}}=3.13\ \mathrm{s}$。取 $g=9.8\ \mathrm{m/s^2}$，声速 $v=340\ \mathrm{m/s}$。
+
+\begin{center}
+\begin{tikzpicture}[>=Latex, font=\scriptsize]
+  \draw[fill=gray!15, draw=black] (0,0) rectangle (1.6,4.2);
+  \foreach \i in {0,1,2,3}{\foreach \j in {0,1}{
+    \draw[fill=white] (0.25+0.65*\j,0.45+0.95*\i) rectangle ++(0.4,0.55);}}
+  \draw[thick] (-0.7,4.2) -- (0,4.2);
+  \fill (-0.7,4.36) circle (2.5pt);
+  \draw[dashed, ->, thick] (-0.7,4.28) -- (-0.7,0.2);
+  \draw[<->] (1.85,0) -- (1.85,4.2);
+  \node[right] at (1.92,2.1) {$h$};
+  \draw[thick, ->] (-0.7,0.04) arc (125:55:0.45);
+  \draw[thick, ->] (-0.7,0.04) arc (125:55:0.80);
+  \draw[thick, ->] (-0.7,0.04) arc (125:55:1.15);
+  \node[below] at (-0.7,-0.12) {落地声};
+\end{tikzpicture}
+\end{center}
+
+\subsection{提出问题}
+楼有多高？把 $3.13\ \mathrm{s}$ 直接代入 $h=\tfrac12gt^2$，得 $48.0\ \mathrm{m}$，这个数可信吗？
+
+\subsection{选模型}
+若小球由静止释放、只受重力，自由落体满足
+\[
+  h=\tfrac12gt^2\qquad\Longleftrightarrow\qquad t=\sqrt{\frac{2h}{g}}.
+\]
+它有三条前提：初速度为零、忽略空气阻力、$g$ 不随高度变化。下面逐条检查。
+
+\subsection{拟合}
+先直接代入：
+\[
+  h_0=\tfrac12\times9.8\times(3.13)^2\approx48.0\ \mathrm{m}.
+\]
+问题在于，秒表记录的 $3.13\ \mathrm{s}$ 并不全是下落时间，其中还夹着声音从地面传回楼顶的时间。
+设楼高为 $h$，则应有
+\[
+  t_{\text{obs}}=\underbrace{\sqrt{\frac{2h}{g}}}_{\text{下落 }t_f}
+               +\underbrace{\frac{h}{340}}_{\text{声音传播 }t_s}.
+\]
+先用 $h\approx48\ \mathrm{m}$ 估一下声音延迟：$48/340\approx0.14\ \mathrm{s}$，
+占总量近 $5\%$，不能随手略去。
+
+迭代求解：由 $h_{k+1}=\tfrac12g\left(t_{\text{obs}}-h_k/340\right)^2$ 逐次逼近，
+\[
+  h_0=48.0\ \mathrm{m},\quad
+  h_1=43.8\ \mathrm{m},\quad
+  h_2=44.1\ \mathrm{m},\quad
+  h_3=44.1\ \mathrm{m},
+\]
+收敛到 $h\approx44.1\ \mathrm{m}$。校核：$t_f=\sqrt{2\times44.1/9.8}=3.00\ \mathrm{s}$，
+$t_s=44.1/340=0.13\ \mathrm{s}$，合计 $3.13\ \mathrm{s}$，与测量自洽。
+可见不做修正的 $48.0\ \mathrm{m}$ 偏高 $3.9\ \mathrm{m}$，相对误差 $+8.8\%$，是可以修正的系统误差。
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{1.6cm}p{1.6cm}p{1.6cm}p{1.8cm}p{2.2cm}p{1.8cm}}
+\toprule
+楼高 $h$（m） & 下落 $t_f$（s） & 声传 $t_s$（s） & 测得 $t$（s） & 直算 $h_0$（m） & 相对偏差 \\
+\midrule
+5    & 1.01 & 0.015 & 1.02 & 5.15   & $+2.9\%$ \\
+10   & 1.43 & 0.029 & 1.46 & 10.42  & $+4.2\%$ \\
+20   & 2.02 & 0.059 & 2.08 & 21.18  & $+5.9\%$ \\
+44.1 & 3.00 & 0.130 & 3.13 & 48.00  & $+8.8\%$ \\
+100  & 4.52 & 0.294 & 4.81 & 113.45 & $+13.5\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+楼越高，声音延迟所占比例越大，不修正的偏差就越严重；到百米量级已不可忽视。
+
+\subsection{预测}
+用修正后的模型做一次预报：把同一个小球从 $20\ \mathrm{m}$ 高的窗口由静止释放，
+\[
+  t_{\text{obs}}=\sqrt{\frac{2\times20}{9.8}}+\frac{20}{340}
+  =2.020+0.059=2.079\ \mathrm{s}.
+\]
+实测三次平均 $2.07\ \mathrm{s}$，相对偏差 $-0.4\%$，与预测相符。
+
+\subsection{结论}
+楼高为
+\[
+  h=44.1\ \mathrm{m}\qquad\text{即}\qquad(44\pm6)\ \mathrm{m}.
+\]
+不确定度来自动作快慢：按表反应约 $\pm0.2\ \mathrm{s}$，由 $\Delta h\approx gt\,\Delta t$ 得
+\[
+  \Delta h\approx9.8\times3.0\times0.20\approx5.9\ \mathrm{m}\quad(\text{约 }\pm13\%).
+\]
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{3.0cm}p{2.2cm}p{1.8cm}p{4.4cm}}
+\toprule
+误差来源 & 大小 & 性质 & 处理办法 \\
+\midrule
+秒表反应        & $\pm13\%$            & 随机 & 多次测量取平均，改用光电门 \\
+声音延迟（未修正） & $+8.8\%$          & 系统 & 改解 $t=\sqrt{2h/g}+h/v$ \\
+空气阻力        & $+1.6\%$              & 系统 & 换密度大、体积小的重物 \\
+$g$ 随高度变化  & $1.4\times10^{-3}\%$  & 系统 & 几千米以下可忽略 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{检验与反思}
+用“每层约 $3\ \mathrm{m}$”核对：$44.1\div3\approx15$ 层，与教学楼实际层数相当，结果合理。
+更要紧的是想清楚模型什么时候会失效：
+\begin{itemize}
+  \item 初速度不为零：若以 $v_0=2\ \mathrm{m/s}$ 抛出，实际下落仅 $2.80\ \mathrm{s}$，
+        代回公式只得 $38.5\ \mathrm{m}$，低估 $12.7\%$。所以必须严格由静止释放。
+  \item 空气阻力不可忽略：轻而大的物体很快到达终极速度 $v_t=\sqrt{2mg/(\rho C_DA)}$。
+        本实验钢球的 $v_t\approx95\ \mathrm{m/s}$，落地速度仅 $29.4\ \mathrm{m/s}$，
+        若忽略阻力，估算会偏高约 $1.6\%$（数值积分给出下落时间由 $3.000\ \mathrm{s}$ 变为 $3.024\ \mathrm{s}$）；
+        换成纸团（$v_t\approx8\ \mathrm{m/s}$）则需 $6.0\ \mathrm{s}$，几乎是真空值的两倍，模型彻底失效。
+  \item 高度过大：$h\approx32\ \mathrm{km}$ 时 $g$ 才减小约 $1\%$，地面实验无需担心。
+  \item 回声干扰：在井底、峡谷或狭窄楼道里，回声会让按表提前或错后。
+\end{itemize}
+\key{自由落体公式给的是“真空中的答案”；把声音、阻力和反应逐项算清楚，才算真的做了测量。}

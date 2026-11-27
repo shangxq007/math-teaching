@@ -1,0 +1,382 @@
+% ==========================================================
+%  第 9 章 drill：结构雷达闪电战 + 五问连环母题
+% ------------------------------------------------------------
+%  纯模块化片段：不含 documentclass / document；
+%  编译入口：_check_drill09.tex（preamble + versions + 本文件）。
+%  只使用 versions.tex 与 common/ 已提供的环境（warmupbox、
+%  advancedonly、\ifteacher、\tk、\logotag 等），
+%  不新增任何 \newcommand / \newenvironment。
+%
+%  选题（结构型，避开别处已用模型：奇偶分解、y=x 镜面求和、
+%  差分 Abel、椭圆仿射、条件最值「1 的代换」）：
+%    母题一 黄金比不动点与单调蛛网：a_{n+1}=(2a_n+1)/(a_n+1)
+%           ——刻意不用正文第 6 节七问母题的 x=1+1/x（同为黄金比
+%           但骨架不同：本题 F'>0 单调阶梯，那里 F'<0 交错螺旋）；
+%    母题二 Möbius 不动点与齐次坐标：f(z)=(2z+1)/(z+2)
+%           ——不动点 ±1、换坐标 X=(z-1)/(z+1) 化等比 1/3，
+%           齐次坐标 (u,v) 与特征方向互译。
+%  导航约定：Möbius 矩阵／特征方向的完整推导见第 5 章探究三；
+%  源、汇、黎曼球与三种类型完整分类见正文第 5 节，本 drill 只作
+%  练习与指针，不重推。
+%
+%  数值核验（sympy 实算，见工作记录）：
+%    phi=(1+√5)/2≈1.6180339887；F'(x)=1/(x+1)^2，F'(phi)=1/phi^4
+%    =(7-3√5)/2≈0.1458980338；
+%    轨道 a_0=1: 3/2, 8/5, 21/13, 55/34, 144/89（隔项 Fibonacci 比）；
+%    恒等式 a_{n+1}-phi=(a_n-phi)/(phi^2(a_n+1)) 残差恒为 0；
+%    共轭变量 X=(a_n-phi)/(a_n+1/phi) 的公比 = 1/phi^4；
+%    f(z)=(2z+1)/(z+2): 不动点 ±1，f'(z)=3/(z+2)^2，f'(1)=1/3，
+%    f'(-1)=3；X=(z-1)/(z+1) 满足 X_{n+1}=X_n/3；
+%    z_0=0 轨道 0,1/2,4/5,13/14,40/41,121/122=(3^n-1)/(3^n+1)；
+%    矩阵 [[2,1],[1,2]] 特征值 3（方向 (1,1)）与 1（方向 (-1,1)），
+%    齐次坐标乘子 ((2u+v)-(u+2v))/((2u+v)+(u+2v)) ÷ ((u-v)/(u+v)) = 1/3；
+%    f(-5/4)=-2，下一步分母为 0（定义域陷阱反例）。
+% ==========================================================
+
+% ---------------------------------------------------------
+%  第一部分：五分钟结构雷达闪电战
+% ---------------------------------------------------------
+
+\begin{warmupbox}{五分钟结构雷达闪电战：只练核心一步变形}
+规则：每题\textbf{只写关键一步}（不是解完整题）。先读「雷达触发」，在脑子里把这一步放回整条链里，再动笔；答案处以下划线留白（学生版显示等宽下划线，教师版显红）。
+
+\begin{enumerate}[label=(\arabic*), itemsep=5pt]
+\item \textbf{解不动点方程}：对 $F(x)=\dfrac{x+1}{x+2}$，解 $F(x)=x$（只列方程并求解）。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}不动点就是曲线与对角线的公共点；去分母后是一元二次方程，解完扫一眼分母。\\
+答案：\tk{x^2+x-1=0,\quad x=\dfrac{-1\pm\sqrt5}{2}}。
+
+\item \textbf{稳定性判据}：对 $F(x)=2-\dfrac1x$（$x\neq0$），求不动点 $x^*$ 与 $|F'(x^*)|$，并判断属于哪一类。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}先解 $x=F(x)$（这里恰好是完全平方），再把 $x^*$ 代进导数；$|F'|=1$ 不能直接宣判。\\
+答案：$x^*=\tk{1}$，$F'(x)=\tk{\dfrac1{x^2}}$，$|F'(1)|=\tk{1}$，故为 \tk{\text{临界（需看高阶项）}}。
+
+\item \textbf{换坐标系：$b_n=a_n-x^*$}：对 $a_{n+1}=\dfrac32a_n-1$，求 $x^*$ 并写出 $b_n=a_n-x^*$ 满足的递推。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}减去不动点＝把原点搬到不动点，常数尾巴立即被吸收，一阶线性递推现形。\\
+答案：$x^*=\tk{2}$，$b_{n+1}=\tk{\dfrac32\,b_n}$（此时 $|3/2|>1$，不稳定）。
+
+\item \textbf{曲线与对角线的交点}：写出曲线 $y=\sqrt{1+x}$ 与直线 $y=x$ 在第一象限的交点横坐标所满足的方程，并求解。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}交点即不动点；根号用平方去掉，注意 $\sqrt{\cdot}\ge0$ 带来的取舍。\\
+答案：$\tk{x^2-x-1=0}$，$x=\tk{\dfrac{1+\sqrt5}{2}}$（负根小于 $0$，舍去）。
+
+\item \textbf{旋转中心与位似中心}：绕原点逆时针转 $90^\circ$ 把 $(2,1)$ 映到 \tk{(-1,2)}，此旋转的唯一不动点是 \tk{(0,0)}；以 $(1,2)$ 为位似中心、相似比 $2$，点 $(3,4)$ 的像是 \tk{(5,6)}。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}位似的像＝中心$\,+k\cdot($点$-$中心$)$；转角非零的平面旋转只剩下中心一个不动点。
+
+\item \textbf{Möbius 分式变换的不动点}：对 $f(z)=\dfrac{2z+1}{z+2}$，写出不动点方程并求出两个不动点。\\
+{\small\bfseries\textcolor{third}{雷达触发：}}$f(z)=z$ 去分母得 $cz^2+(d-a)z-b=0$（一般形式见正文第 5 节）；这里判别式为正，得两个相异实不动点。\\
+答案：$\tk{z^2=1}$（即 $z^2+(d-a)z-b=z^2-1=0$），$z=\tk{\pm1}$。
+\end{enumerate}
+\end{warmupbox}
+
+% ---------------------------------------------------------
+%  第二部分：解答即笔记 · 五问连环母题
+% ---------------------------------------------------------
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题一：黄金比不动点与单调蛛网——$a_{n+1}=\dfrac{2a_n+1}{a_n+1}$},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+设 $a_0=1$，$a_{n+1}=F(a_n)$，其中 $F(x)=\dfrac{2x+1}{x+1}$（$x\ge1$）。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：动机——先用数值「看见」轨道往哪里走；单调还是振荡，蛛网图会直接告诉你，不必等到算完通项。
+
+逐项算：
+\[
+a_1=\frac32,\quad a_2=\frac85,\quad a_3=\frac{21}{13},\quad a_4=\frac{55}{34}.
+\]
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, x=1.15cm, y=1.15cm]
+  \draw[->, gray] (0,0)--(2.4,0) node[below right] {$x$};
+  \draw[->, gray] (0,0)--(0,2.4) node[above left] {$y$};
+  \foreach \x in {1,2}{ \draw (\x,0.05)--(\x,-0.05) node[below=1pt] {\scriptsize \x}; }
+  \foreach \y in {1,2}{ \draw (0.05,\y)--(-0.05,\y) node[left=1pt] {\scriptsize \y}; }
+  \draw[gray!60,dashed,domain=0:2.4,samples=2] plot(\x,\x);
+  \draw[main,very thick,domain=0.9:2.25,samples=80,smooth] plot(\x,{(2*\x+1)/(\x+1)});
+  \draw[third,thick] (1,0)--(1,1.5)--(1.5,1.5)--(1.5,1.6)--(1.6,1.6)--(1.6,1.6154)--(1.6154,1.6154)--(1.6154,1.6176)--(1.6176,1.6176)--(1.6176,1.618);
+  \fill[second] (1.618,1.618) circle (1.6pt) node[above right] {$\varphi\approx1.618$};
+  \node[main!70!black] at (0.98,1.3) {$y=F(x)$};
+  \node[gray!70!black,above left] at (2.15,2.15) {$y=x$};
+  \ifteacher
+    \fill[third] (1,1.5) circle (1.3pt) node[left] {$a_1$};
+    \fill[third] (1.5,1.6) circle (1.3pt) node[below right] {$a_2$};
+    \fill[third] (1.6,1.6154) circle (1.3pt) node[above right,font=\scriptsize] {$a_3$};
+    \node[third,align=left,font=\scriptsize] at (0.85,2.12) {阶梯单向爬升\\\\（不是交错螺旋）};
+  \else
+    \node[third] at (1.55,0.42) {描出 $a_1,a_2,a_3,a_4$，观察蛛网走向并猜想极限};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：$a_1=\frac32,\ a_2=\frac85,\ a_3=\frac{21}{13},\ a_4=\frac{55}{34}$ 恰是隔项的 Fibonacci 比 $\frac{F_{2n+2}}{F_{2n+1}}$（$F_1=F_2=1$）；阶梯只朝一个方向收拢，因为 $F'(\varphi)=\varphi^{-4}>0$。这与正文第 6 节 $x=1+\frac1x$（$F'<0$，交错蛛网）正好是一对对照。猜想：$\lim a_n=\varphi=\frac{1+\sqrt5}{2}$。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：动机——「设极限再代入」之前必须先交代极限存在；单调有界准则是考场上最顺手的存在性工具。
+
+第一步（找不动点）：$x^*=F(x^*)\Rightarrow x^{*2}=x^*+1$，即
+\[
+x^*=\tk{\dfrac{1+\sqrt5}{2}}=\varphi
+\]
+（另一根 $\tfrac{1-\sqrt5}{2}<0$，不在 $[1,+\infty)$ 内，舍去）。
+
+第二步（证单调）：当 $1\le x<\varphi$ 时 $x^2-x-1<0$，故
+\[
+a_{n+1}-a_n=F(x)-x=\tk{\dfrac{1+x-x^2}{1+x}}>0,
+\]
+$\{a_n\}$ 单调递增。
+
+第三步（证有界）：$F'(x)=\tk{\dfrac1{(x+1)^2}}>0$，$F$ 在 $[1,+\infty)$ 上递增；又 $F(\varphi)=\varphi$、$F(1)=\frac32>1$，归纳得
+\[
+1\le a_n<\varphi .
+\]
+
+第四步（取极限）：由单调有界准则，$\lim a_n$ 存在，设为 $L$。对 $a_{n+1}=\dfrac{2a_n+1}{a_n+1}$ 两边取极限：
+\[
+L=\dfrac{2L+1}{L+1}\ \Longrightarrow\ L^2-L-1=0\ \Longrightarrow\ L=\tk{\varphi}.
+\]
+检验：$\varphi$ 确实满足 $\varphi=\dfrac{2\varphi+1}{\varphi+1}$（因 $\varphi^2=\varphi+1$）。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：动机——极限存在之后的收敛速度由 $|F'|$ 读出；局部线性化把非线性迭代翻译成等比数列。
+
+令 $b_n=a_n-\varphi$，则
+\[
+b_{n+1}=F(a_n)-F(\varphi)\approx \tk{F'(\varphi)\,b_n}=\tk{\dfrac{1}{\varphi^4}\,b_n},
+\]
+更有一个精确的恒等式（用 $\varphi^2=\varphi+1$ 可逐字验证）：
+\[
+\tk{a_{n+1}-\varphi=\dfrac{a_n-\varphi}{\varphi^2\,(a_n+1)}}.
+\]
+因 $a_n\ge1$，收缩因子不超过 $\dfrac1{2\varphi^2}$，故误差按公比 $\varphi^{-4}\approx0.1459$ 指数衰减。
+
+与通法左右对读：
+\begin{center}\small\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{1.9cm}|p{5.5cm}|p{5.5cm}}
+\toprule
+ & 考纲通法（第 (2) 问） & 高观点（本问） \\
+\midrule
+存在性 & 单调有界准则，三步论证 & 不变区间 $+$ 收缩因子 $<1$ \\
+收敛速度 & 未涉及 & 公比 $\varphi^{-4}\approx0.1459$，指数衰减 \\
+书写量 & 完整规范，解答题照写 & 两行预判，选填与压轴用 \\
+风险点 & 漏写有界或单调方向 & 只说 $|F'|<1$，不验证轨道进入吸引域 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{与正文对读}：正文第 6 节的局部线性化 $F(x)\approx x^*+F'(x^*)(x-x^*)$ 是同一招的连续版；第 5 章的「共轭变换」$b_{n+1}\approx F'(x^*)b_n$ 是它的离散命名。$F'>0$ 得单调阶梯，$F'<0$ 得交错螺旋——符号决定形态，模长决定快慢。
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：Fibonacci 闭式与一般 Möbius 递推的共轭变量}。
+
+(i) \textbf{闭式}：用 $F_{2n+4}=F_{2n+3}+F_{2n+2}$ 与 $F_{2n+3}=F_{2n+2}+F_{2n+1}$ 可归纳证明
+\[
+a_n=\tk{\dfrac{F_{2n+2}}{F_{2n+1}}}\qquad(F_1=F_2=1),
+\]
+于是 $a_n\to\varphi$，且误差公比为 $\varphi^{-4}$（Binet 公式给出 $|a_n-\varphi|\sim C\,\varphi^{-4n}$）。
+
+(ii) \textbf{共轭变量}：设 $F(x)=\dfrac{ax+b}{cx+d}$ 有两个相异不动点 $p,q$，则
+\[
+X_n=\dfrac{a_n-p}{a_n-q}
+\]
+成等比数列，公比为两特征值之比（推导见第 5 章探究五）。本题 $p=\varphi$，$q=-\dfrac1\varphi$，可直接验证
+\[
+\dfrac{a_{n+1}-\varphi}{a_{n+1}+\frac1\varphi}
+=\dfrac1{\varphi^4}\cdot\dfrac{a_n-\varphi}{a_n+\frac1\varphi},
+\]
+与 (3) 的 $\varphi^{-4}$ 完全一致——「减一个不动点」是近似，「减两个不动点的比」才是精确等比。
+
+(iii) 与正文第 5 节对照：正文已按判别式给出双曲／椭圆／抛物三种类型的完整分类与流场图像，本题属双曲型中 $F'>0$ 的特殊情形，不重复分类讨论。
+\logotag{公式族}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：动机——「不动点存在」与「轨道收敛到不动点」是两回事，这条界线每年都有人在这里丢分。
+
+{\bfseries\color{red!70!black}错解：}设 $\lim a_n=L$，代入 $L=\dfrac{2L+1}{L+1}$ 得 $L^2-L-1=0$，$L=\dfrac{1\pm\sqrt5}{2}$；又 $a_n\ge1$，故 $L=\varphi$，于是 $a_n\to\varphi$。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{循环论证}：「设 $\lim a_n=L$」已经假定了极限存在，而存在性正是要证的东西。反例：$a_{n+1}=2a_n$、$a_0=1$ 有唯一不动点 $0$，但 $a_n=2^n\to\infty$——不动点存在不代表轨道收敛。
+\item \textbf{舍根理由不严}：$a_n\ge1$ 只能排除负根；真正选中 $\varphi$ 的理由是轨道被困在不变区间 $[1,\varphi]$ 内（$F$ 递增且 $F(\varphi)=\varphi$），而不是简单的符号。
+\item \textbf{判据要配套}：$|F'(\varphi)|=\varphi^{-4}<1$ 只是\emph{局部}判据，必须先确认整条轨道落在吸引域内才能使用。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：\tk{\text{先证极限存在（单调有界或不变区间 $+$ 收缩）}}，再取极限；\tk{\text{局部判据 $|F'|<1$ 必须与不变区间连用。}}
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{tcolorbox}[
+  breakable, enhanced, sharp corners,
+  colback=structurecolor!3, colframe=structurecolor!70!black, boxrule=0.6pt,
+  title={\bfseries 解答即笔记·五问连环母题二：Möbius 不动点与齐次坐标——$f(z)=\dfrac{2z+1}{z+2}$ 的「搬原点」},
+  coltitle=black, fonttitle=\small,
+  attach boxed title to top left={xshift=2mm, yshift=-2mm},
+  boxed title style={sharp corners, colback=white,
+    colframe=structurecolor!70!black, boxrule=0.4pt},
+  top=7pt]
+
+设 $f(z)=\dfrac{2z+1}{z+2}$（$ad-bc=3\neq0$），从 $z_0=0$ 出发迭代 $z_{n+1}=f(z_n)$。
+
+\begin{enumerate}[label=(\arabic*), itemsep=4pt]
+\item \textbf{具象感知与画图}：动机——先在射影直线上看轨道被「源」推开、被「汇」吸入，再回到 $(u,v)$ 平面看这两个不动点其实是两条特征方向。
+
+逐项算：
+\[
+z_1=\frac12,\quad z_2=\frac45,\quad z_3=\frac{13}{14},\quad z_4=\frac{40}{41}.
+\]
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, semithick, font=\footnotesize, x=1.05cm, y=1.05cm]
+  % 左：射影直线
+  \draw[->, gray] (-2.7,0)--(2.9,0) node[right] {$z$};
+  \foreach \t in {-2,-1,1,2}{ \draw (\t,0.06)--(\t,-0.06) node[below=1pt] {\scriptsize \t}; }
+  \fill[second] (-1,0) circle (1.8pt) node[above] {$-1$（源）};
+  \fill[main] (1,0) circle (1.8pt) node[above] {$1$（汇）};
+  \draw[third,thick,->] (-1.4,0.22)--(-2.1,0.22);
+  \draw[third,thick,->] (-0.6,0.22)--(0.5,0.22);
+  \draw[third,thick,->] (2.1,0.22)--(1.4,0.22);
+  \node[gray!70!black,align=center,font=\scriptsize] at (0,-0.85) {轨道自源 $-1$ 涌出\\\\汇入汇 $1$};
+  % 右：齐次坐标平面
+  \begin{scope}[shift={(6.1,0)}]
+    \draw[->, gray] (-2.5,0)--(2.7,0) node[right] {$u$};
+    \draw[->, gray] (0,-1.7)--(0,2.7) node[above] {$v$};
+    \draw[main!60!black,dashed,thick] (-2.3,1)--(2.5,1) node[right] {$v=1$};
+    \draw[main,very thick] (-2.2,-2.2)--(2.2,2.2);
+    \draw[second,very thick] (-2.2,2.2)--(2.2,-2.2);
+    \fill[main] (1,1) circle (1.5pt) node[below right] {$1$};
+    \fill[second] (-1,1) circle (1.5pt) node[below left] {$-1$};
+    \fill[third] (0.6,0.6) circle (1.5pt) node[below left,font=\scriptsize] {$(u,v)$};
+    \fill[third] (1.8,1.8) circle (1.5pt) node[above right,font=\scriptsize] {$(3u,3v)$};
+    \draw[third,thick,->] (0.65,0.65)--(1.72,1.72);
+    \fill[main] (-0.6,0.6) circle (1.5pt) node[above right,font=\scriptsize] {不动};
+    \node[gray!70!black,align=center,font=\scriptsize] at (0,-2.15) {特征方向 $=$ 过原点的直线\\\\投影到 $v=1$ 得不动点};
+  \end{scope}
+  \ifteacher
+    \node[main!70!black,font=\scriptsize,above] at (7.3,2.4) {$\lambda=3$};
+    \node[second!80!black,font=\scriptsize,above] at (4.9,2.4) {$\lambda=1$};
+  \else
+    \node[third,font=\scriptsize] at (6.1,2.45) {两条过原点的直线分别对应哪个不动点？};
+  \fi
+\end{tikzpicture}
+\end{center}
+
+\ifteacher
+{\small\textcolor{second}{红笔：左图轨道从源 $-1$ 附近被推出、单调汇入汇 $1$；右图两条特征直线 $v=u$（对应 $z=1$）与 $v=-u$（对应 $z=-1$）就是这两个不动点。沿 $v=u$ 上的向量被放大 $3$ 倍，沿 $v=-u$ 上的向量（特征向量 $(-1,1)$）纹丝不动——线性作用下「特征方向上的点原地按比例伸缩」。猜想：$z_n\to1$。}}
+\else
+\noteblank[3ex]
+\fi
+\logotag{具象感知}
+
+\item \textbf{考纲满分通法}：动机——Möbius 迭代的标准动作只有四步：求不动点、判稳定、换坐标、化等比，每一步都可在卷面上写满。
+
+第一步（求不动点）：$z=\dfrac{2z+1}{z+2}$ 去分母得
+\[
+z^2+(d-a)z-b=z^2-1=0\ \Longrightarrow\ z=\tk{\pm1}.
+\]
+
+第二步（判稳定）：$f'(z)=\tk{\dfrac{3}{(z+2)^2}}$，故 $f'(1)=\tk{\dfrac13}<1$（汇，吸引），$f'(-1)=\tk{3}>1$（源，排斥）。
+
+第三步（换坐标）：令 $X=\dfrac{z-1}{z+1}$（把汇 $1$ 搬到 $0$、源 $-1$ 搬到 $\infty$），则
+\[
+X_{n+1}=\dfrac{f(z_n)-1}{f(z_n)+1}
+=\dfrac{(z_n-1)/(z_n+2)}{3(z_n+1)/(z_n+2)}
+=\tk{\dfrac{X_n}{3}}.
+\]
+
+第四步（等比回代）：$z_0=0\Rightarrow X_0=-1$，故 $X_n=-3^{-n}$；由 $X=\dfrac{z-1}{z+1}$ 反解 $z=\dfrac{1+X}{1-X}$，得
+\[
+z_n=\tk{\dfrac{1-3^{-n}}{1+3^{-n}}}.
+\]
+检验：$n=1$ 时 $z_1=\dfrac{1-\frac13}{1+\frac13}=\dfrac12$，吻合。
+\logotag{考纲通法}
+
+\item \textbf{高观点降维秒杀}：动机——把分式迭代升到二维就是矩阵乘法；不动点与特征方向是同一件事，公比就是特征值之比。
+
+令 $z_n=\dfrac{u_n}{v_n}$，则
+\[
+\binom{u_{n+1}}{v_{n+1}}
+=\begin{pmatrix}2&1\\1&2\end{pmatrix}\binom{u_n}{v_n},
+\qquad
+M\begin{pmatrix}1\\1\end{pmatrix}=3\begin{pmatrix}1\\1\end{pmatrix},\quad
+M\begin{pmatrix}-1\\1\end{pmatrix}=1\begin{pmatrix}-1\\1\end{pmatrix}.
+\]
+特征方向 $(1,1)$ 对应不动点 $z=1$（特征值 $3$），方向 $(-1,1)$ 对应 $z=-1$（特征值 $1$）；直接计算
+\[
+\frac{(u'_{n}-v'_{n})}{(u'_{n}+v'_{n})}
+=\frac13\cdot\frac{u_n-v_n}{u_n+v_n},
+\]
+正是 $X_{n+1}=\dfrac{X_n}{3}$。一句话：\textbf{不动点＝矩阵的特征方向，公比＝两特征值之比}（完整推导见第 5 章探究三）。
+
+与通法左右对读：
+\begin{center}\small\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{1.9cm}|p{5.5cm}|p{5.5cm}}
+\toprule
+ & 考纲通法（第 (2) 问） & 齐次坐标（本问） \\
+\midrule
+对象 & 一维分式递推 $z_{n+1}=f(z_n)$ & 二维线性迭代 $M\binom{u}{v}$ \\
+关键点 & 构造 $X=\frac{z-1}{z+1}$，凑出公比 $\frac13$ & 特征分解，读出方向与特征值 \\
+优势 & 四步照写，解答题可得分 & 为什么恰好两个不动点，一目了然 \\
+风险点 & 忘记 $z\neq-2$ 的定义域；舍根理由写错 & 把特征值之比 $\frac13$ 写成 $3$（方向弄反） \\
+\bottomrule
+\end{tabular}
+\end{center}
+\logotag{高观点}
+
+\begin{advancedonly}
+\item \textbf{结构推广：一般 Möbius 变换与三种类型}。
+
+一般 $f(z)=\dfrac{az+b}{cz+d}$（$ad-bc\neq0$）的不动点方程为
+\[
+cz^2+(d-a)z-b=0,\qquad \Delta=(a-d)^2+4bc.
+\]
+判别式的符号决定类型：$\Delta>0$ 双曲（两相异实不动点，一源一汇）、$\Delta<0$ 椭圆（一对共轭复不动点，旋转／周期）、$\Delta=0$ 抛物（一个二重不动点，取倒数退化为等差）。本题 $\Delta=(2-2)^2+4\cdot1\cdot1=4>0$，双曲型；完整的流场图像与黎曼球解释见正文第 5 节，此处不重复。
+
+\textbf{齐次坐标统一证明}：$z=u/v$ 时 $f$ 对应 $M=\begin{pmatrix}a&b\\c&d\end{pmatrix}$；$z^*$ 是不动点等价于 $(u^*,v^*)^T$ 是 $M$ 的特征向量，乘子等于两特征值之比。$c=0$ 时矩阵有一特征方向在无穷远处，对应「一个有限不动点 $+\ \infty$」；$\Delta=0$ 时两特征值相等，退化为平移（等差）。可见「恰好两个不动点」不是巧合，而是二次方程与二阶矩阵的共同影子。
+\logotag{公式族}
+\end{advancedonly}
+
+\item \textbf{易错边界排雷}：动机——分式递推比整式多两重门：定义域与「源／汇」的取舍；这两点不写清楚，答案对了也扣分。
+
+{\bfseries\color{red!70!black}错解：}设 $\lim z_n=L$，代入 $L=\dfrac{2L+1}{L+2}$ 得 $L^2=1$，$L=\pm1$；由 $z_n>0$ 知 $L=1$，于是 $z_n\to1$。
+
+\ifteacher
+{\bfseries\color{main}诊断：}
+\begin{itemize}[itemsep=1pt]
+\item \textbf{存在性缺位}：又是先设极限再代入。$z_{n+1}=2z_n$（$z_0=1$）的不动点 $0$ 存在，但轨道发散——方程的根未必是极限。本题的正确存在性来自不变区间：$z\in[0,1]$ 时 $f(z)\in[\tfrac12,1]$，且 $f(z)>z$，单调有界故极限存在。
+\item \textbf{舍根理由错误}：$z_n>0$ 只能排除 $-1$ 这个负数，并不构成理由本身；排除源 $-1$ 的真正依据是 $f'(-1)=3>1$（邻近点被弹开），加上轨道始终落在 $[0,1]$ 内。
+\item \textbf{定义域陷阱}：分母 $z+2$ 不能为零。取 $z_0=-\dfrac54$，则 $z_1=-2$，$z_2$ 根本无定义——迭代前先声明初始值与每一步的允许范围。
+\end{itemize}
+
+\textbf{考场防扣分铁律}：\tk{\text{先证极限存在并指明不变区间}}，再取极限；\tk{\text{分式递推先写明分母不为零与初值范围。}}
+\else
+{\small（先自己找出两处漏洞，再对照教师版。）}
+\fi
+\logotag{避坑铁律}
+\end{enumerate}
+\end{tcolorbox}
+
+% ---------------------------------------------------------
+
+\begin{notezone}{章末归档：不动点二级结论 + 五问与笔记功能}
+\textbf{二级结论}：(1) 一阶递推 $a_{n+1}=F(a_n)$：$x^*=F(x^*)$；$|F'(x^*)|<1$ 收缩（稳定）、$>1$ 扩张（不稳定）、$=1$ 临界；$F'$ 的正负决定单调阶梯还是交错蛛网。(2) 连续情形：$f(x)=x$ 等价于曲线 $y=f(x)$ 与对角线 $y=x$ 的交点。(3) 几何变换：旋转中心、位似中心、仿射定点都是不动点的特例，仿射情形满足 $(A-I)\binom xy=-\vec b$。(4) Möbius：不动点方程 $cz^2+(d-a)z-b=0$，判别式 $\Delta=(a-d)^2+4bc$；不动点＝转移矩阵的特征方向，乘子＝两特征值之比；换坐标 $X=\dfrac{x-p}{x-q}$ 把分式迭代化成等比。(5) 齐次坐标 $(u,v)$ 把一维分式作用提升为二维线性作用。
+
+\textbf{五问与笔记功能}：(1) 具象感知与画图 $\to$ 概念引入笔记；(2) 考纲满分通法 $\to$ 规范书写笔记；(3) 高观点降维秒杀 $\to$ 大招与二级结论笔记；(4) 结构推广 $\to$ 公式族笔记；(5) 易错边界排雷 $\to$ 错题本笔记。
+
+\textbf{导航}：Möbius 矩阵与特征方向的完整推导见第 5 章探究三；源、汇、黎曼球与三种类型的系统分类见正文第 5 节；本 drill 只作练习与指针，不重复展开。
+\end{notezone}

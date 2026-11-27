@@ -2,7 +2,7 @@
 
 > 架构与规范的**唯一权威**见 `ARCHITECTURE.md`；本 README 只讲日常用法。
 
-独立成册，编号 0–9，不与 `../guide/`（湘教版章节）混排。文档类 `elegantnote`，XeLaTeX 编译。
+独立成册，编号 0–9，不与 `../guide/`（章节）混排。文档类 `elegantnote`，XeLaTeX 编译。
 
 ## 结构
 
@@ -16,6 +16,7 @@ chapters/02.tex             % 第 2 章 三角函数、解三角形与复平面�
 chapters/03.tex  …          % 第 3–7 章
 chapters/08_homogenization.tex % 第 8 章 齐次化：把二元问题压成一元比例（小节已编号进目录）
 chapters/09_fixed_point.tex  % 第 9 章 不动点：迭代、方程与几何变换的交汇
+chapters/drill_master_chNN.tex % 各章五问母题链 drill（结构雷达闪电战 + 两道母题 + notezone）
 chapters/appA_legalization.tex / appB_honors_bridge.tex % 附录 A/B
 ```
 
@@ -26,8 +27,11 @@ chapters/appA_legalization.tex / appB_honors_bridge.tex % 附录 A/B
 
 沿用 `common/` 里的环境，不要自造盒子：
 
-- 结构：`learnobjective` / `preview`（知识回顾 + 教材速读）/ `explore`（`\key{探究N：…}`）
+- 结构：`learnobjective` / `preview`（知识回顾 + 课前速读）/ `explore`（`\key{探究N：…}`）
   / `inclasstest` / `afterclass`
+  （第 8、9 章为专题章，按 `ARCHITECTURE.md` §7 的豁免走「编号小节 +
+  `methodbox`/`corebox`/`warmupbox` + 章内七问母题」，不套全套骨架；
+  练习由 `chapters/drill_master_chNN.tex` 承载）
 - 题目：`example` / `problem` / `solution`
 - 行内：`\key{…}`、`\blank`、`\level{易|中|难}`
 - 盒子：`derivation` / `summary` / `commonerror{名称}` / `method` / `conccard{结论}{适用条件}{易错点}`；多版本引擎另给 `corebox` / `methodbox{标题}` / `trapbox` / `warmupbox{标题}`

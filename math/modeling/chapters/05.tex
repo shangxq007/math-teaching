@@ -1,0 +1,216 @@
+% 建模活动单 · 第五组活动（活动十、活动十一）
+% 主题：轨迹与几何建模——圆与圆锥曲线。
+% 活动十：绳图实验归纳椭圆的标准方程 x^2/a^2+y^2/b^2=1，由 a=5,c=3 定 b=4
+%         作预测（焦点、顶点）并检验；说明 c->0 时退化为圆。
+% 活动十一：Dandelin 双球证明“平面截圆锥的闭合截面是椭圆”，反思天体轨道与天线。
+% 仅使用 ../common/preamble.tex 与 ../common/macros.tex 中已有命令，无新定义。
+
+\section{活动十：到两定点距离之和为定值——椭圆}
+
+\subsection{情境}
+木匠画椭圆不用公式，用“绳图法”：把一根绳子的两端固定在两颗钉子上，
+用笔尖把绳子绷紧后移动，笔尖描出的闭合曲线就是椭圆。
+我们想知道：这条曲线的方程是什么？它和熟悉的圆有什么关系？
+
+本次实验取钉距 $2c=6$、绳长 $2a=10$（单位：cm）。
+以两钉连线的中点为原点、连线为 $x$ 轴建立坐标系（图~\ref{fig:rope}），
+用刻度尺量出曲线上若干点到两钉的距离。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.75cm,y=0.75cm,>=stealth,font=\footnotesize]
+  \draw[dashed,gray!25] (-5.5,-4.2) grid (5.5,4.2);
+  \draw[->,gray!70] (-6.3,0)--(6.3,0) node[right]{$x$};
+  \draw[->,gray!70] (0,-4.8)--(0,4.8) node[above]{$y$};
+  \draw[thick,main] (0,0) ellipse [x radius=5,y radius=4];
+  \foreach \p in {(5,0),(-5,0),(0,4),(0,-4)}
+    \fill[gray!80] \p circle (1pt);
+  \draw[second,thick,|-|] (-3,0)--(3,0);
+  \node[above] at (0,0.08) {钉距 $2c=6$};
+  \draw[main!60!black,thick,|-|] (-5,-1.1)--(5,-1.1);
+  \node[below] at (0,-1.15) {绳长 $2a=10$};
+  \fill[second] (-3,0) circle (1.8pt);
+  \fill[second] (3,0) circle (1.8pt);
+  \node[below left] at (-3,0) {$F_1$};
+  \node[below right] at (3,0) {$F_2$};
+  \draw[second,very thick] (-3,0)--(4,2.4)--(3,0);
+  \fill (4,2.4) circle (1.6pt) node[above right] {$P(4,2.4)$};
+\end{tikzpicture}
+\caption{绳图法：两钉 $F_1,F_2$ 相距 $2c=6$，绳长 $2a=10$；灰点为椭圆与坐标轴的交点}
+\label{fig:rope}
+\end{figure}
+
+\subsection{数据}
+表中距离为刻度尺读数（保留一位小数，单位 cm）：
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{cccc}
+\toprule
+点 $P(x,y)$ & $|PF_1|$ & $|PF_2|$ & $|PF_1|+|PF_2|$ \\
+\midrule
+$(5,0)$    & $8.0$ & $2.0$ & $10.0$ \\
+$(4,2.4)$  & $7.4$ & $2.6$ & $10.0$ \\
+$(0,4)$    & $5.0$ & $5.0$ & $10.0$ \\
+$(-4,2.4)$ & $2.6$ & $7.4$ & $10.0$ \\
+$(-5,0)$   & $2.0$ & $8.0$ & $10.0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+每组数据的“和”都等于绳长 $10$，这不是巧合：
+笔尖始终绷紧绳子，所以
+\[
+  |PF_1|+|PF_2|=2a.
+\]
+这提示我们：椭圆就是“到两定点距离之和为定值”的点的轨迹。
+
+\subsection{归纳模型}
+反过来推导：设两定点 $F_1(-c,0)$、$F_2(c,0)$，动点 $P(x,y)$ 满足
+\[
+  \sqrt{(x+c)^2+y^2}+\sqrt{(x-c)^2+y^2}=2a\quad(a>c>0).
+\]
+移项得 $\sqrt{(x+c)^2+y^2}=2a-\sqrt{(x-c)^2+y^2}$，两边平方后再整理，得
+\[
+  \frac{x^2}{a^2}+\frac{y^2}{a^2-c^2}=1.
+\]
+由 $a>c>0$，记 $b^2=a^2-c^2\ (b>0)$，即椭圆的标准方程
+\[
+  \key{\frac{x^2}{a^2}+\frac{y^2}{b^2}=1\quad(a>b>0).}
+\]
+其中 $2a$ 是长轴长，$2b$ 是短轴长；两定点 $F_1,F_2$ 叫焦点，$|F_1F_2|=2c$，
+三者恒满足 $c^2=a^2-b^2$。
+
+\subsection{预测}
+本次实验 $2a=10$、$2c=6$，即 $a=5$、$c=3$，于是
+\[
+  b=\sqrt{a^2-c^2}=\sqrt{25-9}=4.
+\]
+曲线方程为 $\dfrac{x^2}{25}+\dfrac{y^2}{16}=1$，由此可预测：
+\begin{itemize}
+  \item 焦点就是两颗钉子：$F_1(-3,0)$、$F_2(3,0)$；
+  \item 顶点为 $(\pm5,0)$，短轴端点为 $(0,\pm4)$；
+  \item 离心率 $e=\dfrac{c}{a}=0.6$（越接近 $1$ 椭圆越扁）。
+\end{itemize}
+
+\subsection{检验}
+用实测点检验。$P(4,2.4)$ 到两钉的距离分别为
+\[
+  |PF_2|=\sqrt{(4-3)^2+2.4^2}=\sqrt{6.76}=2.6,\quad
+  |PF_1|=\sqrt{(4+3)^2+2.4^2}=\sqrt{54.76}=7.4,
+\]
+和为 $10.0$，与绳长一致；并且
+\[
+  \frac{4^2}{25}+\frac{2.4^2}{16}=\frac{16}{25}+\frac{5.76}{16}=0.64+0.36=1,
+\]
+该点确实落在方程 $\dfrac{x^2}{25}+\dfrac{y^2}{16}=1$ 上。
+再验算 $(3,3.2)$：$|PF_2|=3.2$、$|PF_1|=6.8$，和仍是 $10$。
+
+\subsection{检验与反思：椭圆与圆}
+钉距不变、把绳放长（$c$ 相对 $a$ 变小），椭圆会变圆；
+从方程看：$c$ 越小，$b=\sqrt{a^2-c^2}$ 越接近 $a$。
+当 $c\to0$ 时 $b\to a$，方程退化为
+\[
+  x^2+y^2=a^2,
+\]
+两焦点重合于原点——椭圆变成半径为 $a$ 的圆；
+此时“绳图法”就退化为用圆规画圆。反过来，圆可看作两焦点重合的椭圆。
+再看另一个极端：$c\to a$ 时 $b\to0$，椭圆被压扁成两钉之间的线段
+（距离和恰好等于钉距）。椭圆“夹”在圆与线段之间。
+
+\key{把几何约束“到两定点距离之和恒定”翻译成代数，就是椭圆方程；$c=0$ 时它退化为圆。}
+
+\section{活动十一：Dandelin 球——截面为什么是椭圆}
+
+\subsection{情境}
+用平面去截圆锥：垂直于轴截得圆，倾斜一些截得椭圆，更陡则得到抛物线、双曲线。
+但“看起来像椭圆”不算数——它是不是真的椭圆？焦点在哪里？
+1822 年，Dandelin 用两个球给出了一个漂亮的证明：椭圆的焦点竟然就藏在球与截面的切点里。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.95cm,y=0.95cm,>=stealth,font=\footnotesize]
+  \draw[dashed,gray!40] (0,-2.0)--(0,6.15);
+  \draw[gray!75,thick] (0,6)--(-2.6667,-2.0);
+  \draw[gray!75,thick] (0,6)--(2.6667,-2.0);
+  \fill (0,6) circle (1.2pt);
+  \node[right] at (0.08,6.02) {$V$};
+  \draw[main,thick,fill=main!12] (0,4.1142) circle (0.5963);
+  \draw[third,thick,fill=third!12] (0,0.1080) circle (1.8632);
+  \fill[main] (0,4.1142) circle (1.2pt);
+  \fill[third] (0,0.1080) circle (1.2pt);
+  \node[above] at (0,4.73) {$O_1$};
+  \node[below] at (0,-1.82) {$O_2$};
+  \draw[second,very thick] (-2.0167,0.55)--(1.0167,4.45);
+  \node[above right] at (1.04,4.42) {截面 $\alpha$};
+  \draw[main!70!black,thick,rotate around={52.125:(-0.5,2.5)}]
+    (-0.5,2.5) ellipse [x radius=1.9003,y radius=0.62];
+  \node[right] at (1.02,2.1) {椭圆};
+  \fill[gray!60] (-0.5657,4.3028) circle (1.2pt);
+  \node[left] at (-0.5657,4.3028) {$T_1$};
+  \fill[gray!60] (-1.7676,0.6972) circle (1.2pt);
+  \node[below left] at (-1.7676,0.6972) {$T_2$};
+  \fill[second] (0.4707,3.7481) circle (1.5pt);
+  \node[right] at (0.51,3.70) {$F_1$};
+  \fill[second] (-1.4707,1.2519) circle (1.5pt);
+  \node[left] at (-1.51,1.28) {$F_2$};
+  \node[above] at (0.6667,4.05) {$B$};
+  \node[below left] at (-1.6667,0.98) {$A$};
+  \fill (-0.9894,2.8806) circle (1.5pt);
+  \node[above left] at (-0.9894,2.8806) {$P$};
+  \draw[black!80,thin] (-0.9894,2.8806)--(0.4707,3.7481);
+  \draw[black!80,thin] (-0.9894,2.8806)--(-1.4707,1.2519);
+\end{tikzpicture}
+\caption{Dandelin 双球（示意，未按透视严格缩放）：两球切锥面成切圆、切截面 $\alpha$ 于 $F_1,F_2$}
+\label{fig:dandelin}
+\end{figure}
+
+\subsection{直观证明}
+设平面 $\alpha$ 与圆锥相交，在锥内放入两个球 $O_1,O_2$：
+它们都与锥面相切（各贴出一个切圆），并分别与平面 $\alpha$ 相切于 $F_1,F_2$。
+这样的两个球总能放下：球心沿圆锥的轴上下移动，半径随之调整即可（图~\ref{fig:dandelin}）。
+
+\begin{proof}
+在交线上任取一点 $P$，过 $P$ 作圆锥的母线，依次交两个切圆于 $Q_1,Q_2$。
+因为 $\alpha$ 切球 $O_1$ 于 $F_1$，所以 $PF_1$ 是点 $P$ 到球 $O_1$ 的切线长；
+又母线切球 $O_1$ 于 $Q_1$，所以 $PQ_1$ 也是点 $P$ 到同一球 $O_1$ 的切线长。
+由“从同一点到同一球的两条切线长相等”，得 $|PF_1|=|PQ_1|$；同理 $|PF_2|=|PQ_2|$。
+于是
+\[
+  |PF_1|+|PF_2|=|PQ_1|+|PQ_2|=|Q_1Q_2|.
+\]
+两个切圆是锥面上互相平行的圆，沿任何一条母线去量，$|Q_1Q_2|$ 都相同，与 $P$ 的位置无关。
+所以交线上每一点到 $F_1,F_2$ 的距离之和为常数——按定义，交线就是以 $F_1,F_2$ 为焦点的椭圆。
+\end{proof}
+
+\subsection{数值核验}
+以图~\ref{fig:dandelin} 的数据为例：截面与两条母线的交点 $A,B$ 正是长轴的两个端点，
+\[
+  2a=|AB|\approx3.8006,\qquad 2c=|F_1F_2|\approx3.1623,\qquad
+  b=\sqrt{a^2-c^2}\approx1.0541.
+\]
+在端点 $A$ 处直接量：
+\[
+  |AF_1|\approx3.4814,\quad |AF_2|\approx0.3192,\quad
+  |AF_1|+|AF_2|\approx3.4814+0.3192=3.8006=2a,
+\]
+与“距离和恒定”完全吻合；图中两切圆沿母线的距离（左壁上的 $|T_1T_2|$）也是同一个数。
+
+\subsection{反思：从截线到行星轨道}
+开普勒第一定律：每颗行星绕太阳运行的轨道都是椭圆，太阳位于椭圆的一个焦点上。
+牛顿后来证明：在平方反比的万有引力下，只要总能量为负（束缚运动），轨道必然是椭圆——
+椭圆不是“看着像”，而是引力作用下的必然形状。
+卫星天线用的则是同一家族的另一员：让平面平行于母线去截圆锥得抛物线，
+抛物面能把平行入射的电磁波全部汇聚到焦点；而椭圆反射面能把一个焦点发出的信号全部反射到另一个焦点。
+
+\key{圆、椭圆、抛物线、双曲线都是“平面截圆锥”的同族曲线；轨迹问题、天线设计与天体力学，用的是同一套几何。}
+
+\section{活动小结}
+两个活动走的是同一条路：把几何约束翻译成方程（活动十），再让方程回到几何（活动十一）。
+\begin{itemize}
+  \item 绳图实验中“距离和恒定”给出椭圆 $\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$，$c\to0$ 时退化为圆；
+  \item Dandelin 双球说明平面截圆锥的闭合截面必为椭圆，切点即焦点；
+  \item 同族曲线解释了天体轨道（椭圆）与卫星天线（抛物面）。
+\end{itemize}

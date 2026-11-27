@@ -1,0 +1,230 @@
+% 相关与回归——最小二乘模型
+% 活动二十：手算回归直线（身高—体重）；活动二十一：回归的陷阱（Anscombe 精神）。
+% 实算核验（活动二十）：x̄=162, ȳ=60, Sxx=648, Syy=438, Sxy=521,
+%   b=521/648≈0.8040, a=−70.25, r≈0.9779, Q≈19.11。
+% 实算核验（活动二十一）：三组均 x̄=3, ȳ=5, Sxx=10, Sxy=10, b=1, a=2；
+%   甲 r=1, Q=0；乙 r≈0.845, Q=4；丙 r≈0.466, Q=36。
+
+\section{活动二十：身高与体重——最小二乘回归}
+
+\subsection{情境}
+某体育小组测得 10 名同学的身高 $x$（cm）与体重 $y$（kg），记录如下表。
+
+\subsection{提出问题}
+身高和体重有没有关系？如果近似有关系，能否由身高估计体重？
+
+\subsection{数据}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|cccccccccc}
+\toprule
+编号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\midrule
+身高 $x$ & 150 & 152 & 155 & 158 & 160 & 163 & 166 & 169 & 172 & 175 \\
+体重 $y$ & 48 & 51 & 55 & 58 & 61 & 62 & 63 & 65 & 68 & 69 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+描点（图见下）可以看到，这些点大体沿着一条直线分布，只是并不严格落在直线上——这就是“趋势 $+$ 噪声”。
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=9cm, height=6cm,
+  xlabel={身高 $x$（cm）}, ylabel={体重 $y$（kg）},
+  xmin=146, xmax=179, ymin=45, ymax=73,
+  xtick={150,160,170}, ytick={50,60,70},
+  ticklabel style={font=\scriptsize},
+  label style={font=\small},
+  grid=major, grid style={gray!25},
+  legend pos=north west, legend style={font=\scriptsize},
+]
+\addplot[only marks, mark=*, second, mark size=1.8pt] coordinates {
+  (150,48) (152,51) (155,55) (158,58) (160,61)
+  (163,62) (166,63) (169,65) (172,68) (175,69)
+};
+\addplot[main, thick, domain=150:175, samples=2] {0.804012*x-70.25};
+\legend{样本点, 回归直线}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{选模型}
+散点近似一条直线，故设线性模型
+\[
+  \hat y=a+bx .
+\]
+“最贴合”的直线取残差平方和最小的一条，即最小二乘：让
+\[
+  Q=\sum_{i=1}^{10}(y_i-a-bx_i)^2
+\]
+最小。对 $a,b$ 分别求导并令其为零，可得
+\[
+  b=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sum(x_i-\bar x)^2},
+  \qquad a=\bar y-b\bar x .
+\]
+因此回归直线一定经过样本中心 $(\bar x,\bar y)$。
+
+\subsection{拟合（手算）}
+先算均值：
+\[
+  \bar x=\frac{150+152+\cdots+175}{10}=162,\qquad
+  \bar y=\frac{48+51+\cdots+69}{10}=60.
+\]
+偏差 $x_i-\bar x$ 依次为 $-12,-10,-7,-4,-2,1,4,7,10,13$；
+偏差 $y_i-\bar y$ 依次为 $-12,-9,-5,-2,1,2,3,5,8,9$。于是
+\[
+  \sum(x_i-\bar x)^2=144+100+49+16+4+1+16+49+100+169=648,
+\]
+\[
+  \sum(x_i-\bar x)(y_i-\bar y)=144+90+35+8-2+2+12+35+80+117=521.
+\]
+所以
+\[
+  b=\frac{521}{648}\approx0.8040,\qquad
+  a=60-\frac{521}{648}\times162=60-\frac{521}{4}=-70.25.
+\]
+回归直线为
+\[
+  \hat y=0.8040x-70.25
+  \quad\left(\text{精确地 }\hat y=\frac{521}{648}x-\frac{281}{4}\right).
+\]
+检验：$\dfrac{521}{648}\times162-70.25=130.25-70.25=60=\bar y$，确实经过样本中心 $(162,60)$。
+
+\subsection{相关的强弱}
+用相关系数
+\[
+  r=\frac{\sum(x_i-\bar x)(y_i-\bar y)}
+          {\sqrt{\sum(x_i-\bar x)^2\sum(y_i-\bar y)^2}}
+    =\frac{521}{\sqrt{648\times438}}\approx0.978.
+\]
+$r>0$ 且 $|r|$ 很接近 $1$，说明身高与体重是\textbf{很强的正相关}；
+$r^2\approx0.956$，即体重的差异中约 $95.6\%$ 伴随着身高的线性变化。
+
+\subsection{预测}
+由回归直线，身高 $165$ cm 的同学体重约为
+\[
+  \hat y=0.804012\times165-70.25\approx62.4\ \text{（kg）}.
+\]
+身高 $170$ cm 时约为 $66.4$ kg。
+
+\subsection{检验与反思}
+残差依次为
+\[
+  -2.35,\,-0.96,\,0.63,\,1.22,\,2.61,\,1.20,\,-0.22,\,-0.63,\,-0.04,\,-1.45,
+\]
+正负相间、总和约为 $0$；残差平方和
+\[
+  Q=\sum(y_i-\hat y_i)^2=438-\frac{521^2}{648}\approx19.11.
+\]
+注意三点：其一，相关不等于因果，身高并不“导致”体重；其二，样本只有 10 人且身高集中在 $150$–$175$ cm，外推到儿童或 $190$ cm 以上要谨慎；其三，回归直线只描述线性趋势，\textbf{画图在先}，别拿到数据就套公式。
+\key{最小二乘给出“最优直线”，但这条直线该不该存在，要看散点图。}
+
+\section{活动二十一：回归的陷阱——先看散点图，再套公式}
+
+\subsection{情境}
+老师给出甲、乙、丙三组数据，每组都是 5 个点，并说：“它们的统计性质几乎一样。”
+要求各组分别拟合，再比较结论。
+
+\subsection{数据}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|ccccc}
+\toprule
+$x$ & 1 & 2 & 3 & 4 & 5 \\
+\midrule
+甲组 $y$ & 3 & 4 & 5 & 6 & 7 \\
+乙组 $y$ & 2 & 5 & 5 & 7 & 6 \\
+丙组 $y$ & 3 & 5 & 6 & 1 & 10 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{套公式：三组结果完全一样}
+对每一组，$x_i-\bar x$ 都是 $-2,-1,0,1,2$，且 $\bar x=3$、$\bar y=5$，故
+\[
+  \sum(x_i-\bar x)^2=4+1+0+1+4=10.
+\]
+而交叉乘积之和都是 $10$：
+\[
+  \begin{aligned}
+  \text{甲：}&\ (-2)(-2)+(-1)(-1)+0\cdot0+1\cdot1+2\cdot2=10,\\
+  \text{乙：}&\ (-2)(-3)+(-1)\cdot0+0\cdot0+1\cdot2+2\cdot1=10,\\
+  \text{丙：}&\ (-2)(-2)+(-1)\cdot0+0\cdot1+1\cdot(-4)+2\cdot5=10.
+  \end{aligned}
+\]
+于是三组的
+\[
+  b=\frac{10}{10}=1,\qquad a=5-1\times3=2,
+\]
+回归直线\textbf{完全相同}：$\hat y=x+2$。只凭公式，会以为三组数据可以互换使用。
+
+\subsection{画图：三幅图完全不同}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=4.4cm, height=3.6cm, title={甲组}, title style={font=\small},
+  xmin=0.5, xmax=5.5, ymin=0, ymax=11,
+  xtick={1,2,3,4,5}, ytick={0,5,10},
+  ticklabel style={font=\tiny},
+  grid=major, grid style={gray!25},
+]
+\addplot[only marks, mark=*, second, mark size=1.6pt] coordinates {(1,3)(2,4)(3,5)(4,6)(5,7)};
+\addplot[main, thick, dashed, domain=0.7:5.3, samples=2] {x+2};
+\end{axis}
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\begin{axis}[
+  width=4.4cm, height=3.6cm, title={乙组}, title style={font=\small},
+  xmin=0.5, xmax=5.5, ymin=0, ymax=11,
+  xtick={1,2,3,4,5}, ytick={0,5,10},
+  ticklabel style={font=\tiny},
+  grid=major, grid style={gray!25},
+]
+\addplot[only marks, mark=*, second, mark size=1.6pt] coordinates {(1,2)(2,5)(3,5)(4,7)(5,6)};
+\addplot[main, thick, dashed, domain=0.7:5.3, samples=2] {x+2};
+\end{axis}
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\begin{axis}[
+  width=4.4cm, height=3.6cm, title={丙组}, title style={font=\small},
+  xmin=0.5, xmax=5.5, ymin=0, ymax=11,
+  xtick={1,2,3,4,5}, ytick={0,5,10},
+  ticklabel style={font=\tiny},
+  grid=major, grid style={gray!25},
+]
+\addplot[only marks, mark=*, second, mark size=1.6pt] coordinates {(1,3)(2,5)(3,6)(4,1)(5,10)};
+\addplot[main, thick, dashed, domain=0.7:5.3, samples=2] {x+2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+甲组几乎就是一条直线；乙组明显弯曲，末端还往下弯；丙组大部分是散乱的，$(4,1)$ 是一个离群点，$(5,10)$ 又突然升高。同一条 $\hat y=x+2$，画出来却完全是三回事。
+
+\subsection{检验与反思}
+再补两个“回头看”的指标：
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|ccc}
+\toprule
+组别 & 相关系数 $r$ & 残差平方和 $Q$ & 散点形态 \\
+\midrule
+甲组 & $1$ & $0$ & 近似一条直线 \\
+乙组 & $\approx0.845$ & $4$ & 弯曲，末端回落 \\
+丙组 & $\approx0.466$ & $36$ & 有明显离群点 \\
+\bottomrule
+\end{tabular}
+\end{center}
+$r$ 与 $Q$ 能提醒我们“直线拟合得好不好”，但只有散点图能回答“该不该用直线”：
+乙组更像曲线关系，丙组的直线几乎被离群点“拽”着走，直接套用 $\hat y=x+2$ 会掩盖数据的真实结构。
+这正是统计学家安斯库姆（Anscombe）1973 年构造的著名例子（Anscombe 四组数据）的精神：
+那四组数据的均值、方差、相关系数、回归方程全都相同，图形却截然不同。
+\key{先看图，再套公式。公式告诉你直线拟合得多好，图告诉你这条直线该不该存在。}
